@@ -320,7 +320,7 @@ _{explain how the user can enable/disable data encryption}_
 
 Format: `help`
 
-==== Login to system : /login
+==== Login to system : `/login`
 
 Format: `/login u/USERNAME p/PASSWORD`
 
@@ -328,7 +328,7 @@ Examples:
 
 * `/login u/deliveryman p/password`
 
-==== Logout from system : /logout
+==== Logout from system : `/logout`
 
 Format: `/logout`
 
