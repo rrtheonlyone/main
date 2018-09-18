@@ -895,35 +895,122 @@ what specific customers are ordering
 [appendix]
 == Use Cases
 
-(For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
+(For all use cases below, the *System* is FoodZoom and the *Actor* is the `user`, unless specified otherwise)
 
 [discrete]
-=== Use case: Delete person
+=== Use Case: Add Order
 
 *MSS*
 
-1.  User requests to list persons
-2.  AddressBook shows a list of persons
-3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+1.  Manager requests to add order to the FoodZoom
+2.  FoodZoom checks the format of the add command
+3.  FoodZoom adds the order to the database
+4.  FoodZoom shows success message to the manager
 +
 Use case ends.
 
 *Extensions*
 
-[none]
-* 2a. The list is empty.
+* 2a. Add command is invalid
+* 2b. FoodZoom shows an error message to the manager
 +
 Use case ends.
 
-* 3a. The given index is invalid.
-+
-[none]
-** 3a1. AddressBook shows an error message.
-+
-Use case resumes at step 2.
 
-_{More to be added}_
+[discrete]
+=== Use Case: Find orders by phone number
+
+*MSS*
+
+1.  Manager request to list orders by phone number 
+2.  FoodZoom shows a list of orders and their status
+3.  Use case ends.
+
+*Extensions*
+
+* 1a. The phone number not found in the list of orders.
++
+Use case ends.
+
+[discrete]
+=== Use Case: Assign Order to Delivery man
+
+*MSS*
+
+1. Manager requests to view pending orders
+2. FoodZoom lists all orders 
+3. Manager adds pending orders to planner
+4. FoodZoom shows travel route and timing details to Manager for all orders added
+5. Manager requests to add route to available deliverymen
+6. FoodZoom adds route to delivery man and displays on same screen
+7. Manager requests to show routing information
+8. Manager shown a screen showing what each deliveryman is assigned
++
+Use case ends.
+
+*Extension*
+
+* 2a.  No available orders
++
+Use case ends.
+
+* 4a.  Travel Details cannot be fetched
+** 4b.  FoodZoom shows relevant error message to user
++
+Use case ends.
+
+*	5a. No available delivery-men
+**	5b. FoodZoom shows error message
++
+Use case ends.
+      
+[discrete]
+=== Use Case: Delete Order
+
+*MSS*
+
+1.  Manager requests to find the order by phone number
+2.  FoodZoom shows the order
+3.  Manager requests to delete the order
+4.  FoodZoom deletes the order
+5.  FoodZoom shows message order successfully deleted
++
+Use case ends.
+
+*Extension*
+
+* The order does not exist.
+** 1a. FoodZoom shows message that order does not exist
++
+Use case ends
+
+[discrete]
+=== Use Case: View Assigned Route 
+
+*MSS*
+
+1.  Delivery man logs in to the app
+2.  FoodZoom shows if delivery man has routes available 
+3.  Delivery man requests for assigned route
+4.  FoodZoom shows the assigned route
+5.  Delivery man looks through each destination and checks address info
+6.  Delivery man checks for status of food
+7.  Deliveryman logs out to collect food & leave for delivery
++
+Use case ends. 
+
+*Extensions*
+
+* 2a. Delivery man doesn't have any routes
++
+Use case ends
+
+* 4a. Location info is unclear to deliveryman
+** 4b. Delivery man searches for order to get customer's contact
+** 4c. Delivery man contacts customer to clarify location
++
+Use case ends
+   
 
 [appendix]
 == Non Functional Requirements
