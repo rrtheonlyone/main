@@ -922,7 +922,7 @@ Use case ends.
 
 *MSS*
 
-1.  Manager request to list orders by phone number 
+1.  Manager request to list orders by phone number
 2.  FoodZoom shows a list of orders and their status
 3.  Use case ends.
 
@@ -938,7 +938,7 @@ Use case ends.
 *MSS*
 
 1. Manager requests to view pending orders
-2. FoodZoom lists all orders 
+2. FoodZoom lists all orders
 3. Manager adds pending orders to planner
 4. FoodZoom shows travel route and timing details to Manager for all orders added
 5. Manager requests to add route to available deliverymen
@@ -963,7 +963,7 @@ Use case ends.
 **	5b. FoodZoom shows error message
 +
 Use case ends.
-      
+
 [discrete]
 === Use Case: Delete Order
 
@@ -985,19 +985,19 @@ Use case ends.
 Use case ends
 
 [discrete]
-=== Use Case: View Assigned Route 
+=== Use Case: View Assigned Route
 
 *MSS*
 
 1.  Delivery man logs in to the app
-2.  FoodZoom shows if delivery man has routes available 
+2.  FoodZoom shows if delivery man has routes available
 3.  Delivery man requests for assigned route
 4.  FoodZoom shows the assigned route
 5.  Delivery man looks through each destination and checks address info
 6.  Delivery man checks for status of food
 7.  Deliveryman logs out to collect food & leave for delivery
 +
-Use case ends. 
+Use case ends.
 
 *Extensions*
 
@@ -1010,7 +1010,7 @@ Use case ends
 ** 4c. Delivery man contacts customer to clarify location
 +
 Use case ends
-   
+
 
 [appendix]
 == Non Functional Requirements
