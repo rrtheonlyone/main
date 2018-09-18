@@ -820,13 +820,15 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 
 *Target user profile*:
 
-* has a need to manage a significant number of contacts
-* prefer desktop apps over other types
-* can type fast
-* prefers typing over mouse input
+* Business Owners and Delivery Man
+* Needs to manage a large collection of orders
+* Needs to dispatch orders to relevant delivery man
+* Wants to view route information and calculate timings
+* Wants insights on purchases and order history
 * is reasonably comfortable using CLI apps
 
-*Value proposition*: manage contacts faster than a typical mouse/GUI driven app
+
+*Value proposition*: Integrate end-to-end systems and streamline food delivery management
 
 [appendix]
 == User Stories
