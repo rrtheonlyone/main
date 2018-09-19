@@ -895,7 +895,7 @@ what specific customers are ordering
 [appendix]
 == Use Cases
 
-(For all use cases below, the *System* is FoodZoom and the *Actor* is the `user`, unless specified otherwise)
+(For the use cases below, the *System* is FoodZoom and the *Actor* is the Managers)
 
 [discrete]
 === Use Case: Add Order
@@ -983,6 +983,8 @@ Use case ends.
 ** 1a. FoodZoom shows message that order does not exist
 +
 Use case ends
+
+(For the use cases below, the *System* is FoodZoom and the *Actor* is the Delivery-men)
 
 [discrete]
 === Use Case: View Assigned Route
