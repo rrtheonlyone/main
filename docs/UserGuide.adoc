@@ -14,7 +14,7 @@ ifdef::env-github[]
 endif::[]
 :repoURL: https://github.com/se-edu/addressbook-level4
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `T16-3`      Since: `Aug 2018`      Licence: `MIT`
 
 == Introduction
 
@@ -33,10 +33,10 @@ image::Ui.png[width="790"]
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 .  Some example commands you can try:
 
-* *`list`* : lists all contacts
-* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Address Book.
-* **`delete`**`3` : deletes the 3rd contact shown in the current list
-* *`exit`* : exits the app
+* *`/order`* : lists all orders
+* **`/order add`**`f/Roti Prata n/John Smith p/12345678 a/block 123, Clementi Drive, #01-01` : adds the food `Roti Prata`, customers phone number `12345678` and customer address `block 123, Clementi Drive, #01-01` to the list of orders.
+* **`/order delete`**`3` : deletes the 3rd order shown in the current list of orders
+* *`/exit`* : exits the app
 
 .  Refer to <<Features>> for details of each command.
 
@@ -48,7 +48,6 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 * Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
 * Items in square brackets are optional e.g `n/NAME [p/PHONE]` can be used as `n/John Doe p/9112` or as `n/John Doe`.
-* Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
 * Parameters can be in any order e.g. if the command specifies `n/NAME a/ADDRESS`, `a/ADDRESS n/NAME` is also acceptable.
 ====
 
@@ -56,7 +55,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 ==== Viewing help : `/help`
 
-Format: `help`
+Format: `/help`
 
 ==== Login to system : `/login`
 
@@ -75,10 +74,10 @@ Format: `/logout`
 Adds an order to the list of orders +
 Format: `/order add f/FOOD n/NAME p/PHONE a/ADDRESS`
 
-****
-* All fields need to have at least a value. e.g. `n/` is not allowed.
-* Able to add more than 1 food items, seperated by a comma. e.g. `f/Roti Prata, Ice Milo`.
-****
+[NOTE]
+====
+Able to add more than 1 food items, seperated by a comma. e.g. `f/Roti Prata, Ice Milo`.
+====
 
 Examples:
 
@@ -93,7 +92,7 @@ Format: `/order`
 ==== Editing an order : `/order edit`
 
 Edits an existing order in the list of orders. +
-Format: `/order edit INDEX [f/FOOD] [n/NAME] [p/PHONE] [a/address]`
+Format: `/order edit INDEX [f/FOOD] [n/NAME] [p/PHONE] [a/ADDRESS]`
 
 ****
 * Edits the order at the specified `INDEX`. The index refers to the index number shown by `/order`. The index *must be a positive integer* 1, 2, 3, ...
@@ -117,8 +116,6 @@ Find orders whose name or phone contain in the given parameter. +
 Format: `/order find [n/NAME] [p/PHONE]` +
 
 ****
-* p/ will only match with phone numbers.
-* n/ will only match with names.
 * At least one of the optional fields must be provided.
 * The search is case insensitive. e.g `tom` will match `Tom`
 * Partial match is allowed e.g. `9112` will match `91122113`. Likewise, `tom` will match `tommy`
@@ -193,21 +190,19 @@ Edits the name and phone number of the 1st delivery man to be `John Doe` and `12
 ==== Finding delivery man by name : `/deliveryman find`
 
 Find delivery men whose name contain in the given parameter. +
-Format: `/order find NAME [MORE NAMES] +
+Format: `/deliveryman find n/NAME +
 
 ****
 * The search is case insensitive. e.g `tom` will match `Tom`
-* Multiple names must be seperated by a comma. e.g. `/order find john, hilary`.
+* Only search one name at a time
 * The order of the keywords does not matter. e.g. `Alice Smith` will match `Smith Alice`
 * Partial match is allowed e.g. `tom` will match `tommy`
 ****
 
 Examples:
 
-* `/deliveryman find john` +
+* `/deliveryman find n/john` +
 Returns `john` and `John Doe`
-* `/order find john, alice, tom` +
-Returns `john`, `alice`, `tom`
 
 ==== Deleting a delivery man : `/deliveryman delete`
 
@@ -244,6 +239,27 @@ Format: `/route create`
 Shows a list of all existing routes and assigned delivery men +
 Format: `/route`
 
+==== Adding an order to a route : `/route add`
+
+Add an existing orders to an existing route +
+Format: `/route add r/ROUTE_INDEX o/ORDER_INDEX`
+
+****
+* All fields need to have at least a value. e.g. `o/` is not allowed.
+* Able to add more than 1 orders, seperated by a comma. e.g. `o/1, 2, 3`.
+****
+
+Examples:
+
+* `/route` +
+`/order` +
+`/route add o/2 r/1` +
+Adds the 2nd order to the 1st route.
+* `/order` +
+`/route` +
+`/route add r/3 o/4, 5, 6` +
+Adds the 4th, 5th, 6th orders to the 3rd route.
+
 ==== Deleting a route: `/route delete`
 
 Deletes the specified route from the list of routes +
@@ -266,22 +282,6 @@ Deletes the 2nd route in the list of routes.
 Clears all entries from the list of routes. +
 Format: `/route clear`
 
-==== Adding an order to a route : `/plan`
-
-Add an existing order to an existing route +
-Format: `/plan` o/ORDER_INDEX r/ROUTE_INDEX
-
-Examples:
-
-* `/route` +
-`/order` +
-`/plan o/2 r/1` +
-Adds the 2nd order to the 1st route.
-* `/order` +
-`/route` +
-`/plan o/3 r/4` +
-Adds the 3rd order to the 4th route.
-
 ==== Assign route to delivery man : `/assign`
 
 Assign a delivery man to an existing route +
@@ -291,12 +291,22 @@ Examples:
 
 * `/route` +
 `/deliveryman` +
-`/plan d/2 r/1` +
+`/assign d/2 r/1` +
 Add the 2nd delivery man to the 1st route.
 * `/deliveryman` +
 `/route` +
-`/plan o/3 r/4` +
+`/assign r/4 d/3` +
 Add the 3rd delivery man to the 4th route.
+
+==== Listing entered commands : `/history`
+
+Lists all the commands that you have entered in reverse chronological order. +
+Format: `/history`
+
+[NOTE]
+====
+Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
+====
 
 ==== Exiting the program : `/exit`
 
@@ -318,7 +328,7 @@ _{explain how the user can enable/disable data encryption}_
 
 ==== Viewing help : `/help`
 
-Format: `help`
+Format: `/help`
 
 ==== Login to system : `/login`
 
@@ -334,7 +344,7 @@ Format: `/logout`
 
 ==== Show delivery route : `/route`
 
-View the assigned route +
+View the assigned route/s +
 Format: `/route`
 
 ==== Listing assigned orders : `/order`
@@ -375,7 +385,7 @@ e.g. `/deliveryman add n/James Ho p/22224444 a/block 123, Clementi Rd, 1234665`
 e.g. `/deliveryman delete 3`
 * *Edit delivery man* : `/deliveryman edit INDEX [n/NAME] [p/PHONE_NUMBER] [a/ADDRESS]` +
 e.g. `/deliveryman edit 2 n/James Lee`
-* *Find delivery man* : `/deliveryman find [n/NAME] [p/PHONE]` +
+* *Find delivery man* : `/deliveryman find n/NAME` +
 e.g. `/deliveryman find n/James Jake`
 * *Listing delivery men* : `/deliveryman`
 * *Create a route* : `/route create`
@@ -383,10 +393,11 @@ e.g. `/deliveryman find n/James Jake`
 e.g. `/route delete 1`
 * *Listing all routes* : `/route`
 * *Clear routes* : `/route clear`
-* *Add order to route* : `/plan o/ORDER_INDEX r/ROUTE_INDEX` +
-e.g. `/plan o/1 r/1`
+* *Add order to route* : `/route add r/ROUTE_INDEX o/ORDER_INDEX` +
+e.g. `/route add o/1, 2, 3 r/1`
 * *Assign route to delivery man* : `/assign d/DELIVERYMAN_INDEX r/ROUTE_INDEX` +
 e.g. `/assign d/1 r/1`
+* *History* : `/history`
 * *Help* : `/help`
 * *Exit the program* : `/exit`
 
