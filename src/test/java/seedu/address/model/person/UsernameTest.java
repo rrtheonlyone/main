@@ -11,7 +11,7 @@ class UsernameTest {
 
     @Test
     void isValidUsername() {
-        // null phone number
+        // null username
         Assert.assertThrows(NullPointerException.class, () -> Username.isValidUsername(null));
 
         //invalid username
