@@ -13,7 +13,7 @@ public class Password {
                     + "and it should not be blank";
 
     /*
-     * The first character of the username must not be a whitespace,
+     * The first character of the password must not be a whitespace,
      * otherwise " " (a blank string) becomes a valid input.
      */
     public static final String PASSWORD_VALIDATION_REGEX = "[\\p{Alnum}]{6,}";
@@ -23,7 +23,7 @@ public class Password {
     /**
      * Constructs a {@code Password}.
      *
-     * @param password A valid username.
+     * @param password A valid password.
      */
     public Password(String password) {
         requireNonNull(password);
@@ -33,7 +33,7 @@ public class Password {
 
 
     /**
-     * Returns true if a given string is a valid username.
+     * Returns true if a given string is a valid password.
      */
     public static boolean isValidPassword(String test) {
         return test.matches(PASSWORD_VALIDATION_REGEX);
