@@ -2,6 +2,10 @@ package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
 
+/**
+ * Represents a Person's username in FoodZoom.
+ * Guarantees: immutable; is valid as declared in {@link #isValidUsername(String)}
+ */
 public class Username {
 
     public static final String MESSAGE_USERNAME_CONSTRAINTS =
