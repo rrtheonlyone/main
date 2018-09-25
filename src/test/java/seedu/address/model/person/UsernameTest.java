@@ -24,5 +24,6 @@ class UsernameTest {
 
         //valid username
         assertTrue(Username.isValidUsername("manager")); //alphanumeric
+        assertTrue(Username.isValidUsername("manager12")); //alphanumeric
     }
 }
