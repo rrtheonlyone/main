@@ -86,7 +86,7 @@ public class AddressBookParser {
             return new RedoCommand();
 
         case SignUpCommand.COMMAND_WORD:
-            return new HelpCommand();
+            return new SignUpCommandParser().parse(arguments);
 
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
