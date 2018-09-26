@@ -1,19 +1,21 @@
 package seedu.address.logic.parser;
 
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PASSWORD;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_USERNAME;
+
 import seedu.address.logic.commands.SignUpCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Password;
 import seedu.address.model.person.Username;
 import seedu.address.model.user.Manager;
-import seedu.address.model.user.User;
 
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_PASSWORD;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_USERNAME;
-
-public class SignUpCommandParser implements Parser<SignUpCommand>{
+/**
+ * Parses input arguments and creates a new SignUpCommand object
+ */
+public class SignUpCommandParser implements Parser<SignUpCommand> {
 
     @Override
     public SignUpCommand parse(String args) throws ParseException {
