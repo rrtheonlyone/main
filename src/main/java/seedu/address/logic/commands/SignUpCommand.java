@@ -4,6 +4,7 @@ import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.person.Person;
+import seedu.address.model.user.Manager;
 import seedu.address.model.user.User;
 
 import static java.util.Objects.requireNonNull;
@@ -28,7 +29,15 @@ public class SignUpCommand extends Command {
     public static final String MESSAGE_SUCCESS = "New person added: %1$s";
     public static final String MESSAGE_DUPLICATE_USER = "This user already exists in FoodZoom.";
 
+    private final Manager toAdd;
 
+    /**
+     * Creates an SignUpCommand to add the specified {@code Manager}
+     */
+    public SignUpCommand(Manager manager) {
+        requireNonNull(manager);
+        toAdd = manager;
+    }
 
     @Override
     public CommandResult execute(Model model, CommandHistory history) throws CommandException {
