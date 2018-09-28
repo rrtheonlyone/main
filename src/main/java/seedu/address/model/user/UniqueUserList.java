@@ -39,11 +39,11 @@ public class UniqueUserList implements Iterable<User> {
     }
 
     /**
-     * Replaces the person {@code target} in the list with {@code editedPerson}.
+     * Replaces the user {@code target} in the list with {@code editedPerson}.
      * {@code target} must exist in the list.
      * The person identity of {@code editedPerson} must not be the same as another existing person in the list.
      */
-    public void setPerson(User target, User editedPerson) {
+    public void setUser(User target, User editedPerson) {
         requireAllNonNull(target, editedPerson);
 
         int index = internalList.indexOf(target);
@@ -69,7 +69,7 @@ public class UniqueUserList implements Iterable<User> {
         }
     }
 
-    public void setPersons(UniqueUserList replacement) {
+    public void setUsers(UniqueUserList replacement) {
         requireNonNull(replacement);
         internalList.setAll(replacement.internalList);
     }
@@ -78,9 +78,9 @@ public class UniqueUserList implements Iterable<User> {
      * Replaces the contents of this list with {@code persons}.
      * {@code persons} must not contain duplicate persons.
      */
-    public void setPersons(List<User> users) {
+    public void setUsers(List<User> users) {
         requireAllNonNull(users);
-        if (!personsAreUnique(users)) {
+        if (!usersAreUnique(users)) {
             throw new DuplicatePersonException();
         }
 
@@ -114,7 +114,7 @@ public class UniqueUserList implements Iterable<User> {
     /**
      * Returns true if {@code persons} contains only unique users.
      */
-    private boolean personsAreUnique(List<User> users) {
+    private boolean usersAreUnique(List<User> users) {
         for (int i = 0; i < users.size() - 1; i++) {
             for (int j = i + 1; j < users.size(); j++) {
                 if (users.get(i).isSameUser(users.get(j))) {
