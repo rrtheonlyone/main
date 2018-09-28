@@ -42,6 +42,20 @@ public abstract class User {
         return password;
     }
 
+    /**
+     * Returns true if both users of the same name have at least one other identity field that is the same.
+     * This defines a weaker notion of equality between two persons.
+     */
+    public boolean isSameUser(User otherUser) {
+        if (otherUser == this) {
+            return true;
+        }
+
+        return otherUser != null
+                && otherUser.getName().equals(getName())
+                && otherUser.getUsername().equals(getUsername());
+    }
+
 
     /**
      * Returns true if both persons have the same identity and data fields.
