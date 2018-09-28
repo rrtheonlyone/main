@@ -38,7 +38,7 @@ public abstract class User {
         return username;
     }
 
-    private Password getPassword() {
+    public Password getPassword() {
         return password;
     }
 
