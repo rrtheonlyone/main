@@ -6,7 +6,7 @@ import seedu.address.model.user.User;
 /**
  * Unmodifiable view of users
  */
-public interface ReadOnlyUsers {
+public interface ReadOnlyUsersList {
 
     /**
      * Returns an unmodifiable view of the user list.
