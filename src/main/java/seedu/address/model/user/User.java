@@ -16,7 +16,7 @@ import seedu.address.model.person.Username;
 public abstract class User {
 
     // Identity fields
-    private final Name name;
+    private Name name;
     private final Username username;
     private final Password password;
 
@@ -26,6 +26,12 @@ public abstract class User {
     public User(Name name, Username username, Password password) {
         requireAllNonNull(name, username, password);
         this.name = name;
+        this.username = username;
+        this.password = password;
+    }
+
+    public User(Username username, Password password) {
+        requireAllNonNull(username, password);
         this.username = username;
         this.password = password;
     }
@@ -56,6 +62,19 @@ public abstract class User {
                 && otherUser.getUsername().equals(getUsername());
     }
 
+    /**
+     * Returns true if both users of the same username and password.
+     */
+    public boolean isSameExistingUser(User otherUser) {
+        if (otherUser == this) {
+            return true;
+        }
+
+        return otherUser != null
+                && otherUser.getUsername().equals(getUsername())
+                && otherUser.getPassword().equals(getPassword());
+    }
+
 
     /**
      * Returns true if both persons have the same identity and data fields.
@@ -75,7 +94,6 @@ public abstract class User {
         return otherPerson.getName().equals(getName())
                 && otherPerson.getUsername().equals(getUsername())
                 && otherPerson.getPassword().equals(getPassword());
-
     }
 
     @Override
