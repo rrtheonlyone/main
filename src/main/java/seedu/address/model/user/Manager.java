@@ -19,7 +19,7 @@ public class Manager extends User {
     }
 
     public Manager(Username username, Password password) {
-        super(new Name(""), username, password);
+        super(username, password);
     }
 }
 
