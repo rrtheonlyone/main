@@ -3,8 +3,15 @@ package seedu.address.model.deliveryman;
 import seedu.address.model.person.Name;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.Objects;
+
+/**
+ * Represents a Deliveryman in FoodZoom.
+ * Guarantees: has a name that is unique.
+ */
 public class Deliveryman {
     private final Name name;
+    //TODO:  add field for orders/routes attached to deliveryman.
 
     public Deliveryman(Name name) {
         requireAllNonNull(name);
@@ -13,5 +20,43 @@ public class Deliveryman {
 
     public Name getName() {
         return name;
+    }
+
+    public boolean isSamePerson(Deliveryman other) {
+        if (other == this) {
+            return true;
+        }
+
+        return other != null && other.getName().equals(getName());
+    }
+
+    /**
+     * Returns true if both deliverymen have the same identity and data fields.
+     * This defines a stronger notion of equality between two persons.
+     */
+    @Override
+    public boolean equals(Object other) {
+        if (other == this) {
+            return true;
+        }
+
+        if (!(other instanceof Deliveryman)) {
+            return false;
+        }
+
+        Deliveryman otherPerson = (Deliveryman) other;
+        return otherPerson.getName().equals(getName());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder builder = new StringBuilder();
+        builder.append(getName());
+        return builder.toString();
     }
 }
