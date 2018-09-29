@@ -168,6 +168,11 @@ public class ModelManager extends ComponentManager implements Model {
         filteredUsers.setPredicate(predicate);
     }
 
+    @Override
+    public ObservableList<User> getFilteredUsersList() {
+        return FXCollections.unmodifiableObservableList(filteredUsers);
+    }
+
     /**
      * Raises an event to indicate the model has changed
      */
