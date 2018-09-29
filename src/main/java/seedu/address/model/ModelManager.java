@@ -173,6 +173,12 @@ public class ModelManager extends ComponentManager implements Model {
         return FXCollections.unmodifiableObservableList(filteredUsers);
     }
 
+    @Override
+    public boolean loginUser(User user) {
+        requireNonNull(user);
+        return versionedUsersList.login(user);
+    }
+
     /**
      * Raises an event to indicate the model has changed
      */
