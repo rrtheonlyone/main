@@ -27,6 +27,14 @@ public class UniqueUserList implements Iterable<User> {
     }
 
     /**
+     * Returns true if the list contains an equivalent person as the given username and password.
+     */
+    public boolean check(User toCheck) {
+        requireNonNull(toCheck);
+        return internalList.stream().anyMatch(toCheck::isSameExistingUser);
+    }
+
+    /**
      * Adds a user to the list.
      * The user must not already exist in the list.
      */
