@@ -5,7 +5,7 @@ import seedu.address.model.person.Password;
 import seedu.address.model.person.Username;
 
 
-public class Manager extends User{
+public class Manager extends User {
 
     /**
      * Every field must be present and not null.
@@ -18,6 +18,8 @@ public class Manager extends User{
         super(name, username, password);
     }
 
-
+    public Manager(Username username, Password password) {
+        super(new Name(""), username, password);
+    }
 }
 
