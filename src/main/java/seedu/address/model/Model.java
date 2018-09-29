@@ -4,6 +4,7 @@ import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
 import seedu.address.model.person.Person;
+import seedu.address.model.user.User;
 
 /**
  * The API of the Model component.
@@ -75,4 +76,20 @@ public interface Model {
      * Saves the current address book state for undo/redo.
      */
     void commitAddressBook();
+
+
+    /** {@code Predicate} that always evaluate to true */
+    Predicate<User> PREDICATE_SHOW_ALL_USERS = unused -> true;
+
+    boolean hasUser(User user);
+
+    void addUser(User user);
+
+    void commitUsersList();
+
+    /**
+     * Updates the filter of the filtered user list to filter by the given {@code predicate}.
+     * @throws NullPointerException if {@code predicate} is null.
+     */
+    void updateFilteredUsersList(Predicate<User> predicate);
 }
