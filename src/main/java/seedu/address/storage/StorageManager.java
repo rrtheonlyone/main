@@ -73,6 +73,7 @@ public class StorageManager extends ComponentManager implements Storage {
     }
 
     @Override
+    @Subscribe
     public void handleUsersListChangedEvent(UsersListChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event, "Local data changed, saving to file"));
         try {
