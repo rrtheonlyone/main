@@ -12,6 +12,7 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.commons.events.model.UsersListChangedEvent;
 import seedu.address.model.person.Person;
 import seedu.address.model.user.User;
 
@@ -153,7 +154,7 @@ public class ModelManager extends ComponentManager implements Model {
     public void addUser(User user) {
         versionedUsersList.addUser(user);
         updateFilteredUsersList(PREDICATE_SHOW_ALL_USERS);
-        //TODO indicateUsersListChanged();
+        indicateUsersListChanged();
     }
 
     @Override
@@ -165,6 +166,13 @@ public class ModelManager extends ComponentManager implements Model {
     public void updateFilteredUsersList(Predicate<User> predicate) {
         requireNonNull(predicate);
         filteredUsers.setPredicate(predicate);
+    }
+
+    /**
+     * Raises an event to indicate the model has changed
+     */
+    private void indicateUsersListChanged() {
+        raise(new UsersListChangedEvent(versionedUsersList));
     }
 
     @Override
