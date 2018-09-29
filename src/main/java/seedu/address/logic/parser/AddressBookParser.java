@@ -90,7 +90,7 @@ public class AddressBookParser {
             return new SignUpCommandParser().parse(arguments);
 
         case LoginCommand.COMMAND_WORD:
-            return new HelpCommand();
+            return new LoginCommandParser().parse(arguments);
 
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
