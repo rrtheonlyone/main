@@ -96,4 +96,6 @@ public interface Model {
 
     /** Returns an unmodifiable view of the filtered users list */
     ObservableList<User> getFilteredUsersList();
+
+    boolean loginUser(User user);
 }
