@@ -4,7 +4,9 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.Password;
 import seedu.address.model.person.Username;
 
-
+/**
+ * Represents a User in the FoodZoom.
+ */
 public class Manager extends User {
 
     /**

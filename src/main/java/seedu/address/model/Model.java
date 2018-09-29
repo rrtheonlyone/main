@@ -13,6 +13,9 @@ public interface Model {
     /** {@code Predicate} that always evaluate to true */
     Predicate<Person> PREDICATE_SHOW_ALL_PERSONS = unused -> true;
 
+    /** {@code Predicate} that always evaluate to true */
+    Predicate<User> PREDICATE_SHOW_ALL_USERS = unused -> true;
+
     /** Clears existing backing model and replaces with the provided new data. */
     void resetData(ReadOnlyAddressBook newData);
 
@@ -76,10 +79,6 @@ public interface Model {
      * Saves the current address book state for undo/redo.
      */
     void commitAddressBook();
-
-
-    /** {@code Predicate} that always evaluate to true */
-    Predicate<User> PREDICATE_SHOW_ALL_USERS = unused -> true;
 
     boolean hasUser(User user);
 

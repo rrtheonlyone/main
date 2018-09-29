@@ -8,6 +8,10 @@ import javafx.collections.ObservableList;
 import seedu.address.model.user.UniqueUserList;
 import seedu.address.model.user.User;
 
+/**
+ * Wraps all data at the users list.
+ * Duplicates are not allowed.
+ */
 public class UsersList implements ReadOnlyUsersList {
 
     private final UniqueUserList users;

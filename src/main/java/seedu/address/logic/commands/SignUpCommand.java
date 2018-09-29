@@ -10,6 +10,9 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.user.Manager;
 
+/**
+ * Sign up the user into FoodZoom.
+ */
 public class SignUpCommand extends Command {
 
     public static final String COMMAND_WORD = "/signup";
