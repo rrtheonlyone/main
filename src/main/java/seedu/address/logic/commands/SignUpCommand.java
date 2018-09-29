@@ -26,7 +26,7 @@ public class SignUpCommand extends Command {
             + PREFIX_USERNAME + "johndoe "
             + PREFIX_PASSWORD + "johndoepassword";
 
-    public static final String MESSAGE_SUCCESS = "New person added: %1$s";
+    public static final String MESSAGE_SUCCESS = "New user added: %1$s";
     public static final String MESSAGE_DUPLICATE_USER = "This user already exists in FoodZoom.";
 
     private final Manager toAdd;
