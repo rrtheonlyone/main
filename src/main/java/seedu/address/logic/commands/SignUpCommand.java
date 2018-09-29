@@ -41,7 +41,13 @@ public class SignUpCommand extends Command {
 
     @Override
     public CommandResult execute(Model model, CommandHistory history) throws CommandException {
+        requireNonNull(model);
+        if (model.hasUser(toAdd)) {
+            throw new CommandException(MESSAGE_DUPLICATE_USER);
+        }
 
-        return null;
+        model.addUser(toAdd);
+        model.commitUsersList();
+        return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
     }
 }
