@@ -39,11 +39,22 @@ public class UniqueDeliverymenList implements Iterable<Deliveryman>{
     }
 
     /**
+     * Remove the equivalent deliveryman from the list.
+     * deliveryman must exist in the list.
+     */
+    public void remove(Deliveryman toRemove) {
+        requireNonNull(toRemove);
+        if (!internalList.remove(toRemove)) {
+            throw new PersonNotFoundException();
+        }
+    }
+
+    /**
      * Replaces the deliveryman {@code target} in the list with {@code edited}.
      * {@code target} must exist in the list.
      * The deliveryman identity of {@code edited} must not be the same as another deliveryman in the list.
      */
-    public void setDeliverymen(Deliveryman target, Deliveryman edited) {
+    public void setDeliveryman(Deliveryman target, Deliveryman edited) {
         requireAllNonNull(target, edited);
 
         int index = internalList.indexOf(target);
@@ -57,6 +68,20 @@ public class UniqueDeliverymenList implements Iterable<Deliveryman>{
         }
 
         internalList.set(index, edited);
+    }
+
+    public void setDeliverymen(List<Deliveryman> deliverymen) {
+        requireAllNonNull(deliverymen);
+
+        if (!deliverymenAreUnique(deliverymen)) {
+            throw new DuplicatePersonException();
+        }
+
+        internalList.setAll(deliverymen);
+    }
+
+    public ObservableList<Deliveryman> asUnmodifiableObservableList() {
+        return FXCollections.unmodifiableObservableList(internalList);
     }
 
     @Override
