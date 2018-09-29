@@ -5,6 +5,7 @@ import java.nio.file.Path;
 import java.util.Optional;
 
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.commons.events.model.UsersListChangedEvent;
 import seedu.address.commons.events.storage.DataSavingExceptionEvent;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.model.ReadOnlyAddressBook;
@@ -47,4 +48,11 @@ public interface Storage extends AddressBookStorage, UserPrefsStorage, UsersList
 
     @Override
     void saveUsersList(ReadOnlyUsersList usersList) throws IOException;
+
+    /**
+     * Saves the current version of the UsersList to the hard disk.
+     *   Creates the data file if it is missing.
+     * Raises {@link DataSavingExceptionEvent} if there was an error during saving.
+     */
+    void handleUsersListChangedEvent(UsersListChangedEvent ulce);
 }
