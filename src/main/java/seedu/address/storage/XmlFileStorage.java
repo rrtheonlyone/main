@@ -8,6 +8,7 @@ import javax.xml.bind.JAXBException;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.util.XmlUtil;
 import seedu.address.storage.user.XmlSerializableUsersList;
+import seedu.address.storage.deliveryman.XmlSerializableDeliverymenList;
 
 /**
  * Stores orderbook data in an XML file
@@ -61,4 +62,27 @@ public class XmlFileStorage {
         }
     }
 
+    /**
+     * Saves the given deliverymen data to the specified file.
+     */
+    public static void saveDeliverymenDataToFile(Path file, XmlSerializableDeliverymenList deliverymenList)
+            throws FileNotFoundException {
+        try {
+            XmlUtil.saveDataToFile(file, deliverymenList);
+        } catch (JAXBException e) {
+            throw new AssertionError("Unexpected exception " + e.getMessage(), e);
+        }
+    }
+
+    /**
+     * Returns deliverymen list in the file or an empty deliverymen list
+     */
+    public static XmlSerializableDeliverymenList loadDeliverymenDataFromSaveFile(Path file) throws DataConversionException,
+            FileNotFoundException {
+        try {
+            return XmlUtil.getDataFromFile(file, XmlSerializableDeliverymenList.class);
+        } catch (JAXBException e) {
+            throw new DataConversionException(e);
+        }
+    }
 }
