@@ -70,6 +70,11 @@ public class UniqueDeliverymenList implements Iterable<Deliveryman>{
         internalList.set(index, edited);
     }
 
+    public void setDeliverymen(UniqueDeliverymenList replacement) {
+        requireNonNull(replacement);
+        internalList.setAll(replacement.internalList);
+    }
+
     public void setDeliverymen(List<Deliveryman> deliverymen) {
         requireAllNonNull(deliverymen);
 
