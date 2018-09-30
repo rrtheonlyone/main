@@ -34,6 +34,8 @@ import seedu.address.storage.Storage;
 import seedu.address.storage.StorageManager;
 import seedu.address.storage.UserPrefsStorage;
 import seedu.address.storage.XmlOrderBookStorage;
+import seedu.address.storage.deliveryman.DeliverymenListStorage;
+import seedu.address.storage.deliveryman.XmlDeliverymenListStorage;
 import seedu.address.storage.user.UsersListStorage;
 import seedu.address.storage.user.XmlUsersListStorage;
 import seedu.address.ui.Ui;
@@ -70,8 +72,9 @@ public class MainApp extends Application {
         UserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(config.getUserPrefsFilePath());
         userPrefs = initPrefs(userPrefsStorage);
         OrderBookStorage orderBookStorage = new XmlOrderBookStorage(userPrefs.getAddressBookFilePath());
+        DeliverymenListStorage deliverymenListStorage = new XmlDeliverymenListStorage(userPrefs.getDeliverymenListFilePath());
         UsersListStorage usersListStorage = new XmlUsersListStorage(userPrefs.getUsersListFilePath());
-        storage = new StorageManager(orderBookStorage, userPrefsStorage, usersListStorage);
+        storage = new StorageManager(orderBookStorage, userPrefsStorage, usersListStorage, deliverymenListStorage);
 
         initLogging(config);
 

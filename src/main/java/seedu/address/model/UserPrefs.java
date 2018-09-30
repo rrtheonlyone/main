@@ -15,6 +15,8 @@ public class UserPrefs {
     private Path addressBookFilePath = Paths.get("data" , "addressbook.xml");
     private Path usersListFilePath = Paths.get("data", "users.xml");
 
+    private Path deliverymenListFilePath = Paths.get("data" , "deliverymen.xml");
+
     public UserPrefs() {
         setGuiSettings(500, 500, 0, 0);
     }
@@ -45,6 +47,13 @@ public class UserPrefs {
 
     public void setUsersListFilePath(Path usersListFilePath) {
         this.usersListFilePath = usersListFilePath;
+    }
+    public Path getDeliverymenListFilePath() {
+        return deliverymenListFilePath;
+    }
+
+    public void setDeliverymenListFilePath(Path deliverymenListFilePath) {
+        this.deliverymenListFilePath = deliverymenListFilePath;
     }
 
     @Override
