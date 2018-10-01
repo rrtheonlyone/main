@@ -21,7 +21,7 @@ public class UsersListBuilder {
     }
 
     /**
-     * Adds a new {@code Person} to the {@code AddressBook} that we are building.
+     * Adds a new {@code User} to the {@code UsersListBuilder} that we are building.
      */
     public UsersListBuilder withUser(User user) {
         usersList.addUser(user);
