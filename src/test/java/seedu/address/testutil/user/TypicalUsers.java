@@ -26,6 +26,19 @@ public class TypicalUsers {
             .withPassword("carlkurz03")
             .build();
 
+    // Manually added
+    public static final User HOON_MANAGER = new UserBuilder()
+            .withName("Hoon Meier")
+            .withUsername("hoonmeier")
+            .withPassword("hoonmeier04")
+            .build();
+
+    public static final User IDA_MANAGER = new UserBuilder()
+            .withName("Ida Mueller")
+            .withUsername("idamueller")
+            .withPassword("idamueller05")
+            .build();
+
     private TypicalUsers() {} // prevents instantiation
 
     /**
