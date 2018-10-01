@@ -86,7 +86,7 @@ public abstract class User {
             return true;
         }
 
-        if (!(other instanceof Person)) {
+        if (!(other instanceof User)) {
             return false;
         }
 
