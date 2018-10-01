@@ -24,7 +24,7 @@ public class SampleDataUtil {
                 getFoodSet("Ice Tea")),
             new Order(new Name("Bernice Yu"), new Phone("99272758"),
                 new Address("Blk 30 Lorong 3 Serangoon Gardens, #07-18"),
-                    getFoodSet("colleagues", "Chicken Rice")),
+                    getFoodSet("Chicken Rice")),
             new Order(new Name("Charlotte Oliveiro"), new Phone("93210283"),
                 new Address("Blk 11 Ang Mo Kio Street 74, #11-04"),
                     getFoodSet("Nasi Goreng")),

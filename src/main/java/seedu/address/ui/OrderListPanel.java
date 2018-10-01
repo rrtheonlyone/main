@@ -18,7 +18,7 @@ import java.util.logging.Logger;
  * Panel containing the list of orders.
  */
 public class OrderListPanel extends UiPart<Region> {
-    private static final String FXML = "PersonListPanel.fxml";
+    private static final String FXML = "OrderListPanel.fxml";
     private final Logger logger = LogsCenter.getLogger(OrderListPanel.class);
 
     @FXML
@@ -26,6 +26,7 @@ public class OrderListPanel extends UiPart<Region> {
 
     public OrderListPanel(ObservableList<Order> orderList) {
         super(FXML);
+
         setConnections(orderList);
         registerAsAnEventHandler(this);
     }
