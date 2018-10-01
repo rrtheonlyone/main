@@ -8,8 +8,8 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.deliveryman.DeliverymenList;
 import seedu.address.model.deliveryman.Deliveryman;
+import seedu.address.model.deliveryman.DeliverymenList;
 
 /**
  * An Immutable DeliverymenList that is serializable to XML format
@@ -35,7 +35,8 @@ public class XmlSerializableDeliverymenList {
      */
     public XmlSerializableDeliverymenList(DeliverymenList src) {
         this();
-        deliverymen.addAll(src.getDeliverymenList().stream().map(XmlAdaptedDeliveryman::new).collect(Collectors.toList()));
+        deliverymen.addAll(src.getDeliverymenList().stream().map(XmlAdaptedDeliveryman::new)
+            .collect(Collectors.toList()));
     }
 
     /**

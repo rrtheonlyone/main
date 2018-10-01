@@ -154,7 +154,8 @@ public interface Model {
     /**
      * Replaces the given deliveryman {@code target} with {@code editedDeliveryman}.
      * {@code target} must exist in the address book.
-     * The deliveryman identity of {@code editedDeliveryman} must not be the same as another existing deliveryman in the address book.
+     * The deliveryman identity of {@code editedDeliveryman} must not be the same as another
+     * existing deliveryman in the deliverymen list.
      */
     void updateDeliveryman(Deliveryman target, Deliveryman editedDeliveryman);
 

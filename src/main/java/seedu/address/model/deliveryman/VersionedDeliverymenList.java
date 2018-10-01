@@ -3,7 +3,10 @@ package seedu.address.model.deliveryman;
 import java.util.ArrayList;
 import java.util.List;
 
-public class VersionedDeliverymenList extends DeliverymenList{
+/**
+ * Represents a versioned version of the deliverymen list.
+ */
+public class VersionedDeliverymenList extends DeliverymenList {
 
     private final List<DeliverymenList> deliverymenListStateList;
     private int currentStatePointer;

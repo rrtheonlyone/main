@@ -16,6 +16,9 @@ import seedu.address.commons.util.FileUtil;
 import seedu.address.model.deliveryman.DeliverymenList;
 import seedu.address.storage.XmlFileStorage;
 
+/**
+ * Represents the Storage methods for storage of XML deliverymen list.
+ */
 public class XmlDeliverymenListStorage implements DeliverymenListStorage {
 
     private static final Logger logger = LogsCenter.getLogger(XmlDeliverymenListStorage.class);

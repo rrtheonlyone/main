@@ -73,7 +73,8 @@ public class MainApp extends Application {
         UserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(config.getUserPrefsFilePath());
         userPrefs = initPrefs(userPrefsStorage);
         OrderBookStorage orderBookStorage = new XmlOrderBookStorage(userPrefs.getAddressBookFilePath());
-        DeliverymenListStorage deliverymenListStorage = new XmlDeliverymenListStorage(userPrefs.getDeliverymenListFilePath());
+        DeliverymenListStorage deliverymenListStorage =
+            new XmlDeliverymenListStorage(userPrefs.getDeliverymenListFilePath());
         UsersListStorage usersListStorage = new XmlUsersListStorage(userPrefs.getUsersListFilePath());
         storage = new StorageManager(orderBookStorage, userPrefsStorage, usersListStorage, deliverymenListStorage);
 

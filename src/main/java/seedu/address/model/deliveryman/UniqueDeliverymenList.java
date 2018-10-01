@@ -14,7 +14,7 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 /**
  * A list of unique deliverymen
  */
-public class UniqueDeliverymenList implements Iterable<Deliveryman>{
+public class UniqueDeliverymenList implements Iterable<Deliveryman> {
     private final ObservableList<Deliveryman> internalList = FXCollections.observableArrayList();
 
     /**
@@ -106,6 +106,9 @@ public class UniqueDeliverymenList implements Iterable<Deliveryman>{
         return internalList.hashCode();
     }
 
+    /**
+     * Returns true if all the deliverymen in the list are unique.
+     */
     private boolean deliverymenAreUnique(List<Deliveryman> deliverymen) {
         for (int i = 0; i < deliverymen.size() - 1; i++) {
             for (int j = i + 1; j < deliverymen.size(); j++) {

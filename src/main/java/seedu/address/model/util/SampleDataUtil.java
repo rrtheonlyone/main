@@ -49,10 +49,10 @@ public class SampleDataUtil {
 
     public static Deliveryman[] getSampleDeliverymen() {
         return new Deliveryman[] {
-                new Deliveryman(new Name("Hoh Chi Kao")),
-                new Deliveryman(new Name("Tan Yin Jing")),
-                new Deliveryman(new Name("Rajul Rahesh")),
-                new Deliveryman(new Name("Manika Monuela"))
+            new Deliveryman(new Name("Hoh Chi Kao")),
+            new Deliveryman(new Name("Tan Yin Jing")),
+            new Deliveryman(new Name("Rajul Rahesh")),
+            new Deliveryman(new Name("Manika Monuela"))
         };
     }
 

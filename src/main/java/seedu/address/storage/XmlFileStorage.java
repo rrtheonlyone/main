@@ -77,8 +77,8 @@ public class XmlFileStorage {
     /**
      * Returns deliverymen list in the file or an empty deliverymen list
      */
-    public static XmlSerializableDeliverymenList loadDeliverymenDataFromSaveFile(Path file) throws DataConversionException,
-            FileNotFoundException {
+    public static XmlSerializableDeliverymenList loadDeliverymenDataFromSaveFile(Path file)
+        throws DataConversionException, FileNotFoundException {
         try {
             return XmlUtil.getDataFromFile(file, XmlSerializableDeliverymenList.class);
         } catch (JAXBException e) {

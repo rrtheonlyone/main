@@ -7,6 +7,9 @@ import java.util.Optional;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.model.deliveryman.DeliverymenList;
 
+/**
+ * Represents the Storage interface for DeliverymenList
+ */
 public interface DeliverymenListStorage {
     Path getDeliverymenListFilePath();
 

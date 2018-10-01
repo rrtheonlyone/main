@@ -5,9 +5,12 @@ import java.util.Objects;
 import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.person.Name;
 import seedu.address.model.deliveryman.Deliveryman;
+import seedu.address.model.person.Name;
 
+/**
+ * Represents the XML for storage of Deliveryman
+ */
 public class XmlAdaptedDeliveryman {
     public static final String MISSING_FIELD_MESSAGE_FORMAT = "Deliveryman's %s field is missing!";
 
@@ -37,7 +40,7 @@ public class XmlAdaptedDeliveryman {
      *
      * @throws IllegalValueException If there were any data constraints violated.
      */
-    public Deliveryman toModelType()  throws IllegalValueException {
+    public Deliveryman toModelType() throws IllegalValueException {
         if (name == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Name.class.getSimpleName()));
         }

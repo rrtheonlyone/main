@@ -1,9 +1,10 @@
 package seedu.address.model.deliveryman;
 
-import seedu.address.model.person.Name;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Objects;
+
+import seedu.address.model.person.Name;
 
 /**
  * Represents a Deliveryman in FoodZoom.
@@ -22,6 +23,9 @@ public class Deliveryman {
         return name;
     }
 
+    /**
+     * Returns if this is the same person as {@code other}
+     */
     public boolean isSamePerson(Deliveryman other) {
         if (other == this) {
             return true;

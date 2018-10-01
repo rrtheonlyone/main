@@ -35,6 +35,10 @@ public class DeliverymenList {
         this.deliverymenList.setDeliverymen(deliverymen);
     }
 
+    /**
+     * Resets the contents of the deliverymen list with the contents of {@code newData}.
+     * @param newData The DeliverymenList to get the contents from
+     */
     public void resetData(DeliverymenList newData) {
         requireNonNull(newData);
 
@@ -43,6 +47,10 @@ public class DeliverymenList {
 
     /// deliveryman-level operations
 
+    /**
+     * Returns true if the {@code DeliverymenList} contains a {@code deliveryman}
+     * @param deliveryman
+     */
     public boolean hasDeliveryman(Deliveryman deliveryman) {
         requireNonNull(deliveryman);
         return deliverymenList.contains(deliveryman);
@@ -52,6 +60,9 @@ public class DeliverymenList {
         deliverymenList.add(d);
     }
 
+    /**
+     * Replaces the {@code target} deliveryman with an {@code edited} deliveryman.
+     */
     public void updateDeliveryman(Deliveryman target, Deliveryman editedD) {
         requireNonNull(editedD);
 
