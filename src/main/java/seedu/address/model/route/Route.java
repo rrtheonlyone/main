@@ -59,7 +59,7 @@ public class Route {
      * Assign the route to a deliveryman.
      * @param deliveryman
      */
-    public void assignDeliveryman(Deliveryman deliveryman) {
+    public void setDeliveryman(Deliveryman deliveryman) {
         this.deliveryman = deliveryman;
     }
 
@@ -68,7 +68,6 @@ public class Route {
      * This defines a weaker notion of equality between two routes.
      */
     public boolean isSameRoute(Route otherRoute) {
-        return false;
         if (otherRoute == this) {
             return true;
         }
@@ -85,7 +84,6 @@ public class Route {
      */
     @Override
     public boolean equals(Object other) {
-        return false;
         if (other == this) {
             return true;
         }
