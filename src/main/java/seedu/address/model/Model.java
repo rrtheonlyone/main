@@ -97,4 +97,7 @@ public interface Model {
     ObservableList<User> getFilteredUsersList();
 
     boolean loginUser(User user);
+
+    /** Returns the UsersList */
+    ReadOnlyUsersList getUsersList();
 }
