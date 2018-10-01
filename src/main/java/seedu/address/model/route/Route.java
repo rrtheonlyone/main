@@ -1,5 +1,7 @@
 package seedu.address.model.route;
 
+import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+
 import java.util.Objects;
 
 import seedu.address.model.deliveryman.Deliveryman;
@@ -28,6 +30,14 @@ public class Route {
     public Route(Address source) {
         Objects.requireNonNull(source);
         this.source = source;
+    }
+
+    public Route(Address source, Deliveryman deliveryman, Order order) {
+        requireAllNonNull(source, deliveryman, order);
+        this.source = source;
+        this.destination = order.getAddress();
+        this.deliveryman = deliveryman;
+        this.order = order;
     }
 
     public Address getSource() {

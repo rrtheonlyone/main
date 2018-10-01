@@ -65,10 +65,7 @@ public class RouteBuilder {
     }
 
     public Route build() {
-        Route route = new Route(source);
-        route.addOrder(order);
-        route.setDeliveryman(deliveryman);
-        return route;
+        return new Route(source, deliveryman, order);
     }
 
 }
