@@ -179,6 +179,11 @@ public class ModelManager extends ComponentManager implements Model {
         return versionedUsersList.login(user);
     }
 
+    @Override
+    public ReadOnlyUsersList getUsersList() {
+        return versionedUsersList;
+    }
+
     /**
      * Raises an event to indicate the model has changed
      */
