@@ -13,7 +13,6 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.FileUtil;
-import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.ReadOnlyOrderBook;
 
 /**
@@ -21,7 +20,7 @@ import seedu.address.model.ReadOnlyOrderBook;
  */
 public class XmlOrderBookStorage implements OrderBookStorage {
 
-    private static final Logger logger = LogsCenter.getLogger(XmlAddressBookStorage.class);
+    private static final Logger logger = LogsCenter.getLogger(XmlOrderBookStorage.class);
 
     private Path filePath;
 
@@ -52,9 +51,9 @@ public class XmlOrderBookStorage implements OrderBookStorage {
             return Optional.empty();
         }
 
-        XmlSerializableAddressBook xmlAddressBook = XmlFileStorage.loadDataFromSaveFile(filePath);
+        XmlSerializableOrderBook xmlOrderBook = XmlFileStorage.loadDataFromSaveFile(filePath);
         try {
-            return Optional.of(xmlAddressBook.toModelType());
+            return Optional.of(xmlOrderBook.toModelType());
         } catch (IllegalValueException ive) {
             logger.info("Illegal values found in " + filePath + ": " + ive.getMessage());
             throw new DataConversionException(ive);
@@ -75,7 +74,7 @@ public class XmlOrderBookStorage implements OrderBookStorage {
         requireNonNull(filePath);
 
         FileUtil.createIfMissing(filePath);
-        XmlFileStorage.saveDataToFile(filePath, new XmlSerializableAddressBook(orderBook));
+        XmlFileStorage.saveDataToFile(filePath, new XmlSerializableOrderBook(orderBook));
     }
 
 }
