@@ -19,6 +19,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.ReadOnlyUsersList;
 import seedu.address.model.person.Person;
 import seedu.address.model.user.User;
 import seedu.address.testutil.PersonBuilder;
@@ -181,6 +182,11 @@ public class AddCommandTest {
 
         @Override
         public boolean loginUser(User user) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public ReadOnlyUsersList getUsersList() {
             throw new AssertionError("This method should not be called.");
         }
     }
