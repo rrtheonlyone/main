@@ -20,6 +20,7 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.person.Person;
+import seedu.address.model.user.User;
 import seedu.address.testutil.PersonBuilder;
 
 public class AddCommandTest {
@@ -150,6 +151,36 @@ public class AddCommandTest {
 
         @Override
         public void commitAddressBook() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public boolean hasUser(User user) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void addUser(User user) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void commitUsersList() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void updateFilteredUsersList(Predicate<User> predicate) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public ObservableList<User> getFilteredUsersList() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public boolean loginUser(User user) {
             throw new AssertionError("This method should not be called.");
         }
     }
