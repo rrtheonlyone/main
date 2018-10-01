@@ -9,7 +9,7 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
  */
 public class Food {
 
-    public static final String MESSAGE_NAME_CONSTRAINTS =
+    public static final String MESSAGE_FOOD_CONSTRAINTS =
             "Food should only contain alphanumeric characters and spaces, and it should not be blank";
 
     /*
@@ -27,7 +27,7 @@ public class Food {
      */
     public Food(String name) {
         requireNonNull(name);
-        checkArgument(isValidFood(name), MESSAGE_NAME_CONSTRAINTS);
+        checkArgument(isValidFood(name), MESSAGE_FOOD_CONSTRAINTS);
         foodName = name;
     }
 
