@@ -13,7 +13,7 @@ public class UsersListBuilder {
     private UsersList usersList;
 
     public UsersListBuilder() {
-        this.usersList = usersList;
+        usersList = new UsersList();
     }
 
     public UsersListBuilder(UsersList usersList) {
