@@ -6,38 +6,38 @@ import java.util.Set;
 
 import javafx.scene.Node;
 import javafx.scene.control.ListView;
-import seedu.address.model.person.Person;
+import seedu.address.model.order.Order;
 
 /**
- * Provides a handle for {@code PersonListPanel} containing the list of {@code PersonCard}.
+ * Provides a handle for {@code OrderListPanel} containing the list of {@code OrderCard}.
  */
-public class PersonListPanelHandle extends NodeHandle<ListView<Person>> {
-    public static final String PERSON_LIST_VIEW_ID = "#personListView";
+public class OrderListPanelHandle extends NodeHandle<ListView<Order>> {
+    public static final String ORDER_LIST_VIEW_ID = "#orderListView";
 
     private static final String CARD_PANE_ID = "#cardPane";
 
-    private Optional<Person> lastRememberedSelectedPersonCard;
+    private Optional<Order> lastRememberedSelectedOrderCard;
 
-    public PersonListPanelHandle(ListView<Person> personListPanelNode) {
-        super(personListPanelNode);
+    public OrderListPanelHandle(ListView<Order> orderListPanelNode) {
+        super(orderListPanelNode);
     }
 
     /**
-     * Returns a handle to the selected {@code PersonCardHandle}.
+     * Returns a handle to the selected {@code OrderCardHandle}.
      * A maximum of 1 item can be selected at any time.
      * @throws AssertionError if no card is selected, or more than 1 card is selected.
      * @throws IllegalStateException if the selected card is currently not in the scene graph.
      */
-    public PersonCardHandle getHandleToSelectedCard() {
-        List<Person> selectedPersonList = getRootNode().getSelectionModel().getSelectedItems();
+    public OrderCardHandle getHandleToSelectedCard() {
+        List<Order> selectedOrderList = getRootNode().getSelectionModel().getSelectedItems();
 
-        if (selectedPersonList.size() != 1) {
-            throw new AssertionError("Person list size expected 1.");
+        if (selectedOrderList.size() != 1) {
+            throw new AssertionError("Order list size expected 1.");
         }
 
         return getAllCardNodes().stream()
-                .map(PersonCardHandle::new)
-                .filter(handle -> handle.equals(selectedPersonList.get(0)))
+                .map(OrderCardHandle::new)
+                .filter(handle -> handle.equals(selectedOrderList.get(0)))
                 .findFirst()
                 .orElseThrow(IllegalStateException::new);
     }
@@ -53,7 +53,7 @@ public class PersonListPanelHandle extends NodeHandle<ListView<Person>> {
      * Returns true if a card is currently selected.
      */
     public boolean isAnyCardSelected() {
-        List<Person> selectedCardsList = getRootNode().getSelectionModel().getSelectedItems();
+        List<Order> selectedCardsList = getRootNode().getSelectionModel().getSelectedItems();
 
         if (selectedCardsList.size() > 1) {
             throw new AssertionError("Card list size expected 0 or 1.");
@@ -63,15 +63,15 @@ public class PersonListPanelHandle extends NodeHandle<ListView<Person>> {
     }
 
     /**
-     * Navigates the listview to display {@code person}.
+     * Navigates the listview to display {@code order}.
      */
-    public void navigateToCard(Person person) {
-        if (!getRootNode().getItems().contains(person)) {
-            throw new IllegalArgumentException("Person does not exist.");
+    public void navigateToCard(Order order) {
+        if (!getRootNode().getItems().contains(order)) {
+            throw new IllegalArgumentException("Order does not exist.");
         }
 
         guiRobot.interact(() -> {
-            getRootNode().scrollTo(person);
+            getRootNode().scrollTo(order);
         });
         guiRobot.pauseForHuman();
     }
@@ -91,25 +91,25 @@ public class PersonListPanelHandle extends NodeHandle<ListView<Person>> {
     }
 
     /**
-     * Selects the {@code PersonCard} at {@code index} in the list.
+     * Selects the {@code OrderCard} at {@code index} in the list.
      */
     public void select(int index) {
         getRootNode().getSelectionModel().select(index);
     }
 
     /**
-     * Returns the person card handle of a person associated with the {@code index} in the list.
+     * Returns the order card handle of an order associated with the {@code index} in the list.
      * @throws IllegalStateException if the selected card is currently not in the scene graph.
      */
-    public PersonCardHandle getPersonCardHandle(int index) {
+    public OrderCardHandle getOrderCardHandle(int index) {
         return getAllCardNodes().stream()
-                .map(PersonCardHandle::new)
+                .map(OrderCardHandle::new)
                 .filter(handle -> handle.equals(getPerson(index)))
                 .findFirst()
                 .orElseThrow(IllegalStateException::new);
     }
 
-    private Person getPerson(int index) {
+    private Order getOrder(int index) {
         return getRootNode().getItems().get(index);
     }
 
@@ -123,30 +123,30 @@ public class PersonListPanelHandle extends NodeHandle<ListView<Person>> {
     }
 
     /**
-     * Remembers the selected {@code PersonCard} in the list.
+     * Remembers the selected {@code OrderCard} in the list.
      */
-    public void rememberSelectedPersonCard() {
-        List<Person> selectedItems = getRootNode().getSelectionModel().getSelectedItems();
+    public void rememberSelectedOrderCard() {
+        List<Order> selectedItems = getRootNode().getSelectionModel().getSelectedItems();
 
         if (selectedItems.size() == 0) {
-            lastRememberedSelectedPersonCard = Optional.empty();
+            lastRememberedSelectedOrderCard = Optional.empty();
         } else {
-            lastRememberedSelectedPersonCard = Optional.of(selectedItems.get(0));
+            lastRememberedSelectedOrderCard = Optional.of(selectedItems.get(0));
         }
     }
 
     /**
-     * Returns true if the selected {@code PersonCard} is different from the value remembered by the most recent
-     * {@code rememberSelectedPersonCard()} call.
+     * Returns true if the selected {@code OrderCard} is different from the value remembered by the most recent
+     * {@code rememberSelectedOrderCard()} call.
      */
-    public boolean isSelectedPersonCardChanged() {
-        List<Person> selectedItems = getRootNode().getSelectionModel().getSelectedItems();
+    public boolean isSelectedOrderCardChanged() {
+        List<Order> selectedItems = getRootNode().getSelectionModel().getSelectedItems();
 
         if (selectedItems.size() == 0) {
-            return lastRememberedSelectedPersonCard.isPresent();
+            return lastRememberedSelectedOrderCard.isPresent();
         } else {
-            return !lastRememberedSelectedPersonCard.isPresent()
-                    || !lastRememberedSelectedPersonCard.get().equals(selectedItems.get(0));
+            return !lastRememberedSelectedOrderCard.isPresent()
+                    || !lastRememberedSelectedOrderCard.get().equals(selectedItems.get(0));
         }
     }
 
