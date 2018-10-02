@@ -1,7 +1,6 @@
 package systemtests;
 
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
-import static seedu.address.testutil.TypicalPersons.KEYWORD_MATCHING_MEIER;
 
 import org.junit.Test;
 
@@ -12,7 +11,7 @@ import seedu.address.logic.commands.UndoCommand;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 
-public class ClearCommandSystemTest extends AddressBookSystemTest {
+public class ClearCommandSystemTest extends OrderBookSystemTest {
 
     @Test
     public void clear() {
@@ -38,15 +37,9 @@ public class ClearCommandSystemTest extends AddressBookSystemTest {
 
         /* Case: selects first card in person list and clears address book -> cleared and no card selected */
         executeCommand(UndoCommand.COMMAND_WORD); // restores the original address book
-        selectPerson(Index.fromOneBased(1));
+        selectOrder(Index.fromOneBased(1));
         assertCommandSuccess(ClearCommand.COMMAND_WORD);
         assertSelectedCardDeselected();
-
-        /* Case: filters the person list before clearing -> entire address book cleared */
-        executeCommand(UndoCommand.COMMAND_WORD); // restores the original address book
-        showPersonsWithName(KEYWORD_MATCHING_MEIER);
-        assertCommandSuccess(ClearCommand.COMMAND_WORD);
-        assertSelectedCardUnchanged();
 
         /* Case: clear empty address book -> cleared */
         assertCommandSuccess(ClearCommand.COMMAND_WORD);
@@ -87,7 +80,7 @@ public class ClearCommandSystemTest extends AddressBookSystemTest {
      * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
      * Also verifies that the browser url, selected card and status bar remain unchanged, and the command box has the
      * error style.
-     * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
+     * @see OrderBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
      */
     private void assertCommandFailure(String command, String expectedResultMessage) {
         Model expectedModel = getModel();

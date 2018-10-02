@@ -132,9 +132,9 @@ public abstract class OrderBookSystemTest {
     }
 
     /**
-     * Displays all persons in the address book.
+     * Displays all order in the address book.
      */
-    protected void showAllPersons() {
+    protected void showAllOrders() {
         executeCommand(ListCommand.COMMAND_WORD);
         assertEquals(getModel().getOrderBook().getOrderList().size(), getModel().getFilteredOrderList().size());
     }
@@ -151,7 +151,7 @@ public abstract class OrderBookSystemTest {
     /**
      * Selects the order at {@code index} of the displayed list.
      */
-    protected void selectPerson(Index index) {
+    protected void selectOrder(Index index) {
         executeCommand(SelectCommand.COMMAND_WORD + " " + index.getOneBased());
         assertEquals(index.getZeroBased(), getOrderListPanel().getSelectedCardIndex());
     }
