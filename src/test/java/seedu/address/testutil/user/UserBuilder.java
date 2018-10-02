@@ -6,6 +6,11 @@ import seedu.address.model.person.Username;
 import seedu.address.model.user.Manager;
 import seedu.address.model.user.User;
 
+/**
+ * A utility class to help with building UsersList objects.
+ * Example usage: <br>
+ *     {@code UsersList usersList = new UserBuilder().withPerson("John", "Doe").build();}
+ */
 public class UserBuilder {
 
     public static final String DEFAULT_NAME = "Alice Pauline";
