@@ -3,7 +3,6 @@ package seedu.address.model;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.user.TypicalUsers.ALICE_MANAGER;
 import static seedu.address.testutil.user.TypicalUsers.getTypicalUsersList;
 
@@ -18,7 +17,6 @@ import org.junit.rules.ExpectedException;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.user.User;
 import seedu.address.testutil.user.UserBuilder;
