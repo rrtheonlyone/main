@@ -6,7 +6,6 @@ import java.util.Objects;
 
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Password;
-import seedu.address.model.person.Person;
 import seedu.address.model.person.Username;
 
 /**
