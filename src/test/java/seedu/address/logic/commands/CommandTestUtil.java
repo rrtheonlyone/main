@@ -76,6 +76,9 @@ public class CommandTestUtil {
     public static final String PASSWORD_DESC_ALICE = " " + PREFIX_PASSWORD + VALID_MANAGER_PASSWORD_ALICE;
     public static final String PASSWORD_DESC_BENSON = " " + PREFIX_PASSWORD + VALID_MANAGER_PASSWORD_BENSON;
 
+    public static final String INVALID_USERNAME_DESC = " " + PREFIX_USERNAME + "James&"; // '&' not allowed in usernames
+    public static final String INVALID_PASSWORD_DESC = " " + PREFIX_PASSWORD + "Jam&"; // '&' not allowed in password
+
     static {
         DESC_AMY = new EditPersonDescriptorBuilder().withName(VALID_NAME_AMY)
                 .withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY)
