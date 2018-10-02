@@ -47,18 +47,6 @@ public class DeliverymenListTest {
     }
 
     @Test
-    public void resetData_withDuplicatePersons_throwsDuplicatePersonException() {
-        // Two persons with the same identity fields
-        Deliveryman editedManika = new DeliverymanBuilder(MANIKA).withName(VALID_NAME_BOB)
-            .build();
-        List<Deliveryman> newDeliverymen = Arrays.asList(MANIKA, editedManika);
-        DeliverymenListStub newData = new DeliverymenListStub(newDeliverymen);
-
-        thrown.expect(DuplicatePersonException.class);
-        deliverymenList.resetData(newData);
-    }
-
-    @Test
     public void hasDeliveryman_nullPerson_throwsNullPointerException() {
         thrown.expect(NullPointerException.class);
         deliverymenList.hasDeliveryman(null);
