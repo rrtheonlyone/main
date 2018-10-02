@@ -9,6 +9,8 @@ import seedu.address.model.deliveryman.Deliveryman;
 import seedu.address.model.order.Order;
 import seedu.address.model.person.Address;
 import seedu.address.model.route.Route;
+import seedu.address.storage.XmlAdaptedOrder;
+import seedu.address.storage.deliveryman.XmlAdaptedDeliveryman;
 
 /**
  * JAXB-friendly version of the Route.
