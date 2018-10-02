@@ -95,20 +95,20 @@ public class SignUpCommandParserTest {
         // invalid name
         assertParseFailure(parser, INVALID_NAME_DESC
                 + USERNAME_DESC_ALICE
-                + PASSWORD_DESC_ALICE
-                , Name.MESSAGE_NAME_CONSTRAINTS);
+                + PASSWORD_DESC_ALICE,
+                Name.MESSAGE_NAME_CONSTRAINTS);
 
         // invalid username
         assertParseFailure(parser, NAME_DESC_ALICE
                         + INVALID_USERNAME_DESC
-                        + PASSWORD_DESC_ALICE
-                , Username.MESSAGE_USERNAME_CONSTRAINTS);
+                        + PASSWORD_DESC_ALICE,
+                Username.MESSAGE_USERNAME_CONSTRAINTS);
 
         // invalid password
         assertParseFailure(parser, NAME_DESC_ALICE
                         + USERNAME_DESC_ALICE
-                        + INVALID_PASSWORD_DESC
-                , Password.MESSAGE_PASSWORD_CONSTRAINTS);
+                        + INVALID_PASSWORD_DESC,
+                Password.MESSAGE_PASSWORD_CONSTRAINTS);
 
         // non-empty preamble
         assertParseFailure(parser, PREAMBLE_NON_EMPTY

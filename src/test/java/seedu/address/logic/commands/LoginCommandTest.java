@@ -24,12 +24,13 @@ import seedu.address.model.user.User;
 import seedu.address.testutil.user.UserBuilder;
 
 public class LoginCommandTest {
+    private static final CommandHistory EMPTY_COMMAND_HISTORY = new CommandHistory();
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
     private CommandHistory commandHistory = new CommandHistory();
+
     private Model model = new ModelManager(getTypicalAddressBook(), getTypicalUsersList(), new UserPrefs());
-    private static final CommandHistory EMPTY_COMMAND_HISTORY = new CommandHistory();
 
     @Test
     public void constructor_nullUser_throwsNullPointerException() {

@@ -29,12 +29,13 @@ import seedu.address.testutil.user.UserBuilder;
 
 public class SignUpCommandTest {
 
+    private static final CommandHistory EMPTY_COMMAND_HISTORY = new CommandHistory();
+
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
     private CommandHistory commandHistory = new CommandHistory();
     private Model model = new ModelManager(getTypicalAddressBook(), getTypicalUsersList(), new UserPrefs());
-    private static final CommandHistory EMPTY_COMMAND_HISTORY = new CommandHistory();
 
     @Test
     public void constructor_nullUser_throwsNullPointerException() {
@@ -43,7 +44,7 @@ public class SignUpCommandTest {
     }
 
     @Test
-    public void execute_userAcceptedByModel_SignUpSuccessful() throws Exception {
+    public void execute_userAcceptedByModel_signUpSuccessful() throws Exception {
         User validUser = new UserBuilder(HOON_MANAGER).build();
 
         CommandResult commandResult = new SignUpCommand((Manager) validUser).execute(model, commandHistory);
@@ -53,7 +54,7 @@ public class SignUpCommandTest {
     }
 
     @Test
-    public void execute_duplicateUser_SignUpFailure() throws Exception {
+    public void execute_duplicateUser_signUpFailure() throws Exception {
         User duplicateUser = new UserBuilder(BENSON_MANAGER).build();
         thrown.expect(CommandException.class);
         thrown.expectMessage(SignUpCommand.MESSAGE_DUPLICATE_USER);
