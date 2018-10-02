@@ -65,7 +65,7 @@ public class SelectCommandTest {
 
         Index outOfBoundsIndex = INDEX_SECOND_ORDER;
         // ensures that outOfBoundIndex is still in bounds of order book list
-        assertTrue(outOfBoundsIndex.getZeroBased() < model.getOrderBook().getPersonList().size());
+        assertTrue(outOfBoundsIndex.getZeroBased() < model.getOrderBook().getOrderList().size());
 
         assertExecutionFailure(outOfBoundsIndex, Messages.MESSAGE_INVALID_ORDER_DISPLAYED_INDEX);
     }

@@ -15,7 +15,6 @@ import seedu.address.model.OrderBook;
 import seedu.address.model.Model;
 import seedu.address.model.order.NameContainsKeywordsPredicate;
 import seedu.address.model.order.Order;
-import seedu.address.testutil.EditPersonDescriptorBuilder;
 
 /**
  * Contains helper methods for testing commands.

@@ -8,6 +8,7 @@ import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_ORDER;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_ORDER;
 import static seedu.address.testutil.TypicalOrders.getTypicalOrderBook;
+import static seedu.address.logic.commands.CommandTestUtil.showOrderAtIndex;
 
 import org.junit.Test;
 
@@ -52,7 +53,7 @@ public class DeleteCommandTest {
 
     @Test
     public void execute_validIndexFilteredList_success() {
-        showPersonAtIndex(model, INDEX_FIRST_ORDER);
+        showOrderAtIndex(model, INDEX_FIRST_ORDER);
 
         Order orderToDelete = model.getFilteredOrderList().get(INDEX_FIRST_ORDER.getZeroBased());
         DeleteCommand deleteCommand = new DeleteCommand(INDEX_FIRST_ORDER);
@@ -62,14 +63,14 @@ public class DeleteCommandTest {
         Model expectedModel = new ModelManager(model.getOrderBook(), new UserPrefs());
         expectedModel.deleteOrder(orderToDelete);
         expectedModel.commitOrderBook();
-        showNoPerson(expectedModel);
+        showNoOrder(expectedModel);
 
         assertCommandSuccess(deleteCommand, model, commandHistory, expectedMessage, expectedModel);
     }
 
     @Test
     public void execute_invalidIndexFilteredList_throwsCommandException() {
-        showPersonAtIndex(model, INDEX_FIRST_ORDER);
+        showOrderAtIndex(model, INDEX_FIRST_ORDER);
 
         Index outOfBoundIndex = INDEX_SECOND_ORDER;
         // ensures that outOfBoundIndex is still in bounds of address book list
@@ -125,7 +126,7 @@ public class DeleteCommandTest {
         DeleteCommand deleteCommand = new DeleteCommand(INDEX_FIRST_ORDER);
         Model expectedModel = new ModelManager(model.getOrderBook(), new UserPrefs());
 
-        showPersonAtIndex(model, INDEX_SECOND_ORDER);
+        showOrderAtIndex(model, INDEX_SECOND_ORDER);
         Order orderToDelete = model.getFilteredOrderList().get(INDEX_FIRST_ORDER.getZeroBased());
         expectedModel.deleteOrder(orderToDelete);
         expectedModel.commitOrderBook();
@@ -168,7 +169,7 @@ public class DeleteCommandTest {
     /**
      * Updates {@code model}'s filtered list to show no one.
      */
-    private void showNoPerson(Model model) {
+    private void showNoOrder(Model model) {
         model.updateFilteredOrderList(p -> false);
 
         assertTrue(model.getFilteredOrderList().isEmpty());

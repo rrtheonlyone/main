@@ -21,7 +21,6 @@ import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyOrderBook;
 import seedu.address.model.order.Order;
 import seedu.address.testutil.OrderBuilder;
-import seedu.address.testutil.PersonBuilder;
 
 public class AddCommandTest {
 
@@ -167,7 +166,7 @@ public class AddCommandTest {
         }
 
         @Override
-        public boolean hasOrdern(Order order) {
+        public boolean hasOrder(Order order) {
             requireNonNull(order);
             return this.order.isSameOrder(order);
         }
