@@ -11,7 +11,7 @@ We are a team based in the http://www.comp.nus.edu.sg[School of Computing, Natio
 == Project Team
 
 === Rahul
-image::rrtheonlyone.jpg[width="150", align="left"]
+image::rrtheonlyone.png[width="150", align="left"]
 {empty}[https://github.com/rrtheonlyone[github]] [https://www.linkedin.com/in/rahul-rajesh-979919110/[portfolio]]
 
 Roles: Integration, code quality
@@ -19,7 +19,7 @@ Roles: Integration, code quality
 '''
 
 === Julius Sander
-image::juxd.jpg[width="150", align="left"]
+image::juxd.png[width="150", align="left"]
 {empty}[https://github.com/juxd[github]] [<<juliussander#, portfolio>>]
 
 Roles: Code quality and testing +
@@ -27,7 +27,7 @@ Roles: Code quality and testing +
 '''
 
 === Monika Manuela
-image::monmanuela.jpg[width="150", align="left"]
+image::monmanuela.png[width="150", align="left"]
 {empty}[http://github.com/yijinl[github]] [https://www.linkedin.com/in/monika-manuela-hengki-a9383a54[portfolio]]
 
 Roles: Team lead, UI +
@@ -35,7 +35,7 @@ Roles: Team lead, UI +
 '''
 
 === Koh Chi Hao
-image::kohchihao.jpg[width="150", align="left"]
+image::kohchihao.png[width="150", align="left"]
 {empty}[https://github.com/kohchihao[github]] [https://www.kohchihao.com/[portfolio]]
 
 Roles: Scheduling and tracking deliverables and deadlines +
@@ -43,7 +43,7 @@ Roles: Scheduling and tracking deliverables and deadlines +
 '''
 
 === Tan Jin Ying
-image::jinyingtan.jpg[width="150", align="left"]
+image::jinyingtan.png[width="150", align="left"]
 {empty}[https://github.com/jinyingtan[github]] [https://www.tanjinying.com/[portfolio]]
 
 Role: Documentation, UI +
