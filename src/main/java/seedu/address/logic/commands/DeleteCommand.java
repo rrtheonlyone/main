@@ -16,7 +16,7 @@ import seedu.address.model.order.Order;
  */
 public class DeleteCommand extends Command {
 
-    public static final String COMMAND_WORD = "/order delete";
+    public static final String COMMAND_WORD = "delete";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Deletes the order identified by the index number used in the displayed order list.\n"

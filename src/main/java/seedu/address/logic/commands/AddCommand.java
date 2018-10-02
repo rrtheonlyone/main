@@ -16,14 +16,14 @@ import seedu.address.model.order.Order;
  */
 public class AddCommand extends Command {
 
-    public static final String COMMAND_WORD = "/order add";
+    public static final String COMMAND_WORD = "add";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds an order to the order book. "
             + "Parameters: "
             + PREFIX_NAME + "NAME "
             + PREFIX_PHONE + "PHONE "
             + PREFIX_ADDRESS + "ADDRESS "
-            + "[" + PREFIX_FOOD + "TAG]...\n"
+            + PREFIX_FOOD + "FOOD...\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_NAME + "John Doe "
             + PREFIX_PHONE + "98765432 "
