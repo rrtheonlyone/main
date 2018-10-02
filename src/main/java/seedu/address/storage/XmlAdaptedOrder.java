@@ -37,7 +37,12 @@ public class XmlAdaptedOrder {
         this.name = name;
         this.phone = phone;
         this.address = address;
-        this.food = new ArrayList<>(food);
+
+        if (food == null) {
+            this.food = new ArrayList<>();
+        } else {
+            this.food = new ArrayList<>(food);
+        }
     }
 
     /**
