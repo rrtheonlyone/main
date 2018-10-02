@@ -7,6 +7,9 @@ import java.util.List;
 import seedu.address.model.UsersList;
 import seedu.address.model.user.User;
 
+/**
+ * A utility class containing a list of {@code User} objects to be used in tests.
+ */
 public class TypicalUsers {
     public static final User ALICE_MANAGER = new UserBuilder()
             .withName("Alice Pauline")
