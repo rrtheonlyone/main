@@ -38,7 +38,8 @@ public class DeleteCommandTest {
 
         String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_ORDER_SUCCESS, orderToDelete);
 
-        ModelManager expectedModel = new ModelManager(model.getOrderBook(), model.getUsersList(), model.getDeliverymenList(), new UserPrefs());
+        ModelManager expectedModel = new ModelManager(model.getOrderBook(), model.getUsersList(),
+                model.getDeliverymenList(), new UserPrefs());
         expectedModel.deleteOrder(orderToDelete);
         expectedModel.commitOrderBook();
 

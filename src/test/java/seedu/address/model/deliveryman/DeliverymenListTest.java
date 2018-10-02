@@ -3,14 +3,11 @@ package seedu.address.model.deliveryman;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static seedu.address.testutil.TypicalDeliverymen.MANIKA;
 import static seedu.address.testutil.TypicalDeliverymen.getTypicalDeliverymenList;
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -18,8 +15,6 @@ import org.junit.rules.ExpectedException;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import seedu.address.model.person.exceptions.DuplicatePersonException;
-import seedu.address.testutil.DeliverymanBuilder;
 
 public class DeliverymenListTest {
 

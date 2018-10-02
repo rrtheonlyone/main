@@ -1,7 +1,7 @@
 package seedu.address.testutil;
 
-import seedu.address.model.deliveryman.DeliverymenList;
 import seedu.address.model.deliveryman.Deliveryman;
+import seedu.address.model.deliveryman.DeliverymenList;
 
 /**
  * A utility class to help with building DeliverymenList objects.

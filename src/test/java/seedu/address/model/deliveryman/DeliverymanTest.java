@@ -2,7 +2,6 @@ package seedu.address.model.deliveryman;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static seedu.address.testutil.TypicalDeliverymen.CHIKAO;
 import static seedu.address.testutil.TypicalDeliverymen.YINJING;

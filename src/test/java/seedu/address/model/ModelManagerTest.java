@@ -56,7 +56,8 @@ public class ModelManagerTest {
     public void equals() {
         OrderBook orderBook = new OrderBookBuilder().withOrder(ALICE).withOrder(BENSON).build();
         OrderBook differentOrderBook = new OrderBook();
-        DeliverymenList deliverymenList = new DeliverymenListBuilder().withDeliveryman(RAJUL).withDeliveryman(CHIKAO).build();
+        DeliverymenList deliverymenList = new DeliverymenListBuilder().withDeliveryman(RAJUL).withDeliveryman(CHIKAO)
+                .build();
         DeliverymenList differentDeliverymenList = new DeliverymenList();
         UserPrefs userPrefs = new UserPrefs();
 

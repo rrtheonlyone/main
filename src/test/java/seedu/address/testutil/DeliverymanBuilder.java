@@ -2,8 +2,10 @@ package seedu.address.testutil;
 
 import seedu.address.model.deliveryman.Deliveryman;
 import seedu.address.model.person.Name;
-import seedu.address.model.util.SampleDataUtil;
 
+/**
+ * A utility class to help build a deliveryman
+ */
 public class DeliverymanBuilder {
     public static final String DEFAULT_NAME = "Deliver E";
 
