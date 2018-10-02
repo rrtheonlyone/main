@@ -26,7 +26,7 @@ public class OrderCardHandle extends NodeHandle<Node> {
     private final Label phoneLabel;
     private final List<Label> foodLabels;
 
-    public PersonCardHandle(Node cardNode) {
+    public OrderCardHandle(Node cardNode) {
         super(cardNode);
 
         idLabel = getChildNode(ID_FIELD_ID);

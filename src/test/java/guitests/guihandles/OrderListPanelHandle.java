@@ -104,7 +104,7 @@ public class OrderListPanelHandle extends NodeHandle<ListView<Order>> {
     public OrderCardHandle getOrderCardHandle(int index) {
         return getAllCardNodes().stream()
                 .map(OrderCardHandle::new)
-                .filter(handle -> handle.equals(getPerson(index)))
+                .filter(handle -> handle.equals(getOrder(index)))
                 .findFirst()
                 .orElseThrow(IllegalStateException::new);
     }
