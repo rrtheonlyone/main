@@ -74,7 +74,7 @@ public class OrderBookTest {
     @Test
     public void hasOrder_orderInOrderBook_returnsTrue() {
         orderBook.addOrder(ALICE);
-        assertTrue(orderBook.hasPerson(ALICE));
+        assertTrue(orderBook.hasOrder(ALICE));
     }
 
     @Test
