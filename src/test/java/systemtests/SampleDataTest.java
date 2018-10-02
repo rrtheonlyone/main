@@ -44,7 +44,7 @@ public class SampleDataTest extends OrderBookSystemTest {
     }
 
     @Test
-    public void addressBook_dataFileDoesNotExist_loadSampleData() {
+    public void orderBook_dataFileDoesNotExist_loadSampleData() {
         Order[] expectedList = SampleDataUtil.getSampleOrders();
         assertListMatching(getOrderListPanel(), expectedList);
     }

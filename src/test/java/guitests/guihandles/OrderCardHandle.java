@@ -18,7 +18,7 @@ public class OrderCardHandle extends NodeHandle<Node> {
     private static final String NAME_FIELD_ID = "#name";
     private static final String ADDRESS_FIELD_ID = "#address";
     private static final String PHONE_FIELD_ID = "#phone";
-    private static final String FOOD_FIELD_ID = "#food";
+    private static final String FOOD_FIELD_ID = "#foodList";
 
     private final Label idLabel;
     private final Label nameLabel;
