@@ -119,7 +119,7 @@ public class MainApp extends Application {
             initialRouteListData = new RouteList();
         }
 
-        return new ModelManager(initialData, userPrefs);
+        return new ModelManager(initialData, initialRouteListData, userPrefs);
     }
 
     private void initLogging(Config config) {
