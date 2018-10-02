@@ -51,4 +51,11 @@ public class SignUpCommand extends Command {
         model.commitUsersList();
         return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
     }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof SignUpCommand // instanceof handles nulls
+                && toAdd.equals(((SignUpCommand) other).toAdd));
+    }
 }
