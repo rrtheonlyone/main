@@ -20,6 +20,8 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.person.Person;
+import seedu.address.model.route.ReadOnlyRouteList;
+import seedu.address.model.route.Route;
 import seedu.address.testutil.PersonBuilder;
 
 public class AddCommandTest {
@@ -150,6 +152,71 @@ public class AddCommandTest {
 
         @Override
         public void commitAddressBook() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void resetRouteData(ReadOnlyRouteList newData) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public ReadOnlyRouteList getRouteList() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public boolean hasRoute(Route route) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void deleteRoute(Route target) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void addRoute(Route route) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void updateRoute(Route target, Route editedRoute) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public ObservableList<Route> getFilteredRouteList() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void updateFilteredRouteList(Predicate<Route> predicate) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public boolean canUndoRouteList() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public boolean canRedoRouteList() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void undoRouteList() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void redoRouteList() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void commitRouteList() {
             throw new AssertionError("This method should not be called.");
         }
     }
