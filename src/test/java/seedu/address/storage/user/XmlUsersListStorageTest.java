@@ -3,8 +3,6 @@ package seedu.address.storage.user;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static seedu.address.testutil.user.TypicalUsers.ALICE_MANAGER;
-import static seedu.address.testutil.user.TypicalUsers.BENSON_MANAGER;
-import static seedu.address.testutil.user.TypicalUsers.CARL_MANAGER;
 import static seedu.address.testutil.user.TypicalUsers.HOON_MANAGER;
 import static seedu.address.testutil.user.TypicalUsers.IDA_MANAGER;
 import static seedu.address.testutil.user.TypicalUsers.getTypicalUsersList;
@@ -19,7 +17,6 @@ import org.junit.rules.ExpectedException;
 import org.junit.rules.TemporaryFolder;
 
 import seedu.address.commons.exceptions.DataConversionException;
-import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyUsersList;
 import seedu.address.model.UsersList;
 
