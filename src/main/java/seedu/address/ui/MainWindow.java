@@ -121,7 +121,7 @@ public class MainWindow extends UiPart<Stage> {
     void fillInnerParts() {
         browserPanel = new BrowserPanel();
         browserPlaceholder.getChildren().add(browserPanel.getRoot());
-        
+
         orderListPanel = new OrderListPanel(logic.getFilteredOrderList());
         orderListPanelPlaceholder.getChildren().add(orderListPanel.getRoot());
 
