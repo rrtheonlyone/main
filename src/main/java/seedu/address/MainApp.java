@@ -32,6 +32,8 @@ import seedu.address.storage.Storage;
 import seedu.address.storage.StorageManager;
 import seedu.address.storage.UserPrefsStorage;
 import seedu.address.storage.XmlAddressBookStorage;
+import seedu.address.storage.route.RouteListStorage;
+import seedu.address.storage.route.XmlRouteListStorage;
 import seedu.address.ui.Ui;
 import seedu.address.ui.UiManager;
 
@@ -63,7 +65,8 @@ public class MainApp extends Application {
         UserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(config.getUserPrefsFilePath());
         userPrefs = initPrefs(userPrefsStorage);
         AddressBookStorage addressBookStorage = new XmlAddressBookStorage(userPrefs.getAddressBookFilePath());
-        storage = new StorageManager(addressBookStorage, userPrefsStorage);
+        RouteListStorage routeListStorage = new XmlRouteListStorage(userPrefs.getRouteListFilePath());
+        storage = new StorageManager(addressBookStorage, routeListStorage, userPrefsStorage);
 
         initLogging(config);
 

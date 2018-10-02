@@ -10,10 +10,13 @@ import com.google.common.eventbus.Subscribe;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.commons.events.model.RouteListChangedEvent;
 import seedu.address.commons.events.storage.DataSavingExceptionEvent;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.route.ReadOnlyRouteList;
+import seedu.address.storage.route.RouteListStorage;
 
 /**
  * Manages storage of AddressBook data in local storage.
@@ -22,12 +25,15 @@ public class StorageManager extends ComponentManager implements Storage {
 
     private static final Logger logger = LogsCenter.getLogger(StorageManager.class);
     private AddressBookStorage addressBookStorage;
+    private RouteListStorage routeListStorage;
     private UserPrefsStorage userPrefsStorage;
 
 
-    public StorageManager(AddressBookStorage addressBookStorage, UserPrefsStorage userPrefsStorage) {
+    public StorageManager(AddressBookStorage addressBookStorage, RouteListStorage routeListStorage,
+                          UserPrefsStorage userPrefsStorage) {
         super();
         this.addressBookStorage = addressBookStorage;
+        this.routeListStorage = routeListStorage;
         this.userPrefsStorage = userPrefsStorage;
     }
 
@@ -85,6 +91,47 @@ public class StorageManager extends ComponentManager implements Storage {
         logger.info(LogsCenter.getEventHandlingLogMessage(event, "Local data changed, saving to file"));
         try {
             saveAddressBook(event.data);
+        } catch (IOException e) {
+            raise(new DataSavingExceptionEvent(e));
+        }
+    }
+
+    // ================ RouteList methods ==============================
+
+    @Override
+    public Path getRouteListFilePath() {
+        return routeListStorage.getRouteListFilePath();
+    }
+
+    @Override
+    public Optional<ReadOnlyRouteList> readRouteList() throws DataConversionException, IOException {
+        return readRouteList(routeListStorage.getRouteListFilePath());
+    }
+
+    @Override
+    public Optional<ReadOnlyRouteList> readRouteList(Path filePath) throws DataConversionException, IOException {
+        logger.fine("Attempting to read data from file: " + filePath);
+        return routeListStorage.readRouteList(filePath);
+    }
+
+    @Override
+    public void saveRouteList(ReadOnlyRouteList routeList) throws IOException {
+        saveRouteList(routeList, routeListStorage.getRouteListFilePath());
+    }
+
+    @Override
+    public void saveRouteList(ReadOnlyRouteList routeList, Path filePath) throws IOException {
+        logger.fine("Attempting to write to data file: " + filePath);
+        routeListStorage.saveRouteList(routeList, filePath);
+    }
+
+
+    @Override
+    @Subscribe
+    public void handleRouteListChangedEvent(RouteListChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event, "Local data changed, saving to file"));
+        try {
+            saveRouteList(event.data);
         } catch (IOException e) {
             raise(new DataSavingExceptionEvent(e));
         }
