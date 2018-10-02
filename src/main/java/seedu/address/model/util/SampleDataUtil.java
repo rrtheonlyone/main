@@ -11,6 +11,9 @@ import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
+import seedu.address.model.route.ReadOnlyRouteList;
+import seedu.address.model.route.Route;
+import seedu.address.model.route.RouteList;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -40,12 +43,31 @@ public class SampleDataUtil {
         };
     }
 
+    public static Route[] getSampleRoutes() {
+        Order[] sampleOrders = getSampleOrders();
+        Route[] sampleRoutes = new Route[sampleOrders.length];
+        for (int i = 0; i < sampleOrders.length; i++) {
+            Route r = new Route(new Address("12 Clementi Road"));
+            r.addOrder(sampleOrders[i]);
+            sampleRoutes[i] = r;
+        }
+        return sampleRoutes;
+    }
+
     public static ReadOnlyAddressBook getSampleAddressBook() {
         AddressBook sampleAb = new AddressBook();
         for (Person samplePerson : getSamplePersons()) {
             sampleAb.addPerson(samplePerson);
         }
         return sampleAb;
+    }
+
+    public static ReadOnlyRouteList getSampleRouteList() {
+        RouteList sampleRl = new RouteList();
+        for (Route sampleRoute : getSampleRoutes()) {
+            sampleRl.addRoute(sampleRoute);
+        }
+        return sampleRl;
     }
 
     /**

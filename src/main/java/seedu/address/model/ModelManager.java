@@ -12,7 +12,12 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.commons.events.model.RouteListChangedEvent;
 import seedu.address.model.person.Person;
+import seedu.address.model.route.ReadOnlyRouteList;
+import seedu.address.model.route.Route;
+import seedu.address.model.route.RouteList;
+import seedu.address.model.route.VersionedRouteList;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -21,23 +26,29 @@ public class ModelManager extends ComponentManager implements Model {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
 
     private final VersionedAddressBook versionedAddressBook;
+    private final VersionedRouteList versionedRouteList;
     private final FilteredList<Person> filteredPersons;
+    private final FilteredList<Route> filteredRoute;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
      */
-    public ModelManager(ReadOnlyAddressBook addressBook, UserPrefs userPrefs) {
+    public ModelManager(ReadOnlyAddressBook addressBook, ReadOnlyRouteList routeList, UserPrefs userPrefs) {
         super();
-        requireAllNonNull(addressBook, userPrefs);
+        requireAllNonNull(addressBook, routeList, userPrefs);
 
-        logger.fine("Initializing with address book: " + addressBook + " and user prefs " + userPrefs);
+        logger.fine("Initializing with address book: " + addressBook
+                + " and route list " + routeList
+                + " and user prefs " + userPrefs);
 
         versionedAddressBook = new VersionedAddressBook(addressBook);
+        versionedRouteList = new VersionedRouteList(routeList);
         filteredPersons = new FilteredList<>(versionedAddressBook.getPersonList());
+        filteredRoute = new FilteredList<>(versionedRouteList.getRouteList());
     }
 
     public ModelManager() {
-        this(new AddressBook(), new UserPrefs());
+        this(new AddressBook(), new RouteList(), new UserPrefs());
     }
 
     @Override
@@ -47,13 +58,29 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
+    public void resetRouteData(ReadOnlyRouteList newData) {
+        versionedRouteList.resetData(newData);
+        indicateRouteListChanged();
+    }
+
+    @Override
     public ReadOnlyAddressBook getAddressBook() {
         return versionedAddressBook;
+    }
+
+    @Override
+    public ReadOnlyRouteList getRouteList() {
+        return versionedRouteList;
     }
 
     /** Raises an event to indicate the model has changed */
     private void indicateAddressBookChanged() {
         raise(new AddressBookChangedEvent(versionedAddressBook));
+    }
+
+    /** Raises an event to indicate the route model has changed */
+    private void indicateRouteListChanged() {
+        raise(new RouteListChangedEvent(versionedRouteList));
     }
 
     @Override
@@ -83,6 +110,32 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    // ======================== Route related methods =========================
+
+    @Override
+    public boolean hasRoute(Route route) {
+        requireNonNull(route);
+        return versionedRouteList.hasRoute(route);
+    }
+
+    @Override
+    public void deleteRoute(Route target) {
+        versionedRouteList.removeRoute(target);
+        indicateRouteListChanged();
+    }
+
+    @Override
+    public void addRoute(Route route) {
+        versionedRouteList.addRoute(route);
+        indicateRouteListChanged();
+    }
+
+    @Override
+    public void updateRoute(Route target, Route editedRoute) {
+        versionedRouteList.updateRoute(target, editedRoute);
+        indicateRouteListChanged();
+    }
+
     //=========== Filtered Person List Accessors =============================================================
 
     /**
@@ -98,6 +151,23 @@ public class ModelManager extends ComponentManager implements Model {
     public void updateFilteredPersonList(Predicate<Person> predicate) {
         requireNonNull(predicate);
         filteredPersons.setPredicate(predicate);
+    }
+
+    //=========== Filtered Route List Accessors =============================================================
+
+    /**
+     * Returns an unmodifiable view of the list of {@code Route} backed by the internal list of
+     * {@code versionedRouteList}
+     */
+    @Override
+    public ObservableList<Route> getFilteredRouteList() {
+        return FXCollections.unmodifiableObservableList(filteredRoute);
+    }
+
+    @Override
+    public void updateFilteredRouteList(Predicate<Route> predicate) {
+        requireNonNull(predicate);
+        filteredRoute.setPredicate(predicate);
     }
 
     //=========== Undo/Redo =================================================================================
@@ -130,6 +200,33 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
+    public boolean canUndoRouteList() {
+        return versionedRouteList.canUndo();
+    }
+
+    @Override
+    public boolean canRedoRouteList() {
+        return versionedRouteList.canRedo();
+    }
+
+    @Override
+    public void undoRouteList() {
+        versionedRouteList.undo();
+        indicateRouteListChanged();
+    }
+
+    @Override
+    public void redoRouteList() {
+        versionedRouteList.redo();
+        indicateRouteListChanged();
+    }
+
+    @Override
+    public void commitRouteList() {
+        versionedRouteList.commit();
+    }
+
+    @Override
     public boolean equals(Object obj) {
         // short circuit if same object
         if (obj == this) {
@@ -144,7 +241,9 @@ public class ModelManager extends ComponentManager implements Model {
         // state check
         ModelManager other = (ModelManager) obj;
         return versionedAddressBook.equals(other.versionedAddressBook)
-                && filteredPersons.equals(other.filteredPersons);
+                && filteredPersons.equals(other.filteredPersons)
+                && versionedRouteList.equals(other.versionedRouteList)
+                && filteredRoute.equals(other.filteredRoute);
     }
 
 }
