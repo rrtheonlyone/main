@@ -23,5 +23,27 @@ public class Manager extends User {
     public Manager(Username username, Password password) {
         super(username, password);
     }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == this) {
+            return true;
+        }
+
+        if (!(other instanceof Manager)) {
+            return false;
+        }
+
+        Manager otherPerson = (Manager) other;
+        if (otherPerson.getName() == null) {
+            return otherPerson.getUsername().equals(getUsername())
+                    && otherPerson.getPassword().equals(getPassword());
+        } else {
+            return otherPerson.getName().equals(getName())
+                    && otherPerson.getUsername().equals(getUsername())
+                    && otherPerson.getPassword().equals(getPassword());
+        }
+
+    }
 }
 
