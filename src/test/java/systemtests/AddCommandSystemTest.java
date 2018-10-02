@@ -21,14 +21,11 @@ import seedu.address.model.Model;
 import seedu.address.model.order.Food;
 import seedu.address.model.order.Order;
 import seedu.address.model.person.Address;
-import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
-import seedu.address.model.tag.Tag;
 import seedu.address.testutil.OrderBuilder;
 import seedu.address.testutil.OrderUtil;
-import seedu.address.testutil.PersonBuilder;
 
 public class AddCommandSystemTest extends OrderBookSystemTest {
 
@@ -43,7 +40,7 @@ public class AddCommandSystemTest extends OrderBookSystemTest {
          */
         Order toAdd = AMY;
         String command = "   " + AddCommand.COMMAND_WORD + "  " + NAME_DESC_AMY + "  " + PHONE_DESC_AMY + " "
-                + EMAIL_DESC_AMY + "   " + ADDRESS_DESC_AMY + "   " + FOOD_DESC_RICE + " ";
+                 + "   " + ADDRESS_DESC_AMY + "   " + FOOD_DESC_BURGER + " ";
         assertCommandSuccess(command, toAdd);
 
         /* Case: undo adding Amy to the list -> Amy deleted */
@@ -59,11 +56,11 @@ public class AddCommandSystemTest extends OrderBookSystemTest {
 
         /* Case: add an order with all fields same as another order in the order book except name -> added */
         toAdd = new OrderBuilder(AMY).withName(VALID_NAME_BOB).build();
-        command = AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
-                + FOOD_DESC_RICE;
+        command = AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_AMY + ADDRESS_DESC_AMY
+                + FOOD_DESC_BURGER;
         assertCommandSuccess(command, toAdd);
 
-        /* Case: add a person with all fields same as another person in the address book except phone
+        /* Case: add an order with all fields same as another order in the address book except phone
          * -> added
          */
         toAdd = new OrderBuilder(AMY).withPhone(VALID_PHONE_BOB).build();
@@ -76,17 +73,16 @@ public class AddCommandSystemTest extends OrderBookSystemTest {
 
         /* Case: add an order, command with parameters in random order -> added */
         toAdd = BOB;
-        command = AddCommand.COMMAND_WORD + FOOD_DESC_BURGER + PHONE_DESC_BOB + ADDRESS_DESC_BOB + NAME_DESC_BOB
-                + FOOD_DESC_RICE;
+        command = AddCommand.COMMAND_WORD + FOOD_DESC_RICE + PHONE_DESC_BOB + ADDRESS_DESC_BOB + NAME_DESC_BOB;
         assertCommandSuccess(command, toAdd);
 
-        /* Case: add a person, missing tags -> added */
+        /* Case: add an order -> added */
         assertCommandSuccess(HOON);
 
 
         /* ------------------------ Perform add operation while an order card is selected --------------------------- */
 
-        /* Case: selects first card in the person list, add a person -> added, card selection remains unchanged */
+        /* Case: selects first card in the order list, add an order -> added, card selection remains unchanged */
         selectOrder(Index.fromOneBased(1));
         assertCommandSuccess(CARL);
 
@@ -96,30 +92,25 @@ public class AddCommandSystemTest extends OrderBookSystemTest {
         command = OrderUtil.getAddCommand(HOON);
         assertCommandFailure(command, AddCommand.MESSAGE_DUPLICATE_ORDER);
 
-        /* Case: add a duplicate order except with different phone -> rejected */
-        toAdd = new OrderBuilder(HOON).withPhone(VALID_PHONE_BOB).build();
-        command = OrderUtil.getAddCommand(toAdd);
-        assertCommandFailure(command, AddCommand.MESSAGE_DUPLICATE_ORDER);
-
         /* Case: add a duplicate order except with different address -> rejected */
         toAdd = new OrderBuilder(HOON).withAddress(VALID_ADDRESS_BOB).build();
         command = OrderUtil.getAddCommand(toAdd);
         assertCommandFailure(command, AddCommand.MESSAGE_DUPLICATE_ORDER);
 
         /* Case: missing name -> rejected */
-        command = AddCommand.COMMAND_WORD + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + FOOD_DESC_RICE;
+        command = AddCommand.COMMAND_WORD + PHONE_DESC_AMY + ADDRESS_DESC_AMY + FOOD_DESC_BURGER;
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
 
         /* Case: missing phone -> rejected */
-        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + FOOD_DESC_RICE;
+        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + ADDRESS_DESC_AMY + FOOD_DESC_BURGER;
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
 
         /* Case: missing address -> rejected */
-        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + FOOD_DESC_RICE;
+        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + FOOD_DESC_BURGER;
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
 
         /* Case: missing food -> rejected */
-        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + ADDRESS_DESC_AMY + EMAIL_DESC_AMY;
+        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + ADDRESS_DESC_AMY;
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
 
         /* Case: invalid keyword -> rejected */
@@ -127,18 +118,17 @@ public class AddCommandSystemTest extends OrderBookSystemTest {
         assertCommandFailure(command, Messages.MESSAGE_UNKNOWN_COMMAND);
 
         /* Case: invalid name -> rejected */
-        command = AddCommand.COMMAND_WORD + INVALID_NAME_DESC + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY;
+        command = AddCommand.COMMAND_WORD + INVALID_NAME_DESC + PHONE_DESC_AMY + ADDRESS_DESC_AMY + FOOD_DESC_BURGER;
         assertCommandFailure(command, Name.MESSAGE_NAME_CONSTRAINTS);
 
         /* Case: invalid phone -> rejected */
-        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + INVALID_PHONE_DESC + EMAIL_DESC_AMY + ADDRESS_DESC_AMY;
+        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + INVALID_PHONE_DESC +  ADDRESS_DESC_AMY + FOOD_DESC_BURGER;
         assertCommandFailure(command, Phone.MESSAGE_PHONE_CONSTRAINTS);
 
         /* Case: invalid address -> rejected */
-        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + INVALID_ADDRESS_DESC;
+        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + INVALID_ADDRESS_DESC + FOOD_DESC_BURGER;
         assertCommandFailure(command, Address.MESSAGE_ADDRESS_CONSTRAINTS);
 
-        assertCommandFailure(command, Food.MESSAGE_FOOD_CONSTRAINTS);
     }
 
     /**
@@ -196,8 +186,8 @@ public class AddCommandSystemTest extends OrderBookSystemTest {
      * 4. {@code Storage} and {@code PersonListPanel} remain unchanged.<br>
      * 5. Browser url, selected card and status bar remain unchanged.<br>
      * Verifications 1, 3 and 4 are performed by
-     * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
-     * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
+     * {@code OrderBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
+     * @see OrderBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
      */
     private void assertCommandFailure(String command, String expectedResultMessage) {
         Model expectedModel = getModel();
