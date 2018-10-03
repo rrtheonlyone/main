@@ -10,6 +10,7 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_ORDER;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_ORDER;
 import static seedu.address.testutil.TypicalIndexes.INDEX_THIRD_ORDER;
 import static seedu.address.testutil.TypicalOrders.getTypicalOrderBook;
+import static seedu.address.testutil.user.TypicalUsers.getTypicalUsersList;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -30,8 +31,8 @@ public class SelectCommandTest {
     @Rule
     public final EventsCollectorRule eventsCollectorRule = new EventsCollectorRule();
 
-    private Model model = new ModelManager(getTypicalOrderBook(), new UserPrefs());
-    private Model expectedModel = new ModelManager(getTypicalOrderBook(), new UserPrefs());
+    private Model model = new ModelManager(getTypicalOrderBook(), getTypicalUsersList(), new UserPrefs());
+    private Model expectedModel = new ModelManager(getTypicalOrderBook(), getTypicalUsersList(), new UserPrefs());
     private CommandHistory commandHistory = new CommandHistory();
 
     @Test

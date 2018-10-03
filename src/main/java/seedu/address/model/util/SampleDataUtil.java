@@ -6,12 +6,17 @@ import java.util.stream.Collectors;
 
 import seedu.address.model.OrderBook;
 import seedu.address.model.ReadOnlyOrderBook;
+import seedu.address.model.ReadOnlyUsersList;
+import seedu.address.model.UsersList;
 import seedu.address.model.order.Food;
 import seedu.address.model.order.Order;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Name;
+import seedu.address.model.person.Password;
 import seedu.address.model.person.Phone;
-import seedu.address.model.tag.Tag;
+import seedu.address.model.person.Username;
+import seedu.address.model.user.Manager;
+import seedu.address.model.user.User;
 
 /**
  * Contains utility methods for populating {@code OrderBook} with sample data.
@@ -44,19 +49,27 @@ public class SampleDataUtil {
         OrderBook sampleAb = new OrderBook();
         for (Order sampleOrder : getSampleOrders()) {
             sampleAb.addOrder(sampleOrder);
+
         }
         return sampleAb;
     }
 
-    /**
-     * Returns a tag set containing the list of strings given.
-     */
-    public static Set<Tag> getTagSet(String... strings) {
-        return Arrays.stream(strings)
-                .map(Tag::new)
-                .collect(Collectors.toSet());
+    public static User[] getSampleUsers() {
+        return new User[] {
+            new Manager(new Name("Alice Pauline"), new Username("alicepauline"), new Password("alicepauline01")),
+            new Manager(new Name("Benson Meier"), new Username("bensonmeier"), new Password("bensonmeier02")),
+            new Manager(new Name("Carl Kurz"), new Username("carlkurz"), new Password("carlkurz03")),
+            new Manager(new Name("Hoon Meier"), new Username("hoonmeier"), new Password("hoonmeier04"))
+        };
     }
 
+    public static ReadOnlyUsersList getSampleUsersList() {
+        UsersList usersList = new UsersList();
+        for (User user : getSampleUsers()) {
+            usersList.addUser(user);
+        }
+        return usersList;
+    }
 
     /**
      * Returns a food set containing the list of strings given.
