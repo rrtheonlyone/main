@@ -11,9 +11,9 @@ import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.util.FileUtil;
 import seedu.address.commons.util.XmlUtil;
-import seedu.address.model.OrderBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
+import seedu.address.model.OrderBook;
 import seedu.address.model.ReadOnlyOrderBook;
 import seedu.address.model.UserPrefs;
 import seedu.address.storage.UserPrefsStorage;
@@ -48,6 +48,10 @@ public class TestApp extends MainApp {
             createDataFileWithData(new XmlSerializableOrderBook(this.initialDataSupplier.get()),
                     this.saveFileLocation);
         }
+    }
+
+    public static void main(String[] args) {
+        launch(args);
     }
 
     @Override
@@ -100,10 +104,6 @@ public class TestApp extends MainApp {
     @Override
     public void start(Stage primaryStage) {
         ui.start(primaryStage);
-    }
-
-    public static void main(String[] args) {
-        launch(args);
     }
 
     /**

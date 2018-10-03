@@ -2,9 +2,9 @@ package seedu.address.storage;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static seedu.address.testutil.TypicalOrders.ALICE;
 import static seedu.address.testutil.TypicalOrders.HOON;
 import static seedu.address.testutil.TypicalOrders.IDA;
-import static seedu.address.testutil.TypicalOrders.ALICE;
 import static seedu.address.testutil.TypicalOrders.getTypicalOrderBook;
 
 import java.io.IOException;

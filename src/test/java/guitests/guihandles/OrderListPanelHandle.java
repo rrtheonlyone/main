@@ -25,7 +25,8 @@ public class OrderListPanelHandle extends NodeHandle<ListView<Order>> {
     /**
      * Returns a handle to the selected {@code OrderCardHandle}.
      * A maximum of 1 item can be selected at any time.
-     * @throws AssertionError if no card is selected, or more than 1 card is selected.
+     *
+     * @throws AssertionError        if no card is selected, or more than 1 card is selected.
      * @throws IllegalStateException if the selected card is currently not in the scene graph.
      */
     public OrderCardHandle getHandleToSelectedCard() {
@@ -99,6 +100,7 @@ public class OrderListPanelHandle extends NodeHandle<ListView<Order>> {
 
     /**
      * Returns the order card handle of an order associated with the {@code index} in the list.
+     *
      * @throws IllegalStateException if the selected card is currently not in the scene graph.
      */
     public OrderCardHandle getOrderCardHandle(int index) {

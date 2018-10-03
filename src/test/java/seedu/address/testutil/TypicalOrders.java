@@ -1,20 +1,20 @@
 package seedu.address.testutil;
 
-import seedu.address.model.OrderBook;
-import seedu.address.model.order.Order;
-
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_FOOD_BURGER;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_FOOD_RICE;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_FOOD_BURGER;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_FOOD_RICE;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import seedu.address.model.OrderBook;
+import seedu.address.model.order.Order;
 
 /**
  * A utility class containing a list of {@code Order} objects to be used in tests.
@@ -55,7 +55,8 @@ public class TypicalOrders {
             .build();
 
 
-    private TypicalOrders() {} // prevents instantiation
+    private TypicalOrders() {
+    } // prevents instantiation
 
     /**
      * Returns an {@code OrderBook} with all the typical orders.

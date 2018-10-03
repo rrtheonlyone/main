@@ -26,6 +26,7 @@ import seedu.address.testutil.OrderBuilder;
 import seedu.address.testutil.OrderUtil;
 
 public class OrderBookParserTest {
+
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 

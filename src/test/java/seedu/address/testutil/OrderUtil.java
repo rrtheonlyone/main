@@ -1,12 +1,12 @@
 package seedu.address.testutil;
 
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_FOOD;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.model.order.Order;
-import seedu.address.model.order.Food;
-
-import java.util.Set;
-
-import static seedu.address.logic.parser.CliSyntax.*;
 
 /**
  * A utility class for Order.

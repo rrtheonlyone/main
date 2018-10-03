@@ -1,14 +1,25 @@
 package systemtests;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.commands.CommandTestUtil.*;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.address.logic.commands.CommandTestUtil.ADDRESS_DESC_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.ADDRESS_DESC_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.FOOD_DESC_BURGER;
+import static seedu.address.logic.commands.CommandTestUtil.FOOD_DESC_RICE;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_ADDRESS_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_NAME_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_PHONE_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.PHONE_DESC_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.PHONE_DESC_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
 import static seedu.address.testutil.TypicalOrders.ALICE;
 import static seedu.address.testutil.TypicalOrders.AMY;
 import static seedu.address.testutil.TypicalOrders.BOB;
 import static seedu.address.testutil.TypicalOrders.CARL;
 import static seedu.address.testutil.TypicalOrders.HOON;
-import static seedu.address.testutil.TypicalOrders.IDA;
 
 import org.junit.Test;
 
@@ -18,7 +29,6 @@ import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.model.Model;
-import seedu.address.model.order.Food;
 import seedu.address.model.order.Order;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Name;
@@ -40,7 +50,7 @@ public class AddCommandSystemTest extends OrderBookSystemTest {
          */
         Order toAdd = AMY;
         String command = "   " + AddCommand.COMMAND_WORD + "  " + NAME_DESC_AMY + "  " + PHONE_DESC_AMY + " "
-                 + "   " + ADDRESS_DESC_AMY + "   " + FOOD_DESC_BURGER + " ";
+                + "   " + ADDRESS_DESC_AMY + "   " + FOOD_DESC_BURGER + " ";
         assertCommandSuccess(command, toAdd);
 
         /* Case: undo adding Amy to the list -> Amy deleted */
@@ -122,7 +132,7 @@ public class AddCommandSystemTest extends OrderBookSystemTest {
         assertCommandFailure(command, Name.MESSAGE_NAME_CONSTRAINTS);
 
         /* Case: invalid phone -> rejected */
-        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + INVALID_PHONE_DESC +  ADDRESS_DESC_AMY + FOOD_DESC_BURGER;
+        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + INVALID_PHONE_DESC + ADDRESS_DESC_AMY + FOOD_DESC_BURGER;
         assertCommandFailure(command, Phone.MESSAGE_PHONE_CONSTRAINTS);
 
         /* Case: invalid address -> rejected */
@@ -143,6 +153,7 @@ public class AddCommandSystemTest extends OrderBookSystemTest {
      * 6. Status bar's sync status changes.<br>
      * Verifications 1, 3 and 4 are performed by
      * {@code OrderBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
+     *
      * @see OrderBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
      */
     private void assertCommandSuccess(Order toAdd) {
@@ -152,6 +163,7 @@ public class AddCommandSystemTest extends OrderBookSystemTest {
     /**
      * Performs the same verification as {@code assertCommandSuccess(Order)}. Executes {@code command}
      * instead.
+     *
      * @see AddCommandSystemTest#assertCommandSuccess(Person)
      */
     private void assertCommandSuccess(String command, Order toAdd) {
@@ -168,6 +180,7 @@ public class AddCommandSystemTest extends OrderBookSystemTest {
      * 1. Result display box displays {@code expectedResultMessage}.<br>
      * 2. {@code Storage} and {@code PersonListPanel} equal to the corresponding components in
      * {@code expectedModel}.<br>
+     *
      * @see AddCommandSystemTest#assertCommandSuccess(String, Order)
      */
     private void assertCommandSuccess(String command, Model expectedModel, String expectedResultMessage) {
@@ -187,6 +200,7 @@ public class AddCommandSystemTest extends OrderBookSystemTest {
      * 5. Browser url, selected card and status bar remain unchanged.<br>
      * Verifications 1, 3 and 4 are performed by
      * {@code OrderBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
+     *
      * @see OrderBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
      */
     private void assertCommandFailure(String command, String expectedResultMessage) {

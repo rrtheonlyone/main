@@ -241,9 +241,9 @@ public class VersionedOrderBookTest {
      * and states after {@code versionedAddressBook#currentStatePointer} is equal to {@code expectedStatesAfterPointer}.
      */
     private void assertOrderBookListStatus(VersionedOrderBook versionedOrderBook,
-                                             List<ReadOnlyOrderBook> expectedStatesBeforePointer,
-                                             ReadOnlyOrderBook expectedCurrentState,
-                                             List<ReadOnlyOrderBook> expectedStatesAfterPointer) {
+                                           List<ReadOnlyOrderBook> expectedStatesBeforePointer,
+                                           ReadOnlyOrderBook expectedCurrentState,
+                                           List<ReadOnlyOrderBook> expectedStatesAfterPointer) {
         // check state currently pointing at is correct
         assertEquals(new OrderBook(versionedOrderBook), expectedCurrentState);
 

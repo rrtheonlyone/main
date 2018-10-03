@@ -1,12 +1,14 @@
 package seedu.address.testutil;
 
-import seedu.address.model.person.*;
-import seedu.address.model.order.Food;
-import seedu.address.model.order.Order;
-import seedu.address.model.util.SampleDataUtil;
-
 import java.util.HashSet;
 import java.util.Set;
+
+import seedu.address.model.order.Food;
+import seedu.address.model.order.Order;
+import seedu.address.model.person.Address;
+import seedu.address.model.person.Name;
+import seedu.address.model.person.Phone;
+import seedu.address.model.util.SampleDataUtil;
 
 /**
  * A utility class to help with building Order objects.
@@ -51,7 +53,7 @@ public class OrderBuilder {
     /**
      * Parses the {@code food} into a {@code Set<Food>} and set it to the {@code Order} that we are building.
      */
-    public OrderBuilder withFood(String ... food) {
+    public OrderBuilder withFood(String... food) {
         this.food = SampleDataUtil.getFoodSet(food);
         return this;
     }

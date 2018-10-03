@@ -19,8 +19,8 @@ import seedu.address.model.OrderBook;
 import seedu.address.storage.XmlAdaptedFood;
 import seedu.address.storage.XmlAdaptedOrder;
 import seedu.address.storage.XmlSerializableOrderBook;
-import seedu.address.testutil.OrderBuilder;
 import seedu.address.testutil.OrderBookBuilder;
+import seedu.address.testutil.OrderBuilder;
 import seedu.address.testutil.TestUtil;
 
 public class XmlUtilTest {
@@ -141,5 +141,6 @@ public class XmlUtilTest {
      * objects.
      */
     @XmlRootElement(name = "order")
-    private static class XmlAdaptedOrderWithRootElement extends XmlAdaptedOrder {}
+    private static class XmlAdaptedOrderWithRootElement extends XmlAdaptedOrder {
+    }
 }

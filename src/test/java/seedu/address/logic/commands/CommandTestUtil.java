@@ -2,7 +2,12 @@ package seedu.address.logic.commands;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import static seedu.address.logic.parser.CliSyntax.*;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_FOOD;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -11,8 +16,8 @@ import java.util.List;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.OrderBook;
 import seedu.address.model.Model;
+import seedu.address.model.OrderBook;
 import seedu.address.model.order.NameContainsKeywordsPredicate;
 import seedu.address.model.order.Order;
 
@@ -44,8 +49,8 @@ public class CommandTestUtil {
     public static final String ADDRESS_DESC_BOB = " " + PREFIX_ADDRESS + VALID_ADDRESS_BOB;
     public static final String TAG_DESC_FRIEND = " " + PREFIX_TAG + VALID_TAG_FRIEND;
     public static final String TAG_DESC_HUSBAND = " " + PREFIX_TAG + VALID_TAG_HUSBAND;
-    public static final String FOOD_DESC_BURGER = " "  + PREFIX_FOOD + VALID_FOOD_BURGER;
-    public static final String FOOD_DESC_RICE = " "  + PREFIX_FOOD + VALID_FOOD_RICE;
+    public static final String FOOD_DESC_BURGER = " " + PREFIX_FOOD + VALID_FOOD_BURGER;
+    public static final String FOOD_DESC_RICE = " " + PREFIX_FOOD + VALID_FOOD_RICE;
 
     public static final String INVALID_NAME_DESC = " " + PREFIX_NAME + "James&"; // '&' not allowed in names
     public static final String INVALID_PHONE_DESC = " " + PREFIX_PHONE + "911a"; // 'a' not allowed in phones
@@ -63,7 +68,7 @@ public class CommandTestUtil {
      * - the {@code actualCommandHistory} remains unchanged.
      */
     public static void assertCommandSuccess(Command command, Model actualModel, CommandHistory actualCommandHistory,
-            String expectedMessage, Model expectedModel) {
+                                            String expectedMessage, Model expectedModel) {
         CommandHistory expectedCommandHistory = new CommandHistory(actualCommandHistory);
         try {
             CommandResult result = command.execute(actualModel, actualCommandHistory);
@@ -83,7 +88,7 @@ public class CommandTestUtil {
      * - {@code actualCommandHistory} remains unchanged.
      */
     public static void assertCommandFailure(Command command, Model actualModel, CommandHistory actualCommandHistory,
-            String expectedMessage) {
+                                            String expectedMessage) {
         // we are unable to defensively copy the model for comparison later, so we can
         // only do so by copying its components.
         OrderBook expectedOrderBook = new OrderBook(actualModel.getOrderBook());

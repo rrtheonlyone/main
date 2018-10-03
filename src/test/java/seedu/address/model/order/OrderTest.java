@@ -2,14 +2,15 @@ package seedu.address.model.order;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static seedu.address.testutil.TypicalOrders.ALICE;
-import static seedu.address.testutil.TypicalOrders.BENSON;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_FOOD_BURGER;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_FOOD_BURGER;
+import static seedu.address.testutil.TypicalOrders.ALICE;
+import static seedu.address.testutil.TypicalOrders.BENSON;
 
 import org.junit.Test;
+
 import seedu.address.testutil.OrderBuilder;
 
 public class OrderTest {

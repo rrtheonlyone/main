@@ -1,9 +1,9 @@
 package seedu.address.logic.commands;
 
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
+import static seedu.address.logic.commands.CommandTestUtil.showOrderAtIndex;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_ORDER;
 import static seedu.address.testutil.TypicalOrders.getTypicalOrderBook;
-import static seedu.address.logic.commands.CommandTestUtil.showOrderAtIndex;
 
 import org.junit.Before;
 import org.junit.Test;

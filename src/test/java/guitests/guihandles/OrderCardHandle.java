@@ -73,7 +73,7 @@ public class OrderCardHandle extends NodeHandle<Node> {
                 && getAddress().equals(order.getAddress().value)
                 && getPhone().equals(order.getPhone().value)
                 && ImmutableMultiset.copyOf(getFood()).equals(ImmutableMultiset.copyOf(order.getFood().stream()
-                        .map(food -> food.foodName)
-                        .collect(Collectors.toList())));
+                .map(food -> food.foodName)
+                .collect(Collectors.toList())));
     }
 }
