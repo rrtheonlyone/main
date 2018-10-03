@@ -11,9 +11,9 @@ import org.junit.Test;
 
 import guitests.GuiRobot;
 import guitests.guihandles.HelpWindowHandle;
-import seedu.address.logic.commands.order.DeleteCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.order.SelectCommand;
+import seedu.address.logic.commands.order.DeleteCommand;
 import seedu.address.ui.BrowserPanel;
 import seedu.address.ui.StatusBarFooter;
 

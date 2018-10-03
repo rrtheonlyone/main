@@ -1,4 +1,4 @@
-package seedu.address.logic.parser;
+package seedu.address.logic.parser.order;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
@@ -8,7 +8,6 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_ORDER;
 import org.junit.Test;
 
 import seedu.address.logic.commands.order.SelectCommand;
-import seedu.address.logic.parser.order.SelectCommandParser;
 
 /**
  * Test scope: similar to {@code DeleteCommandParserTest}.
