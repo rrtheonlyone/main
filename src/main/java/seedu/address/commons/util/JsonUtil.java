@@ -130,7 +130,7 @@ public class JsonUtil {
 
         /**
          * Gets the logging level that matches loggingLevelString
-         * <p>
+         *
          * Returns null if there are no matches
          */
         private Level getLoggingLevel(String loggingLevelString) {
