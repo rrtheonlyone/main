@@ -43,7 +43,7 @@ public class FindCommandParser implements Parser<OrderCommand> {
             String[] nameKeywords = name.split("\\s+");
             return new FindCommand(new OrderNameContainsKeywordPredicate(Arrays.asList(nameKeywords)));
         } else if (argMultimap.getValue(PREFIX_PHONE).isPresent()) {
-            String phone = argMultimap.getValue(PREFIX_PHONE).get().trim().replaceAll("\\s+", "");
+            String phone = argMultimap.getValue(PREFIX_PHONE).get();
             return new FindCommand(new OrderPhoneContainsKeywordPredicate(phone));
         } else {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
