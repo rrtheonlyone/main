@@ -52,6 +52,14 @@ public class SampleDataUtil {
             sampleRoutes[i] = r;
         }
         return sampleRoutes;
+        return new Route[] {
+                new Route(new Address("Blk 30 Geylang Street 29, #06-40")),
+                new Route(new Address("Blk 30 Lorong 3 Serangoon Gardens, #07-18")),
+                new Route(new Address("Blk 11 Ang Mo Kio Street 74, #11-04")),
+                new Route(new Address("Blk 436 Serangoon Gardens Street 26, #16-43")),
+                new Route(new Address("Blk 47 Tampines Street 20, #17-35")),
+                new Route(new Address("Blk 45 Aljunied Street 85, #11-31"))
+        };
     }
 
     public static ReadOnlyAddressBook getSampleAddressBook() {

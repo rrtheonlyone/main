@@ -43,7 +43,7 @@ public class XmlSerializableRouteList {
      * Converts this route list into the model's {@code RouteList} object.
      *
      * @throws IllegalValueException if there were any data constraints violated or duplicates in the
-     * {@code XmlAdaptedPerson}.
+     * {@code XmlAdaptedRoute}.
      */
     public RouteList toModelType() throws IllegalValueException {
         RouteList routeList = new RouteList();

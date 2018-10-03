@@ -4,9 +4,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static seedu.address.testutil.TypicalRoutes.ALICE;
-import static seedu.address.testutil.TypicalRoutes.BENNY;
-import static seedu.address.testutil.TypicalRoutes.CHARLIE;
+import static seedu.address.testutil.TypicalRoutes.ANGMOKIO;
+import static seedu.address.testutil.TypicalRoutes.BEDOK;
+import static seedu.address.testutil.TypicalRoutes.CHINATOWN;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -18,9 +18,9 @@ import seedu.address.testutil.RouteListBuilder;
 
 public class VersionedRouteListTest {
 
-    private final ReadOnlyRouteList routeListWithAlice = new RouteListBuilder().withRoute(ALICE).build();
-    private final ReadOnlyRouteList routeListWithBenny = new RouteListBuilder().withRoute(BENNY).build();
-    private final ReadOnlyRouteList routeListWithCharlie = new RouteListBuilder().withRoute(CHARLIE).build();
+    private final ReadOnlyRouteList routeListWithAlice = new RouteListBuilder().withRoute(ANGMOKIO).build();
+    private final ReadOnlyRouteList routeListWithBenny = new RouteListBuilder().withRoute(BEDOK).build();
+    private final ReadOnlyRouteList routeListWithCharlie = new RouteListBuilder().withRoute(CHINATOWN).build();
     private final ReadOnlyRouteList emptyRouteList = new RouteListBuilder().build();
 
     @Test

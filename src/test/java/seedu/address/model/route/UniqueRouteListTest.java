@@ -4,11 +4,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_ORDER_MAGGIE;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
-import static seedu.address.testutil.TypicalRoutes.ALICE;
-import static seedu.address.testutil.TypicalRoutes.BENNY;
+import static seedu.address.testutil.TypicalRoutes.ANGMOKIO;
+import static seedu.address.testutil.TypicalRoutes.BEDOK;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -36,21 +33,13 @@ public class UniqueRouteListTest {
 
     @Test
     public void contains_routeNotInList_returnsFalse() {
-        assertFalse(uniqueRouteList.contains(ALICE));
+        assertFalse(uniqueRouteList.contains(ANGMOKIO));
     }
 
     @Test
     public void contains_routeInList_returnsTrue() {
-        uniqueRouteList.add(ALICE);
-        assertTrue(uniqueRouteList.contains(ALICE));
-    }
-
-    @Test
-    public void contains_routeWithSameIdentityFieldsInList_returnsTrue() {
-        uniqueRouteList.add(ALICE);
-        Route editedAlice = new RouteBuilder(ALICE)
-                .withDeliveryman(VALID_NAME_BOB).build();
-        assertTrue(uniqueRouteList.contains(editedAlice));
+        uniqueRouteList.add(ANGMOKIO);
+        assertTrue(uniqueRouteList.contains(ANGMOKIO));
     }
 
     @Test
@@ -61,64 +50,64 @@ public class UniqueRouteListTest {
 
     @Test
     public void add_duplicateRoute_throwsDuplicateRouteException() {
-        uniqueRouteList.add(ALICE);
+        uniqueRouteList.add(ANGMOKIO);
         thrown.expect(DuplicateRouteException.class);
-        uniqueRouteList.add(ALICE);
+        uniqueRouteList.add(ANGMOKIO);
     }
 
     @Test
     public void setRoute_nullTargetRoute_throwsNullPointerException() {
         thrown.expect(NullPointerException.class);
-        uniqueRouteList.setRoute(null, ALICE);
+        uniqueRouteList.setRoute(null, ANGMOKIO);
     }
 
     @Test
     public void setRoute_nullEditedRoute_throwsNullPointerException() {
         thrown.expect(NullPointerException.class);
-        uniqueRouteList.setRoute(ALICE, null);
+        uniqueRouteList.setRoute(ANGMOKIO, null);
     }
 
     @Test
     public void setRoute_targetRouteNotInList_throwsRouteNotFoundException() {
         thrown.expect(RouteNotFoundException.class);
-        uniqueRouteList.setRoute(ALICE, ALICE);
+        uniqueRouteList.setRoute(ANGMOKIO, ANGMOKIO);
     }
 
     @Test
     public void setRoute_editedRouteIsSameRoute_success() {
-        uniqueRouteList.add(ALICE);
-        uniqueRouteList.setRoute(ALICE, ALICE);
+        uniqueRouteList.add(ANGMOKIO);
+        uniqueRouteList.setRoute(ANGMOKIO, ANGMOKIO);
         UniqueRouteList expectedUniqueRouteList = new UniqueRouteList();
-        expectedUniqueRouteList.add(ALICE);
+        expectedUniqueRouteList.add(ANGMOKIO);
         assertEquals(expectedUniqueRouteList, uniqueRouteList);
     }
 
     @Test
     public void setRoute_editedRouteHasSameIdentity_success() {
-        uniqueRouteList.add(ALICE);
-        Route editedAlice = new RouteBuilder(ALICE)
-                .withOrder(VALID_NAME_BOB, VALID_PHONE_BOB, VALID_ADDRESS_BOB, VALID_ORDER_MAGGIE).build();
-        uniqueRouteList.setRoute(ALICE, editedAlice);
+        uniqueRouteList.add(ANGMOKIO);
+        Route editedAngmokio = new RouteBuilder(ANGMOKIO)
+                .withDestination(VALID_ADDRESS_BOB).build();
+        uniqueRouteList.setRoute(ANGMOKIO, editedAngmokio);
         UniqueRouteList expectedUniqueRouteList = new UniqueRouteList();
-        expectedUniqueRouteList.add(editedAlice);
+        expectedUniqueRouteList.add(editedAngmokio);
         assertEquals(expectedUniqueRouteList, uniqueRouteList);
     }
 
     @Test
     public void setRoute_editedRouteHasDifferentIdentity_success() {
-        uniqueRouteList.add(ALICE);
-        uniqueRouteList.setRoute(ALICE, BENNY);
+        uniqueRouteList.add(ANGMOKIO);
+        uniqueRouteList.setRoute(ANGMOKIO, BEDOK);
         UniqueRouteList expectedUniqueRouteList = new UniqueRouteList();
-        expectedUniqueRouteList.add(BENNY);
+        expectedUniqueRouteList.add(BEDOK);
         assertEquals(expectedUniqueRouteList, uniqueRouteList);
     }
 
     @Test
     public void setRoute_editedRouteHasNonUniqueIdentity_throwsDuplicateRouteException() {
-        uniqueRouteList.add(ALICE);
-        uniqueRouteList.add(BENNY);
+        uniqueRouteList.add(ANGMOKIO);
+        uniqueRouteList.add(BEDOK);
         thrown.expect(DuplicateRouteException.class);
-        uniqueRouteList.setRoute(ALICE, BENNY);
+        uniqueRouteList.setRoute(ANGMOKIO, BEDOK);
     }
 
     @Test
@@ -130,13 +119,13 @@ public class UniqueRouteListTest {
     @Test
     public void remove_routeDoesNotExist_throwsRouteNotFoundException() {
         thrown.expect(RouteNotFoundException.class);
-        uniqueRouteList.remove(ALICE);
+        uniqueRouteList.remove(ANGMOKIO);
     }
 
     @Test
     public void remove_existingRoute_removesRoute() {
-        uniqueRouteList.add(ALICE);
-        uniqueRouteList.remove(ALICE);
+        uniqueRouteList.add(ANGMOKIO);
+        uniqueRouteList.remove(ANGMOKIO);
         UniqueRouteList expectedUniqueRouteList = new UniqueRouteList();
         assertEquals(expectedUniqueRouteList, uniqueRouteList);
     }
@@ -149,9 +138,9 @@ public class UniqueRouteListTest {
 
     @Test
     public void setRoutes_uniqueRouteList_replacesOwnListWithProvidedUniqueRouteList() {
-        uniqueRouteList.add(ALICE);
+        uniqueRouteList.add(ANGMOKIO);
         UniqueRouteList expectedUniqueRouteList = new UniqueRouteList();
-        expectedUniqueRouteList.add(BENNY);
+        expectedUniqueRouteList.add(BEDOK);
         uniqueRouteList.setRoutes(expectedUniqueRouteList);
         assertEquals(expectedUniqueRouteList, uniqueRouteList);
     }
@@ -164,17 +153,17 @@ public class UniqueRouteListTest {
 
     @Test
     public void setRoutes_list_replacesOwnListWithProvidedList() {
-        uniqueRouteList.add(ALICE);
-        List<Route> routeList = Collections.singletonList(BENNY);
+        uniqueRouteList.add(ANGMOKIO);
+        List<Route> routeList = Collections.singletonList(BEDOK);
         uniqueRouteList.setRoutes(routeList);
         UniqueRouteList expectedUniqueRouteList = new UniqueRouteList();
-        expectedUniqueRouteList.add(BENNY);
+        expectedUniqueRouteList.add(BEDOK);
         assertEquals(expectedUniqueRouteList, uniqueRouteList);
     }
 
     @Test
     public void setRoutes_listWithDuplicateRoutes_throwsDuplicateRouteException() {
-        List<Route> listWithDuplicateRoutes = Arrays.asList(ALICE, ALICE);
+        List<Route> listWithDuplicateRoutes = Arrays.asList(ANGMOKIO, ANGMOKIO);
         thrown.expect(DuplicateRouteException.class);
         uniqueRouteList.setRoutes(listWithDuplicateRoutes);
     }

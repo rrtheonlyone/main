@@ -3,8 +3,8 @@ package seedu.address.model.route;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
-import static seedu.address.testutil.TypicalRoutes.ALICE;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
+import static seedu.address.testutil.TypicalRoutes.ANGMOKIO;
 import static seedu.address.testutil.TypicalRoutes.getTypicalRouteList;
 
 import java.util.Arrays;
@@ -47,17 +47,6 @@ public class RouteListTest {
     }
 
     @Test
-    public void resetData_withDuplicateRoutes_throwsDuplicateRouteException() {
-        // Two routes with the same identity fields
-        Route editedAlice = new RouteBuilder(ALICE).withDeliveryman(VALID_NAME_BOB).build();
-        List<Route> newRoutes = Arrays.asList(ALICE, editedAlice);
-        RouteListStub newData = new RouteListStub(newRoutes);
-
-        thrown.expect(DuplicateRouteException.class);
-        routeList.resetData(newData);
-    }
-
-    @Test
     public void hasRoute_nullRoute_throwsNullPointerException() {
         thrown.expect(NullPointerException.class);
         routeList.hasRoute(null);
@@ -65,19 +54,19 @@ public class RouteListTest {
 
     @Test
     public void hasRoute_personNotInRouteList_returnsFalse() {
-        assertFalse(routeList.hasRoute(ALICE));
+        assertFalse(routeList.hasRoute(ANGMOKIO));
     }
 
     @Test
     public void hasRoute_personInRouteList_returnsTrue() {
-        routeList.addRoute(ALICE);
-        assertTrue(routeList.hasRoute(ALICE));
+        routeList.addRoute(ANGMOKIO);
+        assertTrue(routeList.hasRoute(ANGMOKIO));
     }
 
     @Test
     public void hasRoute_personWithSameIdentityFieldsInRouteList_returnsTrue() {
-        routeList.addRoute(ALICE);
-        Route editedAlice = new RouteBuilder(ALICE).build();
+        routeList.addRoute(ANGMOKIO);
+        Route editedAlice = new RouteBuilder(ANGMOKIO).build();
         assertTrue(routeList.hasRoute(editedAlice));
     }
 

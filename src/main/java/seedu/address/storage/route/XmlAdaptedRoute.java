@@ -5,8 +5,6 @@ import java.util.Objects;
 import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.deliveryman.Deliveryman;
-import seedu.address.model.order.Order;
 import seedu.address.model.person.Address;
 import seedu.address.model.route.Route;
 import seedu.address.storage.XmlAdaptedOrder;
@@ -21,12 +19,8 @@ public class XmlAdaptedRoute {
 
     @XmlElement(required = true)
     private String source;
-    @XmlElement
+    @XmlElement(required = true)
     private String destination;
-    @XmlElement
-    private XmlAdaptedOrder order;
-    @XmlElement
-    private XmlAdaptedDeliveryman deliveryman;
 
     /**
      * Constructs an XmlAdaptedRoute.
@@ -39,15 +33,7 @@ public class XmlAdaptedRoute {
      */
     public XmlAdaptedRoute(String source, String destination, XmlAdaptedOrder order, XmlAdaptedDeliveryman deliveryman) {
         this.source = source;
-        if (destination != null) {
-            this.destination = destination;
-        }
-        if (order != null) {
-            this.order = order;
-        }
-        if (deliveryman != null) {
-            this.deliveryman = deliveryman;
-        }
+        this.destination = destination;
     }
 
     /**
@@ -57,15 +43,7 @@ public class XmlAdaptedRoute {
      */
     public XmlAdaptedRoute(Route route) {
         source = route.getSource().value;
-        if (route.getDestination() != null) {
-            destination = route.getDestination().value;
-        }
-        if (route.getOrder() != null) {
-            order = new XmlAdaptedOrder(route.getOrder());
-        }
-        if (route.getDeliveryman() != null) {
-            deliveryman = new XmlAdaptedDeliveryman(route.getDeliveryman());
-        }
+        destination = route.getDestination().value;
     }
 
     /**
@@ -90,11 +68,7 @@ public class XmlAdaptedRoute {
         }
         final Address modelDestination = new Address(destination);
 
-        final Order modelOrder = order.toModelType();
-
-        final Deliveryman modelDeliveryman = deliveryman.toModelType();
-
-        return new Route(modelSource, modelDeliveryman, modelOrder);
+        return new Route(modelSource, modelDestination);
     }
 
     @Override
@@ -109,8 +83,6 @@ public class XmlAdaptedRoute {
 
         XmlAdaptedRoute otherRoute = (XmlAdaptedRoute) other;
         return Objects.equals(source, otherRoute.source)
-                && Objects.equals(destination, otherRoute.destination)
-                && deliveryman.equals(otherRoute.deliveryman)
-                && order.equals(otherRoute.order);
+                && Objects.equals(destination, otherRoute.destination);
     }
 }

@@ -1,6 +1,7 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -12,20 +13,22 @@ public class CreateRouteCommand extends RouteCommand {
 
     public static final String COMMAND_WORD = "create";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Creates an empty route.\n"
-            + "Example: /route " + COMMAND_WORD;
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Creates a route with a destination. "
+            + "Parameters: "
+            + PREFIX_ADDRESS + "ADDRESS\n"
+            + "Example: /route " + COMMAND_WORD + " "
+            + PREFIX_ADDRESS + "311, Clementi Ave 2, #02-25 ";
 
-    public static final String MESSAGE_SUCCESS = "Empty route created.";
+    public static final String MESSAGE_SUCCESS = "Route created.";
     public static final String MESSAGE_DUPLICATE_ROUTE = "This route already exists in the address book";
 
     private final Route toAdd;
-    private static final String DEFAULT_SOURCE = "12 Clementi Rd";
 
     /**
      * Creates an AddCommand to add the specified {@code Route}
      */
-    public CreateRouteCommand() {
-        Route route = new Route(new Address(DEFAULT_SOURCE));
+    public CreateRouteCommand(Address destination) {
+        Route route = new Route(destination);
         toAdd = route;
     }
 

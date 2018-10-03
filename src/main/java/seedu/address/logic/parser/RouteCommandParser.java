@@ -6,10 +6,8 @@ import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import seedu.address.logic.commands.AddOrderToRouteCommand;
 import seedu.address.logic.commands.CreateRouteCommand;
 import seedu.address.logic.commands.HelpCommand;
-import seedu.address.logic.commands.ListRouteCommand;
 import seedu.address.logic.commands.RouteCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
@@ -39,16 +37,7 @@ public class RouteCommandParser implements Parser<RouteCommand> {
 
         switch (commandWord) {
             case CreateRouteCommand.COMMAND_WORD:
-                return new CreateRouteCommand();
-
-            case AddOrderToRouteCommand.COMMAND_WORD:
-                return new AddOrderToRouteCommandParser().parse(arguments);
-
-            case ListRouteCommand.COMMAND_WORD:
-                return new ListRouteCommand();
-
-//            case AssignDeliverymanCommand.COMMAND_WORD:
-//                return new AssignDeliverymanCommandParser().parse(arguments);
+                return new CreateRouteCommandParser().parse(arguments);
 
             default:
                 throw new ParseException(MESSAGE_UNKNOWN_COMMAND);

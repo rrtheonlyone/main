@@ -51,8 +51,8 @@ public class ModelManagerTest {
     @Test
     public void equals() {
         AddressBook addressBook = new AddressBookBuilder().withPerson(ALICE).withPerson(BENSON).build();
-        RouteList routeList = new RouteListBuilder().withRoute(TypicalRoutes.ALICE)
-                .withRoute(TypicalRoutes.BENNY).build();
+        RouteList routeList = new RouteListBuilder().withRoute(TypicalRoutes.ANGMOKIO)
+                .withRoute(TypicalRoutes.BEDOK).build();
         AddressBook differentAddressBook = new AddressBook();
         UserPrefs userPrefs = new UserPrefs();
 

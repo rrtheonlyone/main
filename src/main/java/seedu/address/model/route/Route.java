@@ -1,11 +1,10 @@
 package seedu.address.model.route;
 
+import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Objects;
 
-import seedu.address.model.deliveryman.Deliveryman;
-import seedu.address.model.order.Order;
 import seedu.address.model.person.Address;
 
 /**
@@ -13,31 +12,26 @@ import seedu.address.model.person.Address;
  * Guarantees: details are present and not null, field values are validated, immutable.
  */
 public class Route {
+    private static final String DEFAULT_SOURCE = "12 Clementi Rd";
 
     // Identity fields
     private final Address source;
-    private Address destination;
-    private Order order;
-
-    // Data fields
-    private Deliveryman deliveryman;
+    private final Address destination;
 
     /**
-     * Creates a new instance of Route with the address of the
-     * restaurant as the source address.
-     * @param source The address of the restaurant.
+     * Creates a new instance of Route with the destination.
+     * @param destination The address of the restaurant.
      */
-    public Route(Address source) {
-        Objects.requireNonNull(source);
-        this.source = source;
+    public Route(Address destination) {
+        requireNonNull(destination);
+        this.source = new Address(DEFAULT_SOURCE);
+        this.destination = destination;
     }
 
-    public Route(Address source, Deliveryman deliveryman, Order order) {
-        requireAllNonNull(source, deliveryman, order);
+    public Route(Address source, Address destination) {
+        requireAllNonNull(source, destination);
         this.source = source;
-        this.destination = order.getAddress();
-        this.deliveryman = deliveryman;
-        this.order = order;
+        this.destination = destination;
     }
 
     public Address getSource() {
@@ -46,31 +40,6 @@ public class Route {
 
     public Address getDestination() {
         return destination;
-    }
-
-    public Order getOrder() {
-        return order;
-    }
-
-    public Deliveryman getDeliveryman() {
-        return deliveryman;
-    }
-
-    /**
-     * Adds an order to the route.
-     * @param order
-     */
-    public void addOrder(Order order) {
-        this.order = order;
-        destination = order.getAddress();
-    }
-
-    /**
-     * Assign the route to a deliveryman.
-     * @param deliveryman
-     */
-    public void setDeliveryman(Deliveryman deliveryman) {
-        this.deliveryman = deliveryman;
     }
 
     /**
@@ -82,22 +51,9 @@ public class Route {
             return true;
         }
 
-        if (this.isEmptyRoute() && otherRoute.isEmptyRoute()) {
-            return true;
-        }
-
         return otherRoute != null
                 && otherRoute.getSource().equals(getSource())
-                && otherRoute.getDestination().equals(getDestination())
-                && otherRoute.getOrder().equals(getOrder());
-    }
-
-    /**
-     * Returns true if the route is considered an empty route,
-     * i.e. no order, destination and deliveryman set yet.
-     */
-    private boolean isEmptyRoute() {
-        return order == null && destination == null && deliveryman == null;
+                && otherRoute.getDestination().equals(getDestination());
     }
 
     /**
@@ -116,27 +72,23 @@ public class Route {
 
         Route otherRoute = (Route) other;
         return otherRoute.getSource().equals(getSource())
-                && otherRoute.getDestination().equals(getDestination())
-                && otherRoute.getOrder().equals(getOrder())
-                && otherRoute.getDeliveryman().equals(getDeliveryman());
+                && otherRoute.getDestination().equals(getDestination());
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(source, destination, order, deliveryman);
+        return Objects.hash(source, destination);
     }
 
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
         builder.append("Route")
-                .append(" Order: ")
-                .append(getOrder())
-                .append(" Address: ")
-                .append(getDestination())
-                .append(" Deliveryman: ")
-                .append(getDeliveryman());
+                .append("Source: ")
+                .append(getSource())
+                .append(" Destination: ")
+                .append(getDestination());
         return builder.toString();
     }
 }
