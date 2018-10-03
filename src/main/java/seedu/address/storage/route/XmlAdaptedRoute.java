@@ -21,11 +21,11 @@ public class XmlAdaptedRoute {
 
     @XmlElement(required = true)
     private String source;
-    @XmlElement(required = true)
+    @XmlElement
     private String destination;
     @XmlElement
     private XmlAdaptedOrder order;
-    @XmlElement(required = true)
+    @XmlElement
     private XmlAdaptedDeliveryman deliveryman;
 
     /**
@@ -39,9 +39,15 @@ public class XmlAdaptedRoute {
      */
     public XmlAdaptedRoute(String source, String destination, XmlAdaptedOrder order, XmlAdaptedDeliveryman deliveryman) {
         this.source = source;
-        this.destination = destination;
-        this.order = order;
-        this.deliveryman = deliveryman;
+        if (destination != null) {
+            this.destination = destination;
+        }
+        if (order != null) {
+            this.order = order;
+        }
+        if (deliveryman != null) {
+            this.deliveryman = deliveryman;
+        }
     }
 
     /**
@@ -51,9 +57,15 @@ public class XmlAdaptedRoute {
      */
     public XmlAdaptedRoute(Route route) {
         source = route.getSource().value;
-        destination = route.getDestination().value;
-        order = new XmlAdaptedOrder(route.getOrder());
-        deliveryman = new XmlAdaptedDeliveryman(route.getDeliveryman());
+        if (route.getDestination() != null) {
+            destination = route.getDestination().value;
+        }
+        if (route.getOrder() != null) {
+            order = new XmlAdaptedOrder(route.getOrder());
+        }
+        if (route.getDeliveryman() != null) {
+            deliveryman = new XmlAdaptedDeliveryman(route.getDeliveryman());
+        }
     }
 
     /**

@@ -82,10 +82,22 @@ public class Route {
             return true;
         }
 
+        if (this.isEmptyRoute() && otherRoute.isEmptyRoute()) {
+            return true;
+        }
+
         return otherRoute != null
                 && otherRoute.getSource().equals(getSource())
                 && otherRoute.getDestination().equals(getDestination())
                 && otherRoute.getOrder().equals(getOrder());
+    }
+
+    /**
+     * Returns true if the route is considered an empty route,
+     * i.e. no order, destination and deliveryman set yet.
+     */
+    private boolean isEmptyRoute() {
+        return order == null && destination == null && deliveryman == null;
     }
 
     /**
