@@ -48,10 +48,10 @@ public class SampleDataUtil {
 
     public static User[] getSampleUsers() {
         return new User[] {
-                new Manager(new Name("Alice Pauline"), new Username("alicepauline"), new Password("alicepauline01")),
-                new Manager(new Name("Benson Meier"), new Username("bensonmeier"), new Password("bensonmeier02")),
-                new Manager(new Name("Carl Kurz"), new Username("carlkurz"), new Password("carlkurz03")),
-                new Manager(new Name("Hoon Meier"), new Username("hoonmeier"), new Password("hoonmeier04"))
+            new Manager(new Name("Alice Pauline"), new Username("alicepauline"), new Password("alicepauline01")),
+            new Manager(new Name("Benson Meier"), new Username("bensonmeier"), new Password("bensonmeier02")),
+            new Manager(new Name("Carl Kurz"), new Username("carlkurz"), new Password("carlkurz03")),
+            new Manager(new Name("Hoon Meier"), new Username("hoonmeier"), new Password("hoonmeier04"))
         };
     }
 
