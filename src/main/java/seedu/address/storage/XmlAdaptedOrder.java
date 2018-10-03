@@ -1,12 +1,20 @@
 package seedu.address.storage;
 
-import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.person.*;
-import seedu.address.model.order.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Objects;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.xml.bind.annotation.XmlElement;
-import java.util.*;
-import java.util.stream.Collectors;
+
+import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.model.order.Food;
+import seedu.address.model.order.Order;
+import seedu.address.model.person.Address;
+import seedu.address.model.person.Name;
+import seedu.address.model.person.Phone;
 
 /**
  * JAXB-friendly version of the Order.
@@ -28,7 +36,8 @@ public class XmlAdaptedOrder {
      * Constructs an XmlAdaptedOrder.
      * This is the no-arg constructor that is required by JAXB.
      */
-    public XmlAdaptedOrder() {}
+    public XmlAdaptedOrder() {
+    }
 
     /**
      * Constructs an {@code XmlAdaptedOrder} with the given order details.

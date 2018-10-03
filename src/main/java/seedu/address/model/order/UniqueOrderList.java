@@ -1,17 +1,15 @@
 package seedu.address.model.order;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import seedu.address.model.order.Order;
-
-import seedu.address.model.order.exceptions.DuplicateOrderException;
-import seedu.address.model.order.exceptions.OrderNotFoundException;
+import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Iterator;
 import java.util.List;
 
-import static java.util.Objects.requireNonNull;
-import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import seedu.address.model.order.exceptions.DuplicateOrderException;
+import seedu.address.model.order.exceptions.OrderNotFoundException;
 
 /**
  * A list of orders that enforces uniqueness between its elements and does not allow nulls.
@@ -19,7 +17,7 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
  * orders uses Order#isSameOrder(Order) for equality so as to ensure that the Order being added or updated is
  * unique in terms of identity in the UniqueOrderList. However, the removal of an Order uses Order#equals(Object) so
  * as to ensure that the order with exactly the same fields will be removed.
- *
+ * <p>
  * Supports a minimal set of list operations.
  *
  * @see Order#isSameOrder(Order)
@@ -68,17 +66,6 @@ public class UniqueOrderList implements Iterable<Order> {
         internalList.set(index, editedOrder);
     }
 
-    /**
-     * Removes the equivalent order from the list.
-     * The order must exist in the list.
-     */
-    public void remove(Order toRemove) {
-        requireNonNull(toRemove);
-        if (!internalList.remove(toRemove)) {
-            throw new OrderNotFoundException();
-        }
-    }
-
     public void setOrder(UniqueOrderList replacement) {
         requireNonNull(replacement);
         internalList.setAll(replacement.internalList);
@@ -98,6 +85,17 @@ public class UniqueOrderList implements Iterable<Order> {
     }
 
     /**
+     * Removes the equivalent order from the list.
+     * The order must exist in the list.
+     */
+    public void remove(Order toRemove) {
+        requireNonNull(toRemove);
+        if (!internalList.remove(toRemove)) {
+            throw new OrderNotFoundException();
+        }
+    }
+
+    /**
      * Returns the backing list as an unmodifiable {@code ObservableList}.
      */
     public ObservableList<Order> asUnmodifiableObservableList() {
@@ -113,7 +111,7 @@ public class UniqueOrderList implements Iterable<Order> {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof UniqueOrderList // instanceof handles nulls
-                        && internalList.equals(((UniqueOrderList) other).internalList));
+                && internalList.equals(((UniqueOrderList) other).internalList));
     }
 
     @Override

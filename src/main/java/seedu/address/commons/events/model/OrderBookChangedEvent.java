@@ -3,7 +3,9 @@ package seedu.address.commons.events.model;
 import seedu.address.commons.events.BaseEvent;
 import seedu.address.model.ReadOnlyOrderBook;
 
-/** Indicates the OrderBook in the model has changed*/
+/**
+ * Indicates the OrderBook in the model has changed
+ */
 public class OrderBookChangedEvent extends BaseEvent {
 
     public final ReadOnlyOrderBook data;

@@ -9,9 +9,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.OrderBook;
-import seedu.address.model.order.Order;
 import seedu.address.model.ReadOnlyOrderBook;
-import seedu.address.model.person.Person;
+import seedu.address.model.order.Order;
 
 /**
  * An Immutable OrderBook that is serializable to XML format
@@ -44,7 +43,7 @@ public class XmlSerializableOrderBook {
      * Converts this orderbook into the model's {@code OrderBook} object.
      *
      * @throws IllegalValueException if there were any data constraints violated or duplicates in the
-     * {@code XmlAdaptedOrder}.
+     *                               {@code XmlAdaptedOrder}.
      */
     public OrderBook toModelType() throws IllegalValueException {
         OrderBook orderBook = new OrderBook();

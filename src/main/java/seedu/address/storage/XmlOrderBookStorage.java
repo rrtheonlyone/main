@@ -39,11 +39,12 @@ public class XmlOrderBookStorage implements OrderBookStorage {
 
     /**
      * Similar to {@link #readOrderBook()} ()}
+     *
      * @param filePath location of the data. Cannot be null
      * @throws DataConversionException if the file is not in the correct format.
      */
     public Optional<ReadOnlyOrderBook> readOrderBook(Path filePath) throws DataConversionException,
-                                                                                 FileNotFoundException {
+            FileNotFoundException {
         requireNonNull(filePath);
 
         if (!Files.exists(filePath)) {
@@ -67,6 +68,7 @@ public class XmlOrderBookStorage implements OrderBookStorage {
 
     /**
      * Similar to {@link #saveOrderBook(ReadOnlyOrderBook)}
+     *
      * @param filePath location of the data. Cannot be null
      */
     public void saveOrderBook(ReadOnlyOrderBook orderBook, Path filePath) throws IOException {

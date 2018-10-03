@@ -9,13 +9,19 @@ import seedu.address.model.order.Order;
  * The API of the Model component.
  */
 public interface Model {
-    /** {@code Predicate} that always evaluate to true */
+    /**
+     * {@code Predicate} that always evaluate to true
+     */
     Predicate<Order> PREDICATE_SHOW_ALL_ORDERS = unused -> true;
 
-    /** Clears existing backing model and replaces with the provided new data. */
+    /**
+     * Clears existing backing model and replaces with the provided new data.
+     */
     void resetData(ReadOnlyOrderBook newData);
 
-    /** Returns the OrderBook */
+    /**
+     * Returns the OrderBook
+     */
     ReadOnlyOrderBook getOrderBook();
 
     /**
@@ -42,11 +48,14 @@ public interface Model {
      */
     void updateOrder(Order target, Order editedOrder);
 
-    /** Returns an unmodifiable view of the filtered order list */
+    /**
+     * Returns an unmodifiable view of the filtered order list
+     */
     ObservableList<Order> getFilteredOrderList();
 
     /**
      * Updates the filter of the filtered order list to filter by the given {@code predicate}.
+     *
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredOrderList(Predicate<Order> predicate);

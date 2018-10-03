@@ -20,9 +20,18 @@ import seedu.address.commons.util.ConfigUtil;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.Logic;
 import seedu.address.logic.LogicManager;
-import seedu.address.model.*;
+import seedu.address.model.Model;
+import seedu.address.model.ModelManager;
+import seedu.address.model.OrderBook;
+import seedu.address.model.ReadOnlyOrderBook;
+import seedu.address.model.UserPrefs;
 import seedu.address.model.util.SampleDataUtil;
-import seedu.address.storage.*;
+import seedu.address.storage.JsonUserPrefsStorage;
+import seedu.address.storage.OrderBookStorage;
+import seedu.address.storage.Storage;
+import seedu.address.storage.StorageManager;
+import seedu.address.storage.UserPrefsStorage;
+import seedu.address.storage.XmlOrderBookStorage;
 import seedu.address.ui.Ui;
 import seedu.address.ui.UiManager;
 
@@ -42,6 +51,9 @@ public class MainApp extends Application {
     protected Config config;
     protected UserPrefs userPrefs;
 
+    public static void main(String[] args) {
+        launch(args);
+    }
 
     @Override
     public void init() throws Exception {
@@ -191,9 +203,5 @@ public class MainApp extends Application {
     public void handleExitAppRequestEvent(ExitAppRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         stop();
-    }
-
-    public static void main(String[] args) {
-        launch(args);
     }
 }

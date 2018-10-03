@@ -1,9 +1,9 @@
 package seedu.address.storage;
 
+import javax.xml.bind.annotation.XmlValue;
+
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.order.Food;
-
-import javax.xml.bind.annotation.XmlValue;
 
 /**
  * JAXB-friendly adapted version of the Food.
@@ -17,7 +17,8 @@ public class XmlAdaptedFood {
      * Constructs an XmlAdaptedTag.
      * This is the no-arg constructor that is required by JAXB.
      */
-    public XmlAdaptedFood() {}
+    public XmlAdaptedFood() {
+    }
 
     /**
      * Constructs a {@code XmlAdaptedFood} with the given {@code foodName}.

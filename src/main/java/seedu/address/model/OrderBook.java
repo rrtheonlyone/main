@@ -5,8 +5,8 @@ import static java.util.Objects.requireNonNull;
 import java.util.List;
 
 import javafx.collections.ObservableList;
-import seedu.address.model.order.UniqueOrderList;
 import seedu.address.model.order.Order;
+import seedu.address.model.order.UniqueOrderList;
 
 
 /**
@@ -28,7 +28,8 @@ public class OrderBook implements ReadOnlyOrderBook {
         orders = new UniqueOrderList();
     }
 
-    public OrderBook() {}
+    public OrderBook() {
+    }
 
     /**
      * Creates an OrderBook using the Orders in the {@code toBeCopied}

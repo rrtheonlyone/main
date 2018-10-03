@@ -51,7 +51,9 @@ public class ModelManager extends ComponentManager implements Model {
         return versionedOrderBook;
     }
 
-    /** Raises an event to indicate the model has changed */
+    /**
+     * Raises an event to indicate the model has changed
+     */
     private void indicateOrderBookChanged() {
         raise(new OrderBookChangedEvent(versionedOrderBook));
     }
