@@ -44,21 +44,13 @@ public class SampleDataUtil {
     }
 
     public static Route[] getSampleRoutes() {
-        Order[] sampleOrders = getSampleOrders();
-        Route[] sampleRoutes = new Route[sampleOrders.length];
-        for (int i = 0; i < sampleOrders.length; i++) {
-            Route r = new Route(new Address("12 Clementi Road"));
-            r.addOrder(sampleOrders[i]);
-            sampleRoutes[i] = r;
-        }
-        return sampleRoutes;
         return new Route[] {
-                new Route(new Address("Blk 30 Geylang Street 29, #06-40")),
-                new Route(new Address("Blk 30 Lorong 3 Serangoon Gardens, #07-18")),
-                new Route(new Address("Blk 11 Ang Mo Kio Street 74, #11-04")),
-                new Route(new Address("Blk 436 Serangoon Gardens Street 26, #16-43")),
-                new Route(new Address("Blk 47 Tampines Street 20, #17-35")),
-                new Route(new Address("Blk 45 Aljunied Street 85, #11-31"))
+            new Route(new Address("Blk 30 Geylang Street 29, #06-40")),
+            new Route(new Address("Blk 30 Lorong 3 Serangoon Gardens, #07-18")),
+            new Route(new Address("Blk 11 Ang Mo Kio Street 74, #11-04")),
+            new Route(new Address("Blk 436 Serangoon Gardens Street 26, #16-43")),
+            new Route(new Address("Blk 47 Tampines Street 20, #17-35")),
+            new Route(new Address("Blk 45 Aljunied Street 85, #11-31"))
         };
     }
 
@@ -86,5 +78,4 @@ public class SampleDataUtil {
                 .map(Tag::new)
                 .collect(Collectors.toSet());
     }
-
 }

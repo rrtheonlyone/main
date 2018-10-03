@@ -3,14 +3,11 @@ package seedu.address.model.route;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
 import static seedu.address.testutil.TypicalRoutes.ANGMOKIO;
 import static seedu.address.testutil.TypicalRoutes.getTypicalRouteList;
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -18,7 +15,6 @@ import org.junit.rules.ExpectedException;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import seedu.address.model.route.exceptions.DuplicateRouteException;
 import seedu.address.testutil.RouteBuilder;
 
 public class RouteListTest {
@@ -53,18 +49,18 @@ public class RouteListTest {
     }
 
     @Test
-    public void hasRoute_personNotInRouteList_returnsFalse() {
+    public void hasRoute_routeNotInRouteList_returnsFalse() {
         assertFalse(routeList.hasRoute(ANGMOKIO));
     }
 
     @Test
-    public void hasRoute_personInRouteList_returnsTrue() {
+    public void hasRoute_routeInRouteList_returnsTrue() {
         routeList.addRoute(ANGMOKIO);
         assertTrue(routeList.hasRoute(ANGMOKIO));
     }
 
     @Test
-    public void hasRoute_personWithSameIdentityFieldsInRouteList_returnsTrue() {
+    public void hasRoute_routeWithSameIdentityFieldsInRouteList_returnsTrue() {
         routeList.addRoute(ANGMOKIO);
         Route editedAlice = new RouteBuilder(ANGMOKIO).build();
         assertTrue(routeList.hasRoute(editedAlice));

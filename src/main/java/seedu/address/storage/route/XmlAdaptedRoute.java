@@ -7,8 +7,6 @@ import javax.xml.bind.annotation.XmlElement;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Address;
 import seedu.address.model.route.Route;
-import seedu.address.storage.XmlAdaptedOrder;
-import seedu.address.storage.deliveryman.XmlAdaptedDeliveryman;
 
 /**
  * JAXB-friendly version of the Route.
@@ -31,7 +29,7 @@ public class XmlAdaptedRoute {
     /**
      * Constructs an {@code XmlAdaptedRoute} with the given route details.
      */
-    public XmlAdaptedRoute(String source, String destination, XmlAdaptedOrder order, XmlAdaptedDeliveryman deliveryman) {
+    public XmlAdaptedRoute(String source, String destination) {
         this.source = source;
         this.destination = destination;
     }
