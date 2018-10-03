@@ -79,7 +79,8 @@ public class ModelManagerTest {
         assertFalse(modelManager.equals(5));
 
         // different OrderBook -> returns false
-        assertFalse(modelManager.equals(new ModelManager(differentOrderBook, differentUsersList, differentDeliverymenList, userPrefs)));
+        assertFalse(modelManager.equals(new ModelManager(differentOrderBook, differentUsersList,
+                differentDeliverymenList, userPrefs)));
         assertFalse(modelManager.equals(new ModelManager(differentOrderBook, usersList, deliverymenList, userPrefs)));
 
         // different filteredList -> returns false

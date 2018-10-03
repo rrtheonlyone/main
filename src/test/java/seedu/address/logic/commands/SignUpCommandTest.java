@@ -36,7 +36,8 @@ public class SignUpCommandTest {
     public ExpectedException thrown = ExpectedException.none();
 
     private CommandHistory commandHistory = new CommandHistory();
-    private Model model = new ModelManager(getTypicalOrderBook(), getTypicalUsersList(), getTypicalDeliverymenList(), new UserPrefs());
+    private Model model = new ModelManager(getTypicalOrderBook(), getTypicalUsersList(), getTypicalDeliverymenList(),
+            new UserPrefs());
 
     @Test
     public void constructor_nullUser_throwsNullPointerException() {

@@ -3,7 +3,6 @@ package seedu.address.storage;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
-import static seedu.address.testutil.TypicalDeliverymen.getTypicalDeliverymenList;
 import static seedu.address.testutil.TypicalOrders.getTypicalOrderBook;
 
 import java.io.IOException;
@@ -38,9 +37,11 @@ public class StorageManagerTest {
     public void setUp() {
         XmlOrderBookStorage orderBookStorage = new XmlOrderBookStorage(getTempFilePath("ab"));
         JsonUserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(getTempFilePath("prefs"));
-        XmlDeliverymenListStorage deliverymenListStorage = new XmlDeliverymenListStorage(getTempFilePath("dl"));
+        XmlDeliverymenListStorage deliverymenListStorage =
+                new XmlDeliverymenListStorage(getTempFilePath("dl"));
         XmlUsersListStorage usersListStorage = new XmlUsersListStorage(getTempFilePath("users"));
-        storageManager = new StorageManager(orderBookStorage, userPrefsStorage, usersListStorage, deliverymenListStorage);
+        storageManager = new StorageManager(orderBookStorage, userPrefsStorage, usersListStorage,
+                deliverymenListStorage);
     }
 
     private Path getTempFilePath(String fileName) {

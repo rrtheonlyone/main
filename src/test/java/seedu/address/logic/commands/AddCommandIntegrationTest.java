@@ -2,8 +2,8 @@ package seedu.address.logic.commands;
 
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static seedu.address.testutil.TypicalOrders.getTypicalOrderBook;
 import static seedu.address.testutil.TypicalDeliverymen.getTypicalDeliverymenList;
+import static seedu.address.testutil.TypicalOrders.getTypicalOrderBook;
 import static seedu.address.testutil.user.TypicalUsers.getTypicalUsersList;
 
 import org.junit.Before;
@@ -26,13 +26,15 @@ public class AddCommandIntegrationTest {
 
     @Before
     public void setUp() {
-        model = new ModelManager(getTypicalOrderBook(), getTypicalUsersList(), getTypicalDeliverymenList(), new UserPrefs());
+        model = new ModelManager(getTypicalOrderBook(), getTypicalUsersList(), getTypicalDeliverymenList(),
+                new UserPrefs());
     }
 
     @Test
     public void execute_newOrder_success() {
         Order validOrder = new OrderBuilder().build();
-        Model expectedModel = new ModelManager(model.getOrderBook(), model.getUsersList(), model.getDeliverymenList(), new UserPrefs());
+        Model expectedModel = new ModelManager(model.getOrderBook(), model.getUsersList(), model.getDeliverymenList(),
+                new UserPrefs());
         expectedModel.addOrder(validOrder);
         expectedModel.commitOrderBook();
 

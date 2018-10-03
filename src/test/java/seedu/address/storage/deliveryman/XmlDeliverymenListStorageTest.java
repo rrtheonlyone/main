@@ -2,9 +2,7 @@ package seedu.address.storage.deliveryman;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static seedu.address.testutil.TypicalDeliverymen.CHIKAO;
 import static seedu.address.testutil.TypicalDeliverymen.RAJUL;
-import static seedu.address.testutil.TypicalDeliverymen.YINJING;
 import static seedu.address.testutil.TypicalDeliverymen.getTypicalDeliverymenList;
 
 import java.io.IOException;
@@ -108,10 +106,10 @@ public class XmlDeliverymenListStorageTest {
     /**
      * Saves {@code DeliverymenList} at the specified {@code filePath}.
      */
-    private void saveDeliverymenList(DeliverymenList DeliverymenList, String filePath) {
+    private void saveDeliverymenList(DeliverymenList deliverymenList, String filePath) {
         try {
             new XmlDeliverymenListStorage(Paths.get(filePath))
-                .saveDeliverymenList(DeliverymenList, addToTestDataPathIfNotNull(filePath));
+                .saveDeliverymenList(deliverymenList, addToTestDataPathIfNotNull(filePath));
         } catch (IOException ioe) {
             throw new AssertionError("There should not be an error writing to the file.", ioe);
         }

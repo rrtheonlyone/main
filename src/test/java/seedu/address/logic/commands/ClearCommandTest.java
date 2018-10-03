@@ -28,8 +28,10 @@ public class ClearCommandTest {
 
     @Test
     public void execute_nonEmptyOrderBook_success() {
-        Model model = new ModelManager(getTypicalOrderBook(), getTypicalUsersList(), getTypicalDeliverymenList(), new UserPrefs());
-        Model expectedModel = new ModelManager(getTypicalOrderBook(), getTypicalUsersList(), getTypicalDeliverymenList(), new UserPrefs());
+        Model model = new ModelManager(getTypicalOrderBook(), getTypicalUsersList(), getTypicalDeliverymenList(),
+                new UserPrefs());
+        Model expectedModel = new ModelManager(getTypicalOrderBook(), getTypicalUsersList(),
+                getTypicalDeliverymenList(), new UserPrefs());
         expectedModel.resetData(new OrderBook());
         expectedModel.commitOrderBook();
 

@@ -17,9 +17,11 @@ import seedu.address.testutil.TypicalDeliverymen;
 public class XmlSerializableDeliverymenListTest {
 
     private static final Path TEST_DATA_FOLDER = Paths.get("src", "test", "data", "XmlSerializableDeliverymenListTest");
-    private static final Path TYPICAL_DELIVERYMEN_FILE = TEST_DATA_FOLDER.resolve("typicalDeliverymenDeliverymenList.xml");
+    private static final Path TYPICAL_DELIVERYMEN_FILE =
+            TEST_DATA_FOLDER.resolve("typicalDeliverymenDeliverymenList.xml");
     private static final Path INVALID_PERSON_FILE = TEST_DATA_FOLDER.resolve("invalidDeliverymanDeliverymenList.xml");
-    private static final Path DUPLICATE_PERSON_FILE = TEST_DATA_FOLDER.resolve("duplicateDeliverymenDeliverymenList.xml");
+    private static final Path DUPLICATE_PERSON_FILE =
+            TEST_DATA_FOLDER.resolve("duplicateDeliverymenDeliverymenList.xml");
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
