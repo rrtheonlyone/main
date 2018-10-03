@@ -4,9 +4,12 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_FOOD;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PASSWORD;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_USERNAME;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -15,11 +18,10 @@ import java.util.List;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
-import seedu.address.model.person.NameContainsKeywordsPredicate;
-import seedu.address.model.person.Person;
-import seedu.address.testutil.EditPersonDescriptorBuilder;
+import seedu.address.model.OrderBook;
+import seedu.address.model.order.NameContainsKeywordsPredicate;
+import seedu.address.model.order.Order;
 
 /**
  * Contains helper methods for testing commands.
@@ -36,7 +38,8 @@ public class CommandTestUtil {
     public static final String VALID_ADDRESS_BOB = "Block 123, Bobby Street 3";
     public static final String VALID_TAG_HUSBAND = "husband";
     public static final String VALID_TAG_FRIEND = "friend";
-    public static final String VALID_ORDER_MAGGIE = "maggie";
+    public static final String VALID_FOOD_BURGER = "burger";
+    public static final String VALID_FOOD_RICE = "fried rice";
 
     public static final String NAME_DESC_AMY = " " + PREFIX_NAME + VALID_NAME_AMY;
     public static final String NAME_DESC_BOB = " " + PREFIX_NAME + VALID_NAME_BOB;
@@ -48,6 +51,8 @@ public class CommandTestUtil {
     public static final String ADDRESS_DESC_BOB = " " + PREFIX_ADDRESS + VALID_ADDRESS_BOB;
     public static final String TAG_DESC_FRIEND = " " + PREFIX_TAG + VALID_TAG_FRIEND;
     public static final String TAG_DESC_HUSBAND = " " + PREFIX_TAG + VALID_TAG_HUSBAND;
+    public static final String FOOD_DESC_BURGER = " " + PREFIX_FOOD + VALID_FOOD_BURGER;
+    public static final String FOOD_DESC_RICE = " " + PREFIX_FOOD + VALID_FOOD_RICE;
 
     public static final String INVALID_NAME_DESC = " " + PREFIX_NAME + "James&"; // '&' not allowed in names
     public static final String INVALID_PHONE_DESC = " " + PREFIX_PHONE + "911a"; // 'a' not allowed in phones
@@ -58,17 +63,22 @@ public class CommandTestUtil {
     public static final String PREAMBLE_WHITESPACE = "\t  \r  \n";
     public static final String PREAMBLE_NON_EMPTY = "NonEmptyPreamble";
 
-    public static final EditCommand.EditPersonDescriptor DESC_AMY;
-    public static final EditCommand.EditPersonDescriptor DESC_BOB;
+    public static final String VALID_MANAGER_NAME_ALICE = "Alice Pauline";
+    public static final String VALID_MANAGER_NAME_BENSON = "Benson Meier";
+    public static final String VALID_MANAGER_USERNAME_ALICE = "alicepauline";
+    public static final String VALID_MANAGER_USERNAME_BENSON = "bensonmeier";
+    public static final String VALID_MANAGER_PASSWORD_ALICE = "alicepauline01";
+    public static final String VALID_MANAGER_PASSWORD_BENSON = "bensonmeier02";
 
-    static {
-        DESC_AMY = new EditPersonDescriptorBuilder().withName(VALID_NAME_AMY)
-                .withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY)
-                .withTags(VALID_TAG_FRIEND).build();
-        DESC_BOB = new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB)
-                .withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB)
-                .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build();
-    }
+    public static final String NAME_DESC_ALICE = " " + PREFIX_NAME + VALID_MANAGER_NAME_ALICE;
+    public static final String NAME_DESC_BENSON = " " + PREFIX_NAME + VALID_MANAGER_NAME_BENSON;
+    public static final String USERNAME_DESC_ALICE = " " + PREFIX_USERNAME + VALID_MANAGER_USERNAME_ALICE;
+    public static final String USERNAME_DESC_BENSON = " " + PREFIX_USERNAME + VALID_MANAGER_USERNAME_BENSON;
+    public static final String PASSWORD_DESC_ALICE = " " + PREFIX_PASSWORD + VALID_MANAGER_PASSWORD_ALICE;
+    public static final String PASSWORD_DESC_BENSON = " " + PREFIX_PASSWORD + VALID_MANAGER_PASSWORD_BENSON;
+
+    public static final String INVALID_USERNAME_DESC = " " + PREFIX_USERNAME + "James&"; // '&' not allowed in usernames
+    public static final String INVALID_PASSWORD_DESC = " " + PREFIX_PASSWORD + "Jam&"; // '&' not allowed in password
 
     /**
      * Executes the given {@code command}, confirms that <br>
@@ -77,7 +87,7 @@ public class CommandTestUtil {
      * - the {@code actualCommandHistory} remains unchanged.
      */
     public static void assertCommandSuccess(Command command, Model actualModel, CommandHistory actualCommandHistory,
-            String expectedMessage, Model expectedModel) {
+                                            String expectedMessage, Model expectedModel) {
         CommandHistory expectedCommandHistory = new CommandHistory(actualCommandHistory);
         try {
             CommandResult result = command.execute(actualModel, actualCommandHistory);
@@ -97,11 +107,11 @@ public class CommandTestUtil {
      * - {@code actualCommandHistory} remains unchanged.
      */
     public static void assertCommandFailure(Command command, Model actualModel, CommandHistory actualCommandHistory,
-            String expectedMessage) {
+                                            String expectedMessage) {
         // we are unable to defensively copy the model for comparison later, so we can
         // only do so by copying its components.
-        AddressBook expectedAddressBook = new AddressBook(actualModel.getAddressBook());
-        List<Person> expectedFilteredList = new ArrayList<>(actualModel.getFilteredPersonList());
+        OrderBook expectedOrderBook = new OrderBook(actualModel.getOrderBook());
+        List<Order> expectedFilteredList = new ArrayList<>(actualModel.getFilteredOrderList());
 
         CommandHistory expectedCommandHistory = new CommandHistory(actualCommandHistory);
 
@@ -110,8 +120,8 @@ public class CommandTestUtil {
             throw new AssertionError("The expected CommandException was not thrown.");
         } catch (CommandException e) {
             assertEquals(expectedMessage, e.getMessage());
-            assertEquals(expectedAddressBook, actualModel.getAddressBook());
-            assertEquals(expectedFilteredList, actualModel.getFilteredPersonList());
+            assertEquals(expectedOrderBook, actualModel.getOrderBook());
+            assertEquals(expectedFilteredList, actualModel.getFilteredOrderList());
             assertEquals(expectedCommandHistory, actualCommandHistory);
         }
     }
@@ -120,23 +130,23 @@ public class CommandTestUtil {
      * Updates {@code model}'s filtered list to show only the person at the given {@code targetIndex} in the
      * {@code model}'s address book.
      */
-    public static void showPersonAtIndex(Model model, Index targetIndex) {
-        assertTrue(targetIndex.getZeroBased() < model.getFilteredPersonList().size());
+    public static void showOrderAtIndex(Model model, Index targetIndex) {
+        assertTrue(targetIndex.getZeroBased() < model.getFilteredOrderList().size());
 
-        Person person = model.getFilteredPersonList().get(targetIndex.getZeroBased());
-        final String[] splitName = person.getName().fullName.split("\\s+");
-        model.updateFilteredPersonList(new NameContainsKeywordsPredicate(Arrays.asList(splitName[0])));
+        Order order = model.getFilteredOrderList().get(targetIndex.getZeroBased());
+        final String[] splitName = order.getName().fullName.split("\\s+");
+        model.updateFilteredOrderList(new NameContainsKeywordsPredicate(Arrays.asList(splitName[0])));
 
-        assertEquals(1, model.getFilteredPersonList().size());
+        assertEquals(1, model.getFilteredOrderList().size());
     }
 
     /**
      * Deletes the first person in {@code model}'s filtered list from {@code model}'s address book.
      */
     public static void deleteFirstPerson(Model model) {
-        Person firstPerson = model.getFilteredPersonList().get(0);
-        model.deletePerson(firstPerson);
-        model.commitAddressBook();
+        Order firstOrder = model.getFilteredOrderList().get(0);
+        model.deleteOrder(firstOrder);
+        model.commitOrderBook();
     }
 
 }

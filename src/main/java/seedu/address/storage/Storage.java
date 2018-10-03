@@ -4,19 +4,22 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.util.Optional;
 
-import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.commons.events.model.OrderBookChangedEvent;
 import seedu.address.commons.events.model.RouteListChangedEvent;
+import seedu.address.commons.events.model.UsersListChangedEvent;
 import seedu.address.commons.events.storage.DataSavingExceptionEvent;
 import seedu.address.commons.exceptions.DataConversionException;
-import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.ReadOnlyOrderBook;
+import seedu.address.model.ReadOnlyUsersList;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.route.ReadOnlyRouteList;
 import seedu.address.storage.route.RouteListStorage;
+import seedu.address.storage.user.UsersListStorage;
 
 /**
  * API of the Storage component
  */
-public interface Storage extends AddressBookStorage, RouteListStorage, UserPrefsStorage {
+public interface Storage extends OrderBookStorage, RouteListStorage, UserPrefsStorage, UsersListStorage {
 
     @Override
     Optional<UserPrefs> readUserPrefs() throws DataConversionException, IOException;
@@ -25,20 +28,20 @@ public interface Storage extends AddressBookStorage, RouteListStorage, UserPrefs
     void saveUserPrefs(UserPrefs userPrefs) throws IOException;
 
     @Override
-    Path getAddressBookFilePath();
+    Path getOrderBookFilePath();
 
     @Override
-    Optional<ReadOnlyAddressBook> readAddressBook() throws DataConversionException, IOException;
+    Optional<ReadOnlyOrderBook> readOrderBook() throws DataConversionException, IOException;
 
     @Override
-    void saveAddressBook(ReadOnlyAddressBook addressBook) throws IOException;
+    void saveOrderBook(ReadOnlyOrderBook orderBook) throws IOException;
 
     /**
      * Saves the current version of the Address Book to the hard disk.
-     *   Creates the data file if it is missing.
+     * Creates the data file if it is missing.
      * Raises {@link DataSavingExceptionEvent} if there was an error during saving.
      */
-    void handleAddressBookChangedEvent(AddressBookChangedEvent abce);
+    void handleOrderBookChangedEvent(OrderBookChangedEvent abce);
 
     @Override
     Path getRouteListFilePath();
@@ -52,4 +55,20 @@ public interface Storage extends AddressBookStorage, RouteListStorage, UserPrefs
      * Raises {@link DataSavingExceptionEvent} if there was an error during saving.
      */
     void handleRouteListChangedEvent(RouteListChangedEvent abce);
+
+    @Override
+    Path getUsersListFilePath();
+
+    @Override
+    Optional<ReadOnlyUsersList> readUsersList() throws DataConversionException, IOException;
+
+    @Override
+    void saveUsersList(ReadOnlyUsersList usersList) throws IOException;
+
+    /**
+     * Saves the current version of the UsersList to the hard disk.
+     * Creates the data file if it is missing.
+     * Raises {@link DataSavingExceptionEvent} if there was an error during saving.
+     */
+    void handleUsersListChangedEvent(UsersListChangedEvent ulce);
 }

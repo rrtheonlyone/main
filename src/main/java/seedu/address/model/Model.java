@@ -3,83 +3,124 @@ package seedu.address.model;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
-import seedu.address.model.person.Person;
+import seedu.address.model.order.Order;
 import seedu.address.model.route.ReadOnlyRouteList;
 import seedu.address.model.route.Route;
+import seedu.address.model.user.User;
 
 /**
  * The API of the Model component.
  */
 public interface Model {
-    /** {@code Predicate} that always evaluate to true */
-    Predicate<Person> PREDICATE_SHOW_ALL_PERSONS = unused -> true;
+    /**
+     * {@code Predicate} that always evaluate to true
+     */
+    Predicate<Order> PREDICATE_SHOW_ALL_ORDERS = unused -> true;
 
     /** {@code Predicate} that always evaluate to true */
     Predicate<Route> PREDICATE_SHOW_ALL_ROUTES = unused -> true;
 
-    /** Clears existing backing model and replaces with the provided new data. */
-    void resetData(ReadOnlyAddressBook newData);
-
-    /** Returns the AddressBook */
-    ReadOnlyAddressBook getAddressBook();
-
     /**
-     * Returns true if a person with the same identity as {@code person} exists in the address book.
+     * {@code Predicate} that always evaluate to true
      */
-    boolean hasPerson(Person person);
+    Predicate<User> PREDICATE_SHOW_ALL_USERS = unused -> true;
 
     /**
-     * Deletes the given person.
-     * The person must exist in the address book.
+     * Clears existing backing model and replaces with the provided new data.
      */
-    void deletePerson(Person target);
+    void resetData(ReadOnlyOrderBook newData);
 
     /**
-     * Adds the given person.
-     * {@code person} must not already exist in the address book.
+     * Returns the OrderBook
      */
-    void addPerson(Person person);
+    ReadOnlyOrderBook getOrderBook();
 
     /**
-     * Replaces the given person {@code target} with {@code editedPerson}.
+     * Returns true if a person with the same identity as {@code order} exists in the order book.
+     */
+    boolean hasOrder(Order order);
+
+    /**
+     * Deletes the given order.
+     * The order must exist in the address book.
+     */
+    void deleteOrder(Order target);
+
+    /**
+     * Adds the given order.
+     * {@code order} must not already exist in the address book.
+     */
+    void addOrder(Order order);
+
+    /**
+     * Replaces the given order {@code target} with {@code editedOrder}.
      * {@code target} must exist in the address book.
-     * The person identity of {@code editedPerson} must not be the same as another existing person in the address book.
+     * The order identity of {@code editedOrder} must not be the same as another existing order in the order book.
      */
-    void updatePerson(Person target, Person editedPerson);
-
-    /** Returns an unmodifiable view of the filtered person list */
-    ObservableList<Person> getFilteredPersonList();
+    void updateOrder(Order target, Order editedOrder);
 
     /**
-     * Updates the filter of the filtered person list to filter by the given {@code predicate}.
+     * Returns an unmodifiable view of the filtered order list
+     */
+    ObservableList<Order> getFilteredOrderList();
+
+    /**
+     * Updates the filter of the filtered order list to filter by the given {@code predicate}.
+     *
      * @throws NullPointerException if {@code predicate} is null.
      */
-    void updateFilteredPersonList(Predicate<Person> predicate);
+    void updateFilteredOrderList(Predicate<Order> predicate);
 
     /**
-     * Returns true if the model has previous address book states to restore.
+     * Returns true if the model has previous order book states to restore.
      */
-    boolean canUndoAddressBook();
+    boolean canUndoOrderBook();
 
     /**
-     * Returns true if the model has undone address book states to restore.
+     * Returns true if the model has undone order book states to restore.
      */
-    boolean canRedoAddressBook();
+    boolean canRedoOrderBook();
 
     /**
-     * Restores the model's address book to its previous state.
+     * Restores the model's order book to its previous state.
      */
-    void undoAddressBook();
+    void undoOrderBook();
 
     /**
-     * Restores the model's address book to its previously undone state.
+     * Restores the model's order book to its previously undone state.
      */
-    void redoAddressBook();
+    void redoOrderBook();
 
     /**
-     * Saves the current address book state for undo/redo.
+     * Saves the current order book state for undo/redo.
      */
-    void commitAddressBook();
+    void commitOrderBook();
+
+    boolean hasUser(User user);
+
+    void addUser(User user);
+
+    void commitUsersList();
+
+    /**
+     * Updates the filter of the filtered user list to filter by the given {@code predicate}.
+     *
+     * @throws NullPointerException if {@code predicate} is null.
+     */
+    void updateFilteredUsersList(Predicate<User> predicate);
+
+
+    /**
+     * Returns an unmodifiable view of the filtered users list
+     */
+    ObservableList<User> getFilteredUsersList();
+
+    boolean loginUser(User user);
+
+    /**
+     * Returns the UsersList
+     */
+    ReadOnlyUsersList getUsersList();
 
     // ======================== Route related methods =========================
 

@@ -3,8 +3,9 @@ package seedu.address.logic.commands;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.deleteFirstPerson;
-import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+import static seedu.address.testutil.TypicalOrders.getTypicalOrderBook;
 import static seedu.address.testutil.TypicalRoutes.getTypicalRouteList;
+import static seedu.address.testutil.user.TypicalUsers.getTypicalUsersList;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -16,8 +17,9 @@ import seedu.address.model.UserPrefs;
 
 public class RedoCommandTest {
 
-    private final Model model = new ModelManager(getTypicalAddressBook(), getTypicalRouteList(), new UserPrefs());
-    private final Model expectedModel = new ModelManager(getTypicalAddressBook(),
+    private final Model model = new ModelManager(getTypicalOrderBook(), getTypicalUsersList(),
+            getTypicalRouteList(), new UserPrefs());
+    private final Model expectedModel = new ModelManager(getTypicalOrderBook(), getTypicalUsersList(),
             getTypicalRouteList(), new UserPrefs());
     private final CommandHistory commandHistory = new CommandHistory();
 
@@ -26,23 +28,23 @@ public class RedoCommandTest {
         // set up of both models' undo/redo history
         deleteFirstPerson(model);
         deleteFirstPerson(model);
-        model.undoAddressBook();
-        model.undoAddressBook();
+        model.undoOrderBook();
+        model.undoOrderBook();
 
         deleteFirstPerson(expectedModel);
         deleteFirstPerson(expectedModel);
-        expectedModel.undoAddressBook();
-        expectedModel.undoAddressBook();
+        expectedModel.undoOrderBook();
+        expectedModel.undoOrderBook();
     }
 
     @Test
     public void execute() {
         // multiple redoable states in model
-        expectedModel.redoAddressBook();
+        expectedModel.redoOrderBook();
         assertCommandSuccess(new RedoCommand(), model, commandHistory, RedoCommand.MESSAGE_SUCCESS, expectedModel);
 
         // single redoable state in model
-        expectedModel.redoAddressBook();
+        expectedModel.redoOrderBook();
         assertCommandSuccess(new RedoCommand(), model, commandHistory, RedoCommand.MESSAGE_SUCCESS, expectedModel);
 
         // no redoable state in model

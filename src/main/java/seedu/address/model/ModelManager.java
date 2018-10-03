@@ -11,13 +11,15 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.commons.events.model.OrderBookChangedEvent;
 import seedu.address.commons.events.model.RouteListChangedEvent;
-import seedu.address.model.person.Person;
+import seedu.address.commons.events.model.UsersListChangedEvent;
+import seedu.address.model.order.Order;
 import seedu.address.model.route.ReadOnlyRouteList;
 import seedu.address.model.route.Route;
 import seedu.address.model.route.RouteList;
 import seedu.address.model.route.VersionedRouteList;
+import seedu.address.model.user.User;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -25,36 +27,42 @@ import seedu.address.model.route.VersionedRouteList;
 public class ModelManager extends ComponentManager implements Model {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
 
-    private final VersionedAddressBook versionedAddressBook;
+    private final VersionedOrderBook versionedOrderBook;
     private final VersionedRouteList versionedRouteList;
-    private final FilteredList<Person> filteredPersons;
+    private final VersionedUsersList versionedUsersList;
+    private final FilteredList<Order> filteredOrders;
     private final FilteredList<Route> filteredRoute;
+    private final FilteredList<User> filteredUsers;
 
     /**
-     * Initializes a ModelManager with the given addressBook and userPrefs.
+     * Initializes a ModelManager with the given addressBook, usersList and userPrefs.
      */
-    public ModelManager(ReadOnlyAddressBook addressBook, ReadOnlyRouteList routeList, UserPrefs userPrefs) {
+    public ModelManager(ReadOnlyOrderBook orderBook, ReadOnlyUsersList usersList,
+            ReadOnlyRouteList routeList, UserPrefs userPrefs) {
         super();
-        requireAllNonNull(addressBook, routeList, userPrefs);
+        requireAllNonNull(orderBook, routeList, userPrefs);
 
-        logger.fine("Initializing with address book: " + addressBook
+        logger.fine("Initializing with address book: " + orderBook
                 + " and route list " + routeList
+                + " and users list " + usersList
                 + " and user prefs " + userPrefs);
 
-        versionedAddressBook = new VersionedAddressBook(addressBook);
+        versionedOrderBook = new VersionedOrderBook(orderBook);
         versionedRouteList = new VersionedRouteList(routeList);
-        filteredPersons = new FilteredList<>(versionedAddressBook.getPersonList());
+        versionedUsersList = new VersionedUsersList(usersList);
+        filteredOrders = new FilteredList<>(versionedOrderBook.getOrderList());
         filteredRoute = new FilteredList<>(versionedRouteList.getRouteList());
+        filteredUsers = new FilteredList<>(versionedUsersList.getUserList());
     }
 
     public ModelManager() {
-        this(new AddressBook(), new RouteList(), new UserPrefs());
+        this(new OrderBook(), new UsersList(), new RouteList(), new UserPrefs());
     }
 
     @Override
-    public void resetData(ReadOnlyAddressBook newData) {
-        versionedAddressBook.resetData(newData);
-        indicateAddressBookChanged();
+    public void resetData(ReadOnlyOrderBook newData) {
+        versionedOrderBook.resetData(newData);
+        indicateOrderBookChanged();
     }
 
     @Override
@@ -64,8 +72,8 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public ReadOnlyAddressBook getAddressBook() {
-        return versionedAddressBook;
+    public ReadOnlyOrderBook getOrderBook() {
+        return versionedOrderBook;
     }
 
     @Override
@@ -73,9 +81,11 @@ public class ModelManager extends ComponentManager implements Model {
         return versionedRouteList;
     }
 
-    /** Raises an event to indicate the model has changed */
-    private void indicateAddressBookChanged() {
-        raise(new AddressBookChangedEvent(versionedAddressBook));
+    /**
+     * Raises an event to indicate the model has changed
+     */
+    private void indicateOrderBookChanged() {
+        raise(new OrderBookChangedEvent(versionedOrderBook));
     }
 
     /** Raises an event to indicate the route model has changed */
@@ -84,30 +94,30 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public boolean hasPerson(Person person) {
-        requireNonNull(person);
-        return versionedAddressBook.hasPerson(person);
+    public boolean hasOrder(Order order) {
+        requireNonNull(order);
+        return versionedOrderBook.hasOrder(order);
     }
 
     @Override
-    public void deletePerson(Person target) {
-        versionedAddressBook.removePerson(target);
-        indicateAddressBookChanged();
+    public void deleteOrder(Order target) {
+        versionedOrderBook.removeOrder(target);
+        indicateOrderBookChanged();
     }
 
     @Override
-    public void addPerson(Person person) {
-        versionedAddressBook.addPerson(person);
-        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        indicateAddressBookChanged();
+    public void addOrder(Order order) {
+        versionedOrderBook.addOrder(order);
+        updateFilteredOrderList(PREDICATE_SHOW_ALL_ORDERS);
+        indicateOrderBookChanged();
     }
 
     @Override
-    public void updatePerson(Person target, Person editedPerson) {
-        requireAllNonNull(target, editedPerson);
+    public void updateOrder(Order target, Order editedOrder) {
+        requireAllNonNull(target, editedOrder);
 
-        versionedAddressBook.updatePerson(target, editedPerson);
-        indicateAddressBookChanged();
+        versionedOrderBook.updateOrder(target, editedOrder);
+        indicateOrderBookChanged();
     }
 
     // ======================== Route related methods =========================
@@ -136,21 +146,21 @@ public class ModelManager extends ComponentManager implements Model {
         indicateRouteListChanged();
     }
 
-    //=========== Filtered Person List Accessors =============================================================
+    //=========== Filtered Order List Accessors =============================================================
 
     /**
-     * Returns an unmodifiable view of the list of {@code Person} backed by the internal list of
-     * {@code versionedAddressBook}
+     * Returns an unmodifiable view of the list of {@code Order} backed by the internal list of
+     * {@code versionedOrderBook}
      */
     @Override
-    public ObservableList<Person> getFilteredPersonList() {
-        return FXCollections.unmodifiableObservableList(filteredPersons);
+    public ObservableList<Order> getFilteredOrderList() {
+        return FXCollections.unmodifiableObservableList(filteredOrders);
     }
 
     @Override
-    public void updateFilteredPersonList(Predicate<Person> predicate) {
+    public void updateFilteredOrderList(Predicate<Order> predicate) {
         requireNonNull(predicate);
-        filteredPersons.setPredicate(predicate);
+        filteredOrders.setPredicate(predicate);
     }
 
     //=========== Filtered Route List Accessors =============================================================
@@ -173,30 +183,79 @@ public class ModelManager extends ComponentManager implements Model {
     //=========== Undo/Redo =================================================================================
 
     @Override
-    public boolean canUndoAddressBook() {
-        return versionedAddressBook.canUndo();
+    public boolean canUndoOrderBook() {
+        return versionedOrderBook.canUndo();
     }
 
     @Override
-    public boolean canRedoAddressBook() {
-        return versionedAddressBook.canRedo();
+    public boolean canRedoOrderBook() {
+        return versionedOrderBook.canRedo();
     }
 
     @Override
-    public void undoAddressBook() {
-        versionedAddressBook.undo();
-        indicateAddressBookChanged();
+    public void undoOrderBook() {
+        versionedOrderBook.undo();
+        indicateOrderBookChanged();
     }
 
     @Override
-    public void redoAddressBook() {
-        versionedAddressBook.redo();
-        indicateAddressBookChanged();
+    public void redoOrderBook() {
+        versionedOrderBook.redo();
+        indicateOrderBookChanged();
     }
 
     @Override
-    public void commitAddressBook() {
-        versionedAddressBook.commit();
+    public void commitOrderBook() {
+        versionedOrderBook.commit();
+    }
+
+
+    //=========== Filtered User List Accessors =============================================================
+    @Override
+    public boolean hasUser(User user) {
+        requireNonNull(user);
+        return versionedUsersList.hasUser(user);
+    }
+
+    @Override
+    public void addUser(User user) {
+        versionedUsersList.addUser(user);
+        updateFilteredUsersList(PREDICATE_SHOW_ALL_USERS);
+        indicateUsersListChanged();
+    }
+
+    @Override
+    public void commitUsersList() {
+        versionedUsersList.commit();
+    }
+
+    @Override
+    public void updateFilteredUsersList(Predicate<User> predicate) {
+        requireNonNull(predicate);
+        filteredUsers.setPredicate(predicate);
+    }
+
+    @Override
+    public ObservableList<User> getFilteredUsersList() {
+        return FXCollections.unmodifiableObservableList(filteredUsers);
+    }
+
+    @Override
+    public boolean loginUser(User user) {
+        requireNonNull(user);
+        return versionedUsersList.login(user);
+    }
+
+    @Override
+    public ReadOnlyUsersList getUsersList() {
+        return versionedUsersList;
+    }
+
+    /**
+     * Raises an event to indicate the model has changed
+     */
+    private void indicateUsersListChanged() {
+        raise(new UsersListChangedEvent(versionedUsersList));
     }
 
     @Override
@@ -240,10 +299,12 @@ public class ModelManager extends ComponentManager implements Model {
 
         // state check
         ModelManager other = (ModelManager) obj;
-        return versionedAddressBook.equals(other.versionedAddressBook)
-                && filteredPersons.equals(other.filteredPersons)
+        return versionedOrderBook.equals(other.versionedOrderBook)
+                && filteredOrders.equals(other.filteredOrders)
                 && versionedRouteList.equals(other.versionedRouteList)
-                && filteredRoute.equals(other.filteredRoute);
+                && filteredRoute.equals(other.filteredRoute)
+                && versionedOrderBook.equals(other.versionedOrderBook)
+                && filteredOrders.equals(other.filteredOrders);
     }
 
 }

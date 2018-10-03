@@ -14,6 +14,7 @@ public class UserPrefs {
     private GuiSettings guiSettings;
     private Path addressBookFilePath = Paths.get("data" , "addressbook.xml");
     private Path routeListFilePath = Paths.get("data", "routelist.xml");
+    private Path usersListFilePath = Paths.get("data", "users.xml");
 
     public UserPrefs() {
         setGuiSettings(500, 500, 0, 0);
@@ -47,6 +48,14 @@ public class UserPrefs {
         this.routeListFilePath = routeListFilePath;
     }
 
+    public Path getUsersListFilePath() {
+        return usersListFilePath;
+    }
+
+    public void setUsersListFilePath(Path usersListFilePath) {
+        this.usersListFilePath = usersListFilePath;
+    }
+
     @Override
     public boolean equals(Object other) {
         if (other == this) {
@@ -72,6 +81,7 @@ public class UserPrefs {
         StringBuilder sb = new StringBuilder();
         sb.append("Gui Settings : " + guiSettings.toString());
         sb.append("\nLocal data file location : " + addressBookFilePath);
+        sb.append("\nLocal data file location : " + usersListFilePath);
         return sb.toString();
     }
 
