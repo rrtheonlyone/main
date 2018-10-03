@@ -15,6 +15,7 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.order.DeleteCommand;
+import seedu.address.logic.commands.order.OrderCommand;
 import seedu.address.model.Model;
 import seedu.address.model.order.Order;
 
@@ -23,13 +24,14 @@ public class DeleteCommandSystemTest extends OrderBookSystemTest {
     private static final String MESSAGE_INVALID_DELETE_COMMAND_FORMAT =
             String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE);
 
+    private static final String DELETE_COMMAND = OrderCommand.COMMAND_WORD + " " + DeleteCommand.COMMAND_WORD;
     @Test
     public void delete() {
         /* ----------------- Performing delete operation while an unfiltered list is being shown -------------------- */
 
         /* Case: delete the first person in the list, command with leading spaces and trailing spaces -> deleted */
         Model expectedModel = getModel();
-        String command = "     " + DeleteCommand.COMMAND_WORD + "      " + INDEX_FIRST_ORDER.getOneBased() + "       ";
+        String command = "     " + DELETE_COMMAND + "      " + INDEX_FIRST_ORDER.getOneBased() + "       ";
         Order deletedOrder = removeOrder(expectedModel, INDEX_FIRST_ORDER);
         String expectedResultMessage = String.format(MESSAGE_DELETE_ORDER_SUCCESS, deletedOrder);
         assertCommandSuccess(command, expectedModel, expectedResultMessage);
@@ -62,7 +64,7 @@ public class DeleteCommandSystemTest extends OrderBookSystemTest {
         Index selectedIndex = getLastIndex(expectedModel);
         Index expectedIndex = Index.fromZeroBased(selectedIndex.getZeroBased() - 1);
         selectOrder(selectedIndex);
-        command = DeleteCommand.COMMAND_WORD + " " + selectedIndex.getOneBased();
+        command = DELETE_COMMAND + " " + selectedIndex.getOneBased();
         deletedOrder = removeOrder(expectedModel, selectedIndex);
         expectedResultMessage = String.format(MESSAGE_DELETE_ORDER_SUCCESS, deletedOrder);
         assertCommandSuccess(command, expectedModel, expectedResultMessage, expectedIndex);
@@ -70,24 +72,24 @@ public class DeleteCommandSystemTest extends OrderBookSystemTest {
         /* --------------------------------- Performing invalid delete operation ------------------------------------ */
 
         /* Case: invalid index (0) -> rejected */
-        command = DeleteCommand.COMMAND_WORD + " 0";
+        command = DELETE_COMMAND + " 0";
         assertCommandFailure(command, MESSAGE_INVALID_DELETE_COMMAND_FORMAT);
 
         /* Case: invalid index (-1) -> rejected */
-        command = DeleteCommand.COMMAND_WORD + " -1";
+        command = DELETE_COMMAND + " -1";
         assertCommandFailure(command, MESSAGE_INVALID_DELETE_COMMAND_FORMAT);
 
         /* Case: invalid index (size + 1) -> rejected */
         Index outOfBoundsIndex = Index.fromOneBased(
                 getModel().getOrderBook().getOrderList().size() + 1);
-        command = DeleteCommand.COMMAND_WORD + " " + outOfBoundsIndex.getOneBased();
+        command = DELETE_COMMAND + " " + outOfBoundsIndex.getOneBased();
         assertCommandFailure(command, MESSAGE_INVALID_ORDER_DISPLAYED_INDEX);
 
         /* Case: invalid arguments (alphabets) -> rejected */
-        assertCommandFailure(DeleteCommand.COMMAND_WORD + " abc", MESSAGE_INVALID_DELETE_COMMAND_FORMAT);
+        assertCommandFailure(DELETE_COMMAND + " abc", MESSAGE_INVALID_DELETE_COMMAND_FORMAT);
 
         /* Case: invalid arguments (extra argument) -> rejected */
-        assertCommandFailure(DeleteCommand.COMMAND_WORD + " 1 abc", MESSAGE_INVALID_DELETE_COMMAND_FORMAT);
+        assertCommandFailure(DELETE_COMMAND + " 1 abc", MESSAGE_INVALID_DELETE_COMMAND_FORMAT);
 
         /* Case: mixed case command word -> rejected */
         assertCommandFailure("DelETE 1", MESSAGE_UNKNOWN_COMMAND);
@@ -116,7 +118,7 @@ public class DeleteCommandSystemTest extends OrderBookSystemTest {
         String expectedResultMessage = String.format(MESSAGE_DELETE_ORDER_SUCCESS, deletedOrder);
 
         assertCommandSuccess(
-                DeleteCommand.COMMAND_WORD + " " + toDelete.getOneBased(), expectedModel, expectedResultMessage);
+                DELETE_COMMAND + " " + toDelete.getOneBased(), expectedModel, expectedResultMessage);
     }
 
     /**

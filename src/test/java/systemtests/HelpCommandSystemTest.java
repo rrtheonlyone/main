@@ -13,6 +13,7 @@ import guitests.GuiRobot;
 import guitests.guihandles.HelpWindowHandle;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.order.DeleteCommand;
+import seedu.address.logic.commands.order.OrderCommand;
 import seedu.address.logic.commands.order.SelectCommand;
 import seedu.address.ui.BrowserPanel;
 import seedu.address.ui.StatusBarFooter;
@@ -60,7 +61,7 @@ public class HelpCommandSystemTest extends OrderBookSystemTest {
         getMainWindowHandle().focus();
 
         // assert that while the help window is open the UI updates correctly for a command execution
-        executeCommand(SelectCommand.COMMAND_WORD + " " + INDEX_FIRST_ORDER.getOneBased());
+        executeCommand(OrderCommand.COMMAND_WORD + " " + SelectCommand.COMMAND_WORD + " " + INDEX_FIRST_ORDER.getOneBased());
         assertEquals("", getCommandBox().getInput());
         assertCommandBoxShowsDefaultStyle();
         assertNotEquals(HelpCommand.SHOWING_HELP_MESSAGE, getResultDisplay().getText());
@@ -69,7 +70,7 @@ public class HelpCommandSystemTest extends OrderBookSystemTest {
 
         // assert that the status bar too is updated correctly while the help window is open
         // note: the select command tested above does not update the status bar
-        executeCommand(DeleteCommand.COMMAND_WORD + " " + INDEX_FIRST_ORDER.getOneBased());
+        executeCommand(OrderCommand.COMMAND_WORD + " " + DeleteCommand.COMMAND_WORD + " " + INDEX_FIRST_ORDER.getOneBased());
         assertNotEquals(StatusBarFooter.SYNC_STATUS_INITIAL, getStatusBarFooter().getSyncStatus());
     }
 

@@ -8,6 +8,7 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.order.ClearCommand;
+import seedu.address.logic.commands.order.OrderCommand;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 
@@ -17,10 +18,12 @@ public class ClearCommandSystemTest extends OrderBookSystemTest {
     public void clear() {
         final Model defaultModel = getModel();
 
+        String clearCommand = OrderCommand.COMMAND_WORD + " " + ClearCommand.COMMAND_WORD;
+
         /* Case: clear non-empty address book, command with leading spaces and trailing alphanumeric characters and
          * spaces -> cleared
          */
-        assertCommandSuccess("   " + ClearCommand.COMMAND_WORD + " ab12   ");
+        assertCommandSuccess("   " + clearCommand + " ab12   ");
         assertSelectedCardUnchanged();
 
         /* Case: undo clearing address book -> original address book restored */
@@ -38,11 +41,11 @@ public class ClearCommandSystemTest extends OrderBookSystemTest {
         /* Case: selects first card in person list and clears address book -> cleared and no card selected */
         executeCommand(UndoCommand.COMMAND_WORD); // restores the original address book
         selectOrder(Index.fromOneBased(1));
-        assertCommandSuccess(ClearCommand.COMMAND_WORD);
+        assertCommandSuccess(clearCommand);
         assertSelectedCardDeselected();
 
         /* Case: clear empty address book -> cleared */
-        assertCommandSuccess(ClearCommand.COMMAND_WORD);
+        assertCommandSuccess(clearCommand);
         assertSelectedCardUnchanged();
 
         /* Case: mixed case command word -> rejected */

@@ -35,6 +35,7 @@ import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.order.ClearCommand;
 import seedu.address.logic.commands.order.ListCommand;
+import seedu.address.logic.commands.order.OrderCommand;
 import seedu.address.logic.commands.order.SelectCommand;
 import seedu.address.model.Model;
 import seedu.address.model.OrderBook;
@@ -141,7 +142,7 @@ public abstract class OrderBookSystemTest {
      * Displays all order in the address book.
      */
     protected void showAllOrders() {
-        executeCommand(ListCommand.COMMAND_WORD);
+        executeCommand(OrderCommand.COMMAND_WORD + " " + ListCommand.COMMAND_WORD);
         assertEquals(getModel().getOrderBook().getOrderList().size(), getModel().getFilteredOrderList().size());
     }
 
@@ -149,7 +150,7 @@ public abstract class OrderBookSystemTest {
      * Selects the order at {@code index} of the displayed list.
      */
     protected void selectOrder(Index index) {
-        executeCommand(SelectCommand.COMMAND_WORD + " " + index.getOneBased());
+        executeCommand(OrderCommand.COMMAND_WORD + " " + SelectCommand.COMMAND_WORD + " " + index.getOneBased());
         assertEquals(index.getZeroBased(), getOrderListPanel().getSelectedCardIndex());
     }
 
@@ -157,7 +158,7 @@ public abstract class OrderBookSystemTest {
      * Deletes all orders in the order book.
      */
     protected void deleteAllOrders() {
-        executeCommand(ClearCommand.COMMAND_WORD);
+        executeCommand(OrderCommand.COMMAND_WORD + " " + ClearCommand.COMMAND_WORD);
         assertEquals(0, getModel().getOrderBook().getOrderList().size());
     }
 
