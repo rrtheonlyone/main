@@ -12,7 +12,9 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.OrderBookChangedEvent;
+import seedu.address.commons.events.model.UsersListChangedEvent;
 import seedu.address.model.order.Order;
+import seedu.address.model.user.User;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -23,21 +25,29 @@ public class ModelManager extends ComponentManager implements Model {
     private final VersionedOrderBook versionedOrderBook;
     private final FilteredList<Order> filteredOrders;
 
+    private final VersionedUsersList versionedUsersList;
+    private final FilteredList<User> filteredUsers;
+
     /**
-     * Initializes a ModelManager with the given addressBook and userPrefs.
+     * Initializes a ModelManager with the given addressBook, usersList and userPrefs.
      */
-    public ModelManager(ReadOnlyOrderBook orderBook, UserPrefs userPrefs) {
+    public ModelManager(ReadOnlyOrderBook orderBook, ReadOnlyUsersList usersList, UserPrefs userPrefs) {
         super();
         requireAllNonNull(orderBook, userPrefs);
-
-        logger.fine("Initializing with order book: " + orderBook + " and user prefs " + userPrefs);
-
         versionedOrderBook = new VersionedOrderBook(orderBook);
         filteredOrders = new FilteredList<>(versionedOrderBook.getOrderList());
+        versionedUsersList = new VersionedUsersList(usersList);
+        filteredUsers = new FilteredList<>(versionedUsersList.getUserList());
+
+        logger.fine("Initializing with order book: " + orderBook
+                + " and users list "
+                + usersList
+                + " and user prefs "
+                + userPrefs);
     }
 
     public ModelManager() {
-        this(new OrderBook(), new UserPrefs());
+        this(new OrderBook(), new UsersList(), new UserPrefs());
     }
 
     @Override
@@ -129,6 +139,55 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void commitOrderBook() {
         versionedOrderBook.commit();
+    }
+
+
+    //=========== Filtered User List Accessors =============================================================
+    @Override
+    public boolean hasUser(User user) {
+        requireNonNull(user);
+        return versionedUsersList.hasUser(user);
+    }
+
+    @Override
+    public void addUser(User user) {
+        versionedUsersList.addUser(user);
+        updateFilteredUsersList(PREDICATE_SHOW_ALL_USERS);
+        indicateUsersListChanged();
+    }
+
+    @Override
+    public void commitUsersList() {
+        versionedUsersList.commit();
+    }
+
+    @Override
+    public void updateFilteredUsersList(Predicate<User> predicate) {
+        requireNonNull(predicate);
+        filteredUsers.setPredicate(predicate);
+    }
+
+    @Override
+    public ObservableList<User> getFilteredUsersList() {
+        return FXCollections.unmodifiableObservableList(filteredUsers);
+    }
+
+    @Override
+    public boolean loginUser(User user) {
+        requireNonNull(user);
+        return versionedUsersList.login(user);
+    }
+
+    @Override
+    public ReadOnlyUsersList getUsersList() {
+        return versionedUsersList;
+    }
+
+    /**
+     * Raises an event to indicate the model has changed
+     */
+    private void indicateUsersListChanged() {
+        raise(new UsersListChangedEvent(versionedUsersList));
     }
 
     @Override

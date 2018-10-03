@@ -2,6 +2,7 @@ package seedu.address.logic.commands;
 
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.testutil.TypicalOrders.getTypicalOrderBook;
+import static seedu.address.testutil.user.TypicalUsers.getTypicalUsersList;
 
 import org.junit.Test;
 
@@ -26,8 +27,8 @@ public class ClearCommandTest {
 
     @Test
     public void execute_nonEmptyOrderBook_success() {
-        Model model = new ModelManager(getTypicalOrderBook(), new UserPrefs());
-        Model expectedModel = new ModelManager(getTypicalOrderBook(), new UserPrefs());
+        Model model = new ModelManager(getTypicalOrderBook(), getTypicalUsersList(), new UserPrefs());
+        Model expectedModel = new ModelManager(getTypicalOrderBook(), getTypicalUsersList(), new UserPrefs());
         expectedModel.resetData(new OrderBook());
         expectedModel.commitOrderBook();
 
