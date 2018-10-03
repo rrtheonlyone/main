@@ -19,7 +19,7 @@ public class UniqueUserList implements Iterable<User> {
     private final ObservableList<User> internalList = FXCollections.observableArrayList();
 
     /**
-     * Returns true if the list contains an equivalent person as the given argument.
+     * Returns true if the list contains an equivalent user as the given argument.
      */
     public boolean contains(User toCheck) {
         requireNonNull(toCheck);
@@ -27,7 +27,7 @@ public class UniqueUserList implements Iterable<User> {
     }
 
     /**
-     * Returns true if the list contains an equivalent person as the given username and password.
+     * Returns true if the list contains an equivalent user as the given username and password.
      */
     public boolean check(User toCheck) {
         requireNonNull(toCheck);
@@ -49,7 +49,7 @@ public class UniqueUserList implements Iterable<User> {
     /**
      * Replaces the user {@code target} in the list with {@code editedPerson}.
      * {@code target} must exist in the list.
-     * The person identity of {@code editedPerson} must not be the same as another existing person in the list.
+     * The person identity of {@code editedPerson} must not be the same as another existing user in the list.
      */
     public void setUser(User target, User editedPerson) {
         requireAllNonNull(target, editedPerson);
@@ -67,8 +67,8 @@ public class UniqueUserList implements Iterable<User> {
     }
 
     /**
-     * Removes the equivalent person from the list.
-     * The person must exist in the list.
+     * Removes the equivalent user from the list.
+     * The user must exist in the list.
      */
     public void remove(User toRemove) {
         requireNonNull(toRemove);
@@ -83,8 +83,8 @@ public class UniqueUserList implements Iterable<User> {
     }
 
     /**
-     * Replaces the contents of this list with {@code persons}.
-     * {@code persons} must not contain duplicate persons.
+     * Replaces the contents of this list with {@code users}.
+     * {@code users} must not contain duplicate users.
      */
     public void setUsers(List<User> users) {
         requireAllNonNull(users);
@@ -120,7 +120,7 @@ public class UniqueUserList implements Iterable<User> {
     }
 
     /**
-     * Returns true if {@code persons} contains only unique users.
+     * Returns true if {@code users} contains only unique users.
      */
     private boolean usersAreUnique(List<User> users) {
         for (int i = 0; i < users.size() - 1; i++) {
