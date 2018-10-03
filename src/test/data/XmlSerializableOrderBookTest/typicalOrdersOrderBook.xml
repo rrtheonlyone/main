@@ -24,7 +24,7 @@
         <name>Daniel Meier</name>
         <phone>87652533</phone>
         <address>10th street</address>
-        <food>FIsh and Chips</food>
+        <food>Fish and Chips</food>
     </orders>
     <orders>
         <name>Elle Meyer</name>
@@ -42,6 +42,6 @@
         <name>George Best</name>
         <phone>9482442</phone>
         <address>4th street</address>
-        <food>Ice Cream</food>
+        <food>Ice cream</food>
     </orders>
 </orderbook>

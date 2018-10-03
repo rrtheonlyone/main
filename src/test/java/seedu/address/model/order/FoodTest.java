@@ -34,7 +34,7 @@ public class FoodTest {
         // valid food
         assertTrue(Food.isValidFood("roti prata")); // alphabets only
         assertTrue(Food.isValidFood("chocolate milkshake")); // numbers only
-        assertTrue(Food.isValidFood("ice-tea")); // alphanumeric characters
+        assertTrue(Food.isValidFood("ice tea")); // alphanumeric characters
         assertTrue(Food.isValidFood("rojak")); // with capital letters
         assertTrue(Food.isValidFood("lasagna")); // long names
     }

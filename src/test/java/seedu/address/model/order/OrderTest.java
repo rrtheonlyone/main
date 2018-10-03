@@ -67,15 +67,11 @@ public class OrderTest {
         editedAlice = new OrderBuilder(ALICE).withPhone(VALID_PHONE_BOB).build();
         assertFalse(ALICE.equals(editedAlice));
 
-        // different email -> returns false
-        editedAlice = new OrderBuilder(ALICE).build();
-        assertFalse(ALICE.equals(editedAlice));
-
         // different address -> returns false
         editedAlice = new OrderBuilder(ALICE).withAddress(VALID_ADDRESS_BOB).build();
         assertFalse(ALICE.equals(editedAlice));
 
-        // different tags -> returns false
+        // different food -> returns false
         editedAlice = new OrderBuilder(ALICE).withFood(VALID_FOOD_BURGER).build();
         assertFalse(ALICE.equals(editedAlice));
     }

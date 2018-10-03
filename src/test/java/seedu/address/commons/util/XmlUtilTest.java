@@ -31,7 +31,7 @@ public class XmlUtilTest {
     private static final Path VALID_FILE = TEST_DATA_FOLDER.resolve("validOrderBook.xml");
     private static final Path MISSING_ORDER_FIELD_FILE = TEST_DATA_FOLDER.resolve("missingOrderField.xml");
     private static final Path INVALID_ORDER_FIELD_FILE = TEST_DATA_FOLDER.resolve("invalidOrderField.xml");
-    private static final Path VALID_PERSON_FILE = TEST_DATA_FOLDER.resolve("validOrder.xml");
+    private static final Path VALID_ORDER_FILE = TEST_DATA_FOLDER.resolve("validOrder.xml");
     private static final Path TEMP_FILE = TestUtil.getFilePathInSandboxFolder("tempOrderBook.xml");
 
     private static final String INVALID_PHONE = "9482asf424";
@@ -95,7 +95,7 @@ public class XmlUtilTest {
     @Test
     public void xmlAdaptedOrderFromFile_fileWithValidOrder_validResult() throws Exception {
         XmlAdaptedOrder actualOrder = XmlUtil.getDataFromFile(
-                INVALID_ORDER_FIELD_FILE, XmlAdaptedOrderWithRootElement.class);
+                VALID_ORDER_FILE, XmlAdaptedOrderWithRootElement.class);
         XmlAdaptedOrder expectedOrder = new XmlAdaptedOrder(
                 VALID_NAME, VALID_PHONE, VALID_ADDRESS, VALID_FOOD);
         assertEquals(expectedOrder, actualOrder);

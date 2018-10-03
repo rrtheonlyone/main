@@ -59,7 +59,7 @@ public class UniqueOrderListTest {
     @Test
     public void add_duplicateOrder_throwsDuplicateOrderException() {
         uniqueOrderList.add(ALICE);
-        thrown.expect(DuplicatePersonException.class);
+        thrown.expect(DuplicateOrderException.class);
         uniqueOrderList.add(ALICE);
     }
 
@@ -134,8 +134,8 @@ public class UniqueOrderListTest {
     public void remove_existingOrder_removesOrder() {
         uniqueOrderList.add(ALICE);
         uniqueOrderList.remove(ALICE);
-        UniquePersonList expectedUniquePersonList = new UniquePersonList();
-        assertEquals(expectedUniquePersonList, uniqueOrderList);
+        UniqueOrderList expectedUniqueOrderList = new UniqueOrderList();
+        assertEquals(expectedUniqueOrderList, uniqueOrderList);
     }
 
     @Test

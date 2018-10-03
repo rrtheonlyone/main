@@ -99,15 +99,15 @@ public class OrderListPanelTest extends GuiUnitTest {
             builder.append("<phone>000</phone>\n");
             builder.append("<address>a</address>\n");
             builder.append("<food>milo</food>\n");
-            builder.append("</persons>\n");
+            builder.append("</orders>\n");
         }
         builder.append("</orderbook>\n");
 
-        Path manyPersonsFile = Paths.get(TEST_DATA_FOLDER + "manyOrders.xml");
-        FileUtil.createFile(manyPersonsFile);
-        FileUtil.writeToFile(manyPersonsFile, builder.toString());
-        manyPersonsFile.toFile().deleteOnExit();
-        return manyPersonsFile;
+        Path manyOrdersFile = Paths.get(TEST_DATA_FOLDER + "manyOrders.xml");
+        FileUtil.createFile(manyOrdersFile);
+        FileUtil.writeToFile(manyOrdersFile, builder.toString());
+        manyOrdersFile.toFile().deleteOnExit();
+        return manyOrdersFile;
     }
 
     /**
