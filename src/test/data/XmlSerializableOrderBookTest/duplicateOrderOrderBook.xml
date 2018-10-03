@@ -1,20 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addressbook>
+<orderbook>
 
-    <persons>
+    <orders>
         <name>Alice Pauline</name>
         <phone>94351253</phone>
-        <email>alice@example.com</email>
         <address>123, Jurong West Ave 6, #08-111</address>
-        <tagged>friends</tagged>
-    </persons>
+        <food>chocolate milk</food>
+    </orders>
 
-    <!-- Person with same identity as Alice Pauline -->
-    <persons>
+    <!-- Order with same identity as Alice Pauline -->
+    <orders>
         <name>Alice Pauline</name>
         <phone>94351253</phone>
-        <email>pauline@example.com</email>
         <address>4th street</address>
-    </persons>
+        <food>tea</food>
+    </orders>
 
-</addressbook>
+</orderbook>

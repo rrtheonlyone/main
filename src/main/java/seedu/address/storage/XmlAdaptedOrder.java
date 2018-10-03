@@ -60,7 +60,7 @@ public class XmlAdaptedOrder {
     }
 
     /**
-     * Converts this jaxb-friendly adapted person object into the model's Order object.
+     * Converts this jaxb-friendly adapted order object into the model's Order object.
      *
      * @throws IllegalValueException if there were any data constraints violated in the adapted order
      */
