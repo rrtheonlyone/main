@@ -2,6 +2,6 @@
 <deliverymenlist>
     <!-- Person with invalid email field -->
     <deliverymen>
-        <name>Hans Muster</name>
+        <name>Hans Mu5+er</name>
     </deliverymen>
 </deliverymenlist>
