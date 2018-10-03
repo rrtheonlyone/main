@@ -1,6 +1,7 @@
 package seedu.address.commons.util;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
 import java.io.FileNotFoundException;
 import java.nio.file.Path;
@@ -16,9 +17,12 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import seedu.address.model.OrderBook;
+import seedu.address.model.deliveryman.DeliverymenList;
 import seedu.address.storage.XmlAdaptedFood;
 import seedu.address.storage.XmlAdaptedOrder;
 import seedu.address.storage.XmlSerializableOrderBook;
+import seedu.address.storage.deliveryman.XmlAdaptedDeliveryman;
+import seedu.address.storage.deliveryman.XmlSerializableDeliverymenList;
 import seedu.address.testutil.OrderBookBuilder;
 import seedu.address.testutil.OrderBuilder;
 import seedu.address.testutil.TestUtil;
@@ -29,9 +33,12 @@ public class XmlUtilTest {
     private static final Path EMPTY_FILE = TEST_DATA_FOLDER.resolve("empty.xml");
     private static final Path MISSING_FILE = TEST_DATA_FOLDER.resolve("missing.xml");
     private static final Path VALID_FILE = TEST_DATA_FOLDER.resolve("validOrderBook.xml");
+    private static final Path VALID_DELIVERYMEN_LIST_FILE = TEST_DATA_FOLDER.resolve("validDeliverymenList.xml");
     private static final Path MISSING_ORDER_FIELD_FILE = TEST_DATA_FOLDER.resolve("missingOrderField.xml");
     private static final Path INVALID_ORDER_FIELD_FILE = TEST_DATA_FOLDER.resolve("invalidOrderField.xml");
+    private static final Path INVALID_DELIVERYMAN_FIELD_FILE = TEST_DATA_FOLDER.resolve("invalidDeliverymanField.xml");
     private static final Path VALID_ORDER_FILE = TEST_DATA_FOLDER.resolve("validOrder.xml");
+    private static final Path VALID_DELIVERYMAN_FILE = TEST_DATA_FOLDER.resolve("validDeliveryman.xml");
     private static final Path TEMP_FILE = TestUtil.getFilePathInSandboxFolder("tempOrderBook.xml");
 
     private static final String INVALID_PHONE = "9482asf424";
@@ -53,7 +60,7 @@ public class XmlUtilTest {
     @Test
     public void getDataFromFile_nullClass_throwsNullPointerException() throws Exception {
         thrown.expect(NullPointerException.class);
-        XmlUtil.getDataFromFile(VALID_FILE, null);
+        XmlUtil.getDataFromFile(VALID_ADDRESSBOOK_FILE, null);
     }
 
     @Test
@@ -72,6 +79,8 @@ public class XmlUtilTest {
     public void getDataFromFile_validFile_validResult() throws Exception {
         OrderBook dataFromFile = XmlUtil.getDataFromFile(VALID_FILE, XmlSerializableOrderBook.class).toModelType();
         assertEquals(9, dataFromFile.getOrderList().size());
+        DeliverymenList deliverymenDataFromFile = XmlUtil.getDataFromFile(VALID_DELIVERYMEN_LIST_FILE, XmlSerializableDeliverymenList.class).toModelType();
+        assertEquals(2, deliverymenDataFromFile.getDeliverymenList().size());
     }
 
     @Test
@@ -90,6 +99,11 @@ public class XmlUtilTest {
         XmlAdaptedOrder expectedOrder = new XmlAdaptedOrder(
                 VALID_NAME, INVALID_PHONE, VALID_ADDRESS, VALID_FOOD);
         assertEquals(expectedOrder, actualOrder);
+
+        XmlAdaptedDeliveryman actualDeliveryman = XmlUtil.getDataFromFile(
+            INVALID_DELIVERYMAN_FIELD_FILE, XmlAdaptedDeliverymanWithRootElement.class);
+        XmlAdaptedDeliveryman expectedDeliveryman = new XmlAdaptedDeliveryman(VALID_NAME);
+        assertNotEquals(expectedDeliveryman, actualDeliveryman);
     }
 
     @Test
@@ -99,6 +113,11 @@ public class XmlUtilTest {
         XmlAdaptedOrder expectedOrder = new XmlAdaptedOrder(
                 VALID_NAME, VALID_PHONE, VALID_ADDRESS, VALID_FOOD);
         assertEquals(expectedOrder, actualOrder);
+
+        XmlAdaptedDeliveryman actualDeliveryman = XmlUtil.getDataFromFile(
+            VALID_DELIVERYMAN_FILE, XmlAdaptedDeliverymanWithRootElement.class);
+        XmlAdaptedDeliveryman expectedDeliveryman = new XmlAdaptedDeliveryman(VALID_NAME);
+        assertEquals(expectedDeliveryman, actualDeliveryman);
     }
 
     @Test
@@ -110,7 +129,7 @@ public class XmlUtilTest {
     @Test
     public void saveDataToFile_nullClass_throwsNullPointerException() throws Exception {
         thrown.expect(NullPointerException.class);
-        XmlUtil.saveDataToFile(VALID_FILE, null);
+        XmlUtil.saveDataToFile(VALID_ADDRESSBOOK_FILE, null);
     }
 
     @Test
@@ -134,6 +153,7 @@ public class XmlUtilTest {
         XmlUtil.saveDataToFile(TEMP_FILE, dataToWrite);
         dataFromFile = XmlUtil.getDataFromFile(TEMP_FILE, XmlSerializableOrderBook.class);
         assertEquals(dataToWrite, dataFromFile);
+
     }
 
     /**
@@ -141,6 +161,12 @@ public class XmlUtilTest {
      * objects.
      */
     @XmlRootElement(name = "order")
-    private static class XmlAdaptedOrderWithRootElement extends XmlAdaptedOrder {
-    }
+    private static class XmlAdaptedOrderWithRootElement extends XmlAdaptedOrder {}
+
+    /**
+     * Test class annotated with {@code XmlRootElement} to allow unmarshalling of .xml data to
+     * {@code XmlAdaptedDeliveryman} objects.
+     */
+    @XmlRootElement(name = "deliveryman")
+    private static class XmlAdaptedDeliverymanWithRootElement extends XmlAdaptedDeliveryman {}
 }
