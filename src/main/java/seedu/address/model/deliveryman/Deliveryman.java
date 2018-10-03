@@ -26,7 +26,7 @@ public class Deliveryman {
     /**
      * Returns if this is the same person as {@code other}
      */
-    public boolean isSamePerson(Deliveryman other) {
+    public boolean isSameDeliveryman(Deliveryman other) {
         if (other == this) {
             return true;
         }

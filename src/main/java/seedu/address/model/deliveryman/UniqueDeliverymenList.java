@@ -22,7 +22,7 @@ public class UniqueDeliverymenList implements Iterable<Deliveryman> {
      */
     public boolean contains(Deliveryman toCheck) {
         requireNonNull(toCheck);
-        return internalList.stream().anyMatch(toCheck::isSamePerson);
+        return internalList.stream().anyMatch(toCheck::isSameDeliveryman);
     }
 
     /**
@@ -63,7 +63,7 @@ public class UniqueDeliverymenList implements Iterable<Deliveryman> {
             throw new PersonNotFoundException();
         }
 
-        if (!target.isSamePerson(edited) && contains(edited)) {
+        if (!target.isSameDeliveryman(edited) && contains(edited)) {
             throw new DuplicatePersonException();
         }
 
@@ -112,7 +112,7 @@ public class UniqueDeliverymenList implements Iterable<Deliveryman> {
     private boolean deliverymenAreUnique(List<Deliveryman> deliverymen) {
         for (int i = 0; i < deliverymen.size() - 1; i++) {
             for (int j = i + 1; j < deliverymen.size(); j++) {
-                if (deliverymen.get(i).isSamePerson(deliverymen.get(j))) {
+                if (deliverymen.get(i).isSameDeliveryman(deliverymen.get(j))) {
                     return false;
                 }
             }

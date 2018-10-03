@@ -85,7 +85,7 @@ public class VersionedDeliverymenList extends DeliverymenList {
      */
     public static class NoUndoableStateException extends RuntimeException {
         private NoUndoableStateException() {
-            super("Current state pointer at start of addressBookState list, unable to undo.");
+            super("Current state pointer at start of deliverymenListState list, unable to undo.");
         }
     }
 

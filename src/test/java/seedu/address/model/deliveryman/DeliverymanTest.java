@@ -19,17 +19,17 @@ public class DeliverymanTest {
     @Test
     public void isSameDeliveryman() {
         // same object -> returns true
-        assertTrue(CHIKAO.isSamePerson(CHIKAO));
+        assertTrue(CHIKAO.isSameDeliveryman(CHIKAO));
 
         // null -> returns false
-        assertFalse(CHIKAO.isSamePerson(null));
+        assertFalse(CHIKAO.isSameDeliveryman(null));
 
         // different name -> returns false
         Deliveryman differentChikao = new DeliverymanBuilder(CHIKAO).withName(VALID_NAME_BOB).build();
-        assertFalse(CHIKAO.isSamePerson(differentChikao));
+        assertFalse(CHIKAO.isSameDeliveryman(differentChikao));
 
         // completely different deliveryman -> returns false
-        assertFalse(CHIKAO.isSamePerson(YINJING));
+        assertFalse(CHIKAO.isSameDeliveryman(YINJING));
     }
 
     @Test
