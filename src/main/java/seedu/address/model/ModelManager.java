@@ -11,8 +11,8 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.events.model.AddressBookChangedEvent;
-import seedu.address.model.person.Person;
+import seedu.address.commons.events.model.OrderBookChangedEvent;
+import seedu.address.model.order.Order;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -20,113 +20,115 @@ import seedu.address.model.person.Person;
 public class ModelManager extends ComponentManager implements Model {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
 
-    private final VersionedAddressBook versionedAddressBook;
-    private final FilteredList<Person> filteredPersons;
+    private final VersionedOrderBook versionedOrderBook;
+    private final FilteredList<Order> filteredOrders;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
      */
-    public ModelManager(ReadOnlyAddressBook addressBook, UserPrefs userPrefs) {
+    public ModelManager(ReadOnlyOrderBook orderBook, UserPrefs userPrefs) {
         super();
-        requireAllNonNull(addressBook, userPrefs);
+        requireAllNonNull(orderBook, userPrefs);
 
-        logger.fine("Initializing with address book: " + addressBook + " and user prefs " + userPrefs);
+        logger.fine("Initializing with order book: " + orderBook + " and user prefs " + userPrefs);
 
-        versionedAddressBook = new VersionedAddressBook(addressBook);
-        filteredPersons = new FilteredList<>(versionedAddressBook.getPersonList());
+        versionedOrderBook = new VersionedOrderBook(orderBook);
+        filteredOrders = new FilteredList<>(versionedOrderBook.getOrderList());
     }
 
     public ModelManager() {
-        this(new AddressBook(), new UserPrefs());
+        this(new OrderBook(), new UserPrefs());
     }
 
     @Override
-    public void resetData(ReadOnlyAddressBook newData) {
-        versionedAddressBook.resetData(newData);
-        indicateAddressBookChanged();
+    public void resetData(ReadOnlyOrderBook newData) {
+        versionedOrderBook.resetData(newData);
+        indicateOrderBookChanged();
     }
 
     @Override
-    public ReadOnlyAddressBook getAddressBook() {
-        return versionedAddressBook;
+    public ReadOnlyOrderBook getOrderBook() {
+        return versionedOrderBook;
     }
-
-    /** Raises an event to indicate the model has changed */
-    private void indicateAddressBookChanged() {
-        raise(new AddressBookChangedEvent(versionedAddressBook));
-    }
-
-    @Override
-    public boolean hasPerson(Person person) {
-        requireNonNull(person);
-        return versionedAddressBook.hasPerson(person);
-    }
-
-    @Override
-    public void deletePerson(Person target) {
-        versionedAddressBook.removePerson(target);
-        indicateAddressBookChanged();
-    }
-
-    @Override
-    public void addPerson(Person person) {
-        versionedAddressBook.addPerson(person);
-        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        indicateAddressBookChanged();
-    }
-
-    @Override
-    public void updatePerson(Person target, Person editedPerson) {
-        requireAllNonNull(target, editedPerson);
-
-        versionedAddressBook.updatePerson(target, editedPerson);
-        indicateAddressBookChanged();
-    }
-
-    //=========== Filtered Person List Accessors =============================================================
 
     /**
-     * Returns an unmodifiable view of the list of {@code Person} backed by the internal list of
-     * {@code versionedAddressBook}
+     * Raises an event to indicate the model has changed
      */
-    @Override
-    public ObservableList<Person> getFilteredPersonList() {
-        return FXCollections.unmodifiableObservableList(filteredPersons);
+    private void indicateOrderBookChanged() {
+        raise(new OrderBookChangedEvent(versionedOrderBook));
     }
 
     @Override
-    public void updateFilteredPersonList(Predicate<Person> predicate) {
+    public boolean hasOrder(Order order) {
+        requireNonNull(order);
+        return versionedOrderBook.hasOrder(order);
+    }
+
+    @Override
+    public void deleteOrder(Order target) {
+        versionedOrderBook.removeOrder(target);
+        indicateOrderBookChanged();
+    }
+
+    @Override
+    public void addOrder(Order order) {
+        versionedOrderBook.addOrder(order);
+        updateFilteredOrderList(PREDICATE_SHOW_ALL_ORDERS);
+        indicateOrderBookChanged();
+    }
+
+    @Override
+    public void updateOrder(Order target, Order editedOrder) {
+        requireAllNonNull(target, editedOrder);
+
+        versionedOrderBook.updateOrder(target, editedOrder);
+        indicateOrderBookChanged();
+    }
+
+    //=========== Filtered Orders List Accessors =============================================================
+
+    /**
+     * Returns an unmodifiable view of the list of {@code Order} backed by the internal list of
+     * {@code versionedOrderBook}
+     */
+    @Override
+    public ObservableList<Order> getFilteredOrderList() {
+        return FXCollections.unmodifiableObservableList(filteredOrders);
+    }
+
+    @Override
+    public void updateFilteredOrderList(Predicate<Order> predicate) {
         requireNonNull(predicate);
-        filteredPersons.setPredicate(predicate);
+        filteredOrders.setPredicate(predicate);
     }
 
     //=========== Undo/Redo =================================================================================
 
     @Override
-    public boolean canUndoAddressBook() {
-        return versionedAddressBook.canUndo();
+    public boolean canUndoOrderBook() {
+        return versionedOrderBook.canUndo();
     }
 
     @Override
-    public boolean canRedoAddressBook() {
-        return versionedAddressBook.canRedo();
+    public boolean canRedoOrderBook() {
+        return versionedOrderBook.canRedo();
     }
 
     @Override
-    public void undoAddressBook() {
-        versionedAddressBook.undo();
-        indicateAddressBookChanged();
+    public void undoOrderBook() {
+        versionedOrderBook.undo();
+        indicateOrderBookChanged();
     }
 
     @Override
-    public void redoAddressBook() {
-        versionedAddressBook.redo();
-        indicateAddressBookChanged();
+    public void redoOrderBook() {
+        versionedOrderBook.redo();
+        indicateOrderBookChanged();
     }
 
     @Override
-    public void commitAddressBook() {
-        versionedAddressBook.commit();
+    public void commitOrderBook() {
+        versionedOrderBook.commit();
     }
 
     @Override
@@ -143,8 +145,8 @@ public class ModelManager extends ComponentManager implements Model {
 
         // state check
         ModelManager other = (ModelManager) obj;
-        return versionedAddressBook.equals(other.versionedAddressBook)
-                && filteredPersons.equals(other.filteredPersons);
+        return versionedOrderBook.equals(other.versionedOrderBook)
+                && filteredOrders.equals(other.filteredOrders);
     }
 
 }
