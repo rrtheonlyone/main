@@ -25,7 +25,8 @@ import static seedu.address.testutil.TypicalOrders.BOB;
 
 import org.junit.Test;
 
-import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.order.AddCommand;
+import seedu.address.logic.parser.order.AddCommandParser;
 import seedu.address.model.order.Order;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Name;

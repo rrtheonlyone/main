@@ -7,7 +7,8 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_ORDER;
 
 import org.junit.Test;
 
-import seedu.address.logic.commands.SelectCommand;
+import seedu.address.logic.commands.order.SelectCommand;
+import seedu.address.logic.parser.order.SelectCommandParser;
 
 /**
  * Test scope: similar to {@code DeleteCommandParserTest}.

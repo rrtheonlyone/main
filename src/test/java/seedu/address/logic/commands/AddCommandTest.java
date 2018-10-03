@@ -16,6 +16,7 @@ import org.junit.rules.ExpectedException;
 import javafx.collections.ObservableList;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.commands.order.AddCommand;
 import seedu.address.model.Model;
 import seedu.address.model.OrderBook;
 import seedu.address.model.ReadOnlyOrderBook;

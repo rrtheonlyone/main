@@ -7,6 +7,7 @@ import static seedu.address.testutil.user.TypicalUsers.getTypicalUsersList;
 import org.junit.Test;
 
 import seedu.address.logic.CommandHistory;
+import seedu.address.logic.commands.order.ClearCommand;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.OrderBook;
