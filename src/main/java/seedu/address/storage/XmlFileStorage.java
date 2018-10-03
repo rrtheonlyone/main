@@ -7,8 +7,8 @@ import javax.xml.bind.JAXBException;
 
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.util.XmlUtil;
-import seedu.address.storage.user.XmlSerializableUsersList;
 import seedu.address.storage.deliveryman.XmlSerializableDeliverymenList;
+import seedu.address.storage.user.XmlSerializableUsersList;
 
 /**
  * Stores orderbook data in an XML file

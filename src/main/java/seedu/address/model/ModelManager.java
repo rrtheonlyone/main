@@ -38,7 +38,8 @@ public class ModelManager extends ComponentManager implements Model {
     /**
      * Initializes a ModelManager with the given addressBook, usersList and userPrefs.
      */
-    public ModelManager(ReadOnlyOrderBook orderBook, ReadOnlyUsersList usersList, DeliverymenList deliverymenList, UserPrefs userPrefs) {
+    public ModelManager(ReadOnlyOrderBook orderBook, ReadOnlyUsersList usersList, DeliverymenList deliverymenList,
+            UserPrefs userPrefs) {
         super();
         requireAllNonNull(orderBook, userPrefs);
         versionedOrderBook = new VersionedOrderBook(orderBook);
@@ -68,13 +69,14 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public ReadOnlyOrderBook getOrderBook() {
-        return versionedOrderBook;
+    public void resetDeliverymenData(DeliverymenList newData) {
+        versionedDeliverymenList.resetData(newData);
+        indicateDeliverymenListChanged();
     }
 
     @Override
-    public ReadOnlyAddressBook getAddressBook() {
-        return versionedAddressBook;
+    public ReadOnlyOrderBook getOrderBook() {
+        return versionedOrderBook;
     }
 
     @Override

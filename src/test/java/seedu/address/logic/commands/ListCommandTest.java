@@ -26,7 +26,7 @@ public class ListCommandTest {
 
     @Before
     public void setUp() {
-        model = new ModelManager(getTypicalOrderBook(), getTypicalUsersList(), new UserPrefs());
+        model = new ModelManager(getTypicalOrderBook(), getTypicalUsersList(), getTypicalDeliverymenList(), new UserPrefs());
         expectedModel = new ModelManager(model.getOrderBook(), model.getUsersList(), model.getDeliverymenList(), new UserPrefs());
     }
 

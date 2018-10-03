@@ -8,6 +8,7 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_MANAGER_PASSWOR
 import static seedu.address.logic.commands.CommandTestUtil.VALID_MANAGER_PASSWORD_BENSON;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_MANAGER_USERNAME_ALICE;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_MANAGER_USERNAME_BENSON;
+import static seedu.address.testutil.TypicalDeliverymen.getTypicalDeliverymenList;
 import static seedu.address.testutil.TypicalOrders.getTypicalOrderBook;
 import static seedu.address.testutil.user.TypicalUsers.getTypicalUsersList;
 
@@ -30,7 +31,7 @@ public class LoginCommandTest {
 
     private CommandHistory commandHistory = new CommandHistory();
 
-    private Model model = new ModelManager(getTypicalOrderBook(), getTypicalUsersList(), new UserPrefs());
+    private Model model = new ModelManager(getTypicalOrderBook(), getTypicalUsersList(), getTypicalDeliverymenList(), new UserPrefs());
 
     @Test
     public void constructor_nullUser_throwsNullPointerException() {

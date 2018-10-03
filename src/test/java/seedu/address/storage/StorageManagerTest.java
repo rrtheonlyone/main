@@ -86,7 +86,7 @@ public class StorageManagerTest {
         Storage storage = new StorageManager(new XmlOrderBookStorageExceptionThrowingStub(Paths.get("dummy")),
                                              new JsonUserPrefsStorage(Paths.get("dummy")),
                                              new XmlUsersListStorageExceptionThrowingStub(Paths.get("dummy")),
-                                             new XmlDeliverymenListStorageExceptionThrowingStub(Paths.get("dummy2")),
+                                             new XmlDeliverymenListStorageExceptionThrowingStub(Paths.get("dummy2"))
                                             );
         storage.handleOrderBookChangedEvent(new OrderBookChangedEvent(new OrderBook()));
         assertTrue(eventsCollectorRule.eventsCollector.getMostRecent() instanceof DataSavingExceptionEvent);

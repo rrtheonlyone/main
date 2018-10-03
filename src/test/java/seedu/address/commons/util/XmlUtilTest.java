@@ -60,7 +60,7 @@ public class XmlUtilTest {
     @Test
     public void getDataFromFile_nullClass_throwsNullPointerException() throws Exception {
         thrown.expect(NullPointerException.class);
-        XmlUtil.getDataFromFile(VALID_ADDRESSBOOK_FILE, null);
+        XmlUtil.getDataFromFile(VALID_FILE, null);
     }
 
     @Test
@@ -129,7 +129,7 @@ public class XmlUtilTest {
     @Test
     public void saveDataToFile_nullClass_throwsNullPointerException() throws Exception {
         thrown.expect(NullPointerException.class);
-        XmlUtil.saveDataToFile(VALID_ADDRESSBOOK_FILE, null);
+        XmlUtil.saveDataToFile(VALID_FILE, null);
     }
 
     @Test
