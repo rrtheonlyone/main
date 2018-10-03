@@ -9,6 +9,9 @@ import seedu.address.model.Model;
 import seedu.address.model.person.Address;
 import seedu.address.model.route.Route;
 
+/**
+ * Create a route with the given destination.
+ */
 public class CreateRouteCommand extends RouteCommand {
 
     public static final String COMMAND_WORD = "create";

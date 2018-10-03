@@ -36,11 +36,11 @@ public class RouteCommandParser implements Parser<RouteCommand> {
         final String arguments = matcher.group("arguments");
 
         switch (commandWord) {
-            case CreateRouteCommand.COMMAND_WORD:
-                return new CreateRouteCommandParser().parse(arguments);
+        case CreateRouteCommand.COMMAND_WORD:
+            return new CreateRouteCommandParser().parse(arguments);
 
-            default:
-                throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
+        default:
+            throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
         }
     }
 }

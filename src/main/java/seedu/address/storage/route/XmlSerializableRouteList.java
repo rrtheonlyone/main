@@ -8,9 +8,9 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.model.route.ReadOnlyRouteList;
 import seedu.address.model.route.Route;
 import seedu.address.model.route.RouteList;
-import seedu.address.model.route.ReadOnlyRouteList;
 
 /**
  * An Immutable RouteList that is serializable to XML format
