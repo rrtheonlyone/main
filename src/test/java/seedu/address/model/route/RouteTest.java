@@ -2,9 +2,9 @@ package seedu.address.model.route;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
 import static seedu.address.testutil.TypicalRoutes.ANGMOKIO;
 import static seedu.address.testutil.TypicalRoutes.BEDOK;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
 
 import org.junit.Test;
 
