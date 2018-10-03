@@ -7,7 +7,6 @@ import java.util.List;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
-import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
@@ -16,9 +15,9 @@ import seedu.address.model.deliveryman.Deliveryman;
 /**
  * Deletes a deliveryman identified using it's displayed index from the address book.
  */
-public class DeliverymanDeleteCommand extends Command {
+public class DeliverymanDeleteCommand extends DeliverymanCommand {
 
-    public static final String COMMAND_WORD = "deliveryman_delete";
+    public static final String COMMAND_WORD = "delete";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Deletes the deliveryman identified by the index number used in the displayed deliveryman list.\n"

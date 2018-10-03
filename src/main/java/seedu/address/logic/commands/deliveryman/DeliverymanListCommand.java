@@ -4,16 +4,15 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_DELIVERYMEN;
 
 import seedu.address.logic.CommandHistory;
-import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.model.Model;
 
 /**
  * Lists all deliverymen in the list to the user.
  */
-public class DeliverymanListCommand extends Command {
+public class DeliverymanListCommand extends DeliverymanCommand {
 
-    public static final String COMMAND_WORD = "deliveryman_list";
+    public static final String COMMAND_WORD = "list";
 
     public static final String MESSAGE_SUCCESS = "Listed all deliverymen";
 

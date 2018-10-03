@@ -4,7 +4,6 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 
 import seedu.address.logic.CommandHistory;
-import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
@@ -13,9 +12,9 @@ import seedu.address.model.deliveryman.Deliveryman;
 /**
  * Represents the command to add a deliveryman.
  */
-public class DeliverymanAddCommand extends Command {
+public class DeliverymanAddCommand extends DeliverymanCommand {
 
-    public static final String COMMAND_WORD = "deliveryman_add";
+    public static final String COMMAND_WORD = "add";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds deliveryman to the list. "
             + "Parameters: "
