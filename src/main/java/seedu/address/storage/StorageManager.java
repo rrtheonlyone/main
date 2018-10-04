@@ -9,6 +9,7 @@ import com.google.common.eventbus.Subscribe;
 
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.model.DeliverymenListChangedEvent;
 import seedu.address.commons.events.model.OrderBookChangedEvent;
 import seedu.address.commons.events.model.UsersListChangedEvent;
 import seedu.address.commons.events.storage.DataSavingExceptionEvent;
@@ -16,6 +17,8 @@ import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.model.ReadOnlyOrderBook;
 import seedu.address.model.ReadOnlyUsersList;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.deliveryman.DeliverymenList;
+import seedu.address.storage.deliveryman.DeliverymenListStorage;
 import seedu.address.storage.user.UsersListStorage;
 
 /**
@@ -25,13 +28,15 @@ public class StorageManager extends ComponentManager implements Storage {
 
     private static final Logger logger = LogsCenter.getLogger(StorageManager.class);
     private OrderBookStorage orderBookStorage;
+    private DeliverymenListStorage deliverymenListStorage;
     private UserPrefsStorage userPrefsStorage;
     private UsersListStorage usersListStorage;
 
     public StorageManager(OrderBookStorage orderBookStorage, UserPrefsStorage userPrefsStorage,
-                          UsersListStorage usersListStorage) {
+                          UsersListStorage usersListStorage, DeliverymenListStorage deliverymenListStorage) {
         super();
         this.orderBookStorage = orderBookStorage;
+        this.deliverymenListStorage = deliverymenListStorage;
         this.userPrefsStorage = userPrefsStorage;
         this.usersListStorage = usersListStorage;
     }
@@ -136,4 +141,44 @@ public class StorageManager extends ComponentManager implements Storage {
         }
     }
 
+    // ================ DeliverymenList methods ==============================
+
+    @Override
+    public Path getDeliverymenListFilePath() {
+        return deliverymenListStorage.getDeliverymenListFilePath();
+    }
+
+    @Override
+    public Optional<DeliverymenList> readDeliverymenList() throws DataConversionException, IOException {
+        return readDeliverymenList(deliverymenListStorage.getDeliverymenListFilePath());
+    }
+
+    @Override
+    public Optional<DeliverymenList> readDeliverymenList(Path filePath) throws DataConversionException, IOException {
+        logger.fine("Attempting to read data from file: " + filePath);
+        return deliverymenListStorage.readDeliverymenList(filePath);
+    }
+
+    @Override
+    public void saveDeliverymenList(DeliverymenList deliverymenList) throws IOException {
+        saveDeliverymenList(deliverymenList, deliverymenListStorage.getDeliverymenListFilePath());
+    }
+
+    @Override
+    public void saveDeliverymenList(DeliverymenList deliverymenList, Path filePath) throws IOException {
+        logger.fine("Attempting to write to data file: " + filePath);
+        deliverymenListStorage.saveDeliverymenList(deliverymenList, filePath);
+    }
+
+
+    @Override
+    @Subscribe
+    public void handleDeliverymenListChangedEvent(DeliverymenListChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event, "Local data changed, saving to file"));
+        try {
+            saveDeliverymenList(event.data);
+        } catch (IOException e) {
+            raise(new DataSavingExceptionEvent(e));
+        }
+    }
 }

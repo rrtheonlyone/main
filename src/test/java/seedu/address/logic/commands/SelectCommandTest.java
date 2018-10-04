@@ -6,6 +6,7 @@ import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.showOrderAtIndex;
+import static seedu.address.testutil.TypicalDeliverymen.getTypicalDeliverymenList;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_ORDER;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_ORDER;
 import static seedu.address.testutil.TypicalIndexes.INDEX_THIRD_ORDER;
@@ -31,8 +32,10 @@ public class SelectCommandTest {
     @Rule
     public final EventsCollectorRule eventsCollectorRule = new EventsCollectorRule();
 
-    private Model model = new ModelManager(getTypicalOrderBook(), getTypicalUsersList(), new UserPrefs());
-    private Model expectedModel = new ModelManager(getTypicalOrderBook(), getTypicalUsersList(), new UserPrefs());
+    private Model model = new ModelManager(getTypicalOrderBook(), getTypicalUsersList(), getTypicalDeliverymenList(),
+            new UserPrefs());
+    private Model expectedModel = new ModelManager(getTypicalOrderBook(), getTypicalUsersList(),
+            getTypicalDeliverymenList(), new UserPrefs());
     private CommandHistory commandHistory = new CommandHistory();
 
     @Test

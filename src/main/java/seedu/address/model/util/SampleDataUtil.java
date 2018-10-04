@@ -8,6 +8,8 @@ import seedu.address.model.OrderBook;
 import seedu.address.model.ReadOnlyOrderBook;
 import seedu.address.model.ReadOnlyUsersList;
 import seedu.address.model.UsersList;
+import seedu.address.model.deliveryman.Deliveryman;
+import seedu.address.model.deliveryman.DeliverymenList;
 import seedu.address.model.order.Food;
 import seedu.address.model.order.Order;
 import seedu.address.model.person.Address;
@@ -45,6 +47,15 @@ public class SampleDataUtil {
         };
     }
 
+    public static Deliveryman[] getSampleDeliverymen() {
+        return new Deliveryman[] {
+            new Deliveryman(new Name("Hoh Chi Kao")),
+            new Deliveryman(new Name("Tan Yin Jing")),
+            new Deliveryman(new Name("Rajul Rahesh")),
+            new Deliveryman(new Name("Manika Monuela"))
+        };
+    }
+
     public static ReadOnlyOrderBook getSampleOrderBook() {
         OrderBook sampleAb = new OrderBook();
         for (Order sampleOrder : getSampleOrders()) {
@@ -69,6 +80,14 @@ public class SampleDataUtil {
             usersList.addUser(user);
         }
         return usersList;
+    }
+
+    public static DeliverymenList getSampleDeliverymenList() {
+        DeliverymenList sampleDl = new DeliverymenList();
+        for (Deliveryman sampleD : getSampleDeliverymen()) {
+            sampleDl.addDeliveryman(sampleD);
+        }
+        return sampleDl;
     }
 
     /**
