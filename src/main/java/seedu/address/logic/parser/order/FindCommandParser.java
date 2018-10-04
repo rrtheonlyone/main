@@ -1,6 +1,6 @@
 package seedu.address.logic.parser.order;
 
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_ORDER_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 
@@ -35,7 +35,7 @@ public class FindCommandParser implements Parser<OrderCommand> {
                 ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE);
 
         if (arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_PHONE)) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+            throw new ParseException(String.format(MESSAGE_INVALID_ORDER_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
         }
 
         if (argMultimap.getValue(PREFIX_NAME).isPresent()) {
@@ -46,7 +46,7 @@ public class FindCommandParser implements Parser<OrderCommand> {
             String phone = argMultimap.getValue(PREFIX_PHONE).get();
             return new FindCommand(new OrderPhoneContainsKeywordPredicate(phone));
         } else {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+            throw new ParseException(String.format(MESSAGE_INVALID_ORDER_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
         }
     }
 
