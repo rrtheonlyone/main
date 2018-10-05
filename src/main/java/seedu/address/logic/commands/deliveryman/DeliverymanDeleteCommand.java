@@ -43,7 +43,7 @@ public class DeliverymanDeleteCommand extends DeliverymanCommand {
 
         Deliveryman deliverymanToDelete = lastShownList.get(targetIndex.getZeroBased());
         model.deleteDeliveryman(deliverymanToDelete);
-        model.commitAddressBook();
+        model.commitOrderBook();
         return new CommandResult(String.format(MESSAGE_DELETE_DELIVERYMAN_SUCCESS, deliverymanToDelete));
     }
 
