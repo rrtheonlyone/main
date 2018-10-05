@@ -27,6 +27,7 @@ import seedu.address.model.ReadOnlyOrderBook;
 import seedu.address.model.ReadOnlyUsersList;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.UsersList;
+import seedu.address.model.deliveryman.DeliverymenList;
 import seedu.address.model.util.SampleDataUtil;
 import seedu.address.storage.JsonUserPrefsStorage;
 import seedu.address.storage.OrderBookStorage;
@@ -34,6 +35,8 @@ import seedu.address.storage.Storage;
 import seedu.address.storage.StorageManager;
 import seedu.address.storage.UserPrefsStorage;
 import seedu.address.storage.XmlOrderBookStorage;
+import seedu.address.storage.deliveryman.DeliverymenListStorage;
+import seedu.address.storage.deliveryman.XmlDeliverymenListStorage;
 import seedu.address.storage.user.UsersListStorage;
 import seedu.address.storage.user.XmlUsersListStorage;
 import seedu.address.ui.Ui;
@@ -70,8 +73,10 @@ public class MainApp extends Application {
         UserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(config.getUserPrefsFilePath());
         userPrefs = initPrefs(userPrefsStorage);
         OrderBookStorage orderBookStorage = new XmlOrderBookStorage(userPrefs.getAddressBookFilePath());
+        DeliverymenListStorage deliverymenListStorage =
+            new XmlDeliverymenListStorage(userPrefs.getDeliverymenListFilePath());
         UsersListStorage usersListStorage = new XmlUsersListStorage(userPrefs.getUsersListFilePath());
-        storage = new StorageManager(orderBookStorage, userPrefsStorage, usersListStorage);
+        storage = new StorageManager(orderBookStorage, userPrefsStorage, usersListStorage, deliverymenListStorage);
 
         initLogging(config);
 
@@ -94,6 +99,8 @@ public class MainApp extends Application {
         ReadOnlyOrderBook initialData;
         Optional<ReadOnlyUsersList> usersListOptional;
         ReadOnlyUsersList initialUser;
+        Optional<DeliverymenList> deliverymenListOptional;
+        DeliverymenList initialDeliverymenData;
 
         try {
             orderBookOptional = storage.readOrderBook();
@@ -124,7 +131,21 @@ public class MainApp extends Application {
             initialUser = new UsersList();
         }
 
-        return new ModelManager(initialData, initialUser, userPrefs);
+        try {
+            deliverymenListOptional = storage.readDeliverymenList();
+            if (!deliverymenListOptional.isPresent()) {
+                logger.info("Data file not found. Will be starting with a sample DeliverymenList");
+            }
+            initialDeliverymenData = deliverymenListOptional.orElseGet(SampleDataUtil::getSampleDeliverymenList);
+        } catch (DataConversionException e) {
+            logger.warning("Data file not in the correct format. Will be starting with an empty DeliverymenList");
+            initialDeliverymenData = new DeliverymenList();
+        } catch (IOException e) {
+            logger.warning("Problem while reading from the file. Will be starting with an empty DeliverymenList");
+            initialDeliverymenData = new DeliverymenList();
+        }
+
+        return new ModelManager(initialData, initialUser, initialDeliverymenData, userPrefs);
     }
 
     private void initLogging(Config config) {

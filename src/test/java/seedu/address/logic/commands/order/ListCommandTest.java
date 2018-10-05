@@ -2,6 +2,7 @@ package seedu.address.logic.commands.order;
 
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.showOrderAtIndex;
+import static seedu.address.testutil.TypicalDeliverymen.getTypicalDeliverymenList;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_ORDER;
 import static seedu.address.testutil.TypicalOrders.getTypicalOrderBook;
 import static seedu.address.testutil.user.TypicalUsers.getTypicalUsersList;
@@ -25,8 +26,10 @@ public class ListCommandTest {
 
     @Before
     public void setUp() {
-        model = new ModelManager(getTypicalOrderBook(), getTypicalUsersList(), new UserPrefs());
-        expectedModel = new ModelManager(model.getOrderBook(), model.getUsersList(), new UserPrefs());
+        model = new ModelManager(getTypicalOrderBook(), getTypicalUsersList(), getTypicalDeliverymenList(),
+                new UserPrefs());
+        expectedModel = new ModelManager(model.getOrderBook(), model.getUsersList(), model.getDeliverymenList(),
+                new UserPrefs());
     }
 
     @Test

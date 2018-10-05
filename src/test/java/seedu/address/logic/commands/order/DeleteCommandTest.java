@@ -6,6 +6,7 @@ import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.showOrderAtIndex;
+import static seedu.address.testutil.TypicalDeliverymen.getTypicalDeliverymenList;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_ORDER;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_ORDER;
 import static seedu.address.testutil.TypicalOrders.getTypicalOrderBook;
@@ -29,7 +30,8 @@ import seedu.address.model.order.Order;
  */
 public class DeleteCommandTest {
 
-    private Model model = new ModelManager(getTypicalOrderBook(), getTypicalUsersList(), new UserPrefs());
+    private Model model = new ModelManager(getTypicalOrderBook(), getTypicalUsersList(), getTypicalDeliverymenList(),
+            new UserPrefs());
     private CommandHistory commandHistory = new CommandHistory();
 
     @Test
@@ -39,7 +41,8 @@ public class DeleteCommandTest {
 
         String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_ORDER_SUCCESS, orderToDelete);
 
-        ModelManager expectedModel = new ModelManager(model.getOrderBook(), model.getUsersList(), new UserPrefs());
+        ModelManager expectedModel = new ModelManager(model.getOrderBook(), model.getUsersList(),
+                model.getDeliverymenList(), new UserPrefs());
         expectedModel.deleteOrder(orderToDelete);
         expectedModel.commitOrderBook();
 
@@ -63,7 +66,8 @@ public class DeleteCommandTest {
 
         String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_ORDER_SUCCESS, orderToDelete);
 
-        Model expectedModel = new ModelManager(model.getOrderBook(), model.getUsersList(), new UserPrefs());
+        Model expectedModel = new ModelManager(model.getOrderBook(), model.getUsersList(), model.getDeliverymenList(),
+                new UserPrefs());
         expectedModel.deleteOrder(orderToDelete);
         expectedModel.commitOrderBook();
         showNoOrder(expectedModel);
@@ -88,7 +92,8 @@ public class DeleteCommandTest {
     public void executeUndoRedo_validIndexUnfilteredList_success() throws Exception {
         Order orderToDelete = model.getFilteredOrderList().get(INDEX_FIRST_ORDER.getZeroBased());
         DeleteCommand deleteCommand = new DeleteCommand(INDEX_FIRST_ORDER);
-        Model expectedModel = new ModelManager(model.getOrderBook(), model.getUsersList(), new UserPrefs());
+        Model expectedModel = new ModelManager(model.getOrderBook(), model.getUsersList(), model.getDeliverymenList(),
+                new UserPrefs());
         expectedModel.deleteOrder(orderToDelete);
         expectedModel.commitOrderBook();
 
@@ -127,7 +132,8 @@ public class DeleteCommandTest {
     @Test
     public void executeUndoRedo_validIndexFilteredList_sameOrderDeleted() throws Exception {
         DeleteCommand deleteCommand = new DeleteCommand(INDEX_FIRST_ORDER);
-        Model expectedModel = new ModelManager(model.getOrderBook(), model.getUsersList(), new UserPrefs());
+        Model expectedModel = new ModelManager(model.getOrderBook(), model.getUsersList(), model.getDeliverymenList(),
+                new UserPrefs());
 
         showOrderAtIndex(model, INDEX_SECOND_ORDER);
         Order orderToDelete = model.getFilteredOrderList().get(INDEX_FIRST_ORDER.getZeroBased());
