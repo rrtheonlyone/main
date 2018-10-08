@@ -91,10 +91,19 @@ public interface Model {
      */
     void commitOrderBook();
 
+    /**
+     * Return true if user exist inside user list.
+     */
     boolean hasUser(User user);
 
+    /**
+     * Add user to usersList.
+     */
     void addUser(User user);
 
+    /**
+     * Saves the current users list for undo/redo.
+     */
     void commitUsersList();
 
     /**
@@ -116,4 +125,14 @@ public interface Model {
      * Returns the UsersList
      */
     ReadOnlyUsersList getUsersList();
+
+    /**
+     * Return true if user is logged into FoodZoom.
+     */
+    boolean isUserLoggedIn();
+
+    /**
+     * Store the user session details.
+     */
+    void storeUserInSession(User user);
 }
