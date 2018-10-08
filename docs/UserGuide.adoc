@@ -51,7 +51,7 @@ e.g. typing *`/help`* and pressing kbd:[Enter] will open the help window.
 * Parameters can be in any order e.g. if the command specifies `n/NAME a/ADDRESS`, `a/ADDRESS n/NAME` is also acceptable.
 ====
 
-=== Viewing help : `/help`
+=== Viewing help : `/help` `[Since v1.1]`
 
 Format: `/help`
 
@@ -71,7 +71,7 @@ Examples:
 
 * `/login u/manager pw/password`
 
-=== Logout from system : `/logout`
+=== Logout from system : `/logout` `[Not Implemented Yet]`
 
 Format: `/logout`
 
@@ -95,7 +95,7 @@ Examples:
 Shows a list of all orders in chronological order +
 Format: `/order list`
 
-=== Editing an order : `/order edit`
+=== Editing an order : `/order edit` `[Not Implemented Yet]`
 
 Edits an existing order in the list of orders. +
 Format: `/order edit INDEX [f/FOOD] [n/NAME] [p/PHONE] [a/ADDRESS]`
@@ -116,7 +116,7 @@ Edits the phone number and name of the 1st order to be `91234567` and `Jonathan`
 `/order edit 2 f/Maggi Goreng f/Ice Milo` +
 Edits the food of the 2nd order to be `Maggi Goreng, Ice Milo`.
 
-=== Finding orders by name or phone : `/order find`
+=== Finding orders by name or phone : `/order find` `[Not Implemented Yet]`
 
 Find orders whose name or phone contain in the given parameter. +
 Format: `/order find [n/NAME] [p/PHONE]` +
@@ -159,7 +159,7 @@ Deletes the 1st order in the results of the `find` command.
 Clears all entries from the list of orders. +
 Format: `/order clear`
 
-=== Adding a delivery man : `/deliveryman add`
+=== Adding a delivery man : `/deliveryman add` `[Not Implemented Yet]`
 
 Adds a delivery man to the list of delivery men +
 Format: `/deliveryman add n/NAME p/PHONE [a/ADDRESS]`
@@ -170,12 +170,12 @@ Examples:
 * `/deliveryman add a/block 55 Computing Drive n/Harry p/81889111`
 * `/deliveryman add n/Willy p/23456789`
 
-=== Listing all delivery men : `/deliveryman list`
+=== Listing all delivery men : `/deliveryman list` `[Not Implemented Yet]`
 
 Shows a list of all delivery men in chronological order +
 Format: `/deliveryman list`
 
-=== Editing a delivery man : `/deliveryman edit`
+=== Editing a delivery man : `/deliveryman edit` `[Not Implemented Yet]`
 
 Edits an existing delivery man in the list of delivery men. +
 Format: `/delivery man edit INDEX [n/NAME] [p/PHONE] [a/ADDRESS]`
@@ -193,7 +193,7 @@ Examples:
 `/deliveryman edit 1 n/John Doe p/12345678` +
 Edits the name and phone number of the 1st delivery man to be `John Doe` and `12345678` respectively.
 
-=== Finding delivery man by name : `/deliveryman find`
+=== Finding delivery man by name : `/deliveryman find` `[Not Implemented Yet]`
 
 Find delivery men whose name contain in the given parameter. +
 Format: `/deliveryman find n/NAME` +
@@ -210,7 +210,7 @@ Examples:
 * `/deliveryman find n/john` +
 Returns `john` and `John Doe`
 
-=== Deleting a delivery man : `/deliveryman delete`
+=== Deleting a delivery man : `/deliveryman delete` `[Not Implemented Yet]`
 
 Deletes the specified delivery man from the list of delivery men +
 Format: `/deliveryman delete INDEX`
@@ -230,26 +230,26 @@ Deletes the 2nd delivery man in the list of delivery men.
 `/deliveryman delete 1` +
 Deletes the 1st delivery man in the results of the `find` command.
 
-=== Clearing all delivery men entries : `/deliveryman clear`
+=== Clearing all delivery men entries : `/deliveryman clear` `[Not Implemented Yet]`
 
 Clears all entries from the list of delivery men. +
 Format: `/deliveryman clear`
 
-=== Creating a route : `/route create` `[Since v1.1]`
+=== Creating a new route: `/route create` `[Since v1.1]`
 
-Creates a new route and add it to the list of routes +
+Creates a new route from the restaurant's address to the destination specified +
 Format: `/route create a/ADDRESS`
 
 Examples:
 
 * `/route create a/311, Clementi Ave 2, #02-25`
 
-=== Listing all available routes: `/route list`
+=== Listing all available routes: `/route list` `[Not Implemented Yet]`
 
 Shows a list of all existing routes and assigned delivery men +
 Format: `/route list`
 
-=== Adding an order to a route : `/route add`
+=== Adding an order to a route : `/route add` `[Not Implemented Yet]`
 
 Add an existing orders to an existing route +
 Format: `/route add r/ROUTE_INDEX o/ORDER_INDEX`
@@ -263,14 +263,14 @@ Examples:
 
 * `/route list` +
 `/order list` +
-`/route add o/2 r/1` +
+`/route add r/1 o/2` +
 Adds the 2nd order to the 1st route.
 * `/order list` +
 `/route list` +
 `/route add r/3 o/4 o/5 o/6` +
 Adds the 4th, 5th, 6th orders to the 3rd route.
 
-=== Deleting a route: `/route delete`
+=== Deleting a route: `/route delete` `[Not Implemented Yet]`
 
 Deletes the specified route from the list of routes +
 Format: `/route delete INDEX`
@@ -287,12 +287,12 @@ Examples:
 `/route delete 2` +
 Deletes the 2nd route in the list of routes.
 
-=== Clearing all routes : `/route clear`
+=== Clearing all routes : `/route clear` `[Not Implemented Yet]`
 
 Clears all entries from the list of routes. +
 Format: `/route clear`
 
-=== Assign route to delivery man : `/assign`
+=== Assign route to delivery man : `/assign` `[Not Implemented Yet]`
 
 Assign a delivery man to an existing route +
 Format: `/assign d/DELIVERYMAN_INDEX r/ROUTE_INDEX`
@@ -305,10 +305,10 @@ Examples:
 Add the 2nd delivery man to the 1st route.
 * `/deliveryman list` +
 `/route list` +
-`/assign r/4 d/3` +
+`/assign d/3 r/4` +
 Add the 3rd delivery man to the 4th route.
 
-=== Listing entered commands : `/history`
+=== Listing entered commands : `/history` `[Since v1.1]`
 
 Lists all the commands that you have entered in reverse chronological order. +
 Format: `/history`
@@ -318,7 +318,7 @@ Format: `/history`
 Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
 ====
 
-=== Exiting the program : `/exit`
+=== Exiting the program : `/exit` `[Since v1.1]`
 
 Exits the program. +
 Format: `/exit`
@@ -329,16 +329,16 @@ FoodZoom data are saved in the hard disk automatically after any command that ch
 There is no need to save manually.
 
 // tag::dataencryption[]
-=== Encrypting data files `[coming in v2.0]`
+=== Encrypting data files `[Not Implemented Yet]`
 
 _{explain how the user can enable/disable data encryption}_
 // end::dataencryption[]
 
-=== Viewing help : `/help` `(Deliveryman Command)`
+=== Viewing help : `/help` `(Deliveryman Command)` `[Not Implemented Yet]`
 
 Format: `/help`
 
-=== Login to system : `/login` `(Deliveryman Command)`
+=== Login to system : `/login` `(Deliveryman Command)` `[Not Implemented Yet]`
 
 Format: `/login u/USERNAME pw/PASSWORD`
 
@@ -346,21 +346,21 @@ Examples:
 
 * `/login u/deliveryman pw/password`
 
-=== Logout from system : `/logout` `(Deliveryman Command)`
+=== Logout from system : `/logout` `(Deliveryman Command)` `[Not Implemented Yet]`
 
 Format: `/logout`
 
-=== Show delivery route : `/route list` `(Deliveryman Command)`
+=== Show delivery route : `/route list` `(Deliveryman Command)` `[Not Implemented Yet]`
 
 View the assigned route/s +
 Format: `/route list`
 
-=== Listing assigned orders : `/order list` `(Deliveryman Command)`
+=== Listing assigned orders : `/order list` `(Deliveryman Command)` `[Not Implemented Yet]`
 
 List details of assigned order/s +
 Format: `/order list`
 
-=== Exiting the program : `/exit` `(Deliveryman Command)`
+=== Exiting the program : `/exit` `(Deliveryman Command)` `[Not Implemented Yet]`
 
 Exits the program. +
 Format: `/exit`
