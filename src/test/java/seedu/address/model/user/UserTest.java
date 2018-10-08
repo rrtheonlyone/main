@@ -1,7 +1,13 @@
 package seedu.address.model.user;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_MANAGER_NAME_ALICE;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_MANAGER_PASSWORD_ALICE;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_MANAGER_PASSWORD_BENSON;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_MANAGER_USERNAME_ALICE;
 import static seedu.address.testutil.user.TypicalUsers.ALICE_MANAGER;
 import static seedu.address.testutil.user.TypicalUsers.CARL_MANAGER;
 
@@ -67,5 +73,23 @@ public class UserTest {
         User editedAlice = new UserBuilder(ALICE_MANAGER).withName(VALID_NAME_BOB).build();
         assertFalse(ALICE_MANAGER.equals(editedAlice));
 
+    }
+
+    @Test
+    public void testToString() {
+        User alice = new UserBuilder(ALICE_MANAGER).build();
+        String expectedResponse = VALID_MANAGER_NAME_ALICE
+                + " Username: "
+                + VALID_MANAGER_USERNAME_ALICE
+                + " Password: "
+                + VALID_MANAGER_PASSWORD_ALICE;
+        assertEquals(alice.toString(), expectedResponse);
+
+        String wrongResponse = VALID_MANAGER_NAME_ALICE
+                + " Username: "
+                + VALID_MANAGER_USERNAME_ALICE
+                + " Password: "
+                + VALID_MANAGER_PASSWORD_BENSON;
+        assertNotEquals(alice.toString(), wrongResponse);
     }
 }
