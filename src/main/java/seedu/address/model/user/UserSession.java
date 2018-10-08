@@ -1,4 +1,7 @@
 package seedu.address.model.user;
+
+import static java.util.Objects.requireNonNull;
+
 /**
  * UserSession represent a logged in user session.
  */
@@ -19,6 +22,7 @@ public class UserSession {
      * @param toLogin User that has successfully logged in.
      */
     public UserSession(User toLogin) {
+        requireNonNull(toLogin);
         loggedInUser = toLogin;
         this.isLoggedIn = true;
     }
@@ -28,6 +32,7 @@ public class UserSession {
      * @param toLogin User that has successfully logged in.
      */
     public void setUserSession(User toLogin) {
+        requireNonNull(toLogin);
         this.loggedInUser = toLogin;
         this.isLoggedIn = true;
     }
