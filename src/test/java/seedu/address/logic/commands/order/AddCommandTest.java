@@ -199,7 +199,7 @@ public class AddCommandTest {
         }
 
         @Override
-        public boolean loginUser(User user) {
+        public boolean isRegisteredUser(User user) {
             throw new AssertionError("This method should not be called.");
         }
 
