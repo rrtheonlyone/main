@@ -15,6 +15,7 @@ import seedu.address.commons.events.model.OrderBookChangedEvent;
 import seedu.address.commons.events.model.UsersListChangedEvent;
 import seedu.address.model.order.Order;
 import seedu.address.model.user.User;
+import seedu.address.model.user.UserSession;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -28,6 +29,8 @@ public class ModelManager extends ComponentManager implements Model {
     private final VersionedUsersList versionedUsersList;
     private final FilteredList<User> filteredUsers;
 
+    private final UserSession userSession;
+
     /**
      * Initializes a ModelManager with the given addressBook, usersList and userPrefs.
      */
@@ -38,6 +41,8 @@ public class ModelManager extends ComponentManager implements Model {
         filteredOrders = new FilteredList<>(versionedOrderBook.getOrderList());
         versionedUsersList = new VersionedUsersList(usersList);
         filteredUsers = new FilteredList<>(versionedUsersList.getUserList());
+
+        userSession = new UserSession();
 
         logger.fine("Initializing with order book: " + orderBook
                 + " and users list "
@@ -181,6 +186,16 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public ReadOnlyUsersList getUsersList() {
         return versionedUsersList;
+    }
+
+    @Override
+    public boolean isUserLoggedIn() {
+        return userSession.isUserAlreadyLoggedIn();
+    }
+
+    @Override
+    public void storeUserInSession(User user) {
+        userSession.setUserSession(user);
     }
 
     /**
