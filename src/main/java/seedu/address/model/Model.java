@@ -3,6 +3,8 @@ package seedu.address.model;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
+import seedu.address.model.deliveryman.Deliveryman;
+import seedu.address.model.deliveryman.DeliverymenList;
 import seedu.address.model.order.Order;
 import seedu.address.model.route.ReadOnlyRouteList;
 import seedu.address.model.route.Route;
@@ -24,6 +26,10 @@ public interface Model {
      * {@code Predicate} that always evaluate to true
      */
     Predicate<User> PREDICATE_SHOW_ALL_USERS = unused -> true;
+    /** {@code Predicate} that always evaluates to true */
+    Predicate<Deliveryman> PREDICATE_SHOW_ALL_DELIVERYMEN = unused -> true;
+
+    // ==================== order book/order related methods =======================
 
     /**
      * Clears existing backing model and replaces with the provided new data.
@@ -188,4 +194,70 @@ public interface Model {
      */
     void commitRouteList();
 
+    // ======================== Deliveryman related methods =========================
+
+    /** Clears existing backing model and replaces with the provided new data. */
+    void resetDeliverymenData(DeliverymenList newData);
+
+    /** Returns the DeliverymenList */
+    DeliverymenList getDeliverymenList();
+
+    /**
+     * Returns true if a deliveryman with the same identity as {@code deliveryman} exists in the address book.
+     */
+    boolean hasDeliveryman(Deliveryman deliveryman);
+
+    /**
+     * Deletes the given deliveryman.
+     * The deliveryman must exist in the address book.
+     */
+    void deleteDeliveryman(Deliveryman target);
+
+    /**
+     * Adds the given deliveryman.
+     * {@code deliveryman} must not already exist in the address book.
+     */
+    void addDeliveryman(Deliveryman deliveryman);
+
+    /**
+     * Replaces the given deliveryman {@code target} with {@code editedDeliveryman}.
+     * {@code target} must exist in the address book.
+     * The deliveryman identity of {@code editedDeliveryman} must not be the same as another
+     * existing deliveryman in the deliverymen list.
+     */
+    void updateDeliveryman(Deliveryman target, Deliveryman editedDeliveryman);
+
+    /** Returns an unmodifiable view of the filtered deliveryman list */
+    ObservableList<Deliveryman> getFilteredDeliverymenList();
+
+    /**
+     * Updates the filter of the filtered deliveryman list to filter by the given {@code predicate}.
+     * @throws NullPointerException if {@code predicate} is null.
+     */
+    void updateFilteredDeliverymenList(Predicate<Deliveryman> predicate);
+
+    /**
+     * Returns true if the model has previous address book states to restore.
+     */
+    boolean canUndoDeliverymenList();
+
+    /**
+     * Returns true if the model has undone address book states to restore.
+     */
+    boolean canRedoDeliverymenList();
+
+    /**
+     * Restores the model's address book to its previous state.
+     */
+    void undoDeliverymenList();
+
+    /**
+     * Restores the model's address book to its previously undone state.
+     */
+    void redoDeliverymenList();
+
+    /**
+     * Saves the current address book state for undo/redo.
+     */
+    void commitDeliverymenList();
 }

@@ -11,9 +11,13 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.model.DeliverymenListChangedEvent;
 import seedu.address.commons.events.model.OrderBookChangedEvent;
 import seedu.address.commons.events.model.RouteListChangedEvent;
 import seedu.address.commons.events.model.UsersListChangedEvent;
+import seedu.address.model.deliveryman.Deliveryman;
+import seedu.address.model.deliveryman.DeliverymenList;
+import seedu.address.model.deliveryman.VersionedDeliverymenList;
 import seedu.address.model.order.Order;
 import seedu.address.model.route.ReadOnlyRouteList;
 import seedu.address.model.route.Route;
@@ -34,29 +38,35 @@ public class ModelManager extends ComponentManager implements Model {
     private final FilteredList<Route> filteredRoute;
     private final FilteredList<User> filteredUsers;
 
+    private final VersionedDeliverymenList versionedDeliverymenList;
+    private final FilteredList<Deliveryman> filteredDeliverymen;
+
     /**
      * Initializes a ModelManager with the given addressBook, usersList and userPrefs.
      */
-    public ModelManager(ReadOnlyOrderBook orderBook, ReadOnlyUsersList usersList,
-            ReadOnlyRouteList routeList, UserPrefs userPrefs) {
+    public ModelManager(ReadOnlyOrderBook orderBook, ReadOnlyRouteList routeList, ReadOnlyUsersList usersList,
+            DeliverymenList deliverymenList, UserPrefs userPrefs) {
         super();
         requireAllNonNull(orderBook, routeList, userPrefs);
 
         logger.fine("Initializing with order book: " + orderBook
                 + " and route list " + routeList
                 + " and users list " + usersList
+                + " and deliverymen list " + deliverymenList
                 + " and user prefs " + userPrefs);
 
         versionedOrderBook = new VersionedOrderBook(orderBook);
         versionedRouteList = new VersionedRouteList(routeList);
         versionedUsersList = new VersionedUsersList(usersList);
+        versionedDeliverymenList = new VersionedDeliverymenList(deliverymenList);
         filteredOrders = new FilteredList<>(versionedOrderBook.getOrderList());
         filteredRoute = new FilteredList<>(versionedRouteList.getRouteList());
         filteredUsers = new FilteredList<>(versionedUsersList.getUserList());
+        filteredDeliverymen = new FilteredList<>(versionedDeliverymenList.getDeliverymenList());
     }
 
     public ModelManager() {
-        this(new OrderBook(), new UsersList(), new RouteList(), new UserPrefs());
+        this(new OrderBook(), new RouteList(), new UsersList(), new DeliverymenList(), new UserPrefs());
     }
 
     @Override
@@ -72,6 +82,12 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
+    public void resetDeliverymenData(DeliverymenList newData) {
+        versionedDeliverymenList.resetData(newData);
+        indicateDeliverymenListChanged();
+    }
+
+    @Override
     public ReadOnlyOrderBook getOrderBook() {
         return versionedOrderBook;
     }
@@ -79,6 +95,11 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public ReadOnlyRouteList getRouteList() {
         return versionedRouteList;
+    }
+
+    @Override
+    public DeliverymenList getDeliverymenList() {
+        return versionedDeliverymenList;
     }
 
     /**
@@ -91,6 +112,11 @@ public class ModelManager extends ComponentManager implements Model {
     /** Raises an event to indicate the route model has changed */
     private void indicateRouteListChanged() {
         raise(new RouteListChangedEvent(versionedRouteList));
+    }
+
+    /** Raises an event to indicate the deliverymen list model has changed. */
+    private void indicateDeliverymenListChanged() {
+        raise(new DeliverymenListChangedEvent(versionedDeliverymenList));
     }
 
     @Override
@@ -146,7 +172,33 @@ public class ModelManager extends ComponentManager implements Model {
         indicateRouteListChanged();
     }
 
-    //=========== Filtered Order List Accessors =============================================================
+    // =========== Deliveryman methods ====================================
+
+    @Override
+    public boolean hasDeliveryman(Deliveryman deliveryman) {
+        requireNonNull(deliveryman);
+        return versionedDeliverymenList.hasDeliveryman(deliveryman);
+    }
+
+    @Override
+    public void deleteDeliveryman(Deliveryman target) {
+        versionedDeliverymenList.removeDeliveryman(target);
+        indicateDeliverymenListChanged();
+    }
+
+    @Override
+    public void addDeliveryman(Deliveryman deliveryman) {
+        versionedDeliverymenList.addDeliveryman(deliveryman);
+        indicateDeliverymenListChanged();
+    }
+
+    @Override
+    public void updateDeliveryman(Deliveryman target, Deliveryman editedDeliveryman) {
+        versionedDeliverymenList.updateDeliveryman(target, editedDeliveryman);
+        indicateDeliverymenListChanged();
+    }
+
+    //=========== Filtered Orders List Accessors =============================================================
 
     /**
      * Returns an unmodifiable view of the list of {@code Order} backed by the internal list of
@@ -178,6 +230,22 @@ public class ModelManager extends ComponentManager implements Model {
     public void updateFilteredRouteList(Predicate<Route> predicate) {
         requireNonNull(predicate);
         filteredRoute.setPredicate(predicate);
+    }
+    //=========== Filtered Deliveryman List Accessors =======================================================
+
+    /**
+     * Returns an unmodifiable view of the list of {@code Deliveryman} backed by the internal list
+     * of {@code versionedDeliverymenList}
+     */
+    @Override
+    public ObservableList<Deliveryman> getFilteredDeliverymenList() {
+        return FXCollections.unmodifiableObservableList(filteredDeliverymen);
+    }
+
+    @Override
+    public void updateFilteredDeliverymenList(Predicate<Deliveryman> predicate) {
+        requireNonNull(predicate);
+        filteredDeliverymen.setPredicate(predicate);
     }
 
     //=========== Undo/Redo =================================================================================
@@ -286,6 +354,33 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
+    public boolean canUndoDeliverymenList() {
+        return versionedDeliverymenList.canUndo();
+    }
+
+    @Override
+    public boolean canRedoDeliverymenList() {
+        return versionedDeliverymenList.canRedo();
+    }
+
+    @Override
+    public void undoDeliverymenList() {
+        versionedDeliverymenList.undo();
+        indicateDeliverymenListChanged();
+    }
+
+    @Override
+    public void redoDeliverymenList() {
+        versionedDeliverymenList.redo();
+        indicateDeliverymenListChanged();
+    }
+
+    @Override
+    public void commitDeliverymenList() {
+        versionedDeliverymenList.commit();
+    }
+
+    @Override
     public boolean equals(Object obj) {
         // short circuit if same object
         if (obj == this) {
@@ -303,8 +398,11 @@ public class ModelManager extends ComponentManager implements Model {
                 && filteredOrders.equals(other.filteredOrders)
                 && versionedRouteList.equals(other.versionedRouteList)
                 && filteredRoute.equals(other.filteredRoute)
-                && versionedOrderBook.equals(other.versionedOrderBook)
-                && filteredOrders.equals(other.filteredOrders);
+                && versionedUsersList.equals(other.versionedUsersList)
+                && filteredUsers.equals(other.filteredUsers)
+                && versionedDeliverymenList.equals(other.versionedDeliverymenList)
+                && filteredDeliverymen.equals(other.filteredDeliverymen);
     }
+
 
 }

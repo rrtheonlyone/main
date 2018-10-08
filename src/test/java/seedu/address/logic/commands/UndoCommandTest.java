@@ -3,6 +3,7 @@ package seedu.address.logic.commands;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.deleteFirstPerson;
+import static seedu.address.testutil.TypicalDeliverymen.getTypicalDeliverymenList;
 import static seedu.address.testutil.TypicalOrders.getTypicalOrderBook;
 import static seedu.address.testutil.TypicalRoutes.getTypicalRouteList;
 import static seedu.address.testutil.user.TypicalUsers.getTypicalUsersList;
@@ -17,10 +18,10 @@ import seedu.address.model.UserPrefs;
 
 public class UndoCommandTest {
 
-    private final Model model = new ModelManager(getTypicalOrderBook(), getTypicalUsersList(),
-            getTypicalRouteList(), new UserPrefs());
-    private final Model expectedModel = new ModelManager(getTypicalOrderBook(), getTypicalUsersList(),
-            getTypicalRouteList(), new UserPrefs());
+    private final Model model = new ModelManager(getTypicalOrderBook(), getTypicalRouteList(),
+            getTypicalUsersList(), getTypicalDeliverymenList(), new UserPrefs());
+    private final Model expectedModel = new ModelManager(getTypicalOrderBook(), getTypicalRouteList(),
+            getTypicalUsersList(), getTypicalDeliverymenList(), new UserPrefs());
     private final CommandHistory commandHistory = new CommandHistory();
 
     @Before

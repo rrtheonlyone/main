@@ -7,6 +7,7 @@ import javax.xml.bind.JAXBException;
 
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.util.XmlUtil;
+import seedu.address.storage.deliveryman.XmlSerializableDeliverymenList;
 import seedu.address.storage.route.XmlSerializableRouteList;
 import seedu.address.storage.user.XmlSerializableUsersList;
 
@@ -75,6 +76,18 @@ public class XmlFileStorage {
     }
 
     /**
+     * Saves the given deliverymen data to the specified file.
+     */
+    public static void saveDeliverymenDataToFile(Path file, XmlSerializableDeliverymenList deliverymenList)
+            throws FileNotFoundException {
+        try {
+            XmlUtil.saveDataToFile(file, deliverymenList);
+        } catch (JAXBException e) {
+            throw new AssertionError("Unexpected exception " + e.getMessage(), e);
+        }
+    }
+
+    /**
      * Returns route list in the file or an empty route list.
      */
     public static XmlSerializableRouteList loadRouteDataFromSaveFile(Path file) throws DataConversionException,
@@ -86,4 +99,15 @@ public class XmlFileStorage {
         }
     }
 
+    /**
+     * Returns deliverymen list in the file or an empty deliverymen list
+     */
+    public static XmlSerializableDeliverymenList loadDeliverymenDataFromSaveFile(Path file)
+        throws DataConversionException, FileNotFoundException {
+        try {
+            return XmlUtil.getDataFromFile(file, XmlSerializableDeliverymenList.class);
+        } catch (JAXBException e) {
+            throw new DataConversionException(e);
+        }
+    }
 }
