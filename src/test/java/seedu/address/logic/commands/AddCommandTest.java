@@ -189,6 +189,21 @@ public class AddCommandTest {
         public ReadOnlyUsersList getUsersList() {
             throw new AssertionError("This method should not be called.");
         }
+
+        @Override
+        public boolean isUserLoggedIn() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void storeUserInSession(User user) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public User getLoggedInUserDetails() {
+            throw new AssertionError("This method should not be called.");
+        }
     }
 
     /**
