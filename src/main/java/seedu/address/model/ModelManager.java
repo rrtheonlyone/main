@@ -249,9 +249,9 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public boolean loginUser(User user) {
+    public boolean isRegisteredUser(User user) {
         requireNonNull(user);
-        return versionedUsersList.login(user);
+        return versionedUsersList.isRegisteredUser(user);
     }
 
     @Override
