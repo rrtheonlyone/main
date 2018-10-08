@@ -45,5 +45,25 @@ public class Manager extends User {
         }
 
     }
+
+    @Override
+    public String toString() {
+        final StringBuilder builder = new StringBuilder();
+
+        //To print for Login
+        if (getName() == null) {
+            builder.append("Username: ")
+                    .append(getUsername());
+        } else {
+            builder.append(getName())
+                    .append(" Username: ")
+                    .append(getUsername())
+                    .append(" Password: ")
+                    .append(getPassword());
+        }
+
+
+        return builder.toString();
+    }
 }
 
