@@ -54,6 +54,8 @@ public class TypicalOrders {
             .withAddress(VALID_ADDRESS_BOB).withFood(VALID_FOOD_RICE)
             .build();
 
+    public static final String KEYWORD_NAME_MATCHING_MEIER = "n/Meier"; // A keyword name that matches MEIER
+    public static final String KEYWORD_PHONE_MATCHING_BENSON = "p/98765432"; // A keyword phone that matches FIONA
 
     private TypicalOrders() {
     } // prevents instantiation

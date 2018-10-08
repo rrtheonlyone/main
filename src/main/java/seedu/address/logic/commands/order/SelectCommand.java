@@ -1,4 +1,4 @@
-package seedu.address.logic.commands;
+package seedu.address.logic.commands.order;
 
 import static java.util.Objects.requireNonNull;
 
@@ -9,6 +9,7 @@ import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.logic.CommandHistory;
+import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.order.Order;
@@ -16,7 +17,7 @@ import seedu.address.model.order.Order;
 /**
  * Selects an order identified using it's displayed index from the order book.
  */
-public class SelectCommand extends Command {
+public class SelectCommand extends OrderCommand {
 
     public static final String COMMAND_WORD = "select";
 

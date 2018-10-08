@@ -4,7 +4,7 @@ import static org.junit.Assert.assertTrue;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_ORDER_DISPLAYED_INDEX;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
-import static seedu.address.logic.commands.SelectCommand.MESSAGE_SELECT_ORDER_SUCCESS;
+import static seedu.address.logic.commands.order.SelectCommand.MESSAGE_SELECT_ORDER_SUCCESS;
 import static seedu.address.testutil.TestUtil.getLastIndex;
 import static seedu.address.testutil.TestUtil.getMidIndex;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_ORDER;
@@ -13,24 +13,26 @@ import org.junit.Test;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.RedoCommand;
-import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
+import seedu.address.logic.commands.order.OrderCommand;
+import seedu.address.logic.commands.order.SelectCommand;
 import seedu.address.model.Model;
 
 public class SelectCommandSystemTest extends OrderBookSystemTest {
     @Test
     public void select() {
+        String selectCommand = OrderCommand.COMMAND_WORD + " " + SelectCommand.COMMAND_WORD;
         /* ------------------------ Perform select operations on the shown unfiltered list -------------------------- */
 
         /* Case: select the first card in the person list, command with leading spaces and trailing spaces
          * -> selected
          */
-        String command = "   " + SelectCommand.COMMAND_WORD + " " + INDEX_FIRST_ORDER.getOneBased() + "   ";
+        String command = "   " + selectCommand + " " + INDEX_FIRST_ORDER.getOneBased() + "   ";
         assertCommandSuccess(command, INDEX_FIRST_ORDER);
 
         /* Case: select the last card in the person list -> selected */
         Index orderCount = getLastIndex(getModel());
-        command = SelectCommand.COMMAND_WORD + " " + orderCount.getOneBased();
+        command = selectCommand + " " + orderCount.getOneBased();
         assertCommandSuccess(command, orderCount);
 
         /* Case: undo previous selection -> rejected */
@@ -45,7 +47,7 @@ public class SelectCommandSystemTest extends OrderBookSystemTest {
 
         /* Case: select the middle card in the person list -> selected */
         Index middleIndex = getMidIndex(getModel());
-        command = SelectCommand.COMMAND_WORD + " " + middleIndex.getOneBased();
+        command = selectCommand + " " + middleIndex.getOneBased();
         assertCommandSuccess(command, middleIndex);
 
         /* Case: select the current selected card -> selected */
@@ -56,29 +58,29 @@ public class SelectCommandSystemTest extends OrderBookSystemTest {
         /* Case: filtered person list, select index within bounds of address book and person list -> selected */
         Index validIndex = Index.fromOneBased(1);
         assertTrue(validIndex.getZeroBased() < getModel().getFilteredOrderList().size());
-        command = SelectCommand.COMMAND_WORD + " " + validIndex.getOneBased();
+        command = selectCommand + " " + validIndex.getOneBased();
         assertCommandSuccess(command, validIndex);
 
         /* ----------------------------------- Perform invalid select operations ------------------------------------ */
 
         /* Case: invalid index (0) -> rejected */
-        assertCommandFailure(SelectCommand.COMMAND_WORD + " " + 0,
+        assertCommandFailure(selectCommand + " " + 0,
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, SelectCommand.MESSAGE_USAGE));
 
         /* Case: invalid index (-1) -> rejected */
-        assertCommandFailure(SelectCommand.COMMAND_WORD + " " + -1,
+        assertCommandFailure(selectCommand + " " + -1,
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, SelectCommand.MESSAGE_USAGE));
 
         /* Case: invalid index (size + 1) -> rejected */
         int invalidIndex = getModel().getFilteredOrderList().size() + 1;
-        assertCommandFailure(SelectCommand.COMMAND_WORD + " " + invalidIndex, MESSAGE_INVALID_ORDER_DISPLAYED_INDEX);
+        assertCommandFailure(selectCommand + " " + invalidIndex, MESSAGE_INVALID_ORDER_DISPLAYED_INDEX);
 
         /* Case: invalid arguments (alphabets) -> rejected */
-        assertCommandFailure(SelectCommand.COMMAND_WORD + " abc",
+        assertCommandFailure(selectCommand + " abc",
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, SelectCommand.MESSAGE_USAGE));
 
         /* Case: invalid arguments (extra argument) -> rejected */
-        assertCommandFailure(SelectCommand.COMMAND_WORD + " 1 abc",
+        assertCommandFailure(selectCommand + " 1 abc",
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, SelectCommand.MESSAGE_USAGE));
 
         /* Case: mixed case command word -> rejected */
@@ -86,7 +88,7 @@ public class SelectCommandSystemTest extends OrderBookSystemTest {
 
         /* Case: select from empty address book -> rejected */
         deleteAllOrders();
-        assertCommandFailure(SelectCommand.COMMAND_WORD + " " + INDEX_FIRST_ORDER.getOneBased(),
+        assertCommandFailure(selectCommand + " " + INDEX_FIRST_ORDER.getOneBased(),
                 MESSAGE_INVALID_ORDER_DISPLAYED_INDEX);
     }
 
