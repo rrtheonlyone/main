@@ -41,7 +41,7 @@ public class LoginCommand extends Command {
     @Override
     public CommandResult execute(Model model, CommandHistory history) throws CommandException {
         requireNonNull(model);
-        if (model.loginUser(toLogin)) {
+        if (model.isRegisteredUser(toLogin)) {
             model.storeUserInSession(toLogin);
             return new CommandResult(String.format(MESSAGE_SUCCESS, toLogin));
         } else {
