@@ -135,4 +135,9 @@ public interface Model {
      * Store the user session details.
      */
     void storeUserInSession(User user);
+
+    /**
+     * Return the logged in user details.
+     */
+    User getLoggedInUserDetails();
 }
