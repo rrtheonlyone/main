@@ -52,6 +52,28 @@ public class UserTest {
     }
 
     @Test
+    public void isSameExistingUser() {
+        // same object -> returns true
+        assertTrue(ALICE_MANAGER.isSameExistingUser(ALICE_MANAGER));
+
+        // null -> returns false
+        assertFalse(ALICE_MANAGER.isSameExistingUser(null));
+
+        // different username and password -> returns false
+        User editedAlice = new UserBuilder()
+                .withUsername(VALID_USERNAME_AMY)
+                .withPassword(VALID_PASSWORD_AMY)
+                .build();
+        assertFalse(ALICE_MANAGER.isSameExistingUser(editedAlice));
+
+        // same name, same username and different password -> returns true
+        editedAlice = new UserBuilder(ALICE_MANAGER)
+                .withPassword(VALID_PASSWORD_AMY)
+                .build();
+        assertFalse(ALICE_MANAGER.isSameExistingUser(editedAlice));
+    }
+
+    @Test
     public void equals() {
         // same values -> returns true
         User aliceCopy = new UserBuilder(ALICE_MANAGER).build();
@@ -91,5 +113,7 @@ public class UserTest {
                 + " Password: "
                 + VALID_MANAGER_PASSWORD_BENSON;
         assertNotEquals(alice.toString(), wrongResponse);
+
+
     }
 }
