@@ -198,6 +198,11 @@ public class ModelManager extends ComponentManager implements Model {
         userSession.setUserSession(user);
     }
 
+    @Override
+    public User getLoggedInUserDetails() {
+        return userSession.getLoggedInUserDetails();
+    }
+
     /**
      * Raises an event to indicate the model has changed
      */
