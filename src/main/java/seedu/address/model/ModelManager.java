@@ -42,7 +42,7 @@ public class ModelManager extends ComponentManager implements Model {
         super();
         requireAllNonNull(orderBook, routeList, userPrefs);
 
-        logger.fine("Initializing with address book: " + orderBook
+        logger.fine("Initializing with order book: " + orderBook
                 + " and route list " + routeList
                 + " and users list " + usersList
                 + " and user prefs " + userPrefs);

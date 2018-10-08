@@ -3,7 +3,7 @@ package seedu.address.model.route;
 import javafx.collections.ObservableList;
 
 /**
- * Unmodifiable view of a route book
+ * Unmodifiable view of a route list
  */
 public interface ReadOnlyRouteList {
 

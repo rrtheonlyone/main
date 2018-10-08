@@ -3,7 +3,7 @@ package seedu.address.commons.events.model;
 import seedu.address.commons.events.BaseEvent;
 import seedu.address.model.route.ReadOnlyRouteList;
 
-/** Indicates the AddressBook in the model has changed*/
+/** Indicates the OrderBook in the model has changed*/
 public class RouteListChangedEvent extends BaseEvent {
 
     public final ReadOnlyRouteList data;
