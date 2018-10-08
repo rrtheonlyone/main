@@ -125,7 +125,7 @@ public interface Model {
      */
     ObservableList<User> getFilteredUsersList();
 
-    boolean loginUser(User user);
+    boolean isRegisteredUser(User user);
 
     /**
      * Returns the UsersList
