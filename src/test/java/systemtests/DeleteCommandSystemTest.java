@@ -6,7 +6,7 @@ import static seedu.address.logic.commands.order.DeleteCommand.MESSAGE_DELETE_OR
 import static seedu.address.testutil.TestUtil.getLastIndex;
 import static seedu.address.testutil.TestUtil.getMidIndex;
 import static seedu.address.testutil.TestUtil.getOrder;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_ORDER;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST;
 
 import org.junit.Test;
 
@@ -31,8 +31,8 @@ public class DeleteCommandSystemTest extends OrderBookSystemTest {
 
         /* Case: delete the first person in the list, command with leading spaces and trailing spaces -> deleted */
         Model expectedModel = getModel();
-        String command = "     " + DELETE_COMMAND + "      " + INDEX_FIRST_ORDER.getOneBased() + "       ";
-        Order deletedOrder = removeOrder(expectedModel, INDEX_FIRST_ORDER);
+        String command = "     " + DELETE_COMMAND + "      " + INDEX_FIRST.getOneBased() + "       ";
+        Order deletedOrder = removeOrder(expectedModel, INDEX_FIRST);
         String expectedResultMessage = String.format(MESSAGE_DELETE_ORDER_SUCCESS, deletedOrder);
         assertCommandSuccess(command, expectedModel, expectedResultMessage);
 
