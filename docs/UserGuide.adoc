@@ -373,7 +373,7 @@ Format: `/exit`
 == Command Summary
 
 * *Login* : `/login u/USERNAME pw/PASSWORD` +
-e.g. `/login u/manager p/password`
+e.g. `/login u/manager pw/password`
 * *Sign Up* : `/signup n/NAME u/USERNAME pw/PASSWORD` +
 e.g. `/signup n/John Doe u/johndoe pw/johndoepassword`
 * *Logout* : `/logout`
@@ -411,7 +411,7 @@ e.g. `/assign d/1 r/1`
 * *Help* : `/help`
 * *Exit the program* : `/exit`
 
-* *Login (Deliveryman)* : `/login u/USERNAME p/PASSWORD` +
+* *Login (Deliveryman)* : `/login u/USERNAME pw/PASSWORD` +
 e.g. `/login u/deliveryman pw/password`
 * *Logout (Deliveryman)* : `/logout`
 * *View delivery route (Deliveryman)* : `/route list`
