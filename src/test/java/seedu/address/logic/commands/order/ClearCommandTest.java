@@ -3,6 +3,7 @@ package seedu.address.logic.commands.order;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.testutil.TypicalDeliverymen.getTypicalDeliverymenList;
 import static seedu.address.testutil.TypicalOrders.getTypicalOrderBook;
+import static seedu.address.testutil.TypicalRoutes.getTypicalRouteList;
 import static seedu.address.testutil.user.TypicalUsers.getTypicalUsersList;
 
 import org.junit.Test;
@@ -28,9 +29,9 @@ public class ClearCommandTest {
 
     @Test
     public void execute_nonEmptyOrderBook_success() {
-        Model model = new ModelManager(getTypicalOrderBook(), getTypicalUsersList(), getTypicalDeliverymenList(),
-                new UserPrefs());
-        Model expectedModel = new ModelManager(getTypicalOrderBook(), getTypicalUsersList(),
+        Model model = new ModelManager(getTypicalOrderBook(), getTypicalRouteList(), getTypicalUsersList(),
+                getTypicalDeliverymenList(), new UserPrefs());
+        Model expectedModel = new ModelManager(getTypicalOrderBook(), getTypicalRouteList(), getTypicalUsersList(),
                 getTypicalDeliverymenList(), new UserPrefs());
         expectedModel.resetData(new OrderBook());
         expectedModel.commitOrderBook();
