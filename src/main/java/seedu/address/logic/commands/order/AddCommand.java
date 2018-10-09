@@ -25,7 +25,7 @@ public class AddCommand extends OrderCommand {
             + PREFIX_PHONE + "PHONE "
             + PREFIX_ADDRESS + "ADDRESS "
             + PREFIX_FOOD + "FOOD...\n"
-            + "Example: " + COMMAND_WORD + " "
+            + "Example: /order " + COMMAND_WORD + " "
             + PREFIX_NAME + "John Doe "
             + PREFIX_PHONE + "98765432 "
             + PREFIX_ADDRESS + "311, Clementi Ave 2, #02-25 "
