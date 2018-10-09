@@ -8,7 +8,7 @@ import seedu.address.logic.commands.LoginCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Password;
 import seedu.address.model.person.Username;
-import seedu.address.model.user.Manager;
+import seedu.address.model.user.User;
 
 /**
  * Parses input arguments and creates a new LoginCommand object
@@ -28,8 +28,8 @@ public class LoginCommandParser implements Parser<LoginCommand> {
         Username username = ParserUtil.parseUsername(argMultimap.getValue(PREFIX_USERNAME).get());
         Password password = ParserUtil.parsePassword(argMultimap.getValue(PREFIX_PASSWORD).get());
 
-        Manager manager = new Manager(username, password);
+        User user = new User(username, password);
 
-        return new LoginCommand(manager);
+        return new LoginCommand(user);
     }
 }

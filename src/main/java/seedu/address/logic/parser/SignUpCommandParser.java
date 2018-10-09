@@ -10,7 +10,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Password;
 import seedu.address.model.person.Username;
-import seedu.address.model.user.Manager;
+import seedu.address.model.user.User;
 
 /**
  * Parses input arguments and creates a new SignUpCommand object
@@ -32,8 +32,8 @@ public class SignUpCommandParser implements Parser<SignUpCommand> {
         Username username = ParserUtil.parseUsername(argMultimap.getValue(PREFIX_USERNAME).get());
         Password password = ParserUtil.parsePassword(argMultimap.getValue(PREFIX_PASSWORD).get());
 
-        Manager manager = new Manager(name, username, password);
+        User user = new User(name, username, password);
 
-        return new SignUpCommand(manager);
+        return new SignUpCommand(user);
     }
 }
