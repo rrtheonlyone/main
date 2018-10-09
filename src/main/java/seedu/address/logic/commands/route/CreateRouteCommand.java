@@ -1,9 +1,10 @@
-package seedu.address.logic.commands;
+package seedu.address.logic.commands.route;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 
 import seedu.address.logic.CommandHistory;
+import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.person.Address;
@@ -19,7 +20,7 @@ public class CreateRouteCommand extends RouteCommand {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Creates a route with a destination. "
             + "Parameters: "
             + PREFIX_ADDRESS + "ADDRESS\n"
-            + "Example: /route " + COMMAND_WORD + " "
+            + "Example: " + RouteCommand.COMMAND_WORD + " " + COMMAND_WORD + " "
             + PREFIX_ADDRESS + "311, Clementi Ave 2, #02-25 ";
 
     public static final String MESSAGE_SUCCESS = "Route created.";

@@ -12,12 +12,13 @@ import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.LoginCommand;
 import seedu.address.logic.commands.RedoCommand;
-import seedu.address.logic.commands.RouteCommand;
 import seedu.address.logic.commands.SignUpCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.order.OrderCommand;
+import seedu.address.logic.commands.route.RouteCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.logic.parser.order.OrderCommandParser;
+import seedu.address.logic.parser.route.RouteCommandParser;
 
 /**
  * Parses user input.
