@@ -2,7 +2,6 @@ package seedu.address.model.order;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;

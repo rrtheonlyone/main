@@ -1,7 +1,6 @@
 package seedu.address.model.util;
 
 import java.util.Arrays;
-import java.util.Date;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -38,7 +37,8 @@ public class SampleDataUtil {
                         new Address("Blk 11 Ang Mo Kio Street 74, #11-04"), new OrderDate("01-10-2018 10:00:00"),
                         getFoodSet("Nasi Goreng")),
             new Order(new Name("David Li"), new Phone("91031282"),
-                        new Address("Blk 436 Serangoon Gardens Street 26, #16-43"), new OrderDate("01-10-2018 10:00:00"),
+                        new Address("Blk 436 Serangoon Gardens Street 26, #16-43"),
+                        new OrderDate("01-10-2018 10:00:00"),
                         getFoodSet("Satay")),
             new Order(new Name("Irfan Ibrahim"), new Phone("92492021"),
                         new Address("Blk 47 Tampines Street 20, #17-35"), new OrderDate("01-10-2018 10:00:00"),
@@ -50,7 +50,7 @@ public class SampleDataUtil {
     }
 
     public static Deliveryman[] getSampleDeliverymen() {
-        return new Deliveryman[] {
+        return new Deliveryman[]{
             new Deliveryman(new Name("Hoh Chi Kao")),
             new Deliveryman(new Name("Tan Yin Jing")),
             new Deliveryman(new Name("Rajul Rahesh")),
@@ -68,7 +68,7 @@ public class SampleDataUtil {
     }
 
     public static User[] getSampleUsers() {
-        return new User[] {
+        return new User[]{
             new Manager(new Name("Alice Pauline"), new Username("alicepauline"), new Password("alicepauline01")),
             new Manager(new Name("Benson Meier"), new Username("bensonmeier"), new Password("bensonmeier02")),
             new Manager(new Name("Carl Kurz"), new Username("carlkurz"), new Password("carlkurz03")),
