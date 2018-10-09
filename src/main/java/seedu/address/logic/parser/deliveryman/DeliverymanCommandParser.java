@@ -28,7 +28,8 @@ public class DeliverymanCommandParser {
     public DeliverymanCommand parse (String args) throws ParseException {
         final Matcher matcher = BASIC_COMMAND_FORMAT.matcher(args.trim());
         if (!matcher.matches()) {
-            throw new ParseException(String.format(MESSAGE_INVALID_DELIVERYMAN_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE));
+            throw new ParseException(String.format(MESSAGE_INVALID_DELIVERYMAN_COMMAND_FORMAT,
+                    HelpCommand.MESSAGE_USAGE));
         }
 
         final String commandWord = matcher.group("commandWord");
