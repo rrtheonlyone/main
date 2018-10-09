@@ -2,6 +2,7 @@ package seedu.address.model.order;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -20,21 +21,28 @@ public class Order {
     private final Name name;
     private final Phone phone;
     private final Address address;
+    private final OrderDate orderDate;
     private final Set<Food> food = new HashSet<>();
 
     /**
      * Every field must be present and not null.
      */
-    public Order(Name name, Phone phone, Address address, Set<Food> food) {
-        requireAllNonNull(name, phone, address, food);
+    public Order(Name name, Phone phone, Address address, OrderDate orderDate, Set<Food> food) {
+        requireAllNonNull(name, phone, address, orderDate, food);
         this.name = name;
         this.phone = phone;
         this.address = address;
         this.food.addAll(food);
+
+        this.orderDate = orderDate;
     }
 
     public Name getName() {
         return name;
+    }
+
+    public OrderDate getDate() {
+        return this.orderDate;
     }
 
     public Phone getPhone() {
@@ -63,7 +71,8 @@ public class Order {
 
         return otherOrder != null
                 && otherOrder.getName().equals(getName())
-                && (otherOrder.getPhone().equals(getPhone()));
+                && (otherOrder.getPhone().equals(getPhone()))
+                && (otherOrder.getDate().equals(getDate()));
     }
 
     /**
@@ -84,6 +93,7 @@ public class Order {
         return otherOrder.getName().equals(getName())
                 && otherOrder.getPhone().equals(getPhone())
                 && otherOrder.getAddress().equals(getAddress())
+                && (otherOrder.getDate().equals(getDate()))
                 && otherOrder.getFood().equals(getFood());
     }
 
@@ -101,6 +111,8 @@ public class Order {
                 .append(getPhone())
                 .append(" Address: ")
                 .append(getAddress())
+                .append(" Date: ")
+                .append(getDate())
                 .append(" Food: ");
         getFood().forEach(builder::append);
         return builder.toString();
