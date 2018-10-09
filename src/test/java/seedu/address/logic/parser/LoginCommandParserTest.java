@@ -14,7 +14,6 @@ import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSucces
 import org.junit.Test;
 
 import seedu.address.logic.commands.LoginCommand;
-import seedu.address.model.user.Manager;
 import seedu.address.model.user.User;
 import seedu.address.testutil.user.UserBuilder;
 
@@ -33,19 +32,19 @@ public class LoginCommandParserTest {
         assertParseSuccess(parser, PREAMBLE_WHITESPACE
                         + USERNAME_DESC_ALICE
                         + PASSWORD_DESC_ALICE,
-                new LoginCommand((Manager) expectedUser));
+                new LoginCommand(expectedUser));
 
         // multiple usernames - last username accepted
         assertParseSuccess(parser, USERNAME_DESC_BENSON
                         + USERNAME_DESC_ALICE
                         + PASSWORD_DESC_ALICE,
-                new LoginCommand((Manager) expectedUser));
+                new LoginCommand(expectedUser));
 
         // multiple password - last password accepted
         assertParseSuccess(parser, USERNAME_DESC_ALICE
                         + PASSWORD_DESC_BENSON
                         + PASSWORD_DESC_ALICE,
-                new LoginCommand((Manager) expectedUser));
+                new LoginCommand(expectedUser));
     }
 
     @Test

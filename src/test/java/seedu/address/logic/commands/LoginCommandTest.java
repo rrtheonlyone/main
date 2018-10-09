@@ -21,7 +21,6 @@ import seedu.address.logic.CommandHistory;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.user.Manager;
 import seedu.address.model.user.User;
 import seedu.address.testutil.user.UserBuilder;
 
@@ -48,7 +47,7 @@ public class LoginCommandTest {
                 .withPassword(VALID_MANAGER_PASSWORD_ALICE)
                 .build();
 
-        CommandResult commandResult = new LoginCommand((Manager) validUser).execute(model, commandHistory);
+        CommandResult commandResult = new LoginCommand(validUser).execute(model, commandHistory);
 
         assertEquals(String.format(LoginCommand.MESSAGE_SUCCESS, validUser), commandResult.feedbackToUser);
         assertEquals(EMPTY_COMMAND_HISTORY, commandHistory);
@@ -61,7 +60,7 @@ public class LoginCommandTest {
                 .withPassword(VALID_MANAGER_PASSWORD_BENSON)
                 .build();
 
-        CommandResult commandResult = new LoginCommand((Manager) validUser).execute(model, commandHistory);
+        CommandResult commandResult = new LoginCommand(validUser).execute(model, commandHistory);
 
         assertEquals(String.format(LoginCommand.MESSAGE_FAILURE, validUser), commandResult.feedbackToUser);
         assertEquals(EMPTY_COMMAND_HISTORY, commandHistory);
@@ -74,7 +73,7 @@ public class LoginCommandTest {
                 .withPassword(VALID_MANAGER_PASSWORD_BENSON)
                 .build();
 
-        CommandResult commandResult = new LoginCommand((Manager) validUser).execute(model, commandHistory);
+        CommandResult commandResult = new LoginCommand(validUser).execute(model, commandHistory);
 
         assertEquals(String.format(LoginCommand.MESSAGE_FAILURE, validUser), commandResult.feedbackToUser);
         assertEquals(EMPTY_COMMAND_HISTORY, commandHistory);
@@ -93,14 +92,14 @@ public class LoginCommandTest {
                 .withPassword(VALID_MANAGER_PASSWORD_BENSON)
                 .build();
 
-        LoginCommand loginAliceCommand = new LoginCommand((Manager) alice);
-        LoginCommand loginBensonCommand = new LoginCommand((Manager) benson);
+        LoginCommand loginAliceCommand = new LoginCommand(alice);
+        LoginCommand loginBensonCommand = new LoginCommand(benson);
 
         // same object -> returns true
         assertTrue(loginAliceCommand.equals(loginAliceCommand));
 
         // same values -> returns true
-        LoginCommand loginAliceCommandCopy = new LoginCommand((Manager) alice);
+        LoginCommand loginAliceCommandCopy = new LoginCommand(alice);
         assertTrue(loginAliceCommand.equals(loginAliceCommandCopy));
 
         // different types -> returns false

@@ -25,7 +25,6 @@ import seedu.address.logic.commands.SignUpCommand;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Password;
 import seedu.address.model.person.Username;
-import seedu.address.model.user.Manager;
 import seedu.address.model.user.User;
 import seedu.address.testutil.user.UserBuilder;
 
@@ -42,7 +41,7 @@ public class SignUpCommandParserTest {
                         + NAME_DESC_ALICE
                         + USERNAME_DESC_ALICE
                         + PASSWORD_DESC_ALICE,
-                new SignUpCommand((Manager) expectedUser));
+                new SignUpCommand(expectedUser));
 
 
         // multiple names - last name accepted
@@ -50,21 +49,21 @@ public class SignUpCommandParserTest {
                         + NAME_DESC_ALICE
                         + USERNAME_DESC_ALICE
                         + PASSWORD_DESC_ALICE,
-                new SignUpCommand((Manager) expectedUser));
+                new SignUpCommand(expectedUser));
 
         // multiple usernames - last username accepted
         assertParseSuccess(parser, NAME_DESC_ALICE
                         + USERNAME_DESC_BENSON
                         + USERNAME_DESC_ALICE
                         + PASSWORD_DESC_ALICE,
-                new SignUpCommand((Manager) expectedUser));
+                new SignUpCommand(expectedUser));
 
         // multiple password - last password accepted
         assertParseSuccess(parser, NAME_DESC_ALICE
                         + USERNAME_DESC_ALICE
                         + PASSWORD_DESC_BENSON
                         + PASSWORD_DESC_ALICE,
-                new SignUpCommand((Manager) expectedUser));
+                new SignUpCommand(expectedUser));
     }
 
     @Test
@@ -94,8 +93,8 @@ public class SignUpCommandParserTest {
     public void parse_invalidValue_failure() {
         // invalid name
         assertParseFailure(parser, INVALID_NAME_DESC
-                + USERNAME_DESC_ALICE
-                + PASSWORD_DESC_ALICE,
+                        + USERNAME_DESC_ALICE
+                        + PASSWORD_DESC_ALICE,
                 Name.MESSAGE_NAME_CONSTRAINTS);
 
         // invalid username
