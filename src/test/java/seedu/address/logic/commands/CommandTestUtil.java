@@ -20,7 +20,10 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
+import seedu.address.model.ModelManager;
 import seedu.address.model.OrderBook;
+import seedu.address.model.deliveryman.Deliveryman;
+import seedu.address.model.deliveryman.DeliverymanNameContainsKeywordsPredicate;
 import seedu.address.model.order.NameContainsKeywordsPredicate;
 import seedu.address.model.order.Order;
 
@@ -133,8 +136,8 @@ public class CommandTestUtil {
     }
 
     /**
-     * Updates {@code model}'s filtered list to show only the person at the given {@code targetIndex} in the
-     * {@code model}'s address book.
+     * Updates {@code model}'s filtered list to show only the order at the given {@code targetIndex} in the
+     * {@code model}'s order list.
      */
     public static void showOrderAtIndex(Model model, Index targetIndex) {
         assertTrue(targetIndex.getZeroBased() < model.getFilteredOrderList().size());
@@ -146,6 +149,19 @@ public class CommandTestUtil {
         assertEquals(1, model.getFilteredOrderList().size());
     }
 
+    /**
+     * Updates {@code model}'s filtered list to show only the deliveryman at the given {@code targetIndex} in the
+     * {@code model}'s deliverymen list.
+     */
+    public static void showDeliverymanAtIndex(Model model, Index targetIndex) {
+        assertTrue(targetIndex.getZeroBased() < model.getFilteredDeliverymenList().size());
+
+        Deliveryman deliveryman = model.getFilteredDeliverymenList().get(targetIndex.getZeroBased());
+        final String[] splitName = deliveryman.getName().fullName.split("\\s+");
+        model.updateFilteredDeliverymenList(new DeliverymanNameContainsKeywordsPredicate(Arrays.asList(splitName[0])));
+
+        assertEquals(1, model.getFilteredDeliverymenList().size());
+    }
     /**
      * Deletes the first person in {@code model}'s filtered list from {@code model}'s address book.
      */
