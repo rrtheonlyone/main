@@ -6,7 +6,7 @@ import java.util.function.Predicate;
 import seedu.address.commons.util.StringUtil;
 
 /**
- * Tests that a {@code Order}'s {@code Name} matches any of the keywords given.
+ * Tests that a {@code Deliveryman}'s {@code Name} matches any of the keywords given.
  */
 public class DeliverymanNameContainsKeywordsPredicate implements Predicate<Deliveryman> {
     private final List<String> keywords;
@@ -27,5 +27,4 @@ public class DeliverymanNameContainsKeywordsPredicate implements Predicate<Deliv
                 || (other instanceof DeliverymanNameContainsKeywordsPredicate // instanceof handles nulls
                 && keywords.equals(((DeliverymanNameContainsKeywordsPredicate) other).keywords)); // state check
     }
-
 }
