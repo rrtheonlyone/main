@@ -10,6 +10,7 @@ import static seedu.address.testutil.TypicalOrders.CARL;
 import static seedu.address.testutil.TypicalOrders.ELLE;
 import static seedu.address.testutil.TypicalOrders.FIONA;
 import static seedu.address.testutil.TypicalOrders.getTypicalOrderBook;
+import static seedu.address.testutil.TypicalRoutes.getTypicalRouteList;
 import static seedu.address.testutil.user.TypicalUsers.getTypicalUsersList;
 
 import java.util.Arrays;
@@ -30,9 +31,9 @@ import seedu.address.model.order.OrderPhoneContainsKeywordPredicate;
  * Contains integration tests (interaction with the Model) for {@code OrderFindCommand}.
  */
 public class FindCommandTest {
-    private Model model = new ModelManager(getTypicalOrderBook(), getTypicalUsersList(), getTypicalDeliverymenList(),
-            new UserPrefs());
-    private Model expectedModel = new ModelManager(getTypicalOrderBook(), getTypicalUsersList(),
+    private Model model = new ModelManager(getTypicalOrderBook(), getTypicalRouteList(), getTypicalUsersList(),
+            getTypicalDeliverymenList(), new UserPrefs());
+    private Model expectedModel = new ModelManager(getTypicalOrderBook(), getTypicalRouteList(), getTypicalUsersList(),
             getTypicalDeliverymenList(), new UserPrefs());
     private CommandHistory commandHistory = new CommandHistory();
 

@@ -17,6 +17,9 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.Password;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.Username;
+import seedu.address.model.route.ReadOnlyRouteList;
+import seedu.address.model.route.Route;
+import seedu.address.model.route.RouteList;
 import seedu.address.model.user.Manager;
 import seedu.address.model.user.User;
 
@@ -47,6 +50,17 @@ public class SampleDataUtil {
         };
     }
 
+    public static Route[] getSampleRoutes() {
+        return new Route[] {
+            new Route(new Address("Blk 30 Geylang Street 29, #06-40")),
+            new Route(new Address("Blk 30 Lorong 3 Serangoon Gardens, #07-18")),
+            new Route(new Address("Blk 11 Ang Mo Kio Street 74, #11-04")),
+            new Route(new Address("Blk 436 Serangoon Gardens Street 26, #16-43")),
+            new Route(new Address("Blk 47 Tampines Street 20, #17-35")),
+            new Route(new Address("Blk 45 Aljunied Street 85, #11-31"))
+        };
+    }
+
     public static Deliveryman[] getSampleDeliverymen() {
         return new Deliveryman[] {
             new Deliveryman(new Name("Hoh Chi Kao")),
@@ -63,6 +77,14 @@ public class SampleDataUtil {
 
         }
         return sampleAb;
+    }
+
+    public static ReadOnlyRouteList getSampleRouteList() {
+        RouteList sampleRl = new RouteList();
+        for (Route sampleRoute : getSampleRoutes()) {
+            sampleRl.addRoute(sampleRoute);
+        }
+        return sampleRl;
     }
 
     public static User[] getSampleUsers() {

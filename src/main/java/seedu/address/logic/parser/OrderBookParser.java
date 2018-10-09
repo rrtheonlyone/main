@@ -12,6 +12,7 @@ import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.LoginCommand;
 import seedu.address.logic.commands.RedoCommand;
+import seedu.address.logic.commands.RouteCommand;
 import seedu.address.logic.commands.SignUpCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.order.OrderCommand;
@@ -62,6 +63,9 @@ public class OrderBookParser {
 
         case RedoCommand.COMMAND_WORD:
             return new RedoCommand();
+
+        case RouteCommand.COMMAND_WORD:
+            return new RouteCommandParser().parse(arguments);
 
         case SignUpCommand.COMMAND_WORD:
             return new SignUpCommandParser().parse(arguments);

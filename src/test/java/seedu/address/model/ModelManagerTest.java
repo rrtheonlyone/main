@@ -7,6 +7,7 @@ import static seedu.address.testutil.TypicalDeliverymen.CHIKAO;
 import static seedu.address.testutil.TypicalDeliverymen.RAJUL;
 import static seedu.address.testutil.TypicalOrders.ALICE;
 import static seedu.address.testutil.TypicalOrders.BENSON;
+import static seedu.address.testutil.TypicalRoutes.ANGMOKIO;
 import static seedu.address.testutil.user.TypicalUsers.ALICE_MANAGER;
 import static seedu.address.testutil.user.TypicalUsers.CARL_MANAGER;
 
@@ -19,8 +20,10 @@ import org.junit.rules.ExpectedException;
 
 import seedu.address.model.deliveryman.DeliverymenList;
 import seedu.address.model.order.NameContainsKeywordsPredicate;
+import seedu.address.model.route.RouteList;
 import seedu.address.testutil.DeliverymenListBuilder;
 import seedu.address.testutil.OrderBookBuilder;
+import seedu.address.testutil.RouteListBuilder;
 import seedu.address.testutil.user.UsersListBuilder;
 
 public class ModelManagerTest {
@@ -56,17 +59,18 @@ public class ModelManagerTest {
     public void equals() {
         OrderBook orderBook = new OrderBookBuilder().withOrder(ALICE).withOrder(BENSON).build();
         OrderBook differentOrderBook = new OrderBook();
+        RouteList routeList = new RouteListBuilder().withRoute(ANGMOKIO).build();
+        RouteList differentRouteList = new RouteList();
         DeliverymenList deliverymenList = new DeliverymenListBuilder().withDeliveryman(RAJUL).withDeliveryman(CHIKAO)
                 .build();
         DeliverymenList differentDeliverymenList = new DeliverymenList();
-        UserPrefs userPrefs = new UserPrefs();
-
         UsersList usersList = new UsersListBuilder().withUser(ALICE_MANAGER).withUser(CARL_MANAGER).build();
         UsersList differentUsersList = new UsersList();
+        UserPrefs userPrefs = new UserPrefs();
 
         // same values -> returns true
-        modelManager = new ModelManager(orderBook, usersList, deliverymenList, userPrefs);
-        ModelManager modelManagerCopy = new ModelManager(orderBook, usersList, deliverymenList, userPrefs);
+        modelManager = new ModelManager(orderBook, routeList, usersList, deliverymenList, userPrefs);
+        ModelManager modelManagerCopy = new ModelManager(orderBook, routeList, usersList, deliverymenList, userPrefs);
         assertTrue(modelManager.equals(modelManagerCopy));
 
         // same object -> returns true
@@ -79,14 +83,15 @@ public class ModelManagerTest {
         assertFalse(modelManager.equals(5));
 
         // different OrderBook -> returns false
-        assertFalse(modelManager.equals(new ModelManager(differentOrderBook, differentUsersList,
+        assertFalse(modelManager.equals(new ModelManager(differentOrderBook, differentRouteList, differentUsersList,
                 differentDeliverymenList, userPrefs)));
-        assertFalse(modelManager.equals(new ModelManager(differentOrderBook, usersList, deliverymenList, userPrefs)));
+        assertFalse(modelManager.equals(new ModelManager(differentOrderBook, routeList, usersList,
+                deliverymenList, userPrefs)));
 
         // different filteredList -> returns false
         String[] keywords = ALICE.getName().fullName.split("\\s+");
         modelManager.updateFilteredOrderList(new NameContainsKeywordsPredicate(Arrays.asList(keywords)));
-        assertFalse(modelManager.equals(new ModelManager(orderBook, usersList, deliverymenList, userPrefs)));
+        assertFalse(modelManager.equals(new ModelManager(orderBook, routeList, usersList, deliverymenList, userPrefs)));
 
         // resets modelManager to initial state for upcoming tests
         modelManager.updateFilteredOrderList(PREDICATE_SHOW_ALL_ORDERS);
@@ -94,6 +99,7 @@ public class ModelManagerTest {
         // different userPrefs -> returns true
         UserPrefs differentUserPrefs = new UserPrefs();
         differentUserPrefs.setAddressBookFilePath(Paths.get("differentFilePath"));
-        assertTrue(modelManager.equals(new ModelManager(orderBook, usersList, deliverymenList, differentUserPrefs)));
+        assertTrue(modelManager.equals(new ModelManager(orderBook, routeList, usersList,
+                deliverymenList, differentUserPrefs)));
     }
 }

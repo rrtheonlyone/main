@@ -21,7 +21,9 @@ import seedu.address.model.ReadOnlyOrderBook;
 import seedu.address.model.ReadOnlyUsersList;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.deliveryman.DeliverymenList;
+import seedu.address.model.route.ReadOnlyRouteList;
 import seedu.address.storage.deliveryman.XmlDeliverymenListStorage;
+import seedu.address.storage.route.XmlRouteListStorage;
 import seedu.address.storage.user.XmlUsersListStorage;
 import seedu.address.ui.testutil.EventsCollectorRule;
 
@@ -36,12 +38,13 @@ public class StorageManagerTest {
     @Before
     public void setUp() {
         XmlOrderBookStorage orderBookStorage = new XmlOrderBookStorage(getTempFilePath("ab"));
-        JsonUserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(getTempFilePath("prefs"));
+        XmlUsersListStorage usersListStorage = new XmlUsersListStorage(getTempFilePath("users"));
+        XmlRouteListStorage routeListStorage = new XmlRouteListStorage(getTempFilePath("rl"));
         XmlDeliverymenListStorage deliverymenListStorage =
                 new XmlDeliverymenListStorage(getTempFilePath("dl"));
-        XmlUsersListStorage usersListStorage = new XmlUsersListStorage(getTempFilePath("users"));
-        storageManager = new StorageManager(orderBookStorage, userPrefsStorage, usersListStorage,
-                deliverymenListStorage);
+        JsonUserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(getTempFilePath("prefs"));
+        storageManager = new StorageManager(orderBookStorage, routeListStorage, usersListStorage,
+                deliverymenListStorage, userPrefsStorage);
     }
 
     private Path getTempFilePath(String fileName) {
@@ -85,10 +88,10 @@ public class StorageManagerTest {
     public void handleOrderBookChangedEvent_exceptionThrown_eventRaised() {
         // Create a StorageManager while injecting a stub that  throws an exception when the save method is called
         Storage storage = new StorageManager(new XmlOrderBookStorageExceptionThrowingStub(Paths.get("dummy")),
-                                             new JsonUserPrefsStorage(Paths.get("dummy")),
-                                             new XmlUsersListStorageExceptionThrowingStub(Paths.get("dummy")),
-                                             new XmlDeliverymenListStorageExceptionThrowingStub(Paths.get("dummy2"))
-                                            );
+                new XmlRouteListStorageExceptionThrowingStub(Paths.get("dummy")),
+                new XmlUsersListStorageExceptionThrowingStub(Paths.get("dummy")),
+                new XmlDeliverymenListStorageExceptionThrowingStub(Paths.get("dummy2")),
+                new JsonUserPrefsStorage(Paths.get("dummy")));
         storage.handleOrderBookChangedEvent(new OrderBookChangedEvent(new OrderBook()));
         assertTrue(eventsCollectorRule.eventsCollector.getMostRecent() instanceof DataSavingExceptionEvent);
     }
@@ -119,6 +122,21 @@ public class StorageManagerTest {
 
         @Override
         public void saveUsersList(ReadOnlyUsersList usersList, Path filePath) throws IOException {
+            throw new IOException("dummy exception");
+        }
+    }
+
+    /**
+     * A Stub class to throw an exception when the save method is called
+     */
+    class XmlRouteListStorageExceptionThrowingStub extends XmlRouteListStorage {
+
+        public XmlRouteListStorageExceptionThrowingStub(Path filePath) {
+            super(filePath);
+        }
+
+        @Override
+        public void saveRouteList(ReadOnlyRouteList routeList, Path filePath) throws IOException {
             throw new IOException("dummy exception");
         }
     }

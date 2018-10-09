@@ -13,11 +13,16 @@ import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.DeliverymenListChangedEvent;
 import seedu.address.commons.events.model.OrderBookChangedEvent;
+import seedu.address.commons.events.model.RouteListChangedEvent;
 import seedu.address.commons.events.model.UsersListChangedEvent;
 import seedu.address.model.deliveryman.Deliveryman;
 import seedu.address.model.deliveryman.DeliverymenList;
 import seedu.address.model.deliveryman.VersionedDeliverymenList;
 import seedu.address.model.order.Order;
+import seedu.address.model.route.ReadOnlyRouteList;
+import seedu.address.model.route.Route;
+import seedu.address.model.route.RouteList;
+import seedu.address.model.route.VersionedRouteList;
 import seedu.address.model.user.User;
 
 /**
@@ -27,9 +32,10 @@ public class ModelManager extends ComponentManager implements Model {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
 
     private final VersionedOrderBook versionedOrderBook;
-    private final FilteredList<Order> filteredOrders;
-
+    private final VersionedRouteList versionedRouteList;
     private final VersionedUsersList versionedUsersList;
+    private final FilteredList<Order> filteredOrders;
+    private final FilteredList<Route> filteredRoute;
     private final FilteredList<User> filteredUsers;
 
     private final VersionedDeliverymenList versionedDeliverymenList;
@@ -38,34 +44,41 @@ public class ModelManager extends ComponentManager implements Model {
     /**
      * Initializes a ModelManager with the given addressBook, usersList and userPrefs.
      */
-    public ModelManager(ReadOnlyOrderBook orderBook, ReadOnlyUsersList usersList, DeliverymenList deliverymenList,
-            UserPrefs userPrefs) {
+    public ModelManager(ReadOnlyOrderBook orderBook, ReadOnlyRouteList routeList, ReadOnlyUsersList usersList,
+            DeliverymenList deliverymenList, UserPrefs userPrefs) {
         super();
-        requireAllNonNull(orderBook, userPrefs);
-        versionedOrderBook = new VersionedOrderBook(orderBook);
-        filteredOrders = new FilteredList<>(versionedOrderBook.getOrderList());
-        versionedUsersList = new VersionedUsersList(usersList);
-        filteredUsers = new FilteredList<>(versionedUsersList.getUserList());
-        versionedDeliverymenList = new VersionedDeliverymenList(deliverymenList);
-        filteredDeliverymen = new FilteredList<>(versionedDeliverymenList.getDeliverymenList());
+        requireAllNonNull(orderBook, routeList, userPrefs);
 
         logger.fine("Initializing with order book: " + orderBook
-                + " and users list "
-                + usersList
-                + " and deliverymen list"
-                + deliverymenList
-                + " and user prefs "
-                + userPrefs);
+                + " and route list " + routeList
+                + " and users list " + usersList
+                + " and deliverymen list " + deliverymenList
+                + " and user prefs " + userPrefs);
+
+        versionedOrderBook = new VersionedOrderBook(orderBook);
+        versionedRouteList = new VersionedRouteList(routeList);
+        versionedUsersList = new VersionedUsersList(usersList);
+        versionedDeliverymenList = new VersionedDeliverymenList(deliverymenList);
+        filteredOrders = new FilteredList<>(versionedOrderBook.getOrderList());
+        filteredRoute = new FilteredList<>(versionedRouteList.getRouteList());
+        filteredUsers = new FilteredList<>(versionedUsersList.getUserList());
+        filteredDeliverymen = new FilteredList<>(versionedDeliverymenList.getDeliverymenList());
     }
 
     public ModelManager() {
-        this(new OrderBook(), new UsersList(), new DeliverymenList(), new UserPrefs());
+        this(new OrderBook(), new RouteList(), new UsersList(), new DeliverymenList(), new UserPrefs());
     }
 
     @Override
     public void resetData(ReadOnlyOrderBook newData) {
         versionedOrderBook.resetData(newData);
         indicateOrderBookChanged();
+    }
+
+    @Override
+    public void resetRouteData(ReadOnlyRouteList newData) {
+        versionedRouteList.resetData(newData);
+        indicateRouteListChanged();
     }
 
     @Override
@@ -80,6 +93,11 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
+    public ReadOnlyRouteList getRouteList() {
+        return versionedRouteList;
+    }
+
+    @Override
     public DeliverymenList getDeliverymenList() {
         return versionedDeliverymenList;
     }
@@ -89,6 +107,11 @@ public class ModelManager extends ComponentManager implements Model {
      */
     private void indicateOrderBookChanged() {
         raise(new OrderBookChangedEvent(versionedOrderBook));
+    }
+
+    /** Raises an event to indicate the route model has changed */
+    private void indicateRouteListChanged() {
+        raise(new RouteListChangedEvent(versionedRouteList));
     }
 
     /** Raises an event to indicate the deliverymen list model has changed. */
@@ -121,6 +144,32 @@ public class ModelManager extends ComponentManager implements Model {
 
         versionedOrderBook.updateOrder(target, editedOrder);
         indicateOrderBookChanged();
+    }
+
+    // ======================== Route related methods =========================
+
+    @Override
+    public boolean hasRoute(Route route) {
+        requireNonNull(route);
+        return versionedRouteList.hasRoute(route);
+    }
+
+    @Override
+    public void deleteRoute(Route target) {
+        versionedRouteList.removeRoute(target);
+        indicateRouteListChanged();
+    }
+
+    @Override
+    public void addRoute(Route route) {
+        versionedRouteList.addRoute(route);
+        indicateRouteListChanged();
+    }
+
+    @Override
+    public void updateRoute(Route target, Route editedRoute) {
+        versionedRouteList.updateRoute(target, editedRoute);
+        indicateRouteListChanged();
     }
 
     // =========== Deliveryman methods ====================================
@@ -166,6 +215,22 @@ public class ModelManager extends ComponentManager implements Model {
         filteredOrders.setPredicate(predicate);
     }
 
+    //=========== Filtered Route List Accessors =============================================================
+
+    /**
+     * Returns an unmodifiable view of the list of {@code Route} backed by the internal list of
+     * {@code versionedRouteList}
+     */
+    @Override
+    public ObservableList<Route> getFilteredRouteList() {
+        return FXCollections.unmodifiableObservableList(filteredRoute);
+    }
+
+    @Override
+    public void updateFilteredRouteList(Predicate<Route> predicate) {
+        requireNonNull(predicate);
+        filteredRoute.setPredicate(predicate);
+    }
     //=========== Filtered Deliveryman List Accessors =======================================================
 
     /**
@@ -262,6 +327,33 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
+    public boolean canUndoRouteList() {
+        return versionedRouteList.canUndo();
+    }
+
+    @Override
+    public boolean canRedoRouteList() {
+        return versionedRouteList.canRedo();
+    }
+
+    @Override
+    public void undoRouteList() {
+        versionedRouteList.undo();
+        indicateRouteListChanged();
+    }
+
+    @Override
+    public void redoRouteList() {
+        versionedRouteList.redo();
+        indicateRouteListChanged();
+    }
+
+    @Override
+    public void commitRouteList() {
+        versionedRouteList.commit();
+    }
+
+    @Override
     public boolean canUndoDeliverymenList() {
         return versionedDeliverymenList.canUndo();
     }
@@ -304,8 +396,12 @@ public class ModelManager extends ComponentManager implements Model {
         ModelManager other = (ModelManager) obj;
         return versionedOrderBook.equals(other.versionedOrderBook)
                 && filteredOrders.equals(other.filteredOrders)
+                && versionedRouteList.equals(other.versionedRouteList)
+                && filteredRoute.equals(other.filteredRoute)
                 && versionedUsersList.equals(other.versionedUsersList)
-                && versionedDeliverymenList.equals(other.versionedDeliverymenList);
+                && filteredUsers.equals(other.filteredUsers)
+                && versionedDeliverymenList.equals(other.versionedDeliverymenList)
+                && filteredDeliverymen.equals(other.filteredDeliverymen);
     }
 
 
