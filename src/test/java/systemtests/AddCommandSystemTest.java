@@ -3,9 +3,12 @@ package systemtests;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.commands.CommandTestUtil.ADDRESS_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.ADDRESS_DESC_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.DATE_DESC_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.DATE_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.FOOD_DESC_BURGER;
 import static seedu.address.logic.commands.CommandTestUtil.FOOD_DESC_RICE;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_ADDRESS_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_DATE_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_NAME_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_PHONE_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_AMY;
@@ -31,6 +34,7 @@ import seedu.address.logic.commands.order.AddCommand;
 import seedu.address.logic.commands.order.OrderCommand;
 import seedu.address.model.Model;
 import seedu.address.model.order.Order;
+import seedu.address.model.order.OrderDate;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
@@ -52,7 +56,7 @@ public class AddCommandSystemTest extends OrderBookSystemTest {
         Order toAdd = AMY;
         String addCommand = OrderCommand.COMMAND_WORD + " " + AddCommand.COMMAND_WORD;
         String command = "   " + addCommand + "  " + NAME_DESC_AMY + "  " + PHONE_DESC_AMY + " "
-                + "   " + ADDRESS_DESC_AMY + "   " + FOOD_DESC_BURGER + " ";
+                + "   " + ADDRESS_DESC_AMY + "   " + DATE_DESC_AMY + "  " + FOOD_DESC_BURGER + " ";
         assertCommandSuccess(command, toAdd);
 
         /* Case: undo adding Amy to the list -> Amy deleted */
@@ -68,7 +72,7 @@ public class AddCommandSystemTest extends OrderBookSystemTest {
 
         /* Case: add an order with all fields same as another order in the order book except name -> added */
         toAdd = new OrderBuilder(AMY).withName(VALID_NAME_BOB).build();
-        command = addCommand + NAME_DESC_BOB + PHONE_DESC_AMY + ADDRESS_DESC_AMY
+        command = addCommand + NAME_DESC_BOB + PHONE_DESC_AMY + ADDRESS_DESC_AMY + DATE_DESC_AMY
                 + FOOD_DESC_BURGER;
         assertCommandSuccess(command, toAdd);
 
@@ -85,7 +89,7 @@ public class AddCommandSystemTest extends OrderBookSystemTest {
 
         /* Case: add an order, command with parameters in random order -> added */
         toAdd = BOB;
-        command = addCommand + FOOD_DESC_RICE + PHONE_DESC_BOB + ADDRESS_DESC_BOB + NAME_DESC_BOB;
+        command = addCommand + DATE_DESC_BOB + FOOD_DESC_RICE + PHONE_DESC_BOB + ADDRESS_DESC_BOB + NAME_DESC_BOB;
         assertCommandSuccess(command, toAdd);
 
         /* Case: add an order -> added */
@@ -110,19 +114,23 @@ public class AddCommandSystemTest extends OrderBookSystemTest {
         assertCommandFailure(command, AddCommand.MESSAGE_DUPLICATE_ORDER);
 
         /* Case: missing name -> rejected */
-        command = addCommand + PHONE_DESC_AMY + ADDRESS_DESC_AMY + FOOD_DESC_BURGER;
+        command = addCommand + PHONE_DESC_AMY + ADDRESS_DESC_AMY + DATE_DESC_AMY + FOOD_DESC_BURGER;
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
 
         /* Case: missing phone -> rejected */
-        command = addCommand + NAME_DESC_AMY + ADDRESS_DESC_AMY + FOOD_DESC_BURGER;
+        command = addCommand + NAME_DESC_AMY + ADDRESS_DESC_AMY + DATE_DESC_AMY + FOOD_DESC_BURGER;
+        assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
+
+        /* Case: missing date -> rejected */
+        command = addCommand + NAME_DESC_AMY + PHONE_DESC_AMY + ADDRESS_DESC_AMY + FOOD_DESC_BURGER;
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
 
         /* Case: missing address -> rejected */
-        command = addCommand + NAME_DESC_AMY + PHONE_DESC_AMY + FOOD_DESC_BURGER;
+        command = addCommand + NAME_DESC_AMY + PHONE_DESC_AMY + DATE_DESC_AMY + FOOD_DESC_BURGER;
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
 
         /* Case: missing food -> rejected */
-        command = addCommand + NAME_DESC_AMY + PHONE_DESC_AMY + ADDRESS_DESC_AMY;
+        command = addCommand + NAME_DESC_AMY + PHONE_DESC_AMY + DATE_DESC_AMY + ADDRESS_DESC_AMY;
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
 
         /* Case: invalid keyword -> rejected */
@@ -130,16 +138,20 @@ public class AddCommandSystemTest extends OrderBookSystemTest {
         assertCommandFailure(command, Messages.MESSAGE_UNKNOWN_COMMAND);
 
         /* Case: invalid name -> rejected */
-        command = addCommand + INVALID_NAME_DESC + PHONE_DESC_AMY + ADDRESS_DESC_AMY + FOOD_DESC_BURGER;
+        command = addCommand + INVALID_NAME_DESC + PHONE_DESC_AMY + ADDRESS_DESC_AMY + DATE_DESC_AMY + FOOD_DESC_BURGER;
         assertCommandFailure(command, Name.MESSAGE_NAME_CONSTRAINTS);
 
         /* Case: invalid phone -> rejected */
-        command = addCommand + NAME_DESC_AMY + INVALID_PHONE_DESC + ADDRESS_DESC_AMY + FOOD_DESC_BURGER;
+        command = addCommand + NAME_DESC_AMY + INVALID_PHONE_DESC + ADDRESS_DESC_AMY + DATE_DESC_AMY + FOOD_DESC_BURGER;
         assertCommandFailure(command, Phone.MESSAGE_PHONE_CONSTRAINTS);
 
         /* Case: invalid address -> rejected */
-        command = addCommand + NAME_DESC_AMY + PHONE_DESC_AMY + INVALID_ADDRESS_DESC + FOOD_DESC_BURGER;
+        command = addCommand + NAME_DESC_AMY + PHONE_DESC_AMY + INVALID_ADDRESS_DESC + DATE_DESC_AMY + FOOD_DESC_BURGER;
         assertCommandFailure(command, Address.MESSAGE_ADDRESS_CONSTRAINTS);
+
+        /* Case: invalid date -> rejected */
+        command = addCommand + NAME_DESC_AMY + PHONE_DESC_AMY + ADDRESS_DESC_AMY + INVALID_DATE_DESC + FOOD_DESC_BURGER;
+        assertCommandFailure(command, OrderDate.MESSAGE_DATE_CONSTRAINTS);
 
     }
 
