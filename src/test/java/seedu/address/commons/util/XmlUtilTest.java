@@ -46,6 +46,7 @@ public class XmlUtilTest {
     private static final String VALID_NAME = "Hans Muster";
     private static final String VALID_PHONE = "9482424";
     private static final String VALID_ADDRESS = "4th street";
+    private static final String VALID_DATE = "01-10-2018 10:00:00";
     private static final List<XmlAdaptedFood> VALID_FOOD = Collections.singletonList(new XmlAdaptedFood("milo"));
 
     @Rule
@@ -89,7 +90,7 @@ public class XmlUtilTest {
         XmlAdaptedOrder actualOrder = XmlUtil.getDataFromFile(
                 MISSING_ORDER_FIELD_FILE, XmlAdaptedOrderWithRootElement.class);
         XmlAdaptedOrder expectedOrder = new XmlAdaptedOrder(
-                null, VALID_PHONE, VALID_ADDRESS, VALID_FOOD);
+                null, VALID_PHONE, VALID_ADDRESS, VALID_DATE, VALID_FOOD);
         assertEquals(expectedOrder, actualOrder);
     }
 
@@ -98,7 +99,8 @@ public class XmlUtilTest {
         XmlAdaptedOrder actualOrder = XmlUtil.getDataFromFile(
                 INVALID_ORDER_FIELD_FILE, XmlAdaptedOrderWithRootElement.class);
         XmlAdaptedOrder expectedOrder = new XmlAdaptedOrder(
-                VALID_NAME, INVALID_PHONE, VALID_ADDRESS, VALID_FOOD);
+                VALID_NAME, INVALID_PHONE, VALID_ADDRESS, VALID_DATE, VALID_FOOD);
+        System.out.println(actualOrder.toString());
         assertEquals(expectedOrder, actualOrder);
 
         XmlAdaptedDeliveryman actualDeliveryman = XmlUtil.getDataFromFile(
@@ -112,7 +114,7 @@ public class XmlUtilTest {
         XmlAdaptedOrder actualOrder = XmlUtil.getDataFromFile(
                 VALID_ORDER_FILE, XmlAdaptedOrderWithRootElement.class);
         XmlAdaptedOrder expectedOrder = new XmlAdaptedOrder(
-                VALID_NAME, VALID_PHONE, VALID_ADDRESS, VALID_FOOD);
+                VALID_NAME, VALID_PHONE, VALID_ADDRESS, VALID_DATE, VALID_FOOD);
         assertEquals(expectedOrder, actualOrder);
 
         XmlAdaptedDeliveryman actualDeliveryman = XmlUtil.getDataFromFile(
