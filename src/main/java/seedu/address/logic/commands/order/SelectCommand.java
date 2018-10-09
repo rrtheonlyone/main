@@ -24,7 +24,7 @@ public class SelectCommand extends OrderCommand {
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Selects the order identified by the index number used in the displayed order list.\n"
             + "Parameters: INDEX (must be a positive integer)\n"
-            + "Example: " + COMMAND_WORD + " 1";
+            + "Example: /order " + COMMAND_WORD + " 1";
 
     public static final String MESSAGE_SELECT_ORDER_SUCCESS = "Selected Order: %1$s";
 
