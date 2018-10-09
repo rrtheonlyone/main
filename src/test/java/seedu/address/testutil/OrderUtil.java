@@ -1,6 +1,7 @@
 package seedu.address.testutil;
 
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_FOOD;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
@@ -28,6 +29,7 @@ public class OrderUtil {
         sb.append(PREFIX_NAME + order.getName().fullName + " ");
         sb.append(PREFIX_PHONE + order.getPhone().value + " ");
         sb.append(PREFIX_ADDRESS + order.getAddress().value + " ");
+        sb.append(PREFIX_DATE + order.getDate().toString() + " ");
         order.getFood().stream().forEach(
             s -> sb.append(PREFIX_FOOD + s.foodName + " ")
         );
