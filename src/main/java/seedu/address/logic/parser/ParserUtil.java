@@ -3,6 +3,7 @@ package seedu.address.logic.parser;
 import static java.util.Objects.requireNonNull;
 
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Stream;
@@ -11,6 +12,7 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.order.Food;
+import seedu.address.model.order.OrderDate;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
@@ -98,6 +100,21 @@ public class ParserUtil {
             throw new ParseException(Email.MESSAGE_EMAIL_CONSTRAINTS);
         }
         return new Email(trimmedEmail);
+    }
+
+    /**
+     * Parses a {@code String orderDate} into a Java Date.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code orderDate} is invalid.
+     */
+    public static OrderDate parseDate(String orderDate) throws ParseException {
+        requireNonNull(orderDate);
+        String trimmedDate = orderDate.trim();
+        if (!OrderDate.isValidDate(trimmedDate)) {
+            throw new ParseException(OrderDate.MESSAGE_DATE_CONSTRAINTS);
+        }
+        return new OrderDate(trimmedDate);
     }
 
     /**
