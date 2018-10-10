@@ -3,13 +3,14 @@ package seedu.address.logic.commands.deliveryman;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static seedu.address.commons.core.Messages.MESSAGE_DELIVERYMAN_LISTED_OVERVIEW;
+import static seedu.address.commons.core.Messages.MESSAGE_DELIVERYMEN_LISTED_OVERVIEW;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.testutil.TypicalDeliverymen.CHIKAO;
 import static seedu.address.testutil.TypicalDeliverymen.MANIKA;
 import static seedu.address.testutil.TypicalDeliverymen.RAJUL;
 import static seedu.address.testutil.TypicalDeliverymen.getTypicalDeliverymenList;
 import static seedu.address.testutil.TypicalOrders.getTypicalOrderBook;
+import static seedu.address.testutil.TypicalRoutes.getTypicalRouteList;
 import static seedu.address.testutil.user.TypicalUsers.getTypicalUsersList;
 
 import java.util.Arrays;
@@ -28,10 +29,10 @@ import seedu.address.model.deliveryman.DeliverymanNameContainsKeywordsPredicate;
  */
 public class DeliverymanFindCommandTest {
     // TODO: Add deliveryman into Model Manager after merge
-    private Model model = new ModelManager(getTypicalOrderBook(), getTypicalUsersList(), getTypicalDeliverymenList(),
-            new UserPrefs());
-    private Model expectedModel = new ModelManager(getTypicalOrderBook(), getTypicalUsersList(),
-            getTypicalDeliverymenList(), new UserPrefs());
+    private Model model = new ModelManager(getTypicalOrderBook(), getTypicalRouteList(),
+            getTypicalUsersList(), getTypicalDeliverymenList(), new UserPrefs());
+    private Model expectedModel = new ModelManager(getTypicalOrderBook(), getTypicalRouteList(),
+            getTypicalUsersList(), getTypicalDeliverymenList(), new UserPrefs());
     private CommandHistory commandHistory = new CommandHistory();
 
     @Test
@@ -63,7 +64,7 @@ public class DeliverymanFindCommandTest {
 
     @Test
     public void execute_zeroKeywords_noDeliverymanFound() {
-        String expectedMessage = String.format(MESSAGE_DELIVERYMAN_LISTED_OVERVIEW, 0);
+        String expectedMessage = String.format(MESSAGE_DELIVERYMEN_LISTED_OVERVIEW, 0);
 
         DeliverymanNameContainsKeywordsPredicate predicate = preparePredicate(" ");
         DeliverymanFindCommand commandName = new DeliverymanFindCommand(predicate);
@@ -74,7 +75,7 @@ public class DeliverymanFindCommandTest {
 
     @Test
     public void execute_multipleKeywords_multipleDeliverymanFound() {
-        String expectedMessage = String.format(MESSAGE_DELIVERYMAN_LISTED_OVERVIEW, 3);
+        String expectedMessage = String.format(MESSAGE_DELIVERYMEN_LISTED_OVERVIEW, 3);
         DeliverymanNameContainsKeywordsPredicate predicate = preparePredicate("Chi Monuela Rajul");
         DeliverymanFindCommand command = new DeliverymanFindCommand(predicate);
         expectedModel.updateFilteredDeliverymenList(predicate);
