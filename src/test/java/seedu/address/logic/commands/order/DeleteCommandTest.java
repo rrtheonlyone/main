@@ -7,8 +7,8 @@ import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.showOrderAtIndex;
 import static seedu.address.testutil.TypicalDeliverymen.getTypicalDeliverymenList;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_ORDER;
-import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_ORDER;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST;
+import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND;
 import static seedu.address.testutil.TypicalOrders.getTypicalOrderBook;
 import static seedu.address.testutil.TypicalRoutes.getTypicalRouteList;
 import static seedu.address.testutil.user.TypicalUsers.getTypicalUsersList;
@@ -37,8 +37,8 @@ public class DeleteCommandTest {
 
     @Test
     public void execute_validIndexUnfilteredList_success() {
-        Order orderToDelete = model.getFilteredOrderList().get(INDEX_FIRST_ORDER.getZeroBased());
-        DeleteCommand deleteCommand = new DeleteCommand(INDEX_FIRST_ORDER);
+        Order orderToDelete = model.getFilteredOrderList().get(INDEX_FIRST.getZeroBased());
+        DeleteCommand deleteCommand = new DeleteCommand(INDEX_FIRST);
 
         String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_ORDER_SUCCESS, orderToDelete);
 
@@ -60,10 +60,10 @@ public class DeleteCommandTest {
 
     @Test
     public void execute_validIndexFilteredList_success() {
-        showOrderAtIndex(model, INDEX_FIRST_ORDER);
+        showOrderAtIndex(model, INDEX_FIRST);
 
-        Order orderToDelete = model.getFilteredOrderList().get(INDEX_FIRST_ORDER.getZeroBased());
-        DeleteCommand deleteCommand = new DeleteCommand(INDEX_FIRST_ORDER);
+        Order orderToDelete = model.getFilteredOrderList().get(INDEX_FIRST.getZeroBased());
+        DeleteCommand deleteCommand = new DeleteCommand(INDEX_FIRST);
 
         String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_ORDER_SUCCESS, orderToDelete);
 
@@ -78,9 +78,9 @@ public class DeleteCommandTest {
 
     @Test
     public void execute_invalidIndexFilteredList_throwsCommandException() {
-        showOrderAtIndex(model, INDEX_FIRST_ORDER);
+        showOrderAtIndex(model, INDEX_FIRST);
 
-        Index outOfBoundIndex = INDEX_SECOND_ORDER;
+        Index outOfBoundIndex = INDEX_SECOND;
         // ensures that outOfBoundIndex is still in bounds of address book list
         assertTrue(outOfBoundIndex.getZeroBased() < model.getOrderBook().getOrderList().size());
 
@@ -91,8 +91,8 @@ public class DeleteCommandTest {
 
     @Test
     public void executeUndoRedo_validIndexUnfilteredList_success() throws Exception {
-        Order orderToDelete = model.getFilteredOrderList().get(INDEX_FIRST_ORDER.getZeroBased());
-        DeleteCommand deleteCommand = new DeleteCommand(INDEX_FIRST_ORDER);
+        Order orderToDelete = model.getFilteredOrderList().get(INDEX_FIRST.getZeroBased());
+        DeleteCommand deleteCommand = new DeleteCommand(INDEX_FIRST);
         Model expectedModel = new ModelManager(model.getOrderBook(), model.getRouteList(), model.getUsersList(),
                 model.getDeliverymenList(), new UserPrefs());
         expectedModel.deleteOrder(orderToDelete);
@@ -132,12 +132,12 @@ public class DeleteCommandTest {
      */
     @Test
     public void executeUndoRedo_validIndexFilteredList_sameOrderDeleted() throws Exception {
-        DeleteCommand deleteCommand = new DeleteCommand(INDEX_FIRST_ORDER);
+        DeleteCommand deleteCommand = new DeleteCommand(INDEX_FIRST);
         Model expectedModel = new ModelManager(model.getOrderBook(), model.getRouteList(), model.getUsersList(),
                 model.getDeliverymenList(), new UserPrefs());
 
-        showOrderAtIndex(model, INDEX_SECOND_ORDER);
-        Order orderToDelete = model.getFilteredOrderList().get(INDEX_FIRST_ORDER.getZeroBased());
+        showOrderAtIndex(model, INDEX_SECOND);
+        Order orderToDelete = model.getFilteredOrderList().get(INDEX_FIRST.getZeroBased());
         expectedModel.deleteOrder(orderToDelete);
         expectedModel.commitOrderBook();
 
@@ -148,7 +148,7 @@ public class DeleteCommandTest {
         expectedModel.undoOrderBook();
         assertCommandSuccess(new UndoCommand(), model, commandHistory, UndoCommand.MESSAGE_SUCCESS, expectedModel);
 
-        assertNotEquals(orderToDelete, model.getFilteredOrderList().get(INDEX_FIRST_ORDER.getZeroBased()));
+        assertNotEquals(orderToDelete, model.getFilteredOrderList().get(INDEX_FIRST.getZeroBased()));
         // redo -> deletes same second person in unfiltered person list
         expectedModel.redoOrderBook();
         assertCommandSuccess(new RedoCommand(), model, commandHistory, RedoCommand.MESSAGE_SUCCESS, expectedModel);
@@ -156,14 +156,14 @@ public class DeleteCommandTest {
 
     @Test
     public void equals() {
-        DeleteCommand deleteFirstCommand = new DeleteCommand(INDEX_FIRST_ORDER);
-        DeleteCommand deleteSecondCommand = new DeleteCommand(INDEX_SECOND_ORDER);
+        DeleteCommand deleteFirstCommand = new DeleteCommand(INDEX_FIRST);
+        DeleteCommand deleteSecondCommand = new DeleteCommand(INDEX_SECOND);
 
         // same object -> returns true
         assertTrue(deleteFirstCommand.equals(deleteFirstCommand));
 
         // same values -> returns true
-        DeleteCommand deleteFirstCommandCopy = new DeleteCommand(INDEX_FIRST_ORDER);
+        DeleteCommand deleteFirstCommandCopy = new DeleteCommand(INDEX_FIRST);
         assertTrue(deleteFirstCommand.equals(deleteFirstCommandCopy));
 
         // different types -> returns false

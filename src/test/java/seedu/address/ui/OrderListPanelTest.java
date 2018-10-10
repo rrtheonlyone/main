@@ -4,7 +4,7 @@ import static java.time.Duration.ofMillis;
 import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTimeoutPreemptively;
 import static seedu.address.testutil.EventsUtil.postNow;
-import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_ORDER;
+import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND;
 import static seedu.address.testutil.TypicalOrders.getTypicalOrders;
 import static seedu.address.ui.testutil.GuiTestAssert.assertCardDisplaysOrder;
 import static seedu.address.ui.testutil.GuiTestAssert.assertCardEquals;
@@ -28,7 +28,7 @@ public class OrderListPanelTest extends GuiUnitTest {
     private static final ObservableList<Order> TYPICAL_ORDERS =
             FXCollections.observableList(getTypicalOrders());
 
-    private static final JumpToListRequestEvent JUMP_TO_SECOND_EVENT = new JumpToListRequestEvent(INDEX_SECOND_ORDER);
+    private static final JumpToListRequestEvent JUMP_TO_SECOND_EVENT = new JumpToListRequestEvent(INDEX_SECOND);
 
     private static final Path TEST_DATA_FOLDER = Paths.get("src", "test", "data", "sandbox");
 
@@ -56,7 +56,7 @@ public class OrderListPanelTest extends GuiUnitTest {
         postNow(JUMP_TO_SECOND_EVENT);
         guiRobot.pauseForHuman();
 
-        OrderCardHandle expectedPerson = orderListPanelHandle.getOrderCardHandle(INDEX_SECOND_ORDER.getZeroBased());
+        OrderCardHandle expectedPerson = orderListPanelHandle.getOrderCardHandle(INDEX_SECOND.getZeroBased());
         OrderCardHandle selectedPerson = orderListPanelHandle.getHandleToSelectedCard();
         assertCardEquals(expectedPerson, selectedPerson);
     }

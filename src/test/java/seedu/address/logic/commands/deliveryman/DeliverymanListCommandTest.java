@@ -1,7 +1,7 @@
-package seedu.address.logic.commands.order;
+package seedu.address.logic.commands.deliveryman;
 
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static seedu.address.logic.commands.CommandTestUtil.showOrderAtIndex;
+import static seedu.address.logic.commands.CommandTestUtil.showDeliverymanAtIndex;
 import static seedu.address.testutil.TypicalDeliverymen.getTypicalDeliverymenList;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST;
 import static seedu.address.testutil.TypicalOrders.getTypicalOrderBook;
@@ -16,10 +16,7 @@ import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 
-/**
- * Contains integration tests (interaction with the Model) and unit tests for ListCommand.
- */
-public class ListCommandTest {
+public class DeliverymanListCommandTest {
 
     private Model model;
     private Model expectedModel;
@@ -28,19 +25,21 @@ public class ListCommandTest {
     @Before
     public void setUp() {
         model = new ModelManager(getTypicalOrderBook(), getTypicalRouteList(), getTypicalUsersList(),
-                getTypicalDeliverymenList(), new UserPrefs());
+            getTypicalDeliverymenList(), new UserPrefs());
         expectedModel = new ModelManager(model.getOrderBook(), model.getRouteList(), model.getUsersList(),
-                model.getDeliverymenList(), new UserPrefs());
+            model.getDeliverymenList(), new UserPrefs());
     }
 
     @Test
     public void execute_listIsNotFiltered_showsSameList() {
-        assertCommandSuccess(new ListCommand(), model, commandHistory, ListCommand.MESSAGE_SUCCESS, expectedModel);
+        assertCommandSuccess(new DeliverymanListCommand(), model, commandHistory,
+            DeliverymanListCommand.MESSAGE_SUCCESS, expectedModel);
     }
 
     @Test
     public void execute_listIsFiltered_showsEverything() {
-        showOrderAtIndex(model, INDEX_FIRST);
-        assertCommandSuccess(new ListCommand(), model, commandHistory, ListCommand.MESSAGE_SUCCESS, expectedModel);
+        showDeliverymanAtIndex(model, INDEX_FIRST);
+        assertCommandSuccess(new DeliverymanListCommand(), model, commandHistory,
+            DeliverymanListCommand.MESSAGE_SUCCESS, expectedModel);
     }
 }

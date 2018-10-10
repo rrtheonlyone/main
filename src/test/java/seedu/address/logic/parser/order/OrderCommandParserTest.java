@@ -4,7 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_ORDER_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_ORDER;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST;
 
 import java.util.Arrays;
 import java.util.List;
@@ -50,8 +50,8 @@ public class OrderCommandParserTest {
     @Test
     public void parse_delete() throws Exception {
         DeleteCommand command = (DeleteCommand) parser.parse(
-                DeleteCommand.COMMAND_WORD + " " + INDEX_FIRST_ORDER.getOneBased());
-        assertEquals(new DeleteCommand(INDEX_FIRST_ORDER), command);
+                DeleteCommand.COMMAND_WORD + " " + INDEX_FIRST.getOneBased());
+        assertEquals(new DeleteCommand(INDEX_FIRST), command);
     }
 
     @Test
@@ -63,8 +63,8 @@ public class OrderCommandParserTest {
     @Test
     public void parse_select() throws Exception {
         SelectCommand command = (SelectCommand) parser.parse(
-                SelectCommand.COMMAND_WORD + " " + INDEX_FIRST_ORDER.getOneBased());
-        assertEquals(new SelectCommand(INDEX_FIRST_ORDER), command);
+                SelectCommand.COMMAND_WORD + " " + INDEX_FIRST.getOneBased());
+        assertEquals(new SelectCommand(INDEX_FIRST), command);
     }
 
     @Test

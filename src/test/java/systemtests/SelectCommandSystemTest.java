@@ -7,7 +7,7 @@ import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.logic.commands.order.SelectCommand.MESSAGE_SELECT_ORDER_SUCCESS;
 import static seedu.address.testutil.TestUtil.getLastIndex;
 import static seedu.address.testutil.TestUtil.getMidIndex;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_ORDER;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST;
 
 import org.junit.Test;
 
@@ -27,8 +27,8 @@ public class SelectCommandSystemTest extends OrderBookSystemTest {
         /* Case: select the first card in the person list, command with leading spaces and trailing spaces
          * -> selected
          */
-        String command = "   " + selectCommand + " " + INDEX_FIRST_ORDER.getOneBased() + "   ";
-        assertCommandSuccess(command, INDEX_FIRST_ORDER);
+        String command = "   " + selectCommand + " " + INDEX_FIRST.getOneBased() + "   ";
+        assertCommandSuccess(command, INDEX_FIRST);
 
         /* Case: select the last card in the person list -> selected */
         Index orderCount = getLastIndex(getModel());
@@ -55,7 +55,7 @@ public class SelectCommandSystemTest extends OrderBookSystemTest {
 
         /* ------------------------ Perform select operations on the shown filtered list ---------------------------- */
 
-        /* Case: filtered person list, select index within bounds of address book and person list -> selected */
+        /* Case: filtered person list, select index within bounds of order book and person list -> selected */
         Index validIndex = Index.fromOneBased(1);
         assertTrue(validIndex.getZeroBased() < getModel().getFilteredOrderList().size());
         command = selectCommand + " " + validIndex.getOneBased();
@@ -86,9 +86,9 @@ public class SelectCommandSystemTest extends OrderBookSystemTest {
         /* Case: mixed case command word -> rejected */
         assertCommandFailure("SeLeCt 1", MESSAGE_UNKNOWN_COMMAND);
 
-        /* Case: select from empty address book -> rejected */
+        /* Case: select from empty order book -> rejected */
         deleteAllOrders();
-        assertCommandFailure(selectCommand + " " + INDEX_FIRST_ORDER.getOneBased(),
+        assertCommandFailure(selectCommand + " " + INDEX_FIRST.getOneBased(),
                 MESSAGE_INVALID_ORDER_DISPLAYED_INDEX);
     }
 

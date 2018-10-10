@@ -14,8 +14,10 @@ import seedu.address.logic.commands.LoginCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SignUpCommand;
 import seedu.address.logic.commands.UndoCommand;
+import seedu.address.logic.commands.deliveryman.DeliverymanCommand;
 import seedu.address.logic.commands.order.OrderCommand;
 import seedu.address.logic.commands.route.RouteCommand;
+import seedu.address.logic.parser.deliveryman.DeliverymanCommandParser;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.logic.parser.order.OrderCommandParser;
 import seedu.address.logic.parser.route.RouteCommandParser;
@@ -73,6 +75,9 @@ public class OrderBookParser {
 
         case LoginCommand.COMMAND_WORD:
             return new LoginCommandParser().parse(arguments);
+
+        case DeliverymanCommand.COMMAND_WORD:
+            return new DeliverymanCommandParser().parse(arguments);
 
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);

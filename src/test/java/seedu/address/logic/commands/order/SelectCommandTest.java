@@ -7,9 +7,9 @@ import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.showOrderAtIndex;
 import static seedu.address.testutil.TypicalDeliverymen.getTypicalDeliverymenList;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_ORDER;
-import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_ORDER;
-import static seedu.address.testutil.TypicalIndexes.INDEX_THIRD_ORDER;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST;
+import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND;
+import static seedu.address.testutil.TypicalIndexes.INDEX_THIRD;
 import static seedu.address.testutil.TypicalOrders.getTypicalOrderBook;
 import static seedu.address.testutil.TypicalRoutes.getTypicalRouteList;
 import static seedu.address.testutil.user.TypicalUsers.getTypicalUsersList;
@@ -43,8 +43,8 @@ public class SelectCommandTest {
     public void execute_validIndexUnfilteredList_success() {
         Index lastPersonIndex = Index.fromOneBased(model.getFilteredOrderList().size());
 
-        assertExecutionSuccess(INDEX_FIRST_ORDER);
-        assertExecutionSuccess(INDEX_THIRD_ORDER);
+        assertExecutionSuccess(INDEX_FIRST);
+        assertExecutionSuccess(INDEX_THIRD);
         assertExecutionSuccess(lastPersonIndex);
     }
 
@@ -57,18 +57,18 @@ public class SelectCommandTest {
 
     @Test
     public void execute_validIndexFilteredList_success() {
-        showOrderAtIndex(model, INDEX_FIRST_ORDER);
-        showOrderAtIndex(expectedModel, INDEX_FIRST_ORDER);
+        showOrderAtIndex(model, INDEX_FIRST);
+        showOrderAtIndex(expectedModel, INDEX_FIRST);
 
-        assertExecutionSuccess(INDEX_FIRST_ORDER);
+        assertExecutionSuccess(INDEX_FIRST);
     }
 
     @Test
     public void execute_invalidIndexFilteredList_failure() {
-        showOrderAtIndex(model, INDEX_FIRST_ORDER);
-        showOrderAtIndex(expectedModel, INDEX_FIRST_ORDER);
+        showOrderAtIndex(model, INDEX_FIRST);
+        showOrderAtIndex(expectedModel, INDEX_FIRST);
 
-        Index outOfBoundsIndex = INDEX_SECOND_ORDER;
+        Index outOfBoundsIndex = INDEX_SECOND;
         // ensures that outOfBoundIndex is still in bounds of order book list
         assertTrue(outOfBoundsIndex.getZeroBased() < model.getOrderBook().getOrderList().size());
 
@@ -77,14 +77,14 @@ public class SelectCommandTest {
 
     @Test
     public void equals() {
-        SelectCommand selectFirstCommand = new SelectCommand(INDEX_FIRST_ORDER);
-        SelectCommand selectSecondCommand = new SelectCommand(INDEX_SECOND_ORDER);
+        SelectCommand selectFirstCommand = new SelectCommand(INDEX_FIRST);
+        SelectCommand selectSecondCommand = new SelectCommand(INDEX_SECOND);
 
         // same object -> returns true
         assertTrue(selectFirstCommand.equals(selectFirstCommand));
 
         // same values -> returns true
-        SelectCommand selectFirstCommandCopy = new SelectCommand(INDEX_FIRST_ORDER);
+        SelectCommand selectFirstCommandCopy = new SelectCommand(INDEX_FIRST);
         assertTrue(selectFirstCommand.equals(selectFirstCommandCopy));
 
         // different types -> returns false
