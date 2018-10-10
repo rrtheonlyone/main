@@ -7,7 +7,6 @@ import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
-import seedu.address.model.person.Address;
 import seedu.address.model.route.Route;
 
 /**
@@ -31,8 +30,8 @@ public class CreateRouteCommand extends RouteCommand {
     /**
      * Creates an AddCommand to add the specified {@code Route}
      */
-    public CreateRouteCommand(Address destination) {
-        Route route = new Route(destination);
+    public CreateRouteCommand(Route route) {
+        requireNonNull(route);
         toAdd = route;
     }
 

@@ -13,6 +13,7 @@ import seedu.address.logic.parser.ParserUtil;
 import seedu.address.logic.parser.Prefix;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Address;
+import seedu.address.model.route.Route;
 
 /**
  * Parses input arguments and creates a new AddCommand object
@@ -34,8 +35,9 @@ public class CreateRouteCommandParser implements Parser<CreateRouteCommand> {
         }
 
         Address destination = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS).get());
+        Route route = new Route(destination);
 
-        return new CreateRouteCommand(destination);
+        return new CreateRouteCommand(route);
     }
 
     /**
