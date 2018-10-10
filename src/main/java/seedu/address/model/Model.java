@@ -102,10 +102,21 @@ public interface Model {
      */
     void commitOrderBook();
 
+    // ======================== User related methods =========================
+
+    /**
+     * Return true if user exist inside user list.
+     */
     boolean hasUser(User user);
 
+    /**
+     * Add user to usersList.
+     */
     void addUser(User user);
 
+    /**
+     * Saves the current users list for undo/redo.
+     */
     void commitUsersList();
 
     /**
@@ -121,12 +132,31 @@ public interface Model {
      */
     ObservableList<User> getFilteredUsersList();
 
-    boolean loginUser(User user);
+    /**
+     * Return true if user is registered with application.
+     */
+    boolean isRegisteredUser(User user);
 
     /**
      * Returns the UsersList
      */
     ReadOnlyUsersList getUsersList();
+
+
+    /**
+     * Return true if user is logged into FoodZoom.
+     */
+    boolean isUserLoggedIn();
+
+    /**
+     * Store the user session details.
+     */
+    void storeUserInSession(User user);
+
+    /**
+     * Return the logged in user details.
+     */
+    User getLoggedInUserDetails();
 
     // ======================== Route related methods =========================
 

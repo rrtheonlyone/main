@@ -1,6 +1,8 @@
 package seedu.address.model;
 
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_ORDERS;
 import static seedu.address.testutil.TypicalDeliverymen.CHIKAO;
@@ -21,9 +23,11 @@ import org.junit.rules.ExpectedException;
 import seedu.address.model.deliveryman.DeliverymenList;
 import seedu.address.model.order.NameContainsKeywordsPredicate;
 import seedu.address.model.route.RouteList;
+import seedu.address.model.user.User;
 import seedu.address.testutil.DeliverymenListBuilder;
 import seedu.address.testutil.OrderBookBuilder;
 import seedu.address.testutil.RouteListBuilder;
+import seedu.address.testutil.user.UserBuilder;
 import seedu.address.testutil.user.UsersListBuilder;
 
 public class ModelManagerTest {
@@ -54,6 +58,31 @@ public class ModelManagerTest {
         thrown.expect(UnsupportedOperationException.class);
         modelManager.getFilteredOrderList().remove(0);
     }
+
+    @Test
+    public void isUserLoggedIn_isLoggedIn_returnsTrue() {
+        User alice = new UserBuilder(ALICE_MANAGER).build();
+        modelManager.storeUserInSession(alice);
+        assertTrue(modelManager.isUserLoggedIn());
+    }
+
+    @Test
+    public void isUserLoggedIn_isNotLoggedIn_returnsFalse() {
+        assertFalse(modelManager.isUserLoggedIn());
+    }
+
+    @Test
+    public void getLoggedInUserDetails_isLoggedIn_returnsNotNull() {
+        User alice = new UserBuilder(ALICE_MANAGER).build();
+        modelManager.storeUserInSession(alice);
+        assertNotNull(modelManager.getLoggedInUserDetails());
+    }
+
+    @Test
+    public void getLoggedInUserDetails_isNotLoggedIn_returnsNull() {
+        assertNull(modelManager.getLoggedInUserDetails());
+    }
+
 
     @Test
     public void equals() {

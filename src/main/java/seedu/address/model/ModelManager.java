@@ -24,6 +24,7 @@ import seedu.address.model.route.Route;
 import seedu.address.model.route.RouteList;
 import seedu.address.model.route.VersionedRouteList;
 import seedu.address.model.user.User;
+import seedu.address.model.user.UserSession;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -40,6 +41,8 @@ public class ModelManager extends ComponentManager implements Model {
 
     private final VersionedDeliverymenList versionedDeliverymenList;
     private final FilteredList<Deliveryman> filteredDeliverymen;
+
+    private final UserSession userSession;
 
     /**
      * Initializes a ModelManager with the given addressBook, usersList and userPrefs.
@@ -63,6 +66,16 @@ public class ModelManager extends ComponentManager implements Model {
         filteredRoute = new FilteredList<>(versionedRouteList.getRouteList());
         filteredUsers = new FilteredList<>(versionedUsersList.getUserList());
         filteredDeliverymen = new FilteredList<>(versionedDeliverymenList.getDeliverymenList());
+
+        userSession = new UserSession();
+
+        logger.fine("Initializing with order book: " + orderBook
+                + " and users list "
+                + usersList
+                + " and deliverymen list"
+                + deliverymenList
+                + " and user prefs "
+                + userPrefs);
     }
 
     public ModelManager() {
@@ -309,14 +322,29 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public boolean loginUser(User user) {
+    public boolean isRegisteredUser(User user) {
         requireNonNull(user);
-        return versionedUsersList.login(user);
+        return versionedUsersList.isRegisteredUser(user);
     }
 
     @Override
     public ReadOnlyUsersList getUsersList() {
         return versionedUsersList;
+    }
+
+    @Override
+    public boolean isUserLoggedIn() {
+        return userSession.isUserAlreadyLoggedIn();
+    }
+
+    @Override
+    public void storeUserInSession(User user) {
+        userSession.setUserSession(user);
+    }
+
+    @Override
+    public User getLoggedInUserDetails() {
+        return userSession.getLoggedInUserDetails();
     }
 
     /**

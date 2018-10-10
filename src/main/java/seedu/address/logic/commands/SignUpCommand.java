@@ -48,6 +48,7 @@ public class SignUpCommand extends Command {
         }
 
         model.addUser(toAdd);
+        model.storeUserInSession(toAdd);
         model.commitUsersList();
         return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
     }

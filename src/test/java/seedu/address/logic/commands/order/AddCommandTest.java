@@ -201,7 +201,7 @@ public class AddCommandTest {
         }
 
         @Override
-        public boolean loginUser(User user) {
+        public boolean isRegisteredUser(User user) {
             throw new AssertionError("This method should not be called.");
         }
 
@@ -211,12 +211,29 @@ public class AddCommandTest {
         }
 
         @Override
+        public boolean isUserLoggedIn() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void storeUserInSession(User user) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public User getLoggedInUserDetails() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
         public void resetRouteData(ReadOnlyRouteList newData) {
+
             throw new AssertionError("This method should not be called.");
         }
 
         @Override
         public ReadOnlyRouteList getRouteList() {
+
             throw new AssertionError("This method should not be called.");
         }
 

@@ -58,9 +58,9 @@ public class UsersList implements ReadOnlyUsersList {
     /**
      * Returns true if a user with the same identity as {@code user} exists in the usersList.
      */
-    public boolean login(User toLogin) {
-        requireNonNull(toLogin);
-        return users.check(toLogin);
+    public boolean isRegisteredUser(User user) {
+        requireNonNull(user);
+        return users.check(user);
     }
 
     /**
