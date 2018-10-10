@@ -7,7 +7,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_USERNAME;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
-import seedu.address.model.user.Manager;
+import seedu.address.model.user.User;
 
 /**
  * Login the user into FoodZoom.
@@ -28,14 +28,14 @@ public class LoginCommand extends Command {
             + PREFIX_USERNAME + "johndoe "
             + PREFIX_PASSWORD + "johndoepassword";
 
-    private final Manager toLogin;
+    private final User toLogin;
 
     /**
-     * Creates an LoginCommand to add the specified {@code Manager}
+     * Creates an LoginCommand to add the specified {@code user}
      */
-    public LoginCommand(Manager manager) {
-        requireNonNull(manager);
-        toLogin = manager;
+    public LoginCommand(User user) {
+        requireNonNull(user);
+        toLogin = user;
     }
 
     @Override

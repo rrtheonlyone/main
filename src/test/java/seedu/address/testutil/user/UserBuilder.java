@@ -3,13 +3,12 @@ package seedu.address.testutil.user;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Password;
 import seedu.address.model.person.Username;
-import seedu.address.model.user.Manager;
 import seedu.address.model.user.User;
 
 /**
  * A utility class to help with building UsersList objects.
  * Example usage: <br>
- *     {@code UsersList usersList = new UserBuilder().withPerson("John", "Doe").build();}
+ * {@code UsersList usersList = new UserBuilder().withPerson("John", "Doe").build();}
  */
 public class UserBuilder {
 
@@ -63,7 +62,7 @@ public class UserBuilder {
     }
 
     public User build() {
-        return new Manager(name, username, password);
+        return new User(name, username, password);
     }
 
 }

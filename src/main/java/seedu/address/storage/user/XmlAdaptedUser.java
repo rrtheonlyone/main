@@ -8,7 +8,6 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Password;
 import seedu.address.model.person.Username;
-import seedu.address.model.user.Manager;
 import seedu.address.model.user.User;
 
 /**
@@ -85,7 +84,7 @@ public class XmlAdaptedUser {
             throw new IllegalValueException(Password.MESSAGE_PASSWORD_CONSTRAINTS);
         }
         final Password modelPassword = new Password(password);
-        return new Manager(modelName, modelUsername, modelPassword);
+        return new User(modelName, modelUsername, modelPassword);
     }
 
     @Override

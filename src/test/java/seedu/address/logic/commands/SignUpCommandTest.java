@@ -25,7 +25,6 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.user.Manager;
 import seedu.address.model.user.User;
 import seedu.address.testutil.user.UserBuilder;
 
@@ -50,7 +49,7 @@ public class SignUpCommandTest {
     public void execute_userAcceptedByModel_signUpSuccessful() throws Exception {
         User validUser = new UserBuilder(HOON_MANAGER).build();
 
-        CommandResult commandResult = new SignUpCommand((Manager) validUser).execute(model, commandHistory);
+        CommandResult commandResult = new SignUpCommand(validUser).execute(model, commandHistory);
 
         assertEquals(String.format(SignUpCommand.MESSAGE_SUCCESS, validUser), commandResult.feedbackToUser);
         assertEquals(EMPTY_COMMAND_HISTORY, commandHistory);
@@ -61,7 +60,7 @@ public class SignUpCommandTest {
         User duplicateUser = new UserBuilder(BENSON_MANAGER).build();
         thrown.expect(CommandException.class);
         thrown.expectMessage(SignUpCommand.MESSAGE_DUPLICATE_USER);
-        CommandResult commandResult = new SignUpCommand((Manager) duplicateUser).execute(model, commandHistory);
+        CommandResult commandResult = new SignUpCommand(duplicateUser).execute(model, commandHistory);
     }
 
     @Test
@@ -78,14 +77,14 @@ public class SignUpCommandTest {
                 .withPassword(VALID_MANAGER_PASSWORD_BENSON)
                 .build();
 
-        SignUpCommand signUpAliceCommand = new SignUpCommand((Manager) alice);
-        SignUpCommand signUpBensonCommand = new SignUpCommand((Manager) benson);
+        SignUpCommand signUpAliceCommand = new SignUpCommand(alice);
+        SignUpCommand signUpBensonCommand = new SignUpCommand(benson);
 
         // same object -> returns true
         assertTrue(signUpAliceCommand.equals(signUpAliceCommand));
 
         // same values -> returns true
-        SignUpCommand signUpAliceCommandCopy = new SignUpCommand((Manager) alice);
+        SignUpCommand signUpAliceCommandCopy = new SignUpCommand(alice);
         assertTrue(signUpAliceCommand.equals(signUpAliceCommandCopy));
 
         // different types -> returns false

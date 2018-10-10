@@ -8,7 +8,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_USERNAME;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
-import seedu.address.model.user.Manager;
+import seedu.address.model.user.User;
 
 /**
  * Sign up the user into FoodZoom.
@@ -30,14 +30,14 @@ public class SignUpCommand extends Command {
     public static final String MESSAGE_SUCCESS = "New user added: %1$s";
     public static final String MESSAGE_DUPLICATE_USER = "This user already exists in FoodZoom.";
 
-    private final Manager toAdd;
+    private final User toAdd;
 
     /**
-     * Creates an SignUpCommand to add the specified {@code Manager}
+     * Creates an SignUpCommand to add the specified {@code user}
      */
-    public SignUpCommand(Manager manager) {
-        requireNonNull(manager);
-        toAdd = manager;
+    public SignUpCommand(User user) {
+        requireNonNull(user);
+        toAdd = user;
     }
 
     @Override

@@ -10,7 +10,7 @@ import seedu.address.model.person.Username;
  * Represents a User in the FoodZoom.
  * Guarantees: details are present and not null, field values are validated, immutable.
  */
-public abstract class User {
+public class User {
 
     // Identity fields
     private Name name;
@@ -73,6 +73,47 @@ public abstract class User {
     }
 
 
+    @Override
+    public boolean equals(Object other) {
+        if (other == this) {
+            return true;
+        }
+
+        if (!(other instanceof User)) {
+            return false;
+        }
+
+        User otherPerson = (User) other;
+        if (otherPerson.getName() == null) {
+            return otherPerson.getUsername().equals(getUsername())
+                    && otherPerson.getPassword().equals(getPassword());
+        } else {
+            return otherPerson.getName().equals(getName())
+                    && otherPerson.getUsername().equals(getUsername())
+                    && otherPerson.getPassword().equals(getPassword());
+        }
+
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder builder = new StringBuilder();
+
+        //To print for Login
+        if (getName() == null) {
+            builder.append("Username: ")
+                    .append(getUsername());
+        } else {
+            builder.append(getName())
+                    .append(" Username: ")
+                    .append(getUsername())
+                    .append(" Password: ")
+                    .append(getPassword());
+        }
+
+
+        return builder.toString();
+    }
 
 
 }
