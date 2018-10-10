@@ -55,7 +55,7 @@ public class SelectCommandSystemTest extends OrderBookSystemTest {
 
         /* ------------------------ Perform select operations on the shown filtered list ---------------------------- */
 
-        /* Case: filtered person list, select index within bounds of address book and person list -> selected */
+        /* Case: filtered person list, select index within bounds of order book and person list -> selected */
         Index validIndex = Index.fromOneBased(1);
         assertTrue(validIndex.getZeroBased() < getModel().getFilteredOrderList().size());
         command = selectCommand + " " + validIndex.getOneBased();
@@ -86,7 +86,7 @@ public class SelectCommandSystemTest extends OrderBookSystemTest {
         /* Case: mixed case command word -> rejected */
         assertCommandFailure("SeLeCt 1", MESSAGE_UNKNOWN_COMMAND);
 
-        /* Case: select from empty address book -> rejected */
+        /* Case: select from empty order book -> rejected */
         deleteAllOrders();
         assertCommandFailure(selectCommand + " " + INDEX_FIRST.getOneBased(),
                 MESSAGE_INVALID_ORDER_DISPLAYED_INDEX);

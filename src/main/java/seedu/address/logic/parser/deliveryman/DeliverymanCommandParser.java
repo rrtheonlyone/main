@@ -20,8 +20,8 @@ public class DeliverymanCommandParser {
 
     private static final Pattern BASIC_COMMAND_FORMAT = Pattern.compile("(?<commandWord>\\S+)(?<arguments>.*)");
     /**
-     * Parses the given {@code String} of arguments in the context of the OrderCommand
-     * and returns an OrderCommand object for execution.
+     * Parses the given {@code String} of arguments in the context of the DeliverymanCommand
+     * and returns an DeliverymanCommand object for execution.
      * @throws ParseException if the user input does not conform the expected format
      */
 
