@@ -10,6 +10,7 @@ import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.order.AddCommand;
 import seedu.address.logic.commands.order.ClearCommand;
 import seedu.address.logic.commands.order.DeleteCommand;
+import seedu.address.logic.commands.order.EditCommand;
 import seedu.address.logic.commands.order.FindCommand;
 import seedu.address.logic.commands.order.ListCommand;
 import seedu.address.logic.commands.order.OrderCommand;
@@ -56,6 +57,9 @@ public class OrderCommandParser implements Parser<OrderCommand> {
 
         case FindCommand.COMMAND_WORD:
             return new FindCommandParser().parse(arguments);
+
+        case EditCommand.COMMAND_WORD:
+            return new EditCommandParser().parse(arguments);
 
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
