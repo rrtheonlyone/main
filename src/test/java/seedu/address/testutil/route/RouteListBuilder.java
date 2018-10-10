@@ -1,4 +1,4 @@
-package seedu.address.testutil;
+package seedu.address.testutil.route;
 
 import seedu.address.model.route.Route;
 import seedu.address.model.route.RouteList;
