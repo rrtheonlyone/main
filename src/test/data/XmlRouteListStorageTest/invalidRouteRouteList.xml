@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<routelist>
+    <!-- Route with invalid source and destination field -->
+    <routes>
+        <source> </source>
+        <destination> </destination>
+    </routes>
+</routelist>

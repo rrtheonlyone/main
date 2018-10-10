@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<routelist>
+    <!-- Valid route -->
+    <routes>
+        <source>12 Clementi Rd</source>
+        <destination>123 South Rd</destination>
+    </routes>
+    <!-- Route with invalid source and destination field -->
+    <routes>
+        <source> </source>
+        <destination> </destination>
+    </routes>
+</routelist>
