@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<routelist>
+    <routes>
+        <source>12 Clementi Rd</source>
+        <destination>123 Ang Mo Kio St</destination>
+    </routes>
+
+    <!-- Route with same source and destination -->
+    <routes>
+        <source>12 Clementi Rd</source>
+        <destination>123 Ang Mo Kio St</destination>
+    </routes>
+
+</routelist>
