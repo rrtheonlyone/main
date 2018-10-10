@@ -98,6 +98,7 @@ public class OrderListPanelTest extends GuiUnitTest {
             builder.append("<name>").append(i).append("a</name>\n");
             builder.append("<phone>000</phone>\n");
             builder.append("<address>a</address>\n");
+            builder.append("<date>01-10-2018 10:00:00</date>\n");
             builder.append("<food>milo</food>\n");
             builder.append("</orders>\n");
         }

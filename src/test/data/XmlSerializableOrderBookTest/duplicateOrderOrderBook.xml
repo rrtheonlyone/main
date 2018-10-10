@@ -5,6 +5,7 @@
         <name>Alice Pauline</name>
         <phone>94351253</phone>
         <address>123, Jurong West Ave 6, #08-111</address>
+        <date>01-10-2018 10:00:00</date>
         <food>chocolate milk</food>
     </orders>
 
@@ -13,6 +14,7 @@
         <name>Alice Pauline</name>
         <phone>94351253</phone>
         <address>4th street</address>
+        <date>01-10-2018 10:00:00</date>
         <food>tea</food>
     </orders>
 

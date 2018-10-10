@@ -1,6 +1,7 @@
 package seedu.address.storage;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
@@ -12,6 +13,7 @@ import javax.xml.bind.annotation.XmlElement;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.order.Food;
 import seedu.address.model.order.Order;
+import seedu.address.model.order.OrderDate;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
@@ -30,6 +32,8 @@ public class XmlAdaptedOrder {
     @XmlElement(required = true)
     private String address;
     @XmlElement(required = true)
+    private String date;
+    @XmlElement(required = true)
     private List<XmlAdaptedFood> food = new ArrayList<>();
 
     /**
@@ -42,10 +46,11 @@ public class XmlAdaptedOrder {
     /**
      * Constructs an {@code XmlAdaptedOrder} with the given order details.
      */
-    public XmlAdaptedOrder(String name, String phone, String address, List<XmlAdaptedFood> food) {
+    public XmlAdaptedOrder(String name, String phone, String address, String date, List<XmlAdaptedFood> food) {
         this.name = name;
         this.phone = phone;
         this.address = address;
+        this.date = date;
 
         if (food == null) {
             this.food = new ArrayList<>();
@@ -63,6 +68,7 @@ public class XmlAdaptedOrder {
         name = source.getName().fullName;
         phone = source.getPhone().value;
         address = source.getAddress().value;
+        date = source.getDate().toString();
         food = source.getFood().stream()
                 .map(XmlAdaptedFood::new)
                 .collect(Collectors.toList());
@@ -104,6 +110,15 @@ public class XmlAdaptedOrder {
         }
         final Address modelAddress = new Address(address);
 
+
+        if (date == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Date.class.getSimpleName()));
+        }
+        if (!OrderDate.isValidDate(date)) {
+            throw new IllegalValueException(OrderDate.MESSAGE_DATE_CONSTRAINTS);
+        }
+        final OrderDate modelDate = new OrderDate(date);
+
         if (foodStore.isEmpty()) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Food.class.getSimpleName()));
         }
@@ -111,7 +126,7 @@ public class XmlAdaptedOrder {
         final Set<Food> modelFood = new HashSet<>(foodStore);
 
 
-        return new Order(modelName, modelPhone, modelAddress, modelFood);
+        return new Order(modelName, modelPhone, modelAddress, modelDate, modelFood);
     }
 
     @Override
@@ -128,6 +143,7 @@ public class XmlAdaptedOrder {
         return Objects.equals(name, otherOrder.name)
                 && Objects.equals(phone, otherOrder.phone)
                 && Objects.equals(address, otherOrder.address)
+                && Objects.equals(date, otherOrder.date)
                 && food.equals(otherOrder.food);
     }
 }

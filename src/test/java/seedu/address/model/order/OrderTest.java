@@ -31,12 +31,16 @@ public class OrderTest {
         editedAlice = new OrderBuilder(ALICE).withName(VALID_NAME_BOB).build();
         assertFalse(ALICE.isSameOrder(editedAlice));
 
-        // same name, same phone, different address and food -> returns true
+        // same name, same phone, same date different address and food -> returns true
         editedAlice = new OrderBuilder(ALICE).withAddress(VALID_ADDRESS_BOB)
                 .withFood(VALID_FOOD_BURGER).build();
         assertTrue(ALICE.isSameOrder(editedAlice));
 
-        // same name, different food -> returns true
+        // different data, everything else same -> returns false
+        editedAlice = new OrderBuilder(ALICE).withDate("03-10-2018 10:00:01").build();
+        assertFalse(ALICE.isSameOrder(editedAlice));
+
+        // same everything, different food -> returns true
         editedAlice = new OrderBuilder(ALICE)
                 .withFood(VALID_FOOD_BURGER).build();
         assertTrue(ALICE.isSameOrder(editedAlice));

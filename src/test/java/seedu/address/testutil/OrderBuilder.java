@@ -5,6 +5,7 @@ import java.util.Set;
 
 import seedu.address.model.order.Food;
 import seedu.address.model.order.Order;
+import seedu.address.model.order.OrderDate;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
@@ -18,17 +19,20 @@ public class OrderBuilder {
     public static final String DEFAULT_NAME = "Alice Pauline";
     public static final String DEFAULT_PHONE = "85355255";
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
+    public static final String DEFAULT_DATE = "01-10-2018 10:00:00";
     public static final String DEFAULT_FOOD = "Fried Rice";
 
     private Name name;
     private Phone phone;
     private Address address;
+    private OrderDate date;
     private Set<Food> food;
 
     public OrderBuilder() {
         name = new Name(DEFAULT_NAME);
         phone = new Phone(DEFAULT_PHONE);
         address = new Address(DEFAULT_ADDRESS);
+        date = new OrderDate(DEFAULT_DATE);
         food = SampleDataUtil.getFoodSet(DEFAULT_FOOD);
     }
 
@@ -39,6 +43,7 @@ public class OrderBuilder {
         name = orderToCopy.getName();
         phone = orderToCopy.getPhone();
         address = orderToCopy.getAddress();
+        date = orderToCopy.getDate();
         food = new HashSet<>(orderToCopy.getFood());
     }
 
@@ -67,6 +72,14 @@ public class OrderBuilder {
     }
 
     /**
+     * Sets the {@code Date} of the {@code Order} that we are building.
+     */
+    public OrderBuilder withDate(String orderDate) {
+        this.date = new OrderDate(orderDate);
+        return this;
+    }
+
+    /**
      * Sets the {@code Phone} of the {@code Person} that we are building.
      */
     public OrderBuilder withPhone(String phone) {
@@ -76,7 +89,7 @@ public class OrderBuilder {
 
 
     public Order build() {
-        return new Order(name, phone, address, food);
+        return new Order(name, phone, address, date, food);
     }
 
 }
