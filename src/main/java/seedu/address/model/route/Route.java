@@ -3,8 +3,11 @@ package seedu.address.model.route;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
+import seedu.address.model.order.Order;
 import seedu.address.model.person.Address;
 
 /**
@@ -16,30 +19,33 @@ public class Route {
 
     // Identity fields
     private final Address source;
-    private final Address destination;
+    private final Set<Order> orders = new HashSet<>();
 
     /**
      * Creates a new instance of Route with the destination.
-     * @param destination The address of the restaurant.
+     * @param orders The orders delivered in this route.
      */
-    public Route(Address destination) {
-        requireNonNull(destination);
+    public Route(Set<Order> orders) {
+        requireNonNull(orders);
         this.source = new Address(DEFAULT_SOURCE);
-        this.destination = destination;
+        this.orders.addAll(orders);
     }
 
-    public Route(Address source, Address destination) {
-        requireAllNonNull(source, destination);
+    public Route(Address source, Set<Order> orders) {
+        requireAllNonNull(source, orders);
         this.source = source;
-        this.destination = destination;
+        this.orders.addAll(orders);
     }
 
     public Address getSource() {
         return source;
     }
 
-    public Address getDestination() {
-        return destination;
+    /**
+     * Returns an order set
+     */
+    public Set<Order> getOrders() {
+        return orders;
     }
 
     /**
@@ -53,7 +59,7 @@ public class Route {
 
         return otherRoute != null
                 && otherRoute.getSource().equals(getSource())
-                && otherRoute.getDestination().equals(getDestination());
+                && otherRoute.getOrders().equals(getOrders());
     }
 
     /**
@@ -72,13 +78,13 @@ public class Route {
 
         Route otherRoute = (Route) other;
         return otherRoute.getSource().equals(getSource())
-                && otherRoute.getDestination().equals(getDestination());
+                && otherRoute.getOrders().equals(getOrders());
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(source, destination);
+        return Objects.hash(source, orders);
     }
 
     @Override
@@ -86,9 +92,8 @@ public class Route {
         final StringBuilder builder = new StringBuilder();
         builder.append("Route")
                 .append("Source: ")
-                .append(getSource())
-                .append(" Destination: ")
-                .append(getDestination());
+                .append(getSource());
+        getOrders().forEach(builder::append);
         return builder.toString();
     }
 }
