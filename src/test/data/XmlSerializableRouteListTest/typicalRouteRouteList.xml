@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- Routelist save file which contains the same Route values as in TypicalRoutes#getTypicalRouteList() -->
+<routelist>
+    <routes>
+        <source>12 Clementi Rd</source>
+        <destination>123 Ang Mo Kio St</destination>
+    </routes>
+    <routes>
+        <source>12 Clementi Rd</source>
+        <destination>456 Bedok St</destination>
+    </routes>
+    <routes>
+        <source>12 Clementi Rd</source>
+        <destination>78 Chinatown St</destination>
+    </routes>
+</routelist>

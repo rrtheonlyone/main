@@ -14,7 +14,7 @@ import java.util.List;
 
 import org.junit.Test;
 
-import seedu.address.testutil.RouteListBuilder;
+import seedu.address.testutil.route.RouteListBuilder;
 
 public class VersionedRouteListTest {
 

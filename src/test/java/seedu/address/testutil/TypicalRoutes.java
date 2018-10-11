@@ -6,6 +6,7 @@ import java.util.List;
 
 import seedu.address.model.route.Route;
 import seedu.address.model.route.RouteList;
+import seedu.address.testutil.route.RouteBuilder;
 
 /**
  * A utility class containing a list of {@code Route} objects to be used in tests.

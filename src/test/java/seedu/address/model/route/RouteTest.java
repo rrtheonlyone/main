@@ -8,7 +8,7 @@ import static seedu.address.testutil.TypicalRoutes.BEDOK;
 
 import org.junit.Test;
 
-import seedu.address.testutil.RouteBuilder;
+import seedu.address.testutil.route.RouteBuilder;
 
 public class RouteTest {
 

@@ -17,7 +17,7 @@ import org.junit.rules.ExpectedException;
 
 import seedu.address.model.route.exceptions.DuplicateRouteException;
 import seedu.address.model.route.exceptions.RouteNotFoundException;
-import seedu.address.testutil.RouteBuilder;
+import seedu.address.testutil.route.RouteBuilder;
 
 public class UniqueRouteListTest {
     @Rule

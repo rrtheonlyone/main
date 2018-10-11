@@ -26,7 +26,7 @@ import seedu.address.model.route.RouteList;
 import seedu.address.model.user.User;
 import seedu.address.testutil.DeliverymenListBuilder;
 import seedu.address.testutil.OrderBookBuilder;
-import seedu.address.testutil.RouteListBuilder;
+import seedu.address.testutil.route.RouteListBuilder;
 import seedu.address.testutil.user.UserBuilder;
 import seedu.address.testutil.user.UsersListBuilder;
 
