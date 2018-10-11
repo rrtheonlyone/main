@@ -132,6 +132,13 @@ public class ModelManager extends ComponentManager implements Model {
         raise(new DeliverymenListChangedEvent(versionedDeliverymenList));
     }
 
+    /**
+     * Raises an event to indicate the model has changed
+     */
+    private void indicateUsersListChanged() {
+        raise(new UsersListChangedEvent(versionedUsersList));
+    }
+    
     @Override
     public boolean hasOrder(Order order) {
         requireNonNull(order);
@@ -345,13 +352,6 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public User getLoggedInUserDetails() {
         return userSession.getLoggedInUserDetails();
-    }
-
-    /**
-     * Raises an event to indicate the model has changed
-     */
-    private void indicateUsersListChanged() {
-        raise(new UsersListChangedEvent(versionedUsersList));
     }
 
     @Override
