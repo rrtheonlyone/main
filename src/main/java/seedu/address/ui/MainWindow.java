@@ -133,14 +133,17 @@ public class MainWindow extends UiPart<Stage> {
 
         CommandBox commandBox = new CommandBox(logic);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
+
+        orderListPanel = new OrderListPanel(logic.getFilteredOrderList());
+        orderListPanelPlaceholder.getChildren().add(orderListPanel.getRoot());
+        orderListPanelPlaceholder.setVisible(false);
     }
 
     /**
      * Display order list panel after login successful.
      */
     void displayOrderListPanel() {
-        orderListPanel = new OrderListPanel(logic.getFilteredOrderList());
-        orderListPanelPlaceholder.getChildren().add(orderListPanel.getRoot());
+        orderListPanelPlaceholder.setVisible(true);
     }
 
     void hide() {
