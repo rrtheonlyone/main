@@ -42,6 +42,19 @@ public class ParserUtil {
     }
 
     /**
+     * Parses {@code Collection<String> tags} into a {@code Set<Tag>}.
+     */
+    public static Set<Index> parseIndexes(Collection<String> index) throws ParseException {
+        requireNonNull(index);
+        final Set<Index> indexSet = new HashSet<>();
+        for (String indexNo : index) {
+            indexSet.add(parseIndex(indexNo));
+        }
+        return indexSet;
+
+    }
+
+    /**
      * Parses a {@code String name} into a {@code Name}.
      * Leading and trailing whitespaces will be trimmed.
      *
