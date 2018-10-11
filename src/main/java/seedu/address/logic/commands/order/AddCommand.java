@@ -2,6 +2,7 @@ package seedu.address.logic.commands.order;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_FOOD;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
@@ -13,7 +14,7 @@ import seedu.address.model.Model;
 import seedu.address.model.order.Order;
 
 /**
- * Adds a person to the address book.
+ * Adds an order to the order book.
  */
 public class AddCommand extends OrderCommand {
 
@@ -30,7 +31,8 @@ public class AddCommand extends OrderCommand {
             + PREFIX_PHONE + "98765432 "
             + PREFIX_ADDRESS + "311, Clementi Ave 2, #02-25 "
             + PREFIX_FOOD + "Roti Prata "
-            + PREFIX_FOOD + "Ice Milo";
+            + PREFIX_FOOD + "Ice Milo"
+            + PREFIX_DATE + "12-10-2018 00:00:00";
 
     public static final String MESSAGE_SUCCESS = "New order added: %1$s";
     public static final String MESSAGE_DUPLICATE_ORDER = "This order already exists in the order book";
