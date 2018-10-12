@@ -3,7 +3,7 @@ package seedu.address.model.route;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static seedu.address.testutil.TypicalRoutes.ANGMOKIO;
+import static seedu.address.testutil.TypicalRoutes.ROUTE_ALICE_BENSON;
 import static seedu.address.testutil.TypicalRoutes.getTypicalRouteList;
 
 import java.util.Collection;
@@ -50,20 +50,20 @@ public class RouteListTest {
 
     @Test
     public void hasRoute_routeNotInRouteList_returnsFalse() {
-        assertFalse(routeList.hasRoute(ANGMOKIO));
+        assertFalse(routeList.hasRoute(ROUTE_ALICE_BENSON));
     }
 
     @Test
     public void hasRoute_routeInRouteList_returnsTrue() {
-        routeList.addRoute(ANGMOKIO);
-        assertTrue(routeList.hasRoute(ANGMOKIO));
+        routeList.addRoute(ROUTE_ALICE_BENSON);
+        assertTrue(routeList.hasRoute(ROUTE_ALICE_BENSON));
     }
 
     @Test
     public void hasRoute_routeWithSameIdentityFieldsInRouteList_returnsTrue() {
-        routeList.addRoute(ANGMOKIO);
-        Route editedAlice = new RouteBuilder(ANGMOKIO).build();
-        assertTrue(routeList.hasRoute(editedAlice));
+        routeList.addRoute(ROUTE_ALICE_BENSON);
+        Route editedRouteAliceBenson = new RouteBuilder(ROUTE_ALICE_BENSON).build();
+        assertTrue(routeList.hasRoute(editedRouteAliceBenson));
     }
 
     @Test

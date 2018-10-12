@@ -4,9 +4,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static seedu.address.testutil.TypicalRoutes.ANGMOKIO;
-import static seedu.address.testutil.TypicalRoutes.BEDOK;
-import static seedu.address.testutil.TypicalRoutes.CHINATOWN;
+import static seedu.address.testutil.TypicalRoutes.ROUTE_ALICE_BENSON;
+import static seedu.address.testutil.TypicalRoutes.ROUTE_CARL;
+import static seedu.address.testutil.TypicalRoutes.ROUTE_DANIEL;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -18,9 +18,9 @@ import seedu.address.testutil.route.RouteListBuilder;
 
 public class VersionedRouteListTest {
 
-    private final ReadOnlyRouteList routeListWithAlice = new RouteListBuilder().withRoute(ANGMOKIO).build();
-    private final ReadOnlyRouteList routeListWithBenny = new RouteListBuilder().withRoute(BEDOK).build();
-    private final ReadOnlyRouteList routeListWithCharlie = new RouteListBuilder().withRoute(CHINATOWN).build();
+    private final ReadOnlyRouteList routeListWithAliceBenson = new RouteListBuilder().withRoute(ROUTE_ALICE_BENSON).build();
+    private final ReadOnlyRouteList routeListWithCarl = new RouteListBuilder().withRoute(ROUTE_CARL).build();
+    private final ReadOnlyRouteList routeListWithDaniel = new RouteListBuilder().withRoute(ROUTE_DANIEL).build();
     private final ReadOnlyRouteList emptyRouteList = new RouteListBuilder().build();
 
     @Test
@@ -37,19 +37,19 @@ public class VersionedRouteListTest {
     @Test
     public void commit_multipleRouteListPointerAtEndOfStateList_noStatesRemovedCurrentStateSaved() {
         VersionedRouteList versionedRouteList = prepareRouteListList(
-                emptyRouteList, routeListWithAlice, routeListWithBenny);
+                emptyRouteList, routeListWithAliceBenson, routeListWithCarl);
 
         versionedRouteList.commit();
         assertRouteListListStatus(versionedRouteList,
-                Arrays.asList(emptyRouteList, routeListWithAlice, routeListWithBenny),
-                routeListWithBenny,
+                Arrays.asList(emptyRouteList, routeListWithAliceBenson, routeListWithCarl),
+                routeListWithCarl,
                 Collections.emptyList());
     }
 
     @Test
     public void commit_multipleRouteListPointerNotAtEndOfStateList_statesAfterPointerRemovedCurrentStateSaved() {
         VersionedRouteList versionedRouteList = prepareRouteListList(
-                emptyRouteList, routeListWithAlice, routeListWithBenny);
+                emptyRouteList, routeListWithAliceBenson, routeListWithCarl);
         shiftCurrentStatePointerLeftwards(versionedRouteList, 2);
 
         versionedRouteList.commit();
@@ -62,7 +62,7 @@ public class VersionedRouteListTest {
     @Test
     public void canUndo_multipleRouteListPointerAtEndOfStateList_returnsTrue() {
         VersionedRouteList versionedRouteList = prepareRouteListList(
-                emptyRouteList, routeListWithAlice, routeListWithBenny);
+                emptyRouteList, routeListWithAliceBenson, routeListWithCarl);
 
         assertTrue(versionedRouteList.canUndo());
     }
@@ -70,7 +70,7 @@ public class VersionedRouteListTest {
     @Test
     public void canUndo_multipleRouteListPointerAtStartOfStateList_returnsTrue() {
         VersionedRouteList versionedRouteList = prepareRouteListList(
-                emptyRouteList, routeListWithAlice, routeListWithBenny);
+                emptyRouteList, routeListWithAliceBenson, routeListWithCarl);
         shiftCurrentStatePointerLeftwards(versionedRouteList, 1);
 
         assertTrue(versionedRouteList.canUndo());
@@ -86,7 +86,7 @@ public class VersionedRouteListTest {
     @Test
     public void canUndo_multipleRouteListPointerAtStartOfStateList_returnsFalse() {
         VersionedRouteList versionedRouteList = prepareRouteListList(
-                emptyRouteList, routeListWithAlice, routeListWithBenny);
+                emptyRouteList, routeListWithAliceBenson, routeListWithCarl);
         shiftCurrentStatePointerLeftwards(versionedRouteList, 2);
 
         assertFalse(versionedRouteList.canUndo());
@@ -95,7 +95,7 @@ public class VersionedRouteListTest {
     @Test
     public void canRedo_multipleRouteListPointerNotAtEndOfStateList_returnsTrue() {
         VersionedRouteList versionedRouteList = prepareRouteListList(
-                emptyRouteList, routeListWithAlice, routeListWithBenny);
+                emptyRouteList, routeListWithAliceBenson, routeListWithCarl);
         shiftCurrentStatePointerLeftwards(versionedRouteList, 1);
 
         assertTrue(versionedRouteList.canRedo());
@@ -104,7 +104,7 @@ public class VersionedRouteListTest {
     @Test
     public void canRedo_multipleRouteListPointerAtStartOfStateList_returnsTrue() {
         VersionedRouteList versionedRouteList = prepareRouteListList(
-                emptyRouteList, routeListWithAlice, routeListWithBenny);
+                emptyRouteList, routeListWithAliceBenson, routeListWithCarl);
         shiftCurrentStatePointerLeftwards(versionedRouteList, 2);
 
         assertTrue(versionedRouteList.canRedo());
@@ -120,7 +120,7 @@ public class VersionedRouteListTest {
     @Test
     public void canRedo_multipleRouteListPointerAtEndOfStateList_returnsFalse() {
         VersionedRouteList versionedRouteList = prepareRouteListList(
-                emptyRouteList, routeListWithAlice, routeListWithBenny);
+                emptyRouteList, routeListWithAliceBenson, routeListWithCarl);
 
         assertFalse(versionedRouteList.canRedo());
     }
@@ -128,26 +128,26 @@ public class VersionedRouteListTest {
     @Test
     public void undo_multipleRouteListPointerAtEndOfStateList_success() {
         VersionedRouteList versionedRouteList = prepareRouteListList(
-                emptyRouteList, routeListWithAlice, routeListWithBenny);
+                emptyRouteList, routeListWithAliceBenson, routeListWithCarl);
 
         versionedRouteList.undo();
         assertRouteListListStatus(versionedRouteList,
                 Collections.singletonList(emptyRouteList),
-                routeListWithAlice,
-                Collections.singletonList(routeListWithBenny));
+                routeListWithAliceBenson,
+                Collections.singletonList(routeListWithCarl));
     }
 
     @Test
     public void undo_multipleRouteListPointerNotAtStartOfStateList_success() {
         VersionedRouteList versionedRouteList = prepareRouteListList(
-                emptyRouteList, routeListWithAlice, routeListWithBenny);
+                emptyRouteList, routeListWithAliceBenson, routeListWithCarl);
         shiftCurrentStatePointerLeftwards(versionedRouteList, 1);
 
         versionedRouteList.undo();
         assertRouteListListStatus(versionedRouteList,
                 Collections.emptyList(),
                 emptyRouteList,
-                Arrays.asList(routeListWithAlice, routeListWithBenny));
+                Arrays.asList(routeListWithAliceBenson, routeListWithCarl));
     }
 
     @Test
@@ -160,7 +160,7 @@ public class VersionedRouteListTest {
     @Test
     public void undo_multipleRouteListPointerAtStartOfStateList_throwsNoUndoableStateException() {
         VersionedRouteList versionedRouteList = prepareRouteListList(
-                emptyRouteList, routeListWithAlice, routeListWithBenny);
+                emptyRouteList, routeListWithAliceBenson, routeListWithCarl);
         shiftCurrentStatePointerLeftwards(versionedRouteList, 2);
 
         assertThrows(VersionedRouteList.NoUndoableStateException.class, versionedRouteList::undo);
@@ -169,27 +169,27 @@ public class VersionedRouteListTest {
     @Test
     public void redo_multipleRouteListPointerNotAtEndOfStateList_success() {
         VersionedRouteList versionedRouteList = prepareRouteListList(
-                emptyRouteList, routeListWithAlice, routeListWithBenny);
+                emptyRouteList, routeListWithAliceBenson, routeListWithCarl);
         shiftCurrentStatePointerLeftwards(versionedRouteList, 1);
 
         versionedRouteList.redo();
         assertRouteListListStatus(versionedRouteList,
-                Arrays.asList(emptyRouteList, routeListWithAlice),
-                routeListWithBenny,
+                Arrays.asList(emptyRouteList, routeListWithAliceBenson),
+                routeListWithCarl,
                 Collections.emptyList());
     }
 
     @Test
     public void redo_multipleRouteListPointerAtStartOfStateList_success() {
         VersionedRouteList versionedRouteList = prepareRouteListList(
-                emptyRouteList, routeListWithAlice, routeListWithBenny);
+                emptyRouteList, routeListWithAliceBenson, routeListWithCarl);
         shiftCurrentStatePointerLeftwards(versionedRouteList, 2);
 
         versionedRouteList.redo();
         assertRouteListListStatus(versionedRouteList,
                 Collections.singletonList(emptyRouteList),
-                routeListWithAlice,
-                Collections.singletonList(routeListWithBenny));
+                routeListWithAliceBenson,
+                Collections.singletonList(routeListWithCarl));
     }
 
     @Test
@@ -202,17 +202,17 @@ public class VersionedRouteListTest {
     @Test
     public void redo_multipleRouteListPointerAtEndOfStateList_throwsNoRedoableStateException() {
         VersionedRouteList versionedRouteList = prepareRouteListList(
-                emptyRouteList, routeListWithAlice, routeListWithBenny);
+                emptyRouteList, routeListWithAliceBenson, routeListWithCarl);
 
         assertThrows(VersionedRouteList.NoRedoableStateException.class, versionedRouteList::redo);
     }
 
     @Test
     public void equals() {
-        VersionedRouteList versionedRouteList = prepareRouteListList(routeListWithAlice, routeListWithBenny);
+        VersionedRouteList versionedRouteList = prepareRouteListList(routeListWithAliceBenson, routeListWithCarl);
 
         // same values -> returns true
-        VersionedRouteList copy = prepareRouteListList(routeListWithAlice, routeListWithBenny);
+        VersionedRouteList copy = prepareRouteListList(routeListWithAliceBenson, routeListWithCarl);
         assertTrue(versionedRouteList.equals(copy));
 
         // same object -> returns true
@@ -225,12 +225,12 @@ public class VersionedRouteListTest {
         assertFalse(versionedRouteList.equals(1));
 
         // different state list -> returns false
-        VersionedRouteList differentRouteListList = prepareRouteListList(routeListWithBenny, routeListWithCharlie);
+        VersionedRouteList differentRouteListList = prepareRouteListList(routeListWithCarl, routeListWithDaniel);
         assertFalse(versionedRouteList.equals(differentRouteListList));
 
         // different current pointer index -> returns false
         VersionedRouteList differentCurrentStatePointer = prepareRouteListList(
-                routeListWithAlice, routeListWithBenny);
+                routeListWithAliceBenson, routeListWithCarl);
         shiftCurrentStatePointerLeftwards(versionedRouteList, 1);
         assertFalse(versionedRouteList.equals(differentCurrentStatePointer));
     }
