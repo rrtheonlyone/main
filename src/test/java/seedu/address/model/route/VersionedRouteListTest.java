@@ -18,7 +18,8 @@ import seedu.address.testutil.route.RouteListBuilder;
 
 public class VersionedRouteListTest {
 
-    private final ReadOnlyRouteList routeListWithAliceBenson = new RouteListBuilder().withRoute(ROUTE_ALICE_BENSON).build();
+    private final ReadOnlyRouteList routeListWithAliceBenson = new RouteListBuilder()
+            .withRoute(ROUTE_ALICE_BENSON).build();
     private final ReadOnlyRouteList routeListWithCarl = new RouteListBuilder().withRoute(ROUTE_CARL).build();
     private final ReadOnlyRouteList routeListWithDaniel = new RouteListBuilder().withRoute(ROUTE_DANIEL).build();
     private final ReadOnlyRouteList emptyRouteList = new RouteListBuilder().build();

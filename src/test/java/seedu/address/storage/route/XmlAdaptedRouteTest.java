@@ -5,7 +5,6 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_AMY;
 import static seedu.address.storage.route.XmlAdaptedRoute.MISSING_FIELD_MESSAGE_FORMAT;
 import static seedu.address.testutil.TypicalRoutes.ROUTE_ALICE_BENSON;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
