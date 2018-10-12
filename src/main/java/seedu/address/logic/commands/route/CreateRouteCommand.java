@@ -27,7 +27,7 @@ public class CreateRouteCommand extends RouteCommand {
             + "Parameters: "
             + PREFIX_ORDER + "ORDER_ID\n"
             + "Example: " + RouteCommand.COMMAND_WORD + " " + COMMAND_WORD + " "
-            + PREFIX_ORDER + "1" + PREFIX_ORDER + "3";
+            + PREFIX_ORDER + "1 " + PREFIX_ORDER + "3";
 
     public static final String MESSAGE_SUCCESS = "Route created.";
     public static final String MESSAGE_DUPLICATE_ROUTE = "This route already exists in the address book";

@@ -92,7 +92,8 @@ public class Route {
         final StringBuilder builder = new StringBuilder();
         builder.append("Route")
                 .append("Source: ")
-                .append(getSource());
+                .append(getSource())
+                .append(" Orders: ");
         getOrders().forEach(builder::append);
         return builder.toString();
     }
