@@ -2,13 +2,25 @@
 <routelist>
     <routes>
         <source>12 Clementi Rd</source>
-        <destination>123 Ang Mo Kio St</destination>
+        <orders>
+            <name>Carl Kurz</name>
+            <phone>95352563</phone>
+            <address>wall street</address>
+            <date>01-10-2018 10:00:00</date>
+            <food>Milkshake</food>
+        </orders>
     </routes>
 
-    <!-- Route with same source and destination -->
+    <!-- Route with same source and orders -->
     <routes>
         <source>12 Clementi Rd</source>
-        <destination>123 Ang Mo Kio St</destination>
+        <orders>
+            <name>Carl Kurz</name>
+            <phone>95352563</phone>
+            <address>wall street</address>
+            <date>01-10-2018 10:00:00</date>
+            <food>Milkshake</food>
+        </orders>
     </routes>
 
 </routelist>

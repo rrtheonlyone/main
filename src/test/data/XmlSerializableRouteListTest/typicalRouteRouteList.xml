@@ -3,14 +3,40 @@
 <routelist>
     <routes>
         <source>12 Clementi Rd</source>
-        <destination>123 Ang Mo Kio St</destination>
+        <orders>
+            <name>Alice Pauline</name>
+            <phone>94351253</phone>
+            <address>123, Jurong West Ave 6, #08-111</address>
+            <date>01-10-2018 10:00:00</date>
+            <food>Roti Prata</food>
+        </orders>
+        <orders>
+            <name>Benson Meier</name>
+            <phone>98765432</phone>
+            <address>311, Clementi Ave 2, #02-25</address>
+            <date>01-10-2018 10:00:00</date>
+            <food>Egg Fried Rice</food>
+            <food>Milo</food>
+        </orders>
     </routes>
     <routes>
         <source>12 Clementi Rd</source>
-        <destination>456 Bedok St</destination>
+        <orders>
+            <name>Carl Kurz</name>
+            <phone>95352563</phone>
+            <address>wall street</address>
+            <date>01-10-2018 10:00:00</date>
+            <food>Milkshake</food>
+        </orders>
     </routes>
     <routes>
         <source>12 Clementi Rd</source>
-        <destination>78 Chinatown St</destination>
+        <orders>
+            <name>Daniel Meier</name>
+            <phone>87652533</phone>
+            <address>10th street</address>
+            <date>01-10-2018 10:00:00</date>
+            <food>Fish and Chips</food>
+        </orders>
     </routes>
 </routelist>
