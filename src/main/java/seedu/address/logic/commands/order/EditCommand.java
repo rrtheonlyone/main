@@ -53,7 +53,7 @@ public class EditCommand extends OrderCommand {
 
     public static final String MESSAGE_EDIT_ORDER_SUCCESS = "Edited Order: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
-    public static final String MESSAGE_DUPLICATE_ORDER = "This person already exists in the order book.";
+    public static final String MESSAGE_DUPLICATE_ORDER = "This order already exists in the order book.";
     public static final String MESSAGE_INVALID_ORDER_INDEX = "Invalid Order Index: %1$s";
 
     private final Index index;
@@ -139,8 +139,7 @@ public class EditCommand extends OrderCommand {
         private OrderDate orderDate;
         private Set<Food> food;
 
-        public EditOrderDescriptor() {
-        }
+        public EditOrderDescriptor() { }
 
         /**
          * Copy constructor.
