@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
+import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.CommandHistory;
@@ -35,7 +36,7 @@ public class EditCommand extends OrderCommand {
 
     public static final String COMMAND_WORD = "edit";
 
-    public static final String MESSAGE_USAGE = OrderCommand.COMMAND_WORD + COMMAND_WORD
+    public static final String MESSAGE_USAGE = OrderCommand.COMMAND_WORD + " " + COMMAND_WORD
             + ": Edits the details of the order identified "
             + "by the index number used in the displayed order book. "
             + "Existing values will be overwritten by the input values.\n"
@@ -75,21 +76,22 @@ public class EditCommand extends OrderCommand {
         requireNonNull(model);
         List<Order> lastShownList = model.getFilteredOrderList();
 
-        try {
-            Order orderToEdit = lastShownList.get(index.getZeroBased());
-            Order editedOrder = createEditedOrder(orderToEdit, editOrderDescriptor);
-
-            if (!orderToEdit.isSameOrder(editedOrder) && model.hasOrder(editedOrder)) {
-                throw new CommandException(MESSAGE_DUPLICATE_ORDER);
-            }
-
-            model.updateOrder(orderToEdit, editedOrder);
-            model.updateFilteredOrderList(PREDICATE_SHOW_ALL_ORDERS);
-            model.commitOrderBook();
-            return new CommandResult(String.format(MESSAGE_EDIT_ORDER_SUCCESS, editedOrder));
-        } catch (IndexOutOfBoundsException ioob) {
-            throw new CommandException(String.format(MESSAGE_INVALID_ORDER_INDEX, index.getOneBased()));
+        if (index.getZeroBased() >= lastShownList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_ORDER_DISPLAYED_INDEX);
         }
+
+        Order orderToEdit = lastShownList.get(index.getZeroBased());
+        Order editedOrder = createEditedOrder(orderToEdit, editOrderDescriptor);
+
+        if (!orderToEdit.isSameOrder(editedOrder) && model.hasOrder(editedOrder)) {
+            throw new CommandException(MESSAGE_DUPLICATE_ORDER);
+        }
+
+        model.updateOrder(orderToEdit, editedOrder);
+        model.updateFilteredOrderList(PREDICATE_SHOW_ALL_ORDERS);
+        model.commitOrderBook();
+        return new CommandResult(String.format(MESSAGE_EDIT_ORDER_SUCCESS, editedOrder));
+
     }
 
     /**

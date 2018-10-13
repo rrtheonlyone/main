@@ -9,7 +9,6 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Optional;
 import java.util.Set;
 
@@ -79,7 +78,11 @@ public class EditCommandParser implements Parser<OrderCommand> {
         if (food.isEmpty()) {
             return Optional.empty();
         }
-        Collection<String> foodSet = food.size() == 1 && food.contains("") ? Collections.emptySet() : food;
-        return Optional.of(ParserUtil.parseFoods(foodSet));
+
+        if (food.size() == 1 && food.contains("")) {
+            throw new ParseException(String.format(Food.MESSAGE_FOOD_CONSTRAINTS));
+        }
+
+        return Optional.of(ParserUtil.parseFoods(food));
     }
 }
