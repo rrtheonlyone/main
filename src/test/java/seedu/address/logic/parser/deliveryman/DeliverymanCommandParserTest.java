@@ -6,6 +6,8 @@ import static seedu.address.commons.core.Messages.MESSAGE_INVALID_DELIVERYMAN_CO
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST;
 
+import java.util.Arrays;
+
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -13,11 +15,14 @@ import org.junit.rules.ExpectedException;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.deliveryman.DeliverymanAddCommand;
 import seedu.address.logic.commands.deliveryman.DeliverymanDeleteCommand;
+import seedu.address.logic.commands.deliveryman.DeliverymanFindCommand;
 import seedu.address.logic.commands.deliveryman.DeliverymanListCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.deliveryman.Deliveryman;
+import seedu.address.model.deliveryman.DeliverymanNameContainsKeywordsPredicate;
 import seedu.address.testutil.DeliverymanBuilder;
 import seedu.address.testutil.DeliverymanUtil;
+
 
 public class DeliverymanCommandParserTest {
     @Rule
@@ -44,6 +49,15 @@ public class DeliverymanCommandParserTest {
     public void parse_list() throws Exception {
         assertTrue(parser.parse(DeliverymanListCommand.COMMAND_WORD) instanceof DeliverymanListCommand);
         assertTrue(parser.parse(DeliverymanListCommand.COMMAND_WORD + " 3") instanceof DeliverymanListCommand);
+    }
+
+    @Test
+    public void parse_find() throws Exception {
+        String keyword = "foo";
+        DeliverymanFindCommand command = (DeliverymanFindCommand) parser.parse(
+                DeliverymanFindCommand.COMMAND_WORD + " n/" + keyword);
+        assertEquals(new DeliverymanFindCommand(
+                new DeliverymanNameContainsKeywordsPredicate(Arrays.asList(keyword))), command);
     }
 
     @Test

@@ -52,6 +52,9 @@ public class OrderBookParser {
         case OrderCommand.COMMAND_WORD:
             return new OrderCommandParser().parse(arguments);
 
+        case DeliverymanCommand.COMMAND_WORD:
+            return new DeliverymanCommandParser().parse(arguments);
+
         case HistoryCommand.COMMAND_WORD:
             return new HistoryCommand();
 
@@ -75,9 +78,6 @@ public class OrderBookParser {
 
         case LoginCommand.COMMAND_WORD:
             return new LoginCommandParser().parse(arguments);
-
-        case DeliverymanCommand.COMMAND_WORD:
-            return new DeliverymanCommandParser().parse(arguments);
 
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);

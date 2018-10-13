@@ -10,6 +10,7 @@ import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.deliveryman.DeliverymanAddCommand;
 import seedu.address.logic.commands.deliveryman.DeliverymanCommand;
 import seedu.address.logic.commands.deliveryman.DeliverymanDeleteCommand;
+import seedu.address.logic.commands.deliveryman.DeliverymanFindCommand;
 import seedu.address.logic.commands.deliveryman.DeliverymanListCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
@@ -45,6 +46,9 @@ public class DeliverymanCommandParser {
 
         case DeliverymanListCommand.COMMAND_WORD:
             return new DeliverymanListCommand();
+
+        case DeliverymanFindCommand.COMMAND_WORD:
+            return new DeliverymanFindCommandParser().parse(arguments);
 
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
