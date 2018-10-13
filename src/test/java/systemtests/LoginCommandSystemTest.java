@@ -2,9 +2,9 @@ package systemtests;
 
 import static seedu.address.logic.commands.CommandTestUtil.VALID_MANAGER_PASSWORD_ALICE;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_MANAGER_PASSWORD_BENSON;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_MANAGER_PASSWORD_IDA;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_MANAGER_PASSWORD_KENNY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_MANAGER_USERNAME_ALICE;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_MANAGER_USERNAME_IDA;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_MANAGER_USERNAME_KENNY;
 import static seedu.address.logic.commands.LoginCommand.MESSAGE_FAILURE;
 import static seedu.address.logic.commands.LoginCommand.MESSAGE_SUCCESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PASSWORD;
@@ -48,10 +48,10 @@ public class LoginCommandSystemTest extends OrderBookSystemTest {
         String loginCommand = LoginCommand.COMMAND_WORD + " ";
 
         /* Case: Fail to login, wrong password */
-        String command = loginCommand + PREFIX_USERNAME + VALID_MANAGER_USERNAME_IDA
-                + " " + PREFIX_PASSWORD + VALID_MANAGER_PASSWORD_IDA;
+        String command = loginCommand + PREFIX_USERNAME + VALID_MANAGER_USERNAME_KENNY
+                + " " + PREFIX_PASSWORD + VALID_MANAGER_PASSWORD_KENNY;
         String expectedResultMessage = String.format(
-                MESSAGE_FAILURE, "Username: " + VALID_MANAGER_USERNAME_IDA);
+                MESSAGE_FAILURE, "Username: " + VALID_MANAGER_USERNAME_KENNY);
 
         assertCommandFailure(command, expectedResultMessage);
     }
