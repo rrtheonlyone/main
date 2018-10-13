@@ -45,6 +45,7 @@ public class AddCommand extends OrderCommand {
     public AddCommand(Order order) {
         requireNonNull(order);
         toAdd = order;
+
     }
 
     @Override
