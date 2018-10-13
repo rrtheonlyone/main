@@ -18,12 +18,15 @@ import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.order.AddCommand;
 import seedu.address.logic.commands.order.ClearCommand;
 import seedu.address.logic.commands.order.DeleteCommand;
+import seedu.address.logic.commands.order.EditCommand;
+import seedu.address.logic.commands.order.EditCommand.EditOrderDescriptor;
 import seedu.address.logic.commands.order.FindCommand;
 import seedu.address.logic.commands.order.ListCommand;
 import seedu.address.logic.commands.order.SelectCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.order.Order;
 import seedu.address.model.order.OrderNameContainsKeywordPredicate;
+import seedu.address.testutil.EditOrderDescriptorBuilder;
 import seedu.address.testutil.OrderBuilder;
 import seedu.address.testutil.OrderUtil;
 
@@ -73,6 +76,15 @@ public class OrderCommandParserTest {
         FindCommand command = (FindCommand) parser.parse(
                 FindCommand.COMMAND_WORD + " n/" + keywords.stream().collect(Collectors.joining(" ")));
         assertEquals(new FindCommand(new OrderNameContainsKeywordPredicate(keywords)), command);
+    }
+
+    @Test
+    public void parse_edit() throws Exception {
+        Order order = new OrderBuilder().build();
+        EditOrderDescriptor descriptor = new EditOrderDescriptorBuilder(order).build();
+        EditCommand command = (EditCommand) parser.parse(EditCommand.COMMAND_WORD + " "
+                + INDEX_FIRST.getOneBased() + " " + OrderUtil.getEditOrderDescriptorDetails(descriptor));
+        assertEquals(new EditCommand(INDEX_FIRST, descriptor), command);
     }
 
     @Test
