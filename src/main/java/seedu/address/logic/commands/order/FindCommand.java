@@ -21,8 +21,8 @@ public class FindCommand extends OrderCommand {
             + ": Finds the order whose name or phone number contain any of "
             + "the specified keywords (case-insensitive) and displays them as a list with index numbers.\n"
             + "Parameters: n/NAME p/PHONE\n"
-            + "Example: " + COMMAND_WORD + " n/John \n"
-            + "Example: " + COMMAND_WORD + " p/1234578";
+            + "Example: " + OrderCommand.COMMAND_WORD + " " + COMMAND_WORD + " n/John \n"
+            + "Example: " + OrderCommand.COMMAND_WORD + " " + COMMAND_WORD + " p/1234578";
 
     private final OrderContainsAnyKeywordsPredicate predicate;
 
