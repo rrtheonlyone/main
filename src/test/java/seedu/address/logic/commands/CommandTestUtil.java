@@ -19,12 +19,14 @@ import java.util.List;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.commands.order.EditCommand;
 import seedu.address.model.Model;
 import seedu.address.model.OrderBook;
 import seedu.address.model.deliveryman.Deliveryman;
 import seedu.address.model.deliveryman.DeliverymanNameContainsKeywordsPredicate;
 import seedu.address.model.order.NameContainsKeywordsPredicate;
 import seedu.address.model.order.Order;
+import seedu.address.testutil.EditOrderDescriptorBuilder;
 
 /**
  * Contains helper methods for testing commands.
@@ -69,6 +71,7 @@ public class CommandTestUtil {
     public static final String INVALID_ADDRESS_DESC = " " + PREFIX_ADDRESS; // empty string not allowed for addresses
     public static final String INVALID_TAG_DESC = " " + PREFIX_TAG + "hubby*"; // '*' not allowed in tags
     public static final String INVALID_DATE_DESC = " " + PREFIX_DATE + "09/11/18";
+    public static final String INVALID_FOOD_DESC = " " + PREFIX_FOOD + "milo*"; // '*' not allowed in food
 
     public static final String PREAMBLE_WHITESPACE = "\t  \r  \n";
     public static final String PREAMBLE_NON_EMPTY = "NonEmptyPreamble";
@@ -89,6 +92,18 @@ public class CommandTestUtil {
 
     public static final String INVALID_USERNAME_DESC = " " + PREFIX_USERNAME + "James&"; // '&' not allowed in usernames
     public static final String INVALID_PASSWORD_DESC = " " + PREFIX_PASSWORD + "Jam&"; // '&' not allowed in password
+
+    public static final EditCommand.EditOrderDescriptor DESC_AMY;
+    public static final EditCommand.EditOrderDescriptor DESC_BOB;
+
+    static {
+        DESC_AMY = new EditOrderDescriptorBuilder().withName(VALID_NAME_AMY)
+                .withPhone(VALID_PHONE_AMY).withDate(VALID_DATE_AMY).withAddress(VALID_ADDRESS_AMY)
+                .withFood(VALID_FOOD_BURGER).build();
+        DESC_BOB = new EditOrderDescriptorBuilder().withName(VALID_NAME_BOB)
+                .withPhone(VALID_PHONE_BOB).withDate(VALID_DATE_BOB).withAddress(VALID_ADDRESS_BOB)
+                .withFood(VALID_FOOD_RICE, VALID_FOOD_BURGER).build();
+    }
 
     /**
      * Executes the given {@code command}, confirms that <br>
