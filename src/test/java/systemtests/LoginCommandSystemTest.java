@@ -28,34 +28,31 @@ public class LoginCommandSystemTest extends OrderBookSystemTest {
         String expectedResultMessage = String.format(
                 MESSAGE_SUCCESS, "Username: " + VALID_MANAGER_USERNAME_ALICE);
         assertCommandSuccess(command, expectedModel, expectedResultMessage);
-
-
-
     }
 
     @Test
     public void login_fail_wrongPassword() {
         String loginCommand = LoginCommand.COMMAND_WORD + " ";
+
         /* Case: Fail to login, wrong password */
         String command = loginCommand + PREFIX_USERNAME + VALID_MANAGER_USERNAME_ALICE
                 + " " + PREFIX_PASSWORD + VALID_MANAGER_PASSWORD_BENSON;
         String expectedResultMessage = String.format(
                 MESSAGE_FAILURE, "Username: " + VALID_MANAGER_USERNAME_ALICE);
 
-        System.out.println(expectedResultMessage);
         assertCommandFailure(command, expectedResultMessage);
     }
 
     @Test
     public void login_fail_userNotExist() {
         String loginCommand = LoginCommand.COMMAND_WORD + " ";
+
         /* Case: Fail to login, wrong password */
         String command = loginCommand + PREFIX_USERNAME + VALID_MANAGER_USERNAME_IDA
                 + " " + PREFIX_PASSWORD + VALID_MANAGER_PASSWORD_IDA;
         String expectedResultMessage = String.format(
                 MESSAGE_FAILURE, "Username: " + VALID_MANAGER_USERNAME_IDA);
 
-        System.out.println(expectedResultMessage);
         assertCommandFailure(command, expectedResultMessage);
     }
 
