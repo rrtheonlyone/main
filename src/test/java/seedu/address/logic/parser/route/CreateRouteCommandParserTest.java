@@ -1,5 +1,6 @@
 package seedu.address.logic.parser.route;
 
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ORDER;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
 import static seedu.address.logic.parser.ParserUtil.MESSAGE_INVALID_INDEX;
@@ -22,13 +23,13 @@ public class CreateRouteCommandParserTest {
         Set<Index> orderIds = new HashSet<>();
         orderIds.add(INDEX_FIRST);
         orderIds.add(INDEX_SECOND);
-        assertParseSuccess(parser, " o/1 o/2", new CreateRouteCommand(orderIds));
+        assertParseSuccess(parser, " " + PREFIX_ORDER + "1 " + PREFIX_ORDER + "2", new CreateRouteCommand(orderIds));
     }
 
     @Test
     public void parse_invalidIndexNonNumber_failure() {
         // invalid index
-        assertParseFailure(parser, " o/a", MESSAGE_INVALID_INDEX);
+        assertParseFailure(parser, " " + PREFIX_ORDER + "a", MESSAGE_INVALID_INDEX);
     }
 
 }
