@@ -3,7 +3,8 @@ package seedu.address.logic.commands.route;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static seedu.address.logic.commands.route.CreateRouteCommand.MESSAGE_SUCCESS;
+import static seedu.address.logic.commands.route.CreateRouteCommand.MESSAGE_SUCCESS_ALL_VALID;
+import static seedu.address.logic.commands.route.CreateRouteCommand.MESSAGE_SUCCESS_SOME_INVALID;
 import static seedu.address.testutil.TypicalDeliverymen.getTypicalDeliverymenList;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND;
@@ -45,7 +46,7 @@ public class CreateRouteCommandTest {
     }
 
     @Test
-    public void execute_orderAcceptedByModel_addSuccessful() {
+    public void execute_orderAllAcceptedByModel_addSuccessful() {
         Set<Order> orders = new HashSet<>();
         orders.add(validOrder);
         Set<Index> orderIds = new HashSet<>();
@@ -53,7 +54,28 @@ public class CreateRouteCommandTest {
         CreateRouteCommand createRouteCommand = new CreateRouteCommand(orderIds);
         Route validRoute = new Route(orders);
 
-        String expectedMessage = MESSAGE_SUCCESS;
+        String expectedMessage = String.format(MESSAGE_SUCCESS_ALL_VALID, INDEX_FIRST.getOneBased());
+
+        Model expectedModel = new ModelManager(model.getOrderBook(), model.getRouteList(), model.getUsersList(),
+                model.getDeliverymenList(), new UserPrefs());
+        expectedModel.addRoute(validRoute);
+        expectedModel.commitRouteList();
+
+        assertCommandSuccess(createRouteCommand, model, commandHistory, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void execute_orderSomeAcceptedByModel_addSuccessful() {
+        Set<Order> orders = new HashSet<>();
+        orders.add(validOrder);
+        Set<Index> orderIds = new HashSet<>();
+        orderIds.add(INDEX_FIRST);
+        orderIds.add(INDEX_TOO_LARGE);
+        CreateRouteCommand createRouteCommand = new CreateRouteCommand(orderIds);
+        Route validRoute = new Route(orders);
+
+        String expectedMessage = String.format(MESSAGE_SUCCESS_SOME_INVALID,
+                INDEX_FIRST.getOneBased(), INDEX_TOO_LARGE.getOneBased());
 
         Model expectedModel = new ModelManager(model.getOrderBook(), model.getRouteList(), model.getUsersList(),
                 model.getDeliverymenList(), new UserPrefs());
