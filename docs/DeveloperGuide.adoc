@@ -324,6 +324,63 @@ image::UndoRedoActivityDiagram.png[width="650"]
 ** Cons: Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things.
 // end::undoredo[]
 
+=== Login Command
+==== Current Implementation
+
+The `/login` command allows the `Manager` to login into the FoodZoom application and use authenticated commands like
+`/order add`, `/order edit`, `/order list`, ... .Basically all the `/order` commands and `/deliveryman` commands. The
+only commands that can be used without logging in are `/signup`, `/login`, `/help` and `/history`. The format of this
+ command is `/login u/[USERNAME] pw/[PASSWORD]`.
+
+In our current implementation, the `/login` command inherits from `Command` class. 2 components, `Logic` and `Model`
+are involved in the execution of this command. The `Logic` class is responsible for parsing the user input and the
+`Model` class deals with storing the `UserSession` and checking if the user is logged in or not.
+
+Below is a sequence diagram that illustrates how these 2 components interact when the `/login` command is executed:
+
+image::LoginCommandSequenceDiagram1.png[width="800"]
+Figure 3.2.1.1 Sequence diagram to illustrate `Logic` component interactions for `/login`.
+
+image::LoginCommandSequenceDiagram2.png[width="800"]
+Figure 3.2.1.2 Sequence diagram to illustrate `Logic` and `Model` component interactions for `/login`.
+
+As shown above, execution of the `/login` command comprises of the following steps:
+
+1. `LogicManager` invokes the `parseCommand` method of `OrderBookParser`, taking in user inputs as arguments.
+2. During the `parseCommand` method call, an instance of `LoginCommandParser` will be created with the keyword
+`/login` is matched. `LoginCommandParser` then extracts the remaining user inputs and a `LoginCommand` instance will
+be returned provided that the user's input is correct.
+3. `LoginCommand` then invokes `isRegisteredUser` method which belongs to `ModelManager` class. The `ModelManager`
+will the invoke `IsRegisteredUser` method in `UsersList` to check if the user is in the list of users.
+4. After checking if the user is in the list, if it returns `true` then `storeUserInSession` method will be invoked
+to store the `User` object inside `UserSession`. The `execute` method will then return a `CommandResult` with success
+ login message.
+5. If the user is not in the list, `execute` method will just return a `CommandResult` with failure to login message.
+
+==== Design Considerations
+
+===== Aspect: How `/login` executes
+
+* **Alternative 1 (current choice):** Check if user is in users list.
+** Pros: Easy to implement.
+** Cons: Not necessary to implement users list because there will only be 1 user.
+
+* **Alternative 2:** Automatic login even after application is opened more than once.
+** Pros: User do not need to login multiple times after application is re-opened.
+** Cons: Difficult to implement because it requires caching user details locally.
+
+===== Aspect: Data Structure to support `/login` command
+
+* **Alternative 1 (current choice):** Create a unique user list to store all the user and create a `users.xml` to
+store locally.
+** Pros: Easy to implement and you can make sure that there is only unique users.
+** Cons: Not necessary because there would only be 1 user using the application.
+
+* **Alternative 2:** Store user session inside `User` class
+** Pros: Easy to handle login session.
+** Cons: Would break the SRP (Single Responsibility Principle) because `User` class should only be about the user and
+ nothing to do with login at all.
+
 // tag::dataencryption[]
 === [Proposed] Data Encryption
 
