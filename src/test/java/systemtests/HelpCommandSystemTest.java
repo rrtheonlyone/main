@@ -36,13 +36,6 @@ public class HelpCommandSystemTest extends OrderBookSystemTest {
 
     @Test
     public void openHelpWindow() {
-
-        /* Login */
-        String loginCommand = LoginCommand.COMMAND_WORD + " ";
-        String command = loginCommand + PREFIX_USERNAME + VALID_MANAGER_USERNAME_ALICE
-                + " " + PREFIX_PASSWORD + VALID_MANAGER_PASSWORD_ALICE;
-        executeCommand(command);
-
         //use accelerator
         getCommandBox().click();
         getMainMenu().openHelpWindowUsingAccelerator();
@@ -71,6 +64,12 @@ public class HelpCommandSystemTest extends OrderBookSystemTest {
         // open help window and give it focus
         executeCommand(HelpCommand.COMMAND_WORD);
         getMainWindowHandle().focus();
+
+        /* Login */
+        String loginCommand = LoginCommand.COMMAND_WORD + " ";
+        String command = loginCommand + PREFIX_USERNAME + VALID_MANAGER_USERNAME_ALICE
+                + " " + PREFIX_PASSWORD + VALID_MANAGER_PASSWORD_ALICE;
+        executeCommand(command);
 
         // assert that while the help window is open the UI updates correctly for a command execution
         executeCommand(OrderCommand.COMMAND_WORD + " " + SelectCommand.COMMAND_WORD + " "
