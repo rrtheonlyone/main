@@ -381,6 +381,67 @@ store locally.
 ** Cons: Would break the SRP (Single Responsibility Principle) because `User` class should only be about the user and
  nothing to do with login at all.
 
+=== Find Order Feature
+
+==== Current Implementation
+The `find` order command allows searching of orders in FoodZoom.
+It allows finding of orders based on either the name or phone specified in the order.
+
+The following sequence diagram shows the sequence flow from the `LogicManager` to the `ModelManager` when a user enter a `find` command:
+
+image::OrderFindSequenceDiagram.png[width="650"]
+Figure 3.3.1.1 Sequence Diagram for order `find` command
+
+From the sequence diagram:
+
+.  When `LogicManager` receive the `execute` command, it class the `parseCommand` method in `OrderBookParser`.
+.  `OrderBookParser` will receive `/order` as the command and instantiate `OrderCommandParser` to further parse the command.
+.  If the arguments specified in the `find` command are valid, a `FindCommand` will be created and return back to the `LogicManger`
+.  `LogicManger` will proceed to call the `execute` command of `FindCommand`
+.  `FindCommand` will updated the list in the `Model` and create a new `CommandResult` to be returned.
+
+Currently, FoodZoom only allows find for other based on name or phone, but not specifying both name and phone together.
+
+This differentiation is handled by `FindCommandParser` which checks for the fields specified.
+It throws a `ParseException` error if either both name and phone is specified together or when fields other than name or phone is being specified.
+
+`FindCommandParser` will return an `OrderNameContainsKeywordPredicate` if a valid name is specified or return an `OrderPhoneContainsKeyPredicate`.
+
+In order for `FindCommand` to take a general predicate, both `OrderNameContainsKeywordPredicate` and `OrderPhoneContainsKeywordPredicate` implements the interface `OrderContainsKeywordPredicated` and `OrderContainsKeywordPredicate` extends from a `Predicate` of `Order`.  +
+The following shows how is one of the predicate implemented:
+[source,java]
+----
+/**
+ * Tests that a {@code Order}'s {@code Name} matches any of the keywords given.
+ */
+public class OrderNameContainsKeywordPredicate implements OrderContainsAnyKeywordsPredicate {
+
+    @Override
+    public boolean test(Order order) {
+        // test method...
+    }
+
+}
+----
+
+==== Design Consideration
+
+===== Aspect: Implementation of `FindCommand`
+* **Alternative 1 (current choice):** Name and Phone has its own predicate having its own test method.
+** Pros: It adheres to the Single Responsibility Principle (SRP) and the Separation of Concern (SoC). Each Predicate will only handles its own search parameters.
+** Cons: More classes will be needed, which results in more code being written
+* **Alternative 2:** One predicate class which handles name and phone.
+** Pros: Reduces the number of classes, which makes it for new developers to understand.
+** Cons: It decreases the cohesion as one class will need to handle different predicates.
+
+===== Aspect: Implementation of `FindCommandParser`
+* **Alternative 1 (current choice):** `FindCommandParser` handles all the parsing
+** Pros: It makes it easy for new developers to understand as `FindCommandParser` handles all the parsing of the predicates.
+** Cons: It violates the Single Responsibility Principles (SRP). `FindCommandParser` has to break down the arguments as well as check which argument is present.
+* **Alternative 2:** Having a utilities class to handle the break down and checking of which command is present.
+** Pros: It adheres to SRP as handling of argument is pass on to a utility class.
+** Cons: Increase in the complexity of the code for new developers as more classes are needed and more lines of code will be written
+
 // tag::dataencryption[]
 === [Proposed] Data Encryption
 
