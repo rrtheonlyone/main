@@ -328,7 +328,7 @@ image::UndoRedoActivityDiagram.png[width="650"]
 ==== Current Implementation
 
 The `/login` command allows the `Manager` to login into the FoodZoom application and use authenticated commands like
-`/order add`, `/order edit`, `/order list`, ... .Basically all the `/order` commands and `/deliverman` commands. The
+`/order add`, `/order edit`, `/order list`, ... .Basically all the `/order` commands and `/deliveryman` commands. The
 only commands that can be used without logging in are `/signup`, `/login`, `/help` and `/history`. The format of this
  command is `/login u/[USERNAME] pw/[PASSWORD]`.
 
