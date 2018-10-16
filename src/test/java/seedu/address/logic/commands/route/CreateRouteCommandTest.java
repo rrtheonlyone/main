@@ -8,7 +8,6 @@ import static seedu.address.logic.commands.route.CreateRouteCommand.MESSAGE_SUCC
 import static seedu.address.testutil.TypicalDeliverymen.getTypicalDeliverymenList;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND;
-import static seedu.address.testutil.TypicalIndexes.INDEX_TOO_LARGE;
 import static seedu.address.testutil.TypicalOrders.getTypicalOrderBook;
 import static seedu.address.testutil.TypicalRoutes.getTypicalRouteList;
 import static seedu.address.testutil.user.TypicalUsers.getTypicalUsersList;
@@ -37,6 +36,7 @@ public class CreateRouteCommandTest {
     private Model model = new ModelManager(getTypicalOrderBook(), getTypicalRouteList(), getTypicalUsersList(),
             getTypicalDeliverymenList(), new UserPrefs());
     private Order validOrder = model.getFilteredOrderList().get(INDEX_FIRST.getZeroBased());
+    private Index outOfBoundIndex = Index.fromOneBased(model.getFilteredOrderList().size() + 1);
     private CommandHistory commandHistory = new CommandHistory();
 
     @Test
@@ -70,12 +70,12 @@ public class CreateRouteCommandTest {
         orders.add(validOrder);
         Set<Index> orderIds = new HashSet<>();
         orderIds.add(INDEX_FIRST);
-        orderIds.add(INDEX_TOO_LARGE);
+        orderIds.add(outOfBoundIndex);
         CreateRouteCommand createRouteCommand = new CreateRouteCommand(orderIds);
         Route validRoute = new Route(orders);
 
         String expectedMessage = String.format(MESSAGE_SUCCESS_SOME_INVALID,
-                INDEX_FIRST.getOneBased(), INDEX_TOO_LARGE.getOneBased());
+                INDEX_FIRST.getOneBased(), outOfBoundIndex.getOneBased());
 
         Model expectedModel = new ModelManager(model.getOrderBook(), model.getRouteList(), model.getUsersList(),
                 model.getDeliverymenList(), new UserPrefs());
@@ -107,7 +107,7 @@ public class CreateRouteCommandTest {
     @Test
     public void execute_orderIndexTooLarge_throwsCommandException() throws Exception {
         Set<Index> orderIds = new HashSet<>();
-        orderIds.add(INDEX_TOO_LARGE);
+        orderIds.add(outOfBoundIndex);
         CreateRouteCommand createRouteCommand = new CreateRouteCommand(orderIds);
 
         thrown.expect(CommandException.class);
