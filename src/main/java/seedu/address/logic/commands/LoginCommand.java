@@ -48,7 +48,7 @@ public class LoginCommand extends Command {
         requireNonNull(model);
         if (model.isUserLoggedIn()) {
             User loggedInUser = model.getLoggedInUserDetails();
-            String result = String.format(MESSAGE_ALREADY_LOGGED_IN, loggedInUser)
+            String result = String.format(MESSAGE_ALREADY_LOGGED_IN, loggedInUser.getUsername())
                     + "\n"
                     + MESSAGE_REDIRECT_TO_LOGOUT;
             return new CommandResult(result);
