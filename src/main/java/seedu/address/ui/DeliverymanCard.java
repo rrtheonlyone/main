@@ -2,12 +2,9 @@ package seedu.address.ui;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import seedu.address.model.deliveryman.Deliveryman;
-import seedu.address.model.order.Order;
 
 /**
  * An UI component that displays information of a {@code Order}.

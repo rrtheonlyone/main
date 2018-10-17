@@ -2,8 +2,6 @@ package seedu.address.ui;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import seedu.address.model.order.Food;
 import seedu.address.model.order.Order;
@@ -43,7 +41,7 @@ public class OrderCard extends UiPart<Region> {
 
         StringBuilder sb = new StringBuilder();
         for (Food food : order.getFood()) {
-            sb.append(food.foodName + " ");
+            sb.append(food.foodName + ",");
         }
         foodList.setText(sb.toString());
 

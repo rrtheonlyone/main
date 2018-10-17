@@ -1,16 +1,11 @@
 package systemtests;
 
-import static guitests.guihandles.WebViewUtil.waitUntilBrowserLoaded;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static seedu.address.ui.BrowserPanel.DEFAULT_PAGE;
 import static seedu.address.ui.StatusBarFooter.SYNC_STATUS_INITIAL;
 import static seedu.address.ui.StatusBarFooter.SYNC_STATUS_UPDATED;
-import static seedu.address.ui.UiPart.FXML_FILE_FOLDER;
 import static seedu.address.ui.testutil.GuiTestAssert.assertListMatching;
 
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
@@ -29,7 +24,6 @@ import guitests.guihandles.MainWindowHandle;
 import guitests.guihandles.OrderListPanelHandle;
 import guitests.guihandles.ResultDisplayHandle;
 import guitests.guihandles.StatusBarFooterHandle;
-import seedu.address.MainApp;
 import seedu.address.TestApp;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.index.Index;
@@ -40,7 +34,6 @@ import seedu.address.logic.commands.order.SelectCommand;
 import seedu.address.model.Model;
 import seedu.address.model.OrderBook;
 import seedu.address.testutil.TypicalOrders;
-import seedu.address.ui.BrowserPanel;
 import seedu.address.ui.CommandBox;
 
 /**
@@ -48,7 +41,6 @@ import seedu.address.ui.CommandBox;
  * for test verification.
  */
 public abstract class OrderBookSystemTest {
-
     @ClassRule
     public static ClockRule clockRule = new ClockRule();
 
@@ -71,7 +63,6 @@ public abstract class OrderBookSystemTest {
         testApp = setupHelper.setupApplication(this::getInitialData, getDataFileLocation());
         mainWindowHandle = setupHelper.setupMainWindowHandle();
 
-        waitUntilBrowserLoaded(getBrowserPanel());
         assertApplicationStartingStateIsCorrect();
     }
 
@@ -111,10 +102,6 @@ public abstract class OrderBookSystemTest {
         return mainWindowHandle.getMainMenu();
     }
 
-    public BrowserPanelHandle getBrowserPanel() {
-        return mainWindowHandle.getBrowserPanel();
-    }
-
     public StatusBarFooterHandle getStatusBarFooter() {
         return mainWindowHandle.getStatusBarFooter();
     }
@@ -134,8 +121,6 @@ public abstract class OrderBookSystemTest {
         clockRule.setInjectedClockToCurrentTime();
 
         mainWindowHandle.getCommandBox().run(command);
-
-        waitUntilBrowserLoaded(getBrowserPanel());
     }
 
     /**
@@ -181,7 +166,6 @@ public abstract class OrderBookSystemTest {
      */
     private void rememberStates() {
         StatusBarFooterHandle statusBarFooterHandle = getStatusBarFooter();
-        getBrowserPanel().rememberUrl();
         statusBarFooterHandle.rememberSaveLocation();
         statusBarFooterHandle.rememberSyncStatus();
         getOrderListPanel().rememberSelectedOrderCard();
@@ -194,29 +178,7 @@ public abstract class OrderBookSystemTest {
      * @see BrowserPanelHandle#isUrlChanged()
      */
     protected void assertSelectedCardDeselected() {
-        assertFalse(getBrowserPanel().isUrlChanged());
         assertFalse(getOrderListPanel().isAnyCardSelected());
-    }
-
-    /**
-     * Asserts that the browser's url is changed to display the details of the person in the person list panel at
-     * {@code expectedSelectedCardIndex}, and only the card at {@code expectedSelectedCardIndex} is selected.
-     *
-     * @see BrowserPanelHandle#isUrlChanged()
-     * @see OrderListPanelHandle#isSelectedOrderCardChanged() ()
-     */
-    protected void assertSelectedCardChanged(Index expectedSelectedCardIndex) {
-        getOrderListPanel().navigateToCard(getOrderListPanel().getSelectedCardIndex());
-        String selectedCardName = getOrderListPanel().getHandleToSelectedCard().getName();
-        URL expectedUrl;
-        try {
-            expectedUrl = new URL(BrowserPanel.SEARCH_PAGE_URL + selectedCardName.replaceAll(" ", "%20"));
-        } catch (MalformedURLException mue) {
-            throw new AssertionError("URL expected to be valid.", mue);
-        }
-        assertEquals(expectedUrl, getBrowserPanel().getLoadedUrl());
-
-        assertEquals(expectedSelectedCardIndex.getZeroBased(), getOrderListPanel().getSelectedCardIndex());
     }
 
     /**
@@ -226,7 +188,6 @@ public abstract class OrderBookSystemTest {
      * @see OrderListPanelHandle#isSelectedOrderCardChanged() ()
      */
     protected void assertSelectedCardUnchanged() {
-        assertFalse(getBrowserPanel().isUrlChanged());
         assertFalse(getOrderListPanel().isSelectedOrderCardChanged());
     }
 
@@ -271,8 +232,11 @@ public abstract class OrderBookSystemTest {
     private void assertApplicationStartingStateIsCorrect() {
         assertEquals("", getCommandBox().getInput());
         assertEquals("", getResultDisplay().getText());
+
+
         assertListMatching(getOrderListPanel(), getModel().getFilteredOrderList());
-        assertEquals(MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE), getBrowserPanel().getLoadedUrl());
+
+
         assertEquals(Paths.get(".").resolve(testApp.getStorageSaveLocation()).toString(),
                 getStatusBarFooter().getSaveLocation());
         assertEquals(SYNC_STATUS_INITIAL, getStatusBarFooter().getSyncStatus());

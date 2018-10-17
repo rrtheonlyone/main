@@ -15,7 +15,6 @@ import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.order.DeleteCommand;
 import seedu.address.logic.commands.order.OrderCommand;
 import seedu.address.logic.commands.order.SelectCommand;
-import seedu.address.ui.BrowserPanel;
 import seedu.address.ui.StatusBarFooter;
 
 /**
@@ -44,10 +43,6 @@ public class HelpCommandSystemTest extends OrderBookSystemTest {
         getMainMenu().openHelpWindowUsingAccelerator();
         assertHelpWindowOpen();
 
-        getBrowserPanel().click();
-        getMainMenu().openHelpWindowUsingAccelerator();
-        assertHelpWindowNotOpen();
-
         //use menu button
         getMainMenu().openHelpWindowUsingMenu();
         assertHelpWindowOpen();
@@ -66,7 +61,6 @@ public class HelpCommandSystemTest extends OrderBookSystemTest {
         assertEquals("", getCommandBox().getInput());
         assertCommandBoxShowsDefaultStyle();
         assertNotEquals(HelpCommand.SHOWING_HELP_MESSAGE, getResultDisplay().getText());
-        assertNotEquals(BrowserPanel.DEFAULT_PAGE, getBrowserPanel().getLoadedUrl());
         assertListMatching(getOrderListPanel(), getModel().getFilteredOrderList());
 
         // assert that the status bar too is updated correctly while the help window is open

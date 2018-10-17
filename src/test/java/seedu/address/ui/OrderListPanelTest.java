@@ -46,7 +46,7 @@ public class OrderListPanelTest extends GuiUnitTest {
             OrderCardHandle actualCard = orderListPanelHandle.getOrderCardHandle(i);
 
             assertCardDisplaysOrder(expectedOrder, actualCard);
-            assertEquals(Integer.toString(i + 1) + ". ", actualCard.getId());
+            assertEquals("#" + Integer.toString(i + 1), actualCard.getId());
         }
     }
 
