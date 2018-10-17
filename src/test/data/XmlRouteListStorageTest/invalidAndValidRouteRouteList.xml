@@ -2,12 +2,24 @@
 <routelist>
     <!-- Valid route -->
     <routes>
-        <source>12 Clementi Rd</source>
-        <destination>123 South Rd</destination>
+    <source>12 Clementi Rd</source>
+    <orders>
+        <name>Jane Doe</name>
+        <phone>84625432</phone>
+        <address>6 College Ave</address>
+        <date>12-10-2018 01:56:00</date>
+        <food>Prata</food>
+    </orders>
     </routes>
     <!-- Route with invalid source and destination field -->
     <routes>
         <source> </source>
-        <destination> </destination>
+        <orders>
+            <name>Ha!ns Mu@ster</name>
+            <phone>84625432</phone>
+            <address>6 College Ave</address>
+            <date>12-10-2018 01:56:00</date>
+            <food>Prata</food>
+        </orders>
     </routes>
 </routelist>

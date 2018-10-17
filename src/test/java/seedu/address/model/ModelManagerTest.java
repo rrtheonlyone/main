@@ -9,7 +9,7 @@ import static seedu.address.testutil.TypicalDeliverymen.CHIKAO;
 import static seedu.address.testutil.TypicalDeliverymen.RAJUL;
 import static seedu.address.testutil.TypicalOrders.ALICE;
 import static seedu.address.testutil.TypicalOrders.BENSON;
-import static seedu.address.testutil.TypicalRoutes.ANGMOKIO;
+import static seedu.address.testutil.TypicalRoutes.ROUTE_ALICE_BENSON;
 import static seedu.address.testutil.user.TypicalUsers.ALICE_MANAGER;
 import static seedu.address.testutil.user.TypicalUsers.CARL_MANAGER;
 
@@ -88,7 +88,7 @@ public class ModelManagerTest {
     public void equals() {
         OrderBook orderBook = new OrderBookBuilder().withOrder(ALICE).withOrder(BENSON).build();
         OrderBook differentOrderBook = new OrderBook();
-        RouteList routeList = new RouteListBuilder().withRoute(ANGMOKIO).build();
+        RouteList routeList = new RouteListBuilder().withRoute(ROUTE_ALICE_BENSON).build();
         RouteList differentRouteList = new RouteList();
         DeliverymenList deliverymenList = new DeliverymenListBuilder().withDeliveryman(RAJUL).withDeliveryman(CHIKAO)
                 .build();

@@ -1,6 +1,7 @@
 package seedu.address.model.util;
 
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -52,13 +53,17 @@ public class SampleDataUtil {
     }
 
     public static Route[] getSampleRoutes() {
+        Set<Order> orderSetA = new HashSet<>();
+        Set<Order> orderSetB = new HashSet<>();
+        orderSetA.add(getSampleOrders()[0]);
+        orderSetA.add(getSampleOrders()[1]);
+        orderSetA.add(getSampleOrders()[2]);
+        orderSetB.add(getSampleOrders()[3]);
+        orderSetB.add(getSampleOrders()[4]);
+        orderSetB.add(getSampleOrders()[5]);
         return new Route[] {
-            new Route(new Address("Blk 30 Geylang Street 29, #06-40")),
-            new Route(new Address("Blk 30 Lorong 3 Serangoon Gardens, #07-18")),
-            new Route(new Address("Blk 11 Ang Mo Kio Street 74, #11-04")),
-            new Route(new Address("Blk 436 Serangoon Gardens Street 26, #16-43")),
-            new Route(new Address("Blk 47 Tampines Street 20, #17-35")),
-            new Route(new Address("Blk 45 Aljunied Street 85, #11-31"))
+            new Route(orderSetA),
+            new Route(orderSetB)
         };
     }
 

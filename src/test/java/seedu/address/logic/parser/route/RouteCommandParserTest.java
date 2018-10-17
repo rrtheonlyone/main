@@ -3,17 +3,19 @@ package seedu.address.logic.parser.route;
 import static org.junit.Assert.assertEquals;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_ROUTE_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST;
+
+import java.util.HashSet;
+import java.util.Set;
 
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.route.CreateRouteCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.route.Route;
-import seedu.address.testutil.route.RouteBuilder;
-import seedu.address.testutil.route.RouteUtil;
 
 public class RouteCommandParserTest {
     @Rule
@@ -23,9 +25,11 @@ public class RouteCommandParserTest {
 
     @Test
     public void parse_create() throws Exception {
-        Route route = new RouteBuilder().build();
-        CreateRouteCommand command = (CreateRouteCommand) parser.parse(RouteUtil.getCreateRouteCommand(route));
-        assertEquals(new CreateRouteCommand(route), command);
+        CreateRouteCommand command = (CreateRouteCommand) parser.parse(
+                CreateRouteCommand.COMMAND_WORD + " o/" + INDEX_FIRST.getOneBased());
+        Set<Index> orderIds = new HashSet<>();
+        orderIds.add(INDEX_FIRST);
+        assertEquals(new CreateRouteCommand(orderIds), command);
     }
 
     @Test

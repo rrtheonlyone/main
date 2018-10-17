@@ -495,6 +495,41 @@ a `ParseException` would be thrown.
 ** Pros: Easier to implement & maintain
 ** Cons: Deliveryman can only be accessed & treated as parts of an `Order`
 
+=== Create Route Feature
+
+==== Current Implementation
+The `create` route command allows creation of routes in FoodZoom.
+It allows creating routes based on the order ids.
+
+The following sequence diagram shows the sequence flow from the `LogicManager` to the `ModelManager` when a user enter a `/route create` command:
+
+image::CreateRouteCommandSequenceDiagram1.png[width=800]
+Figure 3.5.1.1 Sequence diagram to illustrate `Logic` component interactions for route `create` command.
+
+image::CreateRouteCommandSequenceDiagram2.png[width=800]
+Figure 3.5.1.2 Sequence diagram to illustrate `Logic` and `Model` component interactions for route `create` command.
+
+From the sequence diagram:
+
+.  When `LogicManager` receive the `execute` command, it calls the `parseCommand` method in `OrderBookParser`.
+.  `OrderBookParser` will receive `/route` as the command and instantiate `RouteCommandParser` to further parse the command.
+.  If the arguments specified in the `create` command are valid, a `CreateRouteCommand` will be created and return back to the `LogicManger`
+.  `LogicManger` will proceed to call the `execute` command of `CreateRouteCommand`
+.  `CreateRouteCommand` will proceed to call the `getFilteredOrderList` method of `Model`
+.  Iterate through the `orderIds`, if valid, add the `Index` and the corresponding `Order` to the set of `Index` and `Order` respectively.
+.  Create a `Route` from the set of `Order`
+.  A new route would be added and create a new `CommandResult` to be returned.
+
+==== Design Consideration
+
+===== Aspect: Implementation of `CreateRouteCommandParser`
+* **Alternative 1 (current choice):** `RouteCommandParser` is parsed first, then pass to `CreateRouteCommandParser`
+** Pros: Better modularization for `Route` commands, better cohesion, adheres to the Single Responsibility Principle.
+** Cons: More complicated file & package structure.
+* **Alternative 2:** `CreateRouteCommand` is parsed straight from `OrderBookParser`.
+** Pros: Easier to manage the file structure.
+** Cons: Poor modularization of the `Command` classes.
+
 === Add Order Feature
 
 ==== Current Implementation
@@ -505,7 +540,7 @@ The format of the `add` command is `/order add f/FOOD n/NAME p/PHONE a/ADDRESS d
 The following sequence shows the sequence when the `add` command is execute by the `Manager`:
 
 image::OrderAddSequenceDiagram.png[width="650"]
-Figure 3.5.1.1 Sequence Diagram for order `find` command
+Figure 3.6.1.1 Sequence Diagram for order `find` command
 
 From the diagram above:
 
