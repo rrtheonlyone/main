@@ -58,7 +58,7 @@ public class LoginCommandTest {
                 .build();
 
         commandResult = new LoginCommand(anotherUser).execute(model, commandHistory);
-        String expectedResult = String.format(LoginCommand.MESSAGE_ALREADY_LOGGED_IN, validUser)
+        String expectedResult = String.format(LoginCommand.MESSAGE_ALREADY_LOGGED_IN, validUser.getUsername())
                 + "\n"
                 + LoginCommand.MESSAGE_REDIRECT_TO_LOGOUT;
         assertEquals(expectedResult, commandResult.feedbackToUser);
