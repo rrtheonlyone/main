@@ -1,6 +1,8 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.commands.LoginCommand.MESSAGE_ALREADY_LOGGED_IN;
+import static seedu.address.logic.commands.LoginCommand.MESSAGE_REDIRECT_TO_LOGOUT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PASSWORD;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_USERNAME;
@@ -44,6 +46,14 @@ public class SignUpCommand extends Command {
     @Override
     public CommandResult execute(Model model, CommandHistory history) throws CommandException {
         requireNonNull(model);
+        if (model.isUserLoggedIn()) {
+            User loggedInUser = model.getLoggedInUserDetails();
+            String result = String.format(MESSAGE_ALREADY_LOGGED_IN, loggedInUser.getUsername())
+                    + "\n"
+                    + MESSAGE_REDIRECT_TO_LOGOUT;
+            return new CommandResult(result);
+        }
+
         if (model.hasUser(toAdd)) {
             throw new CommandException(MESSAGE_DUPLICATE_USER);
         }
