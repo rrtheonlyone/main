@@ -6,6 +6,7 @@ import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_MANAGER_NAME_IDA;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_MANAGER_PASSWORD_IDA;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_MANAGER_USERNAME_IDA;
+import static seedu.address.logic.commands.SignUpCommand.MESSAGE_LOGGED_IN;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PASSWORD;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_USERNAME;
@@ -86,7 +87,9 @@ public class LogicManagerTest {
                 .withPassword(VALID_MANAGER_PASSWORD_IDA)
                 .build();
 
-        String expectedResultMessage = String.format(SignUpCommand.MESSAGE_SUCCESS, ida);
+        String expectedResultMessage = String.format(SignUpCommand.MESSAGE_SUCCESS, ida)
+                + "\n"
+                + MESSAGE_LOGGED_IN;
         assertCommandSuccess(command, expectedResultMessage, model);
     }
 
