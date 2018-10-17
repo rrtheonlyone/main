@@ -442,6 +442,60 @@ public class OrderNameContainsKeywordPredicate implements OrderContainsAnyKeywor
 ** Pros: It adheres to SRP as handling of argument is pass on to a utility class.
 ** Cons: Increase in the complexity of the code for new developers as more classes are needed and more lines of code will be written
 
+=== Add deliveryman feature
+
+==== Current Implementation
+
+The `add` deliveryman command allows the Manager to add deliveryman into FoodZoom. It ensures that the newly-added deliveryman
+is not a duplicate of an existing deliveryman.
+
+The following diagram shows the sequence flow from the `LogicManager` to the `ModelManager` when a user enters a `/deliveryman add`
+command:
+
+image::DeliverymanAddCommandSequenceDiagram.png[width="650"]
+Figure 3.4.1.1 Sequence Diagram for deliveryman `add` command
+
+From Figure 3.4.1.1:
+
+1. When `LogicManager` receives the `execute` command from the App, it calls the `parseCommand` method in `OrderBookParser`.
+
+2. `OrderBookParser` will receive `/deliveryman` as the command and instantiate `DeliverymanCommandParser` to parse the rest of the command.
+
+3. If the arguments specified in the `add` command are valid, a `DeliverymanAddCommand` would be created and returned back
+to the `LogicManager`.
+
+4. `LogicManager` would proceed to call `execute` of the `DeliverymanAddCommand`.
+
+5. A new deliveryman would be added and a successful `CommandResult` would be returned and displayed.
+
+FoodZoom's deliveryman is only stored with names currently, and can be search and listed
+only with names.
+
+These names are checked against validations with the `Name` model, and this is a compulsory
+field for a deliveryman to be added. If the provided command either does not have a name, or is an invalid `Name`,
+a `ParseException` would be thrown.
+
+==== Design Considerations
+
+===== Implementation of `DeliverymanAddCommandParser`
+* ** Alternative 1 (current choice):** `DeliverymanCommand` is parsed first, then as a `DeliverymanAddCommand`.
+** Pros: Better modularization for all commands relating to `Deliveryman`
+** Cons: More complicated file & package organization
+
+* ** Alternative 2: ** `DeliverymanAddCommand` is parsed straight from `OrderBookParser`
+** Pros: Easier to manage file structure
+** Cons: Poor modularization of related `Command` classes.
+
+===== Implementation of `DeliverymanAddCommand`
+* **Alternative 1 (current choice):** Deliverymen are stored in separate file
+** Pros: Allows for greater flexibility in how deliverymen interact with other resources like order/routes - better separation of concerns.
+** Cons: Harder to implement & maintain
+
+* **Alternative 2:** Deliverymen are stored in the same file as `Order` s
+** Pros: Easier to implement & maintain
+** Cons: Deliveryman can only be accessed & treated as parts of an `Order`
+
+
 // tag::dataencryption[]
 === [Proposed] Data Encryption
 
