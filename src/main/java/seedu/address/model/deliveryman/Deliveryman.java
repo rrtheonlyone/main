@@ -3,18 +3,28 @@ package seedu.address.model.deliveryman;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Objects;
+import java.util.UUID;
 
+import seedu.address.model.IdObject;
 import seedu.address.model.person.Name;
 
 /**
  * Represents a Deliveryman in FoodZoom.
  * Guarantees: has a name that is unique.
  */
-public class Deliveryman {
+public class Deliveryman extends IdObject {
+
     private final Name name;
     //TODO:  add field for orders/routes attached to deliveryman.
 
     public Deliveryman(Name name) {
+        requireAllNonNull(name);
+        this.name = name;
+    }
+
+    /** This constructor is used when the {@code id} is specified. */
+    public Deliveryman(UUID id, Name name) {
+        super(id);
         requireAllNonNull(name);
         this.name = name;
     }
@@ -49,7 +59,9 @@ public class Deliveryman {
         }
 
         Deliveryman otherPerson = (Deliveryman) other;
-        return otherPerson.getName().equals(getName());
+        return ((getId() == null && otherPerson.getId() == null)
+                || getId().equals(otherPerson.getId()))
+                && otherPerson.getName().equals(getName());
     }
 
     @Override
@@ -63,4 +75,5 @@ public class Deliveryman {
         builder.append(getName());
         return builder.toString();
     }
+
 }

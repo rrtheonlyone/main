@@ -1,5 +1,7 @@
 package systemtests;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.commands.CommandTestUtil.ADDRESS_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.ADDRESS_DESC_BOB;
@@ -27,6 +29,7 @@ import static seedu.address.testutil.TypicalOrders.AMY;
 import static seedu.address.testutil.TypicalOrders.BOB;
 import static seedu.address.testutil.TypicalOrders.CARL;
 import static seedu.address.testutil.TypicalOrders.HOON;
+import static seedu.address.ui.testutil.GuiTestAssert.assertListMatching;
 
 import org.junit.Test;
 
@@ -38,6 +41,7 @@ import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.order.AddCommand;
 import seedu.address.logic.commands.order.OrderCommand;
 import seedu.address.model.Model;
+import seedu.address.model.OrderBook;
 import seedu.address.model.order.Order;
 import seedu.address.model.order.OrderDate;
 import seedu.address.model.person.Address;
@@ -64,7 +68,7 @@ public class AddCommandSystemTest extends OrderBookSystemTest {
         /* Case: add an order to a non-empty address book, command with leading spaces and trailing spaces
          * -> added
          */
-        Order toAdd = AMY;
+        Order toAdd = new OrderBuilder(AMY).build();
         String addCommand = OrderCommand.COMMAND_WORD + " " + AddCommand.COMMAND_WORD;
         command = "   " + addCommand + "  " + NAME_DESC_AMY + "  " + PHONE_DESC_AMY + " "
                 + "   " + ADDRESS_DESC_AMY + "   " + DATE_DESC_AMY + "  " + FOOD_DESC_BURGER + " ";
@@ -96,22 +100,22 @@ public class AddCommandSystemTest extends OrderBookSystemTest {
 
         /* Case: add to empty address book -> added */
         deleteAllOrders();
-        assertCommandSuccess(ALICE);
+        assertCommandSuccess(new OrderBuilder(ALICE).build());
 
         /* Case: add an order, command with parameters in random order -> added */
-        toAdd = BOB;
+        toAdd = new OrderBuilder(BOB).build();
         command = addCommand + DATE_DESC_BOB + FOOD_DESC_RICE + PHONE_DESC_BOB + ADDRESS_DESC_BOB + NAME_DESC_BOB;
         assertCommandSuccess(command, toAdd);
 
         /* Case: add an order -> added */
-        assertCommandSuccess(HOON);
+        assertCommandSuccess(new OrderBuilder(HOON).build());
 
 
         /* ------------------------ Perform add operation while an order card is selected --------------------------- */
 
         /* Case: selects first card in the order list, add an order -> added, card selection remains unchanged */
         selectOrder(Index.fromOneBased(1));
-        assertCommandSuccess(CARL);
+        assertCommandSuccess(new OrderBuilder(CARL).build());
 
         /* ----------------------------------- Perform invalid add operations --------------------------------------- */
 
@@ -214,6 +218,23 @@ public class AddCommandSystemTest extends OrderBookSystemTest {
         assertSelectedCardUnchanged();
         assertCommandBoxShowsDefaultStyle();
         assertStatusBarUnchangedExceptSyncStatus();
+    }
+
+    @Override
+    /**
+     * Asserts that the {@code CommandBox} displays {@code expectedCommandInput}, the {@code ResultDisplay} displays
+     * {@code expectedResultMessage}, the storage contains an equivalent last object.
+     */
+    protected void assertApplicationDisplaysExpected(String expectedCommandInput, String expectedResultMessage,
+                                                     Model expectedModel) {
+        assertEquals(expectedCommandInput, getCommandBox().getInput());
+        assertEquals(expectedResultMessage, getResultDisplay().getText());
+        assertEquals(new OrderBook(expectedModel.getOrderBook()).getOrderList().size(),
+            testApp.readStorageOrderBook().getOrderList().size());
+        int sizeOfList = new OrderBook(expectedModel.getOrderBook()).getOrderList().size();
+        assertTrue(new OrderBook(expectedModel.getOrderBook()).getOrderList().get(sizeOfList - 1).isSameOrder(
+            testApp.readStorageOrderBook().getOrderList().get(sizeOfList - 1)));
+        assertListMatching(getOrderListPanel(), expectedModel.getFilteredOrderList());
     }
 
     /**

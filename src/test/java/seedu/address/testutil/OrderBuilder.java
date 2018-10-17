@@ -2,6 +2,7 @@ package seedu.address.testutil;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 
 import seedu.address.model.order.Food;
 import seedu.address.model.order.Order;
@@ -27,6 +28,7 @@ public class OrderBuilder {
     private Address address;
     private OrderDate date;
     private Set<Food> food;
+    private UUID id;
 
     public OrderBuilder() {
         name = new Name(DEFAULT_NAME);
@@ -40,11 +42,21 @@ public class OrderBuilder {
      * Initializes the OrderBuilder with the data of {@code orderToCopy}.
      */
     public OrderBuilder(Order orderToCopy) {
+        id = orderToCopy.getId();
         name = orderToCopy.getName();
         phone = orderToCopy.getPhone();
         address = orderToCopy.getAddress();
         date = orderToCopy.getDate();
         food = new HashSet<>(orderToCopy.getFood());
+    }
+
+    /**
+     * Sets the {@code id} of the {@code Order} that we are building
+     * @param id
+     */
+    public OrderBuilder withId(String id) {
+        this.id = UUID.fromString(id);
+        return this;
     }
 
     /**
@@ -88,8 +100,15 @@ public class OrderBuilder {
     }
 
 
+    /**
+     * Builds and returns an order.
+     */
     public Order build() {
-        return new Order(name, phone, address, date, food);
+        if (id != null) {
+            return new Order(id, name, phone, address, date, food);
+        } else {
+            return new Order(name, phone, address, date, food);
+        }
     }
 
 }

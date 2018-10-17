@@ -1,5 +1,7 @@
 package seedu.address.testutil;
 
+import java.util.UUID;
+
 import seedu.address.model.deliveryman.Deliveryman;
 import seedu.address.model.person.Name;
 
@@ -10,6 +12,7 @@ public class DeliverymanBuilder {
     public static final String DEFAULT_NAME = "Deliver E";
 
     private Name name;
+    private UUID id;
 
     public DeliverymanBuilder() {
         name = new Name(DEFAULT_NAME);
@@ -19,6 +22,7 @@ public class DeliverymanBuilder {
      * Initializes the DeliverymanBuilder with the data of {@code deliverymanToCopy}.
      */
     public DeliverymanBuilder(Deliveryman deliverymanToCopy) {
+        id = deliverymanToCopy.getId();
         name = deliverymanToCopy.getName();
     }
 
@@ -30,7 +34,23 @@ public class DeliverymanBuilder {
         return this;
     }
 
+    /**
+     * Sets the {@code id} of the {@code Deliveryman} that we are building
+     * @param idString
+     */
+    public DeliverymanBuilder withId(String idString) {
+        this.id = UUID.fromString(idString);
+        return this;
+    }
+
+    /**
+     * Builds the {@code Deliveryman}
+     */
     public Deliveryman build() {
-        return new Deliveryman(name);
+        if (id != null) {
+            return new Deliveryman(id, name);
+        } else {
+            return new Deliveryman(name);
+        }
     }
 }

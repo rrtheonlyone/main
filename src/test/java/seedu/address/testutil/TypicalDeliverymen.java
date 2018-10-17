@@ -12,14 +12,19 @@ import seedu.address.model.deliveryman.DeliverymenList;
  */
 public class TypicalDeliverymen {
 
+    public static final String CHIKAO_ID = "0a52f570-4f41-4460-b303-e0567910e9b3";
+    public static final String MANIKA_ID = "e6f8a44a-fc0c-4a38-b650-4f5a9947fd31";
+    public static final String RAJUL_ID = "778909e5-f134-472a-bfd8-d34b35cf0b62";
+    public static final String YINJING_ID = "71cac1b0-33ea-4d0e-b1bd-c9e72cd3351f";
+
     public static final Deliveryman CHIKAO = new DeliverymanBuilder().withName("Hoh Chi Kao")
-            .build();
+            .withId(CHIKAO_ID).build();
     public static final Deliveryman MANIKA = new DeliverymanBuilder().withName("Manika Monuela")
-            .build();
+            .withId(MANIKA_ID).build();
     public static final Deliveryman RAJUL = new DeliverymanBuilder().withName("Rajul Rahesh")
-            .build();
+            .withId(RAJUL_ID).build();
     public static final Deliveryman YINJING = new DeliverymanBuilder().withName("Tan Yin Jing")
-            .build();
+            .withId(YINJING_ID).build();
 
     /**
      * Returns a {@code DeliverymenList} with all the typical Deliverymen.

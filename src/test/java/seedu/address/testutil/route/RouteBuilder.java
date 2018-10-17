@@ -2,6 +2,7 @@ package seedu.address.testutil.route;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 
 import seedu.address.model.order.Order;
 import seedu.address.model.person.Address;
@@ -18,6 +19,7 @@ public class RouteBuilder {
 
     private Address source;
     private Set<Order> orders = new HashSet<>();
+    private UUID id;
 
     public RouteBuilder() {
         source = new Address(DEFAULT_SOURCE);
@@ -27,8 +29,17 @@ public class RouteBuilder {
      * Initializes the RouteBuilder with the data of {@code routeToCopy}.
      */
     public RouteBuilder(Route routeToCopy) {
+        id = routeToCopy.getId();
         source = routeToCopy.getSource();
         orders = routeToCopy.getOrders();
+    }
+
+    /**
+     * Sets the {@code id } of the {@code Route} that we are building.
+     */
+    public RouteBuilder withId(String id) {
+        this.id = UUID.fromString(id);
+        return this;
     }
 
     /**
@@ -55,8 +66,15 @@ public class RouteBuilder {
         return this;
     }
 
+    /**
+     * Builds and returns the route it builds.
+     */
     public Route build() {
-        return new Route(source, orders);
+        if (id != null) {
+            return new Route(id, source, orders);
+        } else {
+            return new Route(source, orders);
+        }
     }
 
 }

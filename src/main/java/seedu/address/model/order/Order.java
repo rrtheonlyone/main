@@ -5,7 +5,9 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
+import java.util.UUID;
 
+import seedu.address.model.IdObject;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
@@ -14,7 +16,7 @@ import seedu.address.model.person.Phone;
  * Represents an Order in the order book.
  * Guarantees: details are present and not null, field values are validated, immutable.
  */
-public class Order {
+public class Order extends IdObject {
 
     // Identity fields
     private final Name name;
@@ -36,6 +38,19 @@ public class Order {
         this.orderDate = orderDate;
     }
 
+    /**
+     * This constructor is used to create an {@code order} with a specified id.
+     */
+    public Order(UUID id, Name name, Phone phone, Address address, OrderDate orderDate, Set<Food> food) {
+        super(id);
+        requireAllNonNull(name, phone, address, orderDate, food);
+        this.name = name;
+        this.phone = phone;
+        this.address = address;
+        this.food.addAll(food);
+
+        this.orderDate = orderDate;
+    }
     public Name getName() {
         return name;
     }
@@ -89,7 +104,9 @@ public class Order {
         }
 
         Order otherOrder = (Order) other;
-        return otherOrder.getName().equals(getName())
+        return ((getId() == null && otherOrder.getId() == null)
+                || getId().equals(otherOrder.getId()))
+                && otherOrder.getName().equals(getName())
                 && otherOrder.getPhone().equals(getPhone())
                 && otherOrder.getAddress().equals(getAddress())
                 && (otherOrder.getDate().equals(getDate()))

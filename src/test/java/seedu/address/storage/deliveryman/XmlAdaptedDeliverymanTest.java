@@ -14,7 +14,7 @@ public class XmlAdaptedDeliverymanTest {
     private static final String INVALID_NAME = "D@mi+h";
 
     @Test
-    public void toModelType_validDeliverymanDetails_returnsPerson() throws Exception {
+    public void toModelType_validDeliverymanDetails_returnsDeliveryman() throws Exception {
         XmlAdaptedDeliveryman deliveryman = new XmlAdaptedDeliveryman(RAJUL);
         assertEquals(RAJUL, deliveryman.toModelType());
     }

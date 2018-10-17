@@ -1,14 +1,19 @@
 package seedu.address.storage;
 
+import static seedu.address.model.IdObject.MESSAGE_INVALID_ID;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
+import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlID;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.order.Food;
@@ -24,6 +29,10 @@ import seedu.address.model.person.Phone;
 public class XmlAdaptedOrder {
 
     public static final String MISSING_FIELD_MESSAGE_FORMAT = "Order's %s field is missing!";
+
+    @XmlAttribute
+    @XmlID
+    private String id;
 
     @XmlElement(required = true)
     private String name;
@@ -46,7 +55,25 @@ public class XmlAdaptedOrder {
     /**
      * Constructs an {@code XmlAdaptedOrder} with the given order details.
      */
+    public XmlAdaptedOrder(String id, String name, String phone, String address, String date,
+                           List<XmlAdaptedFood> food) {
+        this.id = id;
+        this.name = name;
+        this.phone = phone;
+        this.address = address;
+        this.date = date;
+
+        if (food == null) {
+            this.food = new ArrayList<>();
+        } else {
+            this.food = new ArrayList<>(food);
+        }
+    }
+    /**
+     * Constructs an {@code XmlAdaptedOrder} with the given order details.
+     */
     public XmlAdaptedOrder(String name, String phone, String address, String date, List<XmlAdaptedFood> food) {
+        this.id = UUID.randomUUID().toString();
         this.name = name;
         this.phone = phone;
         this.address = address;
@@ -65,6 +92,7 @@ public class XmlAdaptedOrder {
      * @param source future changes to this will not affect the created XmlAdaptedOrder
      */
     public XmlAdaptedOrder(Order source) {
+        id = source.getId().toString();
         name = source.getName().fullName;
         phone = source.getPhone().value;
         address = source.getAddress().value;
@@ -123,10 +151,17 @@ public class XmlAdaptedOrder {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Food.class.getSimpleName()));
         }
 
+        UUID modelId;
+
+        try {
+            modelId = UUID.fromString(id);
+        } catch (NumberFormatException e) {
+            throw new IllegalValueException(MESSAGE_INVALID_ID);
+        }
+
         final Set<Food> modelFood = new HashSet<>(foodStore);
 
-
-        return new Order(modelName, modelPhone, modelAddress, modelDate, modelFood);
+        return new Order(modelId, modelName, modelPhone, modelAddress, modelDate, modelFood);
     }
 
     @Override
@@ -140,7 +175,8 @@ public class XmlAdaptedOrder {
         }
 
         XmlAdaptedOrder otherOrder = (XmlAdaptedOrder) other;
-        return Objects.equals(name, otherOrder.name)
+        return id.equals(otherOrder.id)
+                && Objects.equals(name, otherOrder.name)
                 && Objects.equals(phone, otherOrder.phone)
                 && Objects.equals(address, otherOrder.address)
                 && Objects.equals(date, otherOrder.date)

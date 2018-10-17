@@ -6,7 +6,9 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
+import java.util.UUID;
 
+import seedu.address.model.IdObject;
 import seedu.address.model.order.Order;
 import seedu.address.model.person.Address;
 
@@ -14,7 +16,7 @@ import seedu.address.model.person.Address;
  * Represents a Route in the address book.
  * Guarantees: details are present and not null, field values are validated, immutable.
  */
-public class Route {
+public class Route extends IdObject {
     private static final String DEFAULT_SOURCE = "12 Clementi Rd";
 
     // Identity fields
@@ -32,6 +34,13 @@ public class Route {
     }
 
     public Route(Address source, Set<Order> orders) {
+        requireAllNonNull(source, orders);
+        this.source = source;
+        this.orders.addAll(orders);
+    }
+
+    public Route(UUID id, Address source, Set<Order> orders) {
+        super(id);
         requireAllNonNull(source, orders);
         this.source = source;
         this.orders.addAll(orders);
@@ -77,7 +86,9 @@ public class Route {
         }
 
         Route otherRoute = (Route) other;
-        return otherRoute.getSource().equals(getSource())
+        return ((getId() == null && otherRoute.getId() == null)
+                || getId().equals(otherRoute.getId()))
+                && otherRoute.getSource().equals(getSource())
                 && otherRoute.getOrders().equals(getOrders());
     }
 
@@ -97,4 +108,5 @@ public class Route {
         getOrders().forEach(builder::append);
         return builder.toString();
     }
+
 }
