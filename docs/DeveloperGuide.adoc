@@ -324,6 +324,178 @@ image::UndoRedoActivityDiagram.png[width="650"]
 ** Cons: Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things.
 // end::undoredo[]
 
+=== Login Command
+==== Current Implementation
+
+The `/login` command allows the `Manager` to login into the FoodZoom application and use authenticated commands like
+`/order add`, `/order edit`, `/order list`, ... .Basically all the `/order` commands and `/deliveryman` commands. The
+only commands that can be used without logging in are `/signup`, `/login`, `/help` and `/history`. The format of this
+ command is `/login u/[USERNAME] pw/[PASSWORD]`.
+
+In our current implementation, the `/login` command inherits from `Command` class. 2 components, `Logic` and `Model`
+are involved in the execution of this command. The `Logic` class is responsible for parsing the user input and the
+`Model` class deals with storing the `UserSession` and checking if the user is logged in or not.
+
+Below is a sequence diagram that illustrates how these 2 components interact when the `/login` command is executed:
+
+image::LoginCommandSequenceDiagram1.png[width="800"]
+Figure 3.2.1.1 Sequence diagram to illustrate `Logic` component interactions for `/login`.
+
+image::LoginCommandSequenceDiagram2.png[width="800"]
+Figure 3.2.1.2 Sequence diagram to illustrate `Logic` and `Model` component interactions for `/login`.
+
+As shown above, execution of the `/login` command comprises of the following steps:
+
+1. `LogicManager` invokes the `parseCommand` method of `OrderBookParser`, taking in user inputs as arguments.
+2. During the `parseCommand` method call, an instance of `LoginCommandParser` will be created with the keyword
+`/login` is matched. `LoginCommandParser` then extracts the remaining user inputs and a `LoginCommand` instance will
+be returned provided that the user's input is correct.
+3. `LoginCommand` then invokes `isRegisteredUser` method which belongs to `ModelManager` class. The `ModelManager`
+will the invoke `IsRegisteredUser` method in `UsersList` to check if the user is in the list of users.
+4. After checking if the user is in the list, if it returns `true` then `storeUserInSession` method will be invoked
+to store the `User` object inside `UserSession`. The `execute` method will then return a `CommandResult` with success
+ login message.
+5. If the user is not in the list, `execute` method will just return a `CommandResult` with failure to login message.
+
+==== Design Considerations
+
+===== Aspect: How `/login` executes
+
+* **Alternative 1 (current choice):** Check if user is in users list.
+** Pros: Easy to implement.
+** Cons: Not necessary to implement users list because there will only be 1 user.
+
+* **Alternative 2:** Automatic login even after application is opened more than once.
+** Pros: User do not need to login multiple times after application is re-opened.
+** Cons: Difficult to implement because it requires caching user details locally.
+
+===== Aspect: Data Structure to support `/login` command
+
+* **Alternative 1 (current choice):** Create a unique user list to store all the user and create a `users.xml` to
+store locally.
+** Pros: Easy to implement and you can make sure that there is only unique users.
+** Cons: Not necessary because there would only be 1 user using the application.
+
+* **Alternative 2:** Store user session inside `User` class
+** Pros: Easy to handle login session.
+** Cons: Would break the SRP (Single Responsibility Principle) because `User` class should only be about the user and
+ nothing to do with login at all.
+
+=== Find Order Feature
+
+==== Current Implementation
+The `find` order command allows searching of orders in FoodZoom.
+It allows finding of orders based on either the name or phone specified in the order.
+
+The following sequence diagram shows the sequence flow from the `LogicManager` to the `ModelManager` when a user enter a `find` command:
+
+image::OrderFindSequenceDiagram.png[width="650"]
+Figure 3.3.1.1 Sequence Diagram for order `find` command
+
+From the sequence diagram:
+
+.  When `LogicManager` receive the `execute` command, it class the `parseCommand` method in `OrderBookParser`.
+.  `OrderBookParser` will receive `/order` as the command and instantiate `OrderCommandParser` to further parse the command.
+.  If the arguments specified in the `find` command are valid, a `FindCommand` will be created and return back to the `LogicManger`
+.  `LogicManger` will proceed to call the `execute` command of `FindCommand`
+.  `FindCommand` will updated the list in the `Model` and create a new `CommandResult` to be returned.
+
+Currently, FoodZoom only allows find for other based on name or phone, but not specifying both name and phone together.
+
+This differentiation is handled by `FindCommandParser` which checks for the fields specified.
+It throws a `ParseException` error if either both name and phone is specified together or when fields other than name or phone is being specified.
+
+`FindCommandParser` will return an `OrderNameContainsKeywordPredicate` if a valid name is specified or return an `OrderPhoneContainsKeyPredicate`.
+
+In order for `FindCommand` to take a general predicate, both `OrderNameContainsKeywordPredicate` and `OrderPhoneContainsKeywordPredicate` implements the interface `OrderContainsKeywordPredicated` and `OrderContainsKeywordPredicate` extends from a `Predicate` of `Order`.  +
+The following shows how is one of the predicate implemented:
+[source,java]
+----
+/**
+ * Tests that a {@code Order}'s {@code Name} matches any of the keywords given.
+ */
+public class OrderNameContainsKeywordPredicate implements OrderContainsAnyKeywordsPredicate {
+
+    @Override
+    public boolean test(Order order) {
+        // test method...
+    }
+
+}
+----
+
+==== Design Consideration
+
+===== Aspect: Implementation of `FindCommand`
+* **Alternative 1 (current choice):** Name and Phone has its own predicate having its own test method.
+** Pros: It adheres to the Single Responsibility Principle (SRP) and the Separation of Concern (SoC). Each Predicate will only handles its own search parameters.
+** Cons: More classes will be needed, which results in more code being written
+* **Alternative 2:** One predicate class which handles name and phone.
+** Pros: Reduces the number of classes, which makes it for new developers to understand.
+** Cons: It decreases the cohesion as one class will need to handle different predicates.
+
+===== Aspect: Implementation of `FindCommandParser`
+* **Alternative 1 (current choice):** `FindCommandParser` handles all the parsing
+** Pros: It makes it easy for new developers to understand as `FindCommandParser` handles all the parsing of the predicates.
+** Cons: It violates the Single Responsibility Principles (SRP). `FindCommandParser` has to break down the arguments as well as check which argument is present.
+* **Alternative 2:** Having a utilities class to handle the break down and checking of which command is present.
+** Pros: It adheres to SRP as handling of argument is pass on to a utility class.
+** Cons: Increase in the complexity of the code for new developers as more classes are needed and more lines of code will be written
+
+=== Add deliveryman feature
+
+==== Current Implementation
+
+The `add` deliveryman command allows the Manager to add deliveryman into FoodZoom. It ensures that the newly-added deliveryman
+is not a duplicate of an existing deliveryman.
+
+The following diagram shows the sequence flow from the `LogicManager` to the `ModelManager` when a user enters a `/deliveryman add`
+command:
+
+image::DeliverymanAddCommandSequenceDiagram.png[width="650"]
+Figure 3.4.1.1 Sequence Diagram for deliveryman `add` command
+
+From Figure 3.4.1.1:
+
+1. When `LogicManager` receives the `execute` command from the App, it calls the `parseCommand` method in `OrderBookParser`.
+
+2. `OrderBookParser` will receive `/deliveryman` as the command and instantiate `DeliverymanCommandParser` to parse the rest of the command.
+
+3. If the arguments specified in the `add` command are valid, a `DeliverymanAddCommand` would be created and returned back
+to the `LogicManager`.
+
+4. `LogicManager` would proceed to call `execute` of the `DeliverymanAddCommand`.
+
+5. A new deliveryman would be added and a successful `CommandResult` would be returned and displayed.
+
+FoodZoom's deliveryman is only stored with names currently, and can be search and listed
+only with names.
+
+These names are checked against validations with the `Name` model, and this is a compulsory
+field for a deliveryman to be added. If the provided command either does not have a name, or is an invalid `Name`,
+a `ParseException` would be thrown.
+
+==== Design Considerations
+
+===== Implementation of `DeliverymanAddCommandParser`
+* ** Alternative 1 (current choice):** `DeliverymanCommand` is parsed first, then as a `DeliverymanAddCommand`.
+** Pros: Better modularization for all commands relating to `Deliveryman`
+** Cons: More complicated file & package organization
+
+* ** Alternative 2: ** `DeliverymanAddCommand` is parsed straight from `OrderBookParser`
+** Pros: Easier to manage file structure
+** Cons: Poor modularization of related `Command` classes.
+
+===== Implementation of `DeliverymanAddCommand`
+* **Alternative 1 (current choice):** Deliverymen are stored in separate file
+** Pros: Allows for greater flexibility in how deliverymen interact with other resources like order/routes - better separation of concerns.
+** Cons: Harder to implement & maintain
+
+* **Alternative 2:** Deliverymen are stored in the same file as `Order` s
+** Pros: Easier to implement & maintain
+** Cons: Deliveryman can only be accessed & treated as parts of an `Order`
+
+
 // tag::dataencryption[]
 === [Proposed] Data Encryption
 

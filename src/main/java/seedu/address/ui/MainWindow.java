@@ -15,6 +15,7 @@ import javafx.stage.Stage;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.model.UserLoggedInEvent;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.logic.Logic;
@@ -27,6 +28,7 @@ import seedu.address.model.UserPrefs;
 public class MainWindow extends UiPart<Stage> {
 
     private static final String FXML = "MainWindow.fxml";
+    private static final String DISPLAYING_ORDER_LIST_PANEL = "Displaying Order list panel";
 
     private final Logger logger = LogsCenter.getLogger(getClass());
 
@@ -126,7 +128,7 @@ public class MainWindow extends UiPart<Stage> {
     void fillInnerParts() {
         display = new Display();
         displayPlaceholder.getChildren().add(display.getRoot());
-
+        
         orderListPanel = new OrderListPanel(logic.getFilteredOrderList());
         orderListPanelPlaceholder.getChildren().add(orderListPanel.getRoot());
 
@@ -141,6 +143,17 @@ public class MainWindow extends UiPart<Stage> {
 
         CommandBox commandBox = new CommandBox(logic);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
+
+        orderListPanel = new OrderListPanel(logic.getFilteredOrderList());
+        orderListPanelPlaceholder.getChildren().add(orderListPanel.getRoot());
+        orderListPanelPlaceholder.setVisible(false);
+    }
+
+    /**
+     * Display order list panel after login successful.
+     */
+    void displayOrderListPanel() {
+        orderListPanelPlaceholder.setVisible(true);
     }
 
     void hide() {
@@ -203,5 +216,11 @@ public class MainWindow extends UiPart<Stage> {
     private void handleShowHelpEvent(ShowHelpRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleHelp();
+    }
+
+    @Subscribe
+    private void handleUserLoggedInEvent(UserLoggedInEvent event) {
+        logger.info(DISPLAYING_ORDER_LIST_PANEL);
+        displayOrderListPanel();
     }
 }

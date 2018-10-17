@@ -1,5 +1,7 @@
 package systemtests;
 
+
+import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static seedu.address.ui.StatusBarFooter.SYNC_STATUS_INITIAL;
@@ -28,6 +30,7 @@ import seedu.address.TestApp;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.order.ClearCommand;
+import seedu.address.logic.commands.order.FindCommand;
 import seedu.address.logic.commands.order.ListCommand;
 import seedu.address.logic.commands.order.OrderCommand;
 import seedu.address.logic.commands.order.SelectCommand;
@@ -129,6 +132,14 @@ public abstract class OrderBookSystemTest {
     protected void showAllOrders() {
         executeCommand(OrderCommand.COMMAND_WORD + " " + ListCommand.COMMAND_WORD);
         assertEquals(getModel().getOrderBook().getOrderList().size(), getModel().getFilteredOrderList().size());
+    }
+
+    /**
+     * Displays all orders with any parts of their names matching {@code keyword} (case-insensitive).
+     */
+    protected void showOrdersWithName(String keyword) {
+        executeCommand(OrderCommand.COMMAND_WORD + " " + FindCommand.COMMAND_WORD + " " + keyword);
+        assertTrue(getModel().getFilteredOrderList().size() < getModel().getOrderBook().getOrderList().size());
     }
 
     /**
