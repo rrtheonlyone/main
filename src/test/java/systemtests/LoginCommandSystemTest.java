@@ -36,7 +36,7 @@ public class LoginCommandSystemTest extends OrderBookSystemTest {
         command = loginCommand + PREFIX_USERNAME + VALID_MANAGER_USERNAME_HOON
                 + " " + PREFIX_PASSWORD + VALID_MANAGER_PASSWORD_HOON;
         expectedResultMessage = String.format(LoginCommand.MESSAGE_ALREADY_LOGGED_IN,
-                "Username: " + VALID_MANAGER_USERNAME_ALICE) + "\n" + LoginCommand.MESSAGE_REDIRECT_TO_LOGOUT;
+                VALID_MANAGER_USERNAME_ALICE) + "\n" + LoginCommand.MESSAGE_REDIRECT_TO_LOGOUT;
         assertCommandSuccess(command, expectedModel, expectedResultMessage);
     }
 
