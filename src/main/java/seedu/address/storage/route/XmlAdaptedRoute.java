@@ -1,12 +1,19 @@
 package seedu.address.storage.route;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.model.order.Order;
 import seedu.address.model.person.Address;
 import seedu.address.model.route.Route;
+import seedu.address.storage.XmlAdaptedOrder;
 
 /**
  * JAXB-friendly version of the Route.
@@ -18,7 +25,7 @@ public class XmlAdaptedRoute {
     @XmlElement(required = true)
     private String source;
     @XmlElement(required = true)
-    private String destination;
+    private List<XmlAdaptedOrder> orders = new ArrayList<>();
 
     /**
      * Constructs an XmlAdaptedRoute.
@@ -29,9 +36,13 @@ public class XmlAdaptedRoute {
     /**
      * Constructs an {@code XmlAdaptedRoute} with the given route details.
      */
-    public XmlAdaptedRoute(String source, String destination) {
+    public XmlAdaptedRoute(String source, List<XmlAdaptedOrder> orders) {
         this.source = source;
-        this.destination = destination;
+        if (orders == null) {
+            this.orders = new ArrayList<>();
+        } else {
+            this.orders = new ArrayList<>(orders);
+        }
     }
 
     /**
@@ -41,7 +52,9 @@ public class XmlAdaptedRoute {
      */
     public XmlAdaptedRoute(Route route) {
         source = route.getSource().value;
-        destination = route.getDestination().value;
+        orders = route.getOrders().stream()
+                .map(XmlAdaptedOrder::new)
+                .collect(Collectors.toList());
     }
 
     /**
@@ -50,6 +63,11 @@ public class XmlAdaptedRoute {
      * @throws IllegalValueException if there were any data constraints violated in the adapted route
      */
     public Route toModelType() throws IllegalValueException {
+        final List<Order> orderStore = new ArrayList<>();
+        for (XmlAdaptedOrder orderItem : orders) {
+            orderStore.add(orderItem.toModelType());
+        }
+
         if (source == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Address.class.getSimpleName()));
         }
@@ -58,15 +76,13 @@ public class XmlAdaptedRoute {
         }
         final Address modelSource = new Address(source);
 
-        if (destination == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Address.class.getSimpleName()));
+        if (orderStore.isEmpty()) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Order.class.getSimpleName()));
         }
-        if (!Address.isValidAddress(destination)) {
-            throw new IllegalValueException(Address.MESSAGE_ADDRESS_CONSTRAINTS);
-        }
-        final Address modelDestination = new Address(destination);
 
-        return new Route(modelSource, modelDestination);
+        final Set<Order> modelOrder = new HashSet<>(orderStore);
+
+        return new Route(modelSource, modelOrder);
     }
 
     @Override
@@ -81,6 +97,6 @@ public class XmlAdaptedRoute {
 
         XmlAdaptedRoute otherRoute = (XmlAdaptedRoute) other;
         return Objects.equals(source, otherRoute.source)
-                && Objects.equals(destination, otherRoute.destination);
+                && Objects.equals(orders, otherRoute.orders);
     }
 }

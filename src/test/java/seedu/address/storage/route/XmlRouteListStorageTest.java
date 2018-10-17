@@ -2,7 +2,7 @@ package seedu.address.storage.route;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static seedu.address.testutil.TypicalRoutes.BEDOK;
+import static seedu.address.testutil.TypicalRoutes.ROUTE_ALICE_BENSON;
 import static seedu.address.testutil.TypicalRoutes.getTypicalRouteList;
 
 import java.io.IOException;
@@ -83,13 +83,13 @@ public class XmlRouteListStorageTest {
         assertEquals(original, new RouteList(readBack));
 
         //Modify data, overwrite exiting file, and read back
-        original.removeRoute(BEDOK);
+        original.removeRoute(ROUTE_ALICE_BENSON);
         xmlRouteListStorage.saveRouteList(original, filePath);
         readBack = xmlRouteListStorage.readRouteList(filePath).get();
         assertEquals(original, new RouteList(readBack));
 
         //Save and read without specifying file path
-        original.addRoute(BEDOK);
+        original.addRoute(ROUTE_ALICE_BENSON);
         xmlRouteListStorage.saveRouteList(original); //file path not specified
         readBack = xmlRouteListStorage.readRouteList().get(); //file path not specified
         assertEquals(original, new RouteList(readBack));

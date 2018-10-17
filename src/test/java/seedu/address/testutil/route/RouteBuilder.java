@@ -1,7 +1,12 @@
 package seedu.address.testutil.route;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import seedu.address.model.order.Order;
 import seedu.address.model.person.Address;
 import seedu.address.model.route.Route;
+import seedu.address.testutil.TypicalOrders;
 
 /**
  * A utility class to help with building Route objects.
@@ -9,14 +14,13 @@ import seedu.address.model.route.Route;
 public class RouteBuilder {
 
     public static final String DEFAULT_SOURCE = "12 Clementi Rd";
-    public static final String DEFAULT_DESTINATION = "123, Jurong West Ave 6, #08-111";
+    public static final Order DEFAULT_ORDER = TypicalOrders.ALICE;
 
     private Address source;
-    private Address destination;
+    private Set<Order> orders = new HashSet<>();
 
     public RouteBuilder() {
         source = new Address(DEFAULT_SOURCE);
-        destination = new Address(DEFAULT_DESTINATION);
     }
 
     /**
@@ -24,7 +28,7 @@ public class RouteBuilder {
      */
     public RouteBuilder(Route routeToCopy) {
         source = routeToCopy.getSource();
-        destination = routeToCopy.getDestination();
+        orders = routeToCopy.getOrders();
     }
 
     /**
@@ -36,15 +40,23 @@ public class RouteBuilder {
     }
 
     /**
-     * Sets the {@code source} of the {@code Route} that we are building.
+     * Sets the {@code orders} of the {@code Route} that we are building.
      */
-    public RouteBuilder withDestination(String destination) {
-        this.destination = new Address(destination);
+    public RouteBuilder withOrders(Set<Order> orders) {
+        this.orders = orders;
+        return this;
+    }
+
+    /**
+     * Adds the {@code order} to the set of {@code orders} of the {@code Route} that we are building.
+     */
+    public RouteBuilder withOrder(Order order) {
+        this.orders.add(order);
         return this;
     }
 
     public Route build() {
-        return new Route(source, destination);
+        return new Route(source, orders);
     }
 
 }
