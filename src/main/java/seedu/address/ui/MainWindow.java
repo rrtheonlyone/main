@@ -128,7 +128,7 @@ public class MainWindow extends UiPart<Stage> {
     void fillInnerParts() {
         display = new Display();
         displayPlaceholder.getChildren().add(display.getRoot());
-        
+
         orderListPanel = new OrderListPanel(logic.getFilteredOrderList());
         orderListPanelPlaceholder.getChildren().add(orderListPanel.getRoot());
 
