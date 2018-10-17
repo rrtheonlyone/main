@@ -72,27 +72,6 @@ public class SignUpCommandSystemTest extends OrderBookSystemTest {
     }
 
     @Test
-    public void signup_newUser_successful() {
-        Model expectedModel = getModel();
-        String command = signupCommand + PREFIX_NAME + VALID_MANAGER_NAME_IDA
-                + " " + PREFIX_USERNAME + VALID_MANAGER_USERNAME_IDA
-                + " " + PREFIX_PASSWORD + VALID_MANAGER_PASSWORD_IDA;
-
-        User ida = new UserBuilder()
-                .withName(VALID_MANAGER_NAME_IDA)
-                .withUsername(VALID_MANAGER_USERNAME_IDA)
-                .withPassword(VALID_MANAGER_PASSWORD_IDA)
-                .build();
-
-        String expectedResultMessage = String.format(MESSAGE_SUCCESS, ida)
-                + "\n"
-                + MESSAGE_LOGGED_IN;
-
-
-        assertCommandSuccess(command, expectedModel, expectedResultMessage);
-    }
-
-    @Test
     public void signup_exisitingUser_failure() {
         Model expectedModel = getModel();
         String command = signupCommand + PREFIX_NAME + VALID_MANAGER_NAME_ALICE
