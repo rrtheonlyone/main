@@ -28,6 +28,7 @@ public class SignUpCommand extends Command {
             + PREFIX_PASSWORD + "johndoepassword";
 
     public static final String MESSAGE_SUCCESS = "New user added: %1$s";
+    public static final String MESSAGE_LOGGED_IN = "You have been logged into FoodZoom.";
     public static final String MESSAGE_DUPLICATE_USER = "This user already exists in FoodZoom.";
 
     private final User toAdd;
@@ -50,7 +51,10 @@ public class SignUpCommand extends Command {
         model.addUser(toAdd);
         model.storeUserInSession(toAdd);
         model.commitUsersList();
-        return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
+        String result = String.format(MESSAGE_SUCCESS, toAdd)
+                + "\n"
+                + MESSAGE_LOGGED_IN;
+        return new CommandResult(result);
     }
 
     @Override

@@ -9,6 +9,8 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_MANAGER_PASSWOR
 import static seedu.address.logic.commands.CommandTestUtil.VALID_MANAGER_PASSWORD_BENSON;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_MANAGER_USERNAME_ALICE;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_MANAGER_USERNAME_BENSON;
+import static seedu.address.logic.commands.SignUpCommand.MESSAGE_LOGGED_IN;
+import static seedu.address.logic.commands.SignUpCommand.MESSAGE_SUCCESS;
 import static seedu.address.testutil.TypicalDeliverymen.getTypicalDeliverymenList;
 import static seedu.address.testutil.TypicalOrders.getTypicalOrderBook;
 import static seedu.address.testutil.TypicalRoutes.getTypicalRouteList;
@@ -51,7 +53,10 @@ public class SignUpCommandTest {
 
         CommandResult commandResult = new SignUpCommand(validUser).execute(model, commandHistory);
 
-        assertEquals(String.format(SignUpCommand.MESSAGE_SUCCESS, validUser), commandResult.feedbackToUser);
+        String expectedResult = String.format(MESSAGE_SUCCESS, validUser)
+                + "\n"
+                + MESSAGE_LOGGED_IN;
+        assertEquals(expectedResult, commandResult.feedbackToUser);
         assertEquals(EMPTY_COMMAND_HISTORY, commandHistory);
     }
 
