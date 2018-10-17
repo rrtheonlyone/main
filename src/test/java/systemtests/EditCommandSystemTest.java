@@ -281,11 +281,6 @@ public class EditCommandSystemTest extends OrderBookSystemTest {
         expectedModel.updateFilteredOrderList(PREDICATE_SHOW_ALL_ORDERS);
         assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
         assertCommandBoxShowsDefaultStyle();
-        if (expectedSelectedCardIndex != null) {
-            assertSelectedCardChanged(expectedSelectedCardIndex);
-        } else {
-            assertSelectedCardUnchanged();
-        }
         assertStatusBarUnchangedExceptSyncStatus();
     }
 
