@@ -22,8 +22,8 @@ public class LoginCommand extends Command {
 
     public static final String MESSAGE_ALREADY_LOGGED_IN = "You are already logged in as %1$s";
 
-    public static final String MESSAGE_REDIRECT_TO_LOGOUT = "Please logout before attempting to login to another " +
-            "account";
+    public static final String MESSAGE_REDIRECT_TO_LOGOUT = "Please logout before attempting to login to another "
+            + "account";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Login to FoodZoom. "
             + "Parameters: "
