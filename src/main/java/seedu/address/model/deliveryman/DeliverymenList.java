@@ -73,6 +73,9 @@ public class DeliverymenList {
     public void updateDeliveryman(Deliveryman target, Deliveryman editedD) {
         requireNonNull(editedD);
 
+        if (editedD.getTag() == null) {
+            editedD.assignTag();
+        }
         deliverymenList.setDeliveryman(target, editedD);
     }
 

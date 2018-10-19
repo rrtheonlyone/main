@@ -13,7 +13,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-import java.util.UUID;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
@@ -102,14 +101,13 @@ public class EditCommand extends OrderCommand {
     private static Order createEditedOrder(Order orderToEdit, EditOrderDescriptor editOrderDescriptor) {
         assert orderToEdit != null;
 
-        UUID id = orderToEdit.getTag();
         Name updatedName = editOrderDescriptor.getName().orElse(orderToEdit.getName());
         Phone updatedPhone = editOrderDescriptor.getPhone().orElse(orderToEdit.getPhone());
         Address updatedAddress = editOrderDescriptor.getAddress().orElse(orderToEdit.getAddress());
         OrderDate updatedDate = editOrderDescriptor.getDate().orElse(orderToEdit.getDate());
         Set<Food> updatedFood = editOrderDescriptor.getFood().orElse(orderToEdit.getFood());
 
-        return new Order(id, updatedName, updatedPhone, updatedAddress, updatedDate, updatedFood);
+        return new Order(updatedName, updatedPhone, updatedAddress, updatedDate, updatedFood);
     }
 
     @Override

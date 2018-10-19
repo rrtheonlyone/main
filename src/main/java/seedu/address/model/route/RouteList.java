@@ -83,6 +83,9 @@ public class RouteList implements ReadOnlyRouteList {
     public void updateRoute(Route target, Route editedRoute) {
         requireNonNull(editedRoute);
 
+        if (editedRoute.getTag() == null) {
+            editedRoute.assignTag();
+        }
         routes.setRoute(target, editedRoute);
     }
 

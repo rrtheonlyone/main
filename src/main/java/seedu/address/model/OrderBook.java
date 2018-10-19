@@ -87,6 +87,9 @@ public class OrderBook implements ReadOnlyOrderBook {
     public void updateOrder(Order target, Order editedOrder) {
         requireNonNull(editedOrder);
 
+        if (editedOrder.getTag() == null) {
+            editedOrder.assignTag();
+        }
         orders.setOrder(target, editedOrder);
     }
 
