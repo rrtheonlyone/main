@@ -36,7 +36,7 @@ public class XmlSerializableRouteListTest {
         RouteList typicalRouteRouteList = TypicalRoutes.getTypicalRouteList();
         assertEquals(routeListFromFile, typicalRouteRouteList);
         assertTrue(Streams.zip(routeListFromFile.getRouteList().stream(),
-            typicalRouteRouteList.getRouteList().stream(), (a, b) -> a.hasSameId(b)).allMatch(x -> x));
+            typicalRouteRouteList.getRouteList().stream(), (a, b) -> a.hasSameTag(b)).allMatch(x -> x));
     }
 
     @Test

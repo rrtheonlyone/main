@@ -5,14 +5,14 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import java.util.Objects;
 import java.util.UUID;
 
-import seedu.address.model.IdObject;
+import seedu.address.model.TaggedObject;
 import seedu.address.model.person.Name;
 
 /**
  * Represents a Deliveryman in FoodZoom.
  * Guarantees: has a name that is unique.
  */
-public class Deliveryman extends IdObject {
+public class Deliveryman extends TaggedObject {
 
     private final Name name;
     //TODO:  add field for orders/routes attached to deliveryman.

@@ -87,7 +87,7 @@ public class XmlOrderBookStorageTest {
         ReadOnlyOrderBook readBack = xmlOrderBookStorage.readOrderBook(filePath).get();
         assertEquals(original, new OrderBook(readBack));
         assertTrue(Streams.zip(original.getOrderList().stream(),
-            readBack.getOrderList().stream(), (a, b) -> a.hasSameId(b)).allMatch(x -> x));
+            readBack.getOrderList().stream(), (a, b) -> a.hasSameTag(b)).allMatch(x -> x));
 
         //Modify data, overwrite exiting file, and read back
         original.addOrder(HOON);
@@ -96,7 +96,7 @@ public class XmlOrderBookStorageTest {
         readBack = xmlOrderBookStorage.readOrderBook(filePath).get();
         assertEquals(original, new OrderBook(readBack));
         assertTrue(Streams.zip(original.getOrderList().stream(),
-            readBack.getOrderList().stream(), (a, b) -> a.hasSameId(b)).allMatch(x -> x));
+            readBack.getOrderList().stream(), (a, b) -> a.hasSameTag(b)).allMatch(x -> x));
 
         //Save and read without specifying file path
         original.addOrder(IDA);
@@ -104,7 +104,7 @@ public class XmlOrderBookStorageTest {
         readBack = xmlOrderBookStorage.readOrderBook().get(); //file path not specified
         assertEquals(original, new OrderBook(readBack));
         assertTrue(Streams.zip(original.getOrderList().stream(),
-            readBack.getOrderList().stream(), (a, b) -> a.hasSameId(b)).allMatch(x -> x));
+            readBack.getOrderList().stream(), (a, b) -> a.hasSameTag(b)).allMatch(x -> x));
 
     }
 

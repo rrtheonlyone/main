@@ -8,7 +8,7 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 
-import seedu.address.model.IdObject;
+import seedu.address.model.TaggedObject;
 import seedu.address.model.order.Order;
 import seedu.address.model.person.Address;
 
@@ -16,7 +16,7 @@ import seedu.address.model.person.Address;
  * Represents a Route in the address book.
  * Guarantees: details are present and not null, field values are validated, immutable.
  */
-public class Route extends IdObject {
+public class Route extends TaggedObject {
     private static final String DEFAULT_SOURCE = "12 Clementi Rd";
 
     // Identity fields

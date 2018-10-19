@@ -86,7 +86,7 @@ public class XmlDeliverymenListStorageTest {
         DeliverymenList readBack = xmlDeliverymenListStorage.readDeliverymenList(filePath).get();
         assertEquals(original, new DeliverymenList(readBack));
         assertTrue(Streams.zip(original.getDeliverymenList().stream(),
-            readBack.getDeliverymenList().stream(), (a, b) -> a.hasSameId(b)).allMatch(x -> x));
+            readBack.getDeliverymenList().stream(), (a, b) -> a.hasSameTag(b)).allMatch(x -> x));
 
         //Modify data, overwrite exiting file, and read back
         original.removeDeliveryman(RAJUL);
@@ -94,7 +94,7 @@ public class XmlDeliverymenListStorageTest {
         readBack = xmlDeliverymenListStorage.readDeliverymenList(filePath).get();
         assertEquals(original, new DeliverymenList(readBack));
         assertTrue(Streams.zip(original.getDeliverymenList().stream(),
-            readBack.getDeliverymenList().stream(), (a, b) -> a.hasSameId(b)).allMatch(x -> x));
+            readBack.getDeliverymenList().stream(), (a, b) -> a.hasSameTag(b)).allMatch(x -> x));
 
         //Save and read without specifying file path
         original.addDeliveryman(RAJUL);
@@ -102,7 +102,7 @@ public class XmlDeliverymenListStorageTest {
         readBack = xmlDeliverymenListStorage.readDeliverymenList().get(); //file path not specified
         assertEquals(original, new DeliverymenList(readBack));
         assertTrue(Streams.zip(original.getDeliverymenList().stream(),
-            readBack.getDeliverymenList().stream(), (a, b) -> a.hasSameId(b)).allMatch(x -> x));
+            readBack.getDeliverymenList().stream(), (a, b) -> a.hasSameTag(b)).allMatch(x -> x));
 
     }
 

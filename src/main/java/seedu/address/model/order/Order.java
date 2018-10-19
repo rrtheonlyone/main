@@ -7,7 +7,7 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 
-import seedu.address.model.IdObject;
+import seedu.address.model.TaggedObject;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
@@ -16,7 +16,7 @@ import seedu.address.model.person.Phone;
  * Represents an Order in the order book.
  * Guarantees: details are present and not null, field values are validated, immutable.
  */
-public class Order extends IdObject {
+public class Order extends TaggedObject {
 
     // Identity fields
     private final Name name;

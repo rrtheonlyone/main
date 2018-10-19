@@ -35,7 +35,7 @@ public class XmlSerializableOrderBookTest {
         OrderBook typicalOrdersOrderBook = TypicalOrders.getTypicalOrderBook();
         assertEquals(orderBookFromFile, typicalOrdersOrderBook);
         assertTrue(Streams.zip(orderBookFromFile.getOrderList().stream(),
-            typicalOrdersOrderBook.getOrderList().stream(), (a, b) -> a.hasSameId(b)).allMatch(x -> x));
+            typicalOrdersOrderBook.getOrderList().stream(), (a, b) -> a.hasSameTag(b)).allMatch(x -> x));
     }
 
     @Test

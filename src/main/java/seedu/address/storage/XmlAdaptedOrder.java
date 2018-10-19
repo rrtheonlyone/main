@@ -1,6 +1,6 @@
 package seedu.address.storage;
 
-import static seedu.address.model.IdObject.MESSAGE_INVALID_ID;
+import static seedu.address.model.TaggedObject.MESSAGE_INVALID_ID;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -32,7 +32,7 @@ public class XmlAdaptedOrder {
 
     @XmlAttribute
     @XmlID
-    private String id;
+    private String tag;
 
     @XmlElement(required = true)
     private String name;
@@ -55,9 +55,9 @@ public class XmlAdaptedOrder {
     /**
      * Constructs an {@code XmlAdaptedOrder} with the given order details.
      */
-    public XmlAdaptedOrder(String id, String name, String phone, String address, String date,
+    public XmlAdaptedOrder(String tag, String name, String phone, String address, String date,
                            List<XmlAdaptedFood> food) {
-        this.id = id;
+        this.tag = tag;
         this.name = name;
         this.phone = phone;
         this.address = address;
@@ -73,7 +73,7 @@ public class XmlAdaptedOrder {
      * Constructs an {@code XmlAdaptedOrder} with the given order details.
      */
     public XmlAdaptedOrder(String name, String phone, String address, String date, List<XmlAdaptedFood> food) {
-        this.id = UUID.randomUUID().toString();
+        this.tag = UUID.randomUUID().toString();
         this.name = name;
         this.phone = phone;
         this.address = address;
@@ -92,7 +92,7 @@ public class XmlAdaptedOrder {
      * @param source future changes to this will not affect the created XmlAdaptedOrder
      */
     public XmlAdaptedOrder(Order source) {
-        id = source.getId().toString();
+        tag = source.getTag().toString();
         name = source.getName().fullName;
         phone = source.getPhone().value;
         address = source.getAddress().value;
@@ -151,17 +151,17 @@ public class XmlAdaptedOrder {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Food.class.getSimpleName()));
         }
 
-        UUID modelId;
+        UUID modelTag;
 
         try {
-            modelId = UUID.fromString(id);
+            modelTag = UUID.fromString(tag);
         } catch (NumberFormatException e) {
             throw new IllegalValueException(MESSAGE_INVALID_ID);
         }
 
         final Set<Food> modelFood = new HashSet<>(foodStore);
 
-        return new Order(modelId, modelName, modelPhone, modelAddress, modelDate, modelFood);
+        return new Order(modelTag, modelName, modelPhone, modelAddress, modelDate, modelFood);
     }
 
     @Override
@@ -175,7 +175,7 @@ public class XmlAdaptedOrder {
         }
 
         XmlAdaptedOrder otherOrder = (XmlAdaptedOrder) other;
-        return id.equals(otherOrder.id)
+        return tag.equals(otherOrder.tag)
                 && Objects.equals(name, otherOrder.name)
                 && Objects.equals(phone, otherOrder.phone)
                 && Objects.equals(address, otherOrder.address)

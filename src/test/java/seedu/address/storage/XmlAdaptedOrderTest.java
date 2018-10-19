@@ -36,7 +36,7 @@ public class XmlAdaptedOrderTest {
     public void toModelType_validOrderDetails_returnsOrder() throws Exception {
         XmlAdaptedOrder order = new XmlAdaptedOrder(BENSON);
         assertEquals(BENSON, order.toModelType());
-        assertTrue(BENSON.hasSameId(order.toModelType()));
+        assertTrue(BENSON.hasSameTag(order.toModelType()));
     }
 
     @Test

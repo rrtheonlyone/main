@@ -29,7 +29,7 @@ public class XmlAdaptedRouteTest {
     public void toModelType_validRouteDetails_returnsRoute() throws Exception {
         XmlAdaptedRoute route = new XmlAdaptedRoute(ROUTE_ALICE_BENSON);
         assertEquals(ROUTE_ALICE_BENSON, route.toModelType());
-        assertTrue(ROUTE_ALICE_BENSON.hasSameId(route.toModelType()));
+        assertTrue(ROUTE_ALICE_BENSON.hasSameTag(route.toModelType()));
     }
 
     @Test

@@ -39,7 +39,7 @@ public class XmlSerializableDeliverymenListTest {
             deliverymenListFromFile.getDeliverymenList().get(1));
         assertEquals(deliverymenListFromFile, typicalDeliverymenDeliverymenList);
         assertTrue(Streams.zip(deliverymenListFromFile.getDeliverymenList().stream(),
-            typicalDeliverymenDeliverymenList.getDeliverymenList().stream(), (a, b) -> a.hasSameId(b))
+            typicalDeliverymenDeliverymenList.getDeliverymenList().stream(), (a, b) -> a.hasSameTag(b))
             .allMatch(x -> x));
     }
 

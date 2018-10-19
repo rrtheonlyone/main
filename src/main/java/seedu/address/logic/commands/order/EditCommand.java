@@ -102,7 +102,7 @@ public class EditCommand extends OrderCommand {
     private static Order createEditedOrder(Order orderToEdit, EditOrderDescriptor editOrderDescriptor) {
         assert orderToEdit != null;
 
-        UUID id = orderToEdit.getId();
+        UUID id = orderToEdit.getTag();
         Name updatedName = editOrderDescriptor.getName().orElse(orderToEdit.getName());
         Phone updatedPhone = editOrderDescriptor.getPhone().orElse(orderToEdit.getPhone());
         Address updatedAddress = editOrderDescriptor.getAddress().orElse(orderToEdit.getAddress());

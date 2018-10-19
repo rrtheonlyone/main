@@ -18,7 +18,7 @@ public class XmlAdaptedDeliverymanTest {
     public void toModelType_validDeliverymanDetails_returnsDeliveryman() throws Exception {
         XmlAdaptedDeliveryman deliveryman = new XmlAdaptedDeliveryman(RAJUL);
         assertEquals(RAJUL, deliveryman.toModelType());
-        assertTrue(RAJUL.hasSameId(deliveryman.toModelType()));
+        assertTrue(RAJUL.hasSameTag(deliveryman.toModelType()));
     }
 
     @Test
