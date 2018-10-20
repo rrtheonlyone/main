@@ -188,3 +188,7 @@
     -fx-padding: 10;
 }
 
+#loginPane {
+    -fx-background-color: derive(#14281D, 20%);
+}
+
