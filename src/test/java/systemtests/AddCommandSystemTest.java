@@ -42,7 +42,6 @@ import seedu.address.model.order.Order;
 import seedu.address.model.order.OrderDate;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Name;
-import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.testutil.OrderBuilder;
 import seedu.address.testutil.OrderUtil;
@@ -190,7 +189,6 @@ public class AddCommandSystemTest extends OrderBookSystemTest {
      * Performs the same verification as {@code assertCommandSuccess(Order)}. Executes {@code command}
      * instead.
      *
-     * @see AddCommandSystemTest#assertCommandSuccess(Person)
      */
     private void assertCommandSuccess(String command, Order toAdd) {
         Model expectedModel = getModel();
