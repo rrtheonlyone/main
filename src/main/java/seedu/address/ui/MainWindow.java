@@ -7,9 +7,11 @@ import com.google.common.eventbus.Subscribe;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.SplitPane;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import seedu.address.commons.core.Config;
@@ -29,9 +31,8 @@ import seedu.address.model.UserPrefs;
 public class MainWindow extends UiPart<Stage> {
 
     private static final String FXML = "MainWindow.fxml";
-    private static final String DISPLAYING_ORDER_LIST_PANEL = "Displaying Order list panel";
-    private static final String HIDE_ORDER_LIST_PANEL = "Hiding order list panel";
-    private static final String HIDE_BROWER_PANEL = "Hiding browser panel";
+    private static final String DISPLAYING_LOGGED_IN_PANEL = "Displaying logged in panel";
+    private static final String HIDE_LOGGED_IN_PANEL = "Hiding logged in panel";
 
     private final Logger logger = LogsCenter.getLogger(getClass());
 
@@ -39,15 +40,12 @@ public class MainWindow extends UiPart<Stage> {
     private Logic logic;
 
     // Independent Ui parts residing in this Ui container
-    private Display display;
-    private OrderListPanel orderListPanel;
-    private DeliverymanListPanel deliveryMenListPanel;
     private Config config;
     private UserPrefs prefs;
     private HelpWindow helpWindow;
 
-    @FXML
-    private StackPane displayPlaceholder;
+    private LoginPanel loginPanel;
+    private LoggedInPanel loggedInPanel;
 
     @FXML
     private StackPane commandBoxPlaceholder;
@@ -56,16 +54,14 @@ public class MainWindow extends UiPart<Stage> {
     private MenuItem helpMenuItem;
 
     @FXML
-    private StackPane orderListPanelPlaceholder;
-
-    @FXML
-    private StackPane deliveryMenListPanelPlaceholder;
-
-    @FXML
     private StackPane resultDisplayPlaceholder;
 
     @FXML
     private StackPane statusbarPlaceholder;
+
+    @FXML
+    private AnchorPane mainDisplayPlaceholder;
+
 
     public MainWindow(Stage primaryStage, Config config, UserPrefs prefs, Logic logic) {
         super(FXML, primaryStage);
@@ -129,15 +125,6 @@ public class MainWindow extends UiPart<Stage> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
-        display = new Display();
-        displayPlaceholder.getChildren().add(display.getRoot());
-
-        orderListPanel = new OrderListPanel(logic.getFilteredOrderList());
-        orderListPanelPlaceholder.getChildren().add(orderListPanel.getRoot());
-
-        deliveryMenListPanel = new DeliverymanListPanel(logic.getFilteredDeliverymanList());
-        deliveryMenListPanelPlaceholder.getChildren().add(deliveryMenListPanel.getRoot());
-
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
 
@@ -147,27 +134,27 @@ public class MainWindow extends UiPart<Stage> {
         CommandBox commandBox = new CommandBox(logic);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
 
-        orderListPanel = new OrderListPanel(logic.getFilteredOrderList());
-        orderListPanelPlaceholder.getChildren().add(orderListPanel.getRoot());
-        orderListPanelPlaceholder.setVisible(false);
+        loginPanel = new LoginPanel();
+        mainDisplayPlaceholder.getChildren().add(loginPanel.getRoot());
     }
 
     /**
-     * Display order list panel after login successful.
+     * Display logged in panel after login successful.
      */
-    void displayOrderListPanel() {
-        orderListPanelPlaceholder.setVisible(true);
+    void displayLoggedInPanel() {
+        mainDisplayPlaceholder.getChildren().removeAll(loginPanel.getRoot());
+
+        loggedInPanel = new LoggedInPanel(logic);
+        mainDisplayPlaceholder.getChildren().add(loggedInPanel.getRoot());
     }
 
     /**
-     * Hide order list panel after logout successful.
+     * Hide logged in panel after logout successful.
      */
-    void hideOrderListPanel() {
-        orderListPanelPlaceholder.setVisible(false);
-    }
+    void hideLoggedInPanel() {
+        mainDisplayPlaceholder.getChildren().removeAll(loggedInPanel.getRoot());
 
-    void hideBrowserPanel() {
-        browserPlaceholder.setVisible(false);
+        mainDisplayPlaceholder.getChildren().add(loginPanel.getRoot());
     }
 
     void hide() {
@@ -222,10 +209,6 @@ public class MainWindow extends UiPart<Stage> {
         raise(new ExitAppRequestEvent());
     }
 
-    public OrderListPanel getOrderListPanel() {
-        return orderListPanel;
-    }
-
     @Subscribe
     private void handleShowHelpEvent(ShowHelpRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
@@ -234,16 +217,13 @@ public class MainWindow extends UiPart<Stage> {
 
     @Subscribe
     private void handleUserLoggedInEvent(UserLoggedInEvent event) {
-        logger.info(DISPLAYING_ORDER_LIST_PANEL);
-        displayOrderListPanel();
+        logger.info(DISPLAYING_LOGGED_IN_PANEL);
+        displayLoggedInPanel();
     }
 
     @Subscribe
     private void handleUserLoggedOutEvent(UserLoggedOutEvent event) {
-        logger.info(HIDE_BROWER_PANEL);
-        hideBrowserPanel();
-
-        logger.info(HIDE_ORDER_LIST_PANEL);
-        hideOrderListPanel();
+        logger.info(HIDE_LOGGED_IN_PANEL);
+        hideLoggedInPanel();
     }
 }
