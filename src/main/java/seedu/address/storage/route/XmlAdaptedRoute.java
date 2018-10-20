@@ -15,8 +15,8 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlID;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.order.Order;
 import seedu.address.model.common.Address;
+import seedu.address.model.order.Order;
 import seedu.address.model.route.Route;
 import seedu.address.storage.XmlAdaptedOrder;
 
@@ -40,7 +40,8 @@ public class XmlAdaptedRoute {
      * Constructs an XmlAdaptedRoute.
      * This is the no-arg constructor that is required by JAXB.
      */
-    public XmlAdaptedRoute() {}
+    public XmlAdaptedRoute() {
+    }
 
     /**
      * Constructs an {@code XmlAdaptedRoute} with the given route details.

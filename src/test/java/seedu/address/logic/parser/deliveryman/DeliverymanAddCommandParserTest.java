@@ -12,8 +12,8 @@ import static seedu.address.testutil.TypicalDeliverymen.RAJUL;
 import org.junit.Test;
 
 import seedu.address.logic.commands.deliveryman.DeliverymanAddCommand;
-import seedu.address.model.deliveryman.Deliveryman;
 import seedu.address.model.common.Name;
+import seedu.address.model.deliveryman.Deliveryman;
 import seedu.address.testutil.DeliverymanBuilder;
 
 public class DeliverymanAddCommandParserTest {
@@ -24,10 +24,10 @@ public class DeliverymanAddCommandParserTest {
         Deliveryman expectedDeliveryman = new DeliverymanBuilder(RAJUL).build();
 
         assertParseSuccess(parser, PREAMBLE_WHITESPACE + NAME_DESC_RAJUL,
-            new DeliverymanAddCommand(expectedDeliveryman));
+                new DeliverymanAddCommand(expectedDeliveryman));
 
         assertParseSuccess(parser, NAME_DESC_RAJUL,
-            new DeliverymanAddCommand(expectedDeliveryman));
+                new DeliverymanAddCommand(expectedDeliveryman));
     }
 
     @Test

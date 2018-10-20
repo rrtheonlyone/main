@@ -38,11 +38,11 @@ import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.order.AddCommand;
 import seedu.address.logic.commands.order.OrderCommand;
 import seedu.address.model.Model;
-import seedu.address.model.order.Order;
-import seedu.address.model.order.OrderDate;
 import seedu.address.model.common.Address;
 import seedu.address.model.common.Name;
 import seedu.address.model.common.Phone;
+import seedu.address.model.order.Order;
+import seedu.address.model.order.OrderDate;
 import seedu.address.testutil.OrderBuilder;
 import seedu.address.testutil.OrderUtil;
 
@@ -188,7 +188,6 @@ public class AddCommandSystemTest extends OrderBookSystemTest {
     /**
      * Performs the same verification as {@code assertCommandSuccess(Order)}. Executes {@code command}
      * instead.
-     *
      */
     private void assertCommandSuccess(String command, Order toAdd) {
         Model expectedModel = getModel();

@@ -10,8 +10,8 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlID;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.deliveryman.Deliveryman;
 import seedu.address.model.common.Name;
+import seedu.address.model.deliveryman.Deliveryman;
 
 /**
  * Represents the XML for storage of Deliveryman
@@ -26,7 +26,8 @@ public class XmlAdaptedDeliveryman {
     @XmlElement(required = true)
     private String name;
 
-    public XmlAdaptedDeliveryman() {}
+    public XmlAdaptedDeliveryman() {
+    }
 
     /**
      * Constructs an {@code XmlAdapterDeliveryman} with the given common details.
@@ -35,6 +36,7 @@ public class XmlAdaptedDeliveryman {
         this.tag = tag;
         this.name = name;
     }
+
     /**
      * Constructs an {@code XmlAdapterDeliveryman} with the given common details.
      */
@@ -91,6 +93,6 @@ public class XmlAdaptedDeliveryman {
 
         XmlAdaptedDeliveryman otherDman = (XmlAdaptedDeliveryman) other;
         return tag.equals(otherDman.tag)
-            && Objects.equals(name, otherDman.name);
+                && Objects.equals(name, otherDman.name);
     }
 }

@@ -10,13 +10,13 @@ import java.util.stream.Stream;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.order.Food;
-import seedu.address.model.order.OrderDate;
 import seedu.address.model.common.Address;
 import seedu.address.model.common.Name;
 import seedu.address.model.common.Password;
 import seedu.address.model.common.Phone;
 import seedu.address.model.common.Username;
+import seedu.address.model.order.Food;
+import seedu.address.model.order.OrderDate;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -168,7 +168,8 @@ public class ParserUtil {
 
     }
 
-    /** Parses a {@code String username} into an {@code Username}.
+    /**
+     * Parses a {@code String username} into an {@code Username}.
      * Leading and trailing whitespaces will be trimmed.
      *
      * @throws ParseException if the given {@code username} is invalid.

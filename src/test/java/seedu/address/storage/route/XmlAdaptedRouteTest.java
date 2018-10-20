@@ -12,8 +12,8 @@ import java.util.stream.Collectors;
 import org.junit.Test;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.order.Order;
 import seedu.address.model.common.Address;
+import seedu.address.model.order.Order;
 import seedu.address.storage.XmlAdaptedOrder;
 import seedu.address.testutil.Assert;
 import seedu.address.testutil.TypicalRoutes;

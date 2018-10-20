@@ -2,8 +2,8 @@ package seedu.address.testutil;
 
 import java.util.UUID;
 
-import seedu.address.model.deliveryman.Deliveryman;
 import seedu.address.model.common.Name;
+import seedu.address.model.deliveryman.Deliveryman;
 
 /**
  * A utility class to help build a deliveryman
@@ -36,6 +36,7 @@ public class DeliverymanBuilder {
 
     /**
      * Sets the {@code id} of the {@code Deliveryman} that we are building
+     *
      * @param idString
      */
     public DeliverymanBuilder withId(String idString) {

@@ -9,8 +9,8 @@ import java.util.Set;
 import java.util.UUID;
 
 import seedu.address.model.TaggedObject;
-import seedu.address.model.order.Order;
 import seedu.address.model.common.Address;
+import seedu.address.model.order.Order;
 
 /**
  * Represents a Route in the address book.
@@ -25,6 +25,7 @@ public class Route extends TaggedObject {
 
     /**
      * Creates a new instance of Route with the destination.
+     *
      * @param orders The orders delivered in this route.
      */
     public Route(Set<Order> orders) {

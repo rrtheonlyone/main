@@ -5,12 +5,12 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import seedu.address.logic.commands.order.EditCommand.EditOrderDescriptor;
-import seedu.address.model.order.Food;
-import seedu.address.model.order.Order;
-import seedu.address.model.order.OrderDate;
 import seedu.address.model.common.Address;
 import seedu.address.model.common.Name;
 import seedu.address.model.common.Phone;
+import seedu.address.model.order.Food;
+import seedu.address.model.order.Order;
+import seedu.address.model.order.OrderDate;
 
 /**
  * A utility class to help with building EditOrderDescriptor objects.

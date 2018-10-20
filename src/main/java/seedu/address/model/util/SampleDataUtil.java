@@ -9,16 +9,16 @@ import seedu.address.model.OrderBook;
 import seedu.address.model.ReadOnlyOrderBook;
 import seedu.address.model.ReadOnlyUsersList;
 import seedu.address.model.UsersList;
-import seedu.address.model.deliveryman.Deliveryman;
-import seedu.address.model.deliveryman.DeliverymenList;
-import seedu.address.model.order.Food;
-import seedu.address.model.order.Order;
-import seedu.address.model.order.OrderDate;
 import seedu.address.model.common.Address;
 import seedu.address.model.common.Name;
 import seedu.address.model.common.Password;
 import seedu.address.model.common.Phone;
 import seedu.address.model.common.Username;
+import seedu.address.model.deliveryman.Deliveryman;
+import seedu.address.model.deliveryman.DeliverymenList;
+import seedu.address.model.order.Food;
+import seedu.address.model.order.Order;
+import seedu.address.model.order.OrderDate;
 import seedu.address.model.route.ReadOnlyRouteList;
 import seedu.address.model.route.Route;
 import seedu.address.model.route.RouteList;
@@ -62,7 +62,7 @@ public class SampleDataUtil {
         orderSetB.add(getSampleOrders()[3]);
         orderSetB.add(getSampleOrders()[4]);
         orderSetB.add(getSampleOrders()[5]);
-        return new Route[] {
+        return new Route[]{
             new Route(orderSetA),
             new Route(orderSetB)
         };
@@ -94,7 +94,7 @@ public class SampleDataUtil {
     }
 
     public static User[] getSampleUsers() {
-        return new User[] {
+        return new User[]{
             new User(new Name("Alice Pauline"), new Username("alicepauline"), new Password("alicepauline01")),
             new User(new Name("Benson Meier"), new Username("bensonmeier"), new Password("bensonmeier02")),
             new User(new Name("Carl Kurz"), new Username("carlkurz"), new Password("carlkurz03")),

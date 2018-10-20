@@ -29,10 +29,10 @@ import static seedu.address.testutil.TypicalOrders.BOB;
 import org.junit.Test;
 
 import seedu.address.logic.commands.order.AddCommand;
-import seedu.address.model.order.Order;
 import seedu.address.model.common.Address;
 import seedu.address.model.common.Name;
 import seedu.address.model.common.Phone;
+import seedu.address.model.order.Order;
 import seedu.address.testutil.OrderBuilder;
 
 public class AddCommandParserTest {
