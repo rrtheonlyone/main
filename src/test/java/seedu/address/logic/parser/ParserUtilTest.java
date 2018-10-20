@@ -15,9 +15,9 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.person.Address;
-import seedu.address.model.person.Name;
-import seedu.address.model.person.Phone;
+import seedu.address.model.common.Address;
+import seedu.address.model.common.Name;
+import seedu.address.model.common.Phone;
 import seedu.address.model.tag.Tag;
 import seedu.address.testutil.Assert;
 

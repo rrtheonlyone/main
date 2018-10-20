@@ -62,7 +62,7 @@ public class FindCommandSystemTest extends OrderBookSystemTest {
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
-        /* Case: find single person in order book by phone, command with leading spaces and trailing spaces */
+        /* Case: find single common in order book by phone, command with leading spaces and trailing spaces */
         command = "    " + findCommand + " " + KEYWORD_PHONE_MATCHING_BENSON + "   ";
         ModelHelper.setFilteredList(expectedModel, BENSON);
         assertCommandSuccess(command, expectedModel);
@@ -73,13 +73,13 @@ public class FindCommandSystemTest extends OrderBookSystemTest {
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
-        /* Case: find person name where order list is not displaying the order we are finding -> 1 order found */
+        /* Case: find common name where order list is not displaying the order we are finding -> 1 order found */
         command = findCommand + " " + PREFIX_NAME + "Carl";
         ModelHelper.setFilteredList(expectedModel, CARL);
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
-        /* Case: find person phone where order list is not displaying the order we are finding -> 1 order found */
+        /* Case: find common phone where order list is not displaying the order we are finding -> 1 order found */
         command = findCommand + " " + PREFIX_PHONE + "98765432";
         ModelHelper.setFilteredList(expectedModel, BENSON);
         assertCommandSuccess(command, expectedModel);

@@ -90,7 +90,7 @@ public class DeliverymanAddCommandTest {
         // null -> returns false
         assertFalse(addMatthewCommand.equals(null));
 
-        // different person -> returns false
+        // different common -> returns false
         assertFalse(addMatthewCommand.equals(addLinusCommand));
     }
 

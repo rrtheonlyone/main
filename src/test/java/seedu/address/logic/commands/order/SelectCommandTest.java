@@ -93,7 +93,7 @@ public class SelectCommandTest {
         // null -> returns false
         assertFalse(selectFirstCommand.equals(null));
 
-        // different person -> returns false
+        // different common -> returns false
         assertFalse(selectFirstCommand.equals(selectSecondCommand));
     }
 

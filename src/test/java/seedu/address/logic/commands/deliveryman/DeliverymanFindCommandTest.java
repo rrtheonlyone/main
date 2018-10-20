@@ -58,7 +58,7 @@ public class DeliverymanFindCommandTest {
         // null -> returns false
         assertFalse(findFirstOrderCommand.equals(null));
 
-        // different person -> returns false
+        // different common -> returns false
         assertFalse(findFirstOrderCommand.equals(findSecondOrderCommand));
     }
 

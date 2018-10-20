@@ -8,9 +8,9 @@ import java.util.Set;
 import java.util.UUID;
 
 import seedu.address.model.TaggedObject;
-import seedu.address.model.person.Address;
-import seedu.address.model.person.Name;
-import seedu.address.model.person.Phone;
+import seedu.address.model.common.Address;
+import seedu.address.model.common.Name;
+import seedu.address.model.common.Phone;
 
 /**
  * Represents an Order in the order book.

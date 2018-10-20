@@ -103,7 +103,7 @@ public class DeliverymanDeleteCommandTest {
         // null -> returns false
         assertFalse(deleteFirstCommand.equals(null));
 
-        // different person -> returns false
+        // different common -> returns false
         assertFalse(deleteFirstCommand.equals(deleteSecondCommand));
     }
 

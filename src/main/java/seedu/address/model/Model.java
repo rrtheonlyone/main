@@ -42,7 +42,7 @@ public interface Model {
     ReadOnlyOrderBook getOrderBook();
 
     /**
-     * Returns true if a person with the same identity as {@code order} exists in the order book.
+     * Returns true if a common with the same identity as {@code order} exists in the order book.
      */
     boolean hasOrder(Order order);
 

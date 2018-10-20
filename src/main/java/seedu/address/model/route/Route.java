@@ -10,7 +10,7 @@ import java.util.UUID;
 
 import seedu.address.model.TaggedObject;
 import seedu.address.model.order.Order;
-import seedu.address.model.person.Address;
+import seedu.address.model.common.Address;
 
 /**
  * Represents a Route in the address book.

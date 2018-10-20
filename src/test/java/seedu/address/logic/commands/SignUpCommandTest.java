@@ -123,7 +123,7 @@ public class SignUpCommandTest {
         // null -> returns false
         assertFalse(signUpAliceCommandCopy.equals(null));
 
-        // different person -> returns false
+        // different common -> returns false
         assertFalse(signUpAliceCommandCopy.equals(signUpBensonCommand));
     }
 }

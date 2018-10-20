@@ -36,7 +36,7 @@ public class OrderNameContainsKeywordPredicateTest {
         // null -> returns false
         assertFalse(firstPredicate.equals(null));
 
-        // different person -> returns false
+        // different common -> returns false
         assertFalse(firstPredicate.equals(secondPredicate));
     }
 

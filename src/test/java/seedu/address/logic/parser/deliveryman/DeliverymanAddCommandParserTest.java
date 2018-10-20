@@ -13,7 +13,7 @@ import org.junit.Test;
 
 import seedu.address.logic.commands.deliveryman.DeliverymanAddCommand;
 import seedu.address.model.deliveryman.Deliveryman;
-import seedu.address.model.person.Name;
+import seedu.address.model.common.Name;
 import seedu.address.testutil.DeliverymanBuilder;
 
 public class DeliverymanAddCommandParserTest {

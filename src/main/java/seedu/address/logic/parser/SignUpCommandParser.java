@@ -7,9 +7,9 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_USERNAME;
 
 import seedu.address.logic.commands.SignUpCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.person.Name;
-import seedu.address.model.person.Password;
-import seedu.address.model.person.Username;
+import seedu.address.model.common.Name;
+import seedu.address.model.common.Password;
+import seedu.address.model.common.Username;
 import seedu.address.model.user.User;
 
 /**

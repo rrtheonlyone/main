@@ -58,7 +58,7 @@ public class OrderBook implements ReadOnlyOrderBook {
         setOrders(newData.getOrderList());
     }
 
-    //// person-level operations
+    //// common-level operations
 
     /**
      * Returns true if an order with the same identity as {@code order} exists in the order book.

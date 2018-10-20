@@ -5,7 +5,7 @@ import java.util.Set;
 import java.util.UUID;
 
 import seedu.address.model.order.Order;
-import seedu.address.model.person.Address;
+import seedu.address.model.common.Address;
 import seedu.address.model.route.Route;
 import seedu.address.testutil.TypicalOrders;
 

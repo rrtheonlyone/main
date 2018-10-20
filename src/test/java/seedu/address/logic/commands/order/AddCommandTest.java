@@ -87,7 +87,7 @@ public class AddCommandTest {
         // null -> returns false
         assertFalse(addAliceCommand.equals(null));
 
-        // different person -> returns false
+        // different common -> returns false
         assertFalse(addAliceCommand.equals(addBobCommand));
     }
 

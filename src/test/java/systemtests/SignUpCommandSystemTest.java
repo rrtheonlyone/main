@@ -20,9 +20,9 @@ import static seedu.address.logic.commands.SignUpCommand.MESSAGE_SUCCESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PASSWORD;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_USERNAME;
-import static seedu.address.model.person.Name.MESSAGE_NAME_CONSTRAINTS;
-import static seedu.address.model.person.Password.MESSAGE_PASSWORD_CONSTRAINTS;
-import static seedu.address.model.person.Username.MESSAGE_USERNAME_CONSTRAINTS;
+import static seedu.address.model.common.Name.MESSAGE_NAME_CONSTRAINTS;
+import static seedu.address.model.common.Password.MESSAGE_PASSWORD_CONSTRAINTS;
+import static seedu.address.model.common.Username.MESSAGE_USERNAME_CONSTRAINTS;
 
 import org.junit.Test;
 

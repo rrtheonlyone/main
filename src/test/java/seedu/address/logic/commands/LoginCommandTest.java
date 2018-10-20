@@ -132,7 +132,7 @@ public class LoginCommandTest {
         // null -> returns false
         assertFalse(loginAliceCommand.equals(null));
 
-        // different person -> returns false
+        // different common -> returns false
         assertFalse(loginAliceCommand.equals(loginBensonCommand));
     }
 

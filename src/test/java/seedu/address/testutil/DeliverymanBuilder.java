@@ -3,7 +3,7 @@ package seedu.address.testutil;
 import java.util.UUID;
 
 import seedu.address.model.deliveryman.Deliveryman;
-import seedu.address.model.person.Name;
+import seedu.address.model.common.Name;
 
 /**
  * A utility class to help build a deliveryman

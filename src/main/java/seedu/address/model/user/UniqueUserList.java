@@ -8,8 +8,8 @@ import java.util.List;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import seedu.address.model.person.exceptions.DuplicatePersonException;
-import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.common.exceptions.DuplicatePersonException;
+import seedu.address.model.common.exceptions.PersonNotFoundException;
 
 /**
  * A list of unique users
@@ -49,7 +49,7 @@ public class UniqueUserList implements Iterable<User> {
     /**
      * Replaces the user {@code target} in the list with {@code editedPerson}.
      * {@code target} must exist in the list.
-     * The person identity of {@code editedPerson} must not be the same as another existing user in the list.
+     * The common identity of {@code editedPerson} must not be the same as another existing user in the list.
      */
     public void setUser(User target, User editedPerson) {
         requireAllNonNull(target, editedPerson);

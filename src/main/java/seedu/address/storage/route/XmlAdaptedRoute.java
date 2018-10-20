@@ -16,7 +16,7 @@ import javax.xml.bind.annotation.XmlID;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.order.Order;
-import seedu.address.model.person.Address;
+import seedu.address.model.common.Address;
 import seedu.address.model.route.Route;
 import seedu.address.storage.XmlAdaptedOrder;
 
@@ -69,7 +69,7 @@ public class XmlAdaptedRoute {
     }
 
     /**
-     * Converts this jaxb-friendly adapted person object into the model's Route object.
+     * Converts this jaxb-friendly adapted common object into the model's Route object.
      *
      * @throws IllegalValueException if there were any data constraints violated in the adapted route
      */
