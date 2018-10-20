@@ -29,7 +29,7 @@ public class RouteBuilder {
      * Initializes the RouteBuilder with the data of {@code routeToCopy}.
      */
     public RouteBuilder(Route routeToCopy) {
-        id = routeToCopy.getId();
+        id = routeToCopy.getTag();
         source = routeToCopy.getSource();
         orders = routeToCopy.getOrders();
     }

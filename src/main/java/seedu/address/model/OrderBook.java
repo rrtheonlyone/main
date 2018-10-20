@@ -73,8 +73,8 @@ public class OrderBook implements ReadOnlyOrderBook {
      * The order must not already exist in the order book.
      */
     public void addOrder(Order o) {
-        if (o.getId() == null) {
-            o.assignId();
+        if (o.getTag() == null) {
+            o.assignTag();
         }
         orders.add(o);
     }
@@ -87,6 +87,9 @@ public class OrderBook implements ReadOnlyOrderBook {
     public void updateOrder(Order target, Order editedOrder) {
         requireNonNull(editedOrder);
 
+        if (editedOrder.getTag() == null) {
+            editedOrder.assignTag();
+        }
         orders.setOrder(target, editedOrder);
     }
 

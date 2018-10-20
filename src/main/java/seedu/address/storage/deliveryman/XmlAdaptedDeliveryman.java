@@ -1,6 +1,6 @@
 package seedu.address.storage.deliveryman;
 
-import static seedu.address.model.IdObject.MESSAGE_INVALID_ID;
+import static seedu.address.model.TaggedObject.MESSAGE_INVALID_ID;
 
 import java.util.Objects;
 import java.util.UUID;
@@ -21,7 +21,7 @@ public class XmlAdaptedDeliveryman {
 
     @XmlAttribute
     @XmlID
-    private String id;
+    private String tag;
 
     @XmlElement(required = true)
     private String name;
@@ -31,15 +31,15 @@ public class XmlAdaptedDeliveryman {
     /**
      * Constructs an {@code XmlAdapterDeliveryman} with the given person details.
      */
-    public XmlAdaptedDeliveryman(String id, String name) {
-        this.id = id;
+    public XmlAdaptedDeliveryman(String tag, String name) {
+        this.tag = tag;
         this.name = name;
     }
     /**
      * Constructs an {@code XmlAdapterDeliveryman} with the given person details.
      */
     public XmlAdaptedDeliveryman(String name) {
-        this.id = UUID.randomUUID().toString();
+        this.tag = UUID.randomUUID().toString();
         this.name = name;
     }
 
@@ -49,7 +49,7 @@ public class XmlAdaptedDeliveryman {
      * @param source
      */
     public XmlAdaptedDeliveryman(Deliveryman source) {
-        id = source.getId().toString();
+        tag = source.getTag().toString();
         name = source.getName().fullName;
     }
 
@@ -66,17 +66,17 @@ public class XmlAdaptedDeliveryman {
             throw new IllegalValueException(Name.MESSAGE_NAME_CONSTRAINTS);
         }
 
-        UUID modelId;
+        UUID modelTag;
 
         try {
-            modelId = UUID.fromString(id);
+            modelTag = UUID.fromString(tag);
         } catch (NumberFormatException e) {
             throw new IllegalValueException(MESSAGE_INVALID_ID);
         }
 
         final Name modelName = new Name(name);
 
-        return new Deliveryman(modelId, modelName);
+        return new Deliveryman(modelTag, modelName);
     }
 
     @Override
@@ -90,7 +90,7 @@ public class XmlAdaptedDeliveryman {
         }
 
         XmlAdaptedDeliveryman otherDman = (XmlAdaptedDeliveryman) other;
-        return id.equals(otherDman.id)
+        return tag.equals(otherDman.tag)
             && Objects.equals(name, otherDman.name);
     }
 }

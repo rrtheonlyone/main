@@ -22,7 +22,7 @@ public class DeliverymanBuilder {
      * Initializes the DeliverymanBuilder with the data of {@code deliverymanToCopy}.
      */
     public DeliverymanBuilder(Deliveryman deliverymanToCopy) {
-        id = deliverymanToCopy.getId();
+        id = deliverymanToCopy.getTag();
         name = deliverymanToCopy.getName();
     }
 

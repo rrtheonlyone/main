@@ -1,6 +1,6 @@
 package seedu.address.storage.route;
 
-import static seedu.address.model.IdObject.MESSAGE_INVALID_ID;
+import static seedu.address.model.TaggedObject.MESSAGE_INVALID_ID;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -29,7 +29,7 @@ public class XmlAdaptedRoute {
 
     @XmlAttribute
     @XmlID
-    private String id;
+    private String tag;
 
     @XmlElement(required = true)
     private String source;
@@ -46,7 +46,7 @@ public class XmlAdaptedRoute {
      * Constructs an {@code XmlAdaptedRoute} with the given route details.
      */
     public XmlAdaptedRoute(String source, List<XmlAdaptedOrder> orders) {
-        this.id = UUID.randomUUID().toString();
+        this.tag = UUID.randomUUID().toString();
         this.source = source;
         if (orders == null) {
             this.orders = new ArrayList<>();
@@ -61,7 +61,7 @@ public class XmlAdaptedRoute {
      * @param route future changes to this will not affect the created XmlAdaptedRoute
      */
     public XmlAdaptedRoute(Route route) {
-        id = route.getId().toString();
+        tag = route.getTag().toString();
         source = route.getSource().value;
         orders = route.getOrders().stream()
                 .map(XmlAdaptedOrder::new)
@@ -93,15 +93,15 @@ public class XmlAdaptedRoute {
 
         final Set<Order> modelOrder = new HashSet<>(orderStore);
 
-        UUID modelId;
+        UUID modelTag;
 
         try {
-            modelId = UUID.fromString(id);
+            modelTag = UUID.fromString(tag);
         } catch (IllegalArgumentException e) {
             throw new IllegalValueException(MESSAGE_INVALID_ID);
         }
 
-        return new Route(modelId, modelSource, modelOrder);
+        return new Route(modelTag, modelSource, modelOrder);
     }
 
     @Override

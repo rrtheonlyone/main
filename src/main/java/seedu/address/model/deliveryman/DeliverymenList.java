@@ -61,8 +61,8 @@ public class DeliverymenList {
      * @param d
      */
     public void addDeliveryman(Deliveryman d) {
-        if (d.getId() == null) {
-            d.assignId();
+        if (d.getTag() == null) {
+            d.assignTag();
         }
         deliverymenList.add(d);
     }
@@ -73,6 +73,9 @@ public class DeliverymenList {
     public void updateDeliveryman(Deliveryman target, Deliveryman editedD) {
         requireNonNull(editedD);
 
+        if (editedD.getTag() == null) {
+            editedD.assignTag();
+        }
         deliverymenList.setDeliveryman(target, editedD);
     }
 
