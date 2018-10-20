@@ -58,6 +58,7 @@ public class AddCommandSystemTest extends OrderBookSystemTest {
         String command = loginCommand + PREFIX_USERNAME + VALID_MANAGER_USERNAME_ALICE
                 + " " + PREFIX_PASSWORD + VALID_MANAGER_PASSWORD_ALICE;
         executeCommand(command);
+        setUpOrderListPanel();
 
         /* ------------------------ Perform add operations on the shown unfiltered list ----------------------------- */
 
@@ -210,6 +211,7 @@ public class AddCommandSystemTest extends OrderBookSystemTest {
      */
     private void assertCommandSuccess(String command, Model expectedModel, String expectedResultMessage) {
         executeCommand(command);
+        setUpOrderListPanel();
         assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
         assertSelectedCardUnchanged();
         assertCommandBoxShowsDefaultStyle();

@@ -1,5 +1,6 @@
 package systemtests;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
@@ -34,6 +35,7 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND;
 import static seedu.address.testutil.TypicalOrders.AMY;
 import static seedu.address.testutil.TypicalOrders.BOB;
 import static seedu.address.testutil.TypicalOrders.KEYWORD_NAME_MATCHING_MEIER;
+import static seedu.address.ui.testutil.GuiTestAssert.assertListMatching;
 
 import org.junit.Test;
 
@@ -45,6 +47,7 @@ import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.order.EditCommand;
 import seedu.address.logic.commands.order.OrderCommand;
 import seedu.address.model.Model;
+import seedu.address.model.OrderBook;
 import seedu.address.model.order.Food;
 import seedu.address.model.order.Order;
 import seedu.address.model.order.OrderDate;
@@ -66,6 +69,7 @@ public class EditCommandSystemTest extends OrderBookSystemTest {
         String command = loginCommand + PREFIX_USERNAME + VALID_MANAGER_USERNAME_ALICE
                 + " " + PREFIX_PASSWORD + VALID_MANAGER_PASSWORD_ALICE;
         executeCommand(command);
+        setUpOrderListPanel();
 
         /* ----------------- Performing edit operation while an unfiltered list is being shown ---------------------- */
         /* Case: edit all fields, command with leading spaces, trailing spaces and multiple spaces between each field
@@ -228,6 +232,7 @@ public class EditCommandSystemTest extends OrderBookSystemTest {
     /**
      * Performs the same verification as {@code assertCommandSuccess(String, Index, Person, Index)} except that
      * the browser url and selected card remain unchanged.
+     *
      * @param toEdit the index of the current model's filtered list
      * @see EditCommandSystemTest#assertCommandSuccess(String, Index, Person, Index)
      */
@@ -240,6 +245,7 @@ public class EditCommandSystemTest extends OrderBookSystemTest {
      * 1. Asserts that result display box displays the success message of executing {@code EditCommand}.<br>
      * 2. Asserts that the model related components are updated to reflect the order at index {@code toEdit} being
      * updated to values specified {@code editedOrder}.<br>
+     *
      * @param toEdit the index of the current model's filtered list.
      * @see EditCommandSystemTest#assertCommandSuccess(String, Model, String, Index)
      */
@@ -256,6 +262,7 @@ public class EditCommandSystemTest extends OrderBookSystemTest {
     /**
      * Performs the same verification as {@code assertCommandSuccess(String, Model, String, Index)} except that the
      * browser url and selected card remain unchanged.
+     *
      * @see EditCommandSystemTest#assertCommandSuccess(String, Model, String, Index)
      */
     private void assertCommandSuccess(String command, Model expectedModel, String expectedResultMessage) {
@@ -272,17 +279,35 @@ public class EditCommandSystemTest extends OrderBookSystemTest {
      * 5. Asserts that the command box has the default style class.<br>
      * Verifications 1 and 2 are performed by
      * {@code OrderBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
+     *
      * @see OrderBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
      * @see OrderBookSystemTest#assertSelectedCardChanged(Index)
      */
     private void assertCommandSuccess(String command, Model expectedModel, String expectedResultMessage,
                                       Index expectedSelectedCardIndex) {
         executeCommand(command);
+        setUpOrderListPanel();
         expectedModel.updateFilteredOrderList(PREDICATE_SHOW_ALL_ORDERS);
         assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
         assertCommandBoxShowsDefaultStyle();
         assertStatusBarUnchangedExceptSyncStatus();
     }
+
+
+    @Override
+    /**
+     * Asserts that the {@code CommandBox} displays {@code expectedCommandInput}, the {@code ResultDisplay} displays
+     * {@code expectedResultMessage}, the storage contains an equivalent last object.
+     */
+    protected void assertApplicationDisplaysExpected(String expectedCommandInput, String expectedResultMessage,
+                                                     Model expectedModel) {
+        assertEquals(expectedCommandInput, getCommandBox().getInput());
+        assertEquals(expectedResultMessage, getResultDisplay().getText());
+        assertEquals(new OrderBook(expectedModel.getOrderBook()).getOrderList().size(),
+                testApp.readStorageOrderBook().getOrderList().size());
+        assertListMatching(getOrderListPanel(), expectedModel.getFilteredOrderList());
+    }
+
 
     /**
      * Executes {@code command} and in addition,<br>
@@ -292,6 +317,7 @@ public class EditCommandSystemTest extends OrderBookSystemTest {
      * 4. Asserts that the command box has the error style.<br>
      * Verifications 1 and 2 are performed by
      * {@code OrderBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
+     *
      * @see OrderBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
      */
     private void assertCommandFailure(String command, String expectedResultMessage) {

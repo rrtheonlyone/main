@@ -93,7 +93,9 @@ public class LoginCommandSystemTest extends OrderBookSystemTest {
      * @see OrderBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
      */
     private void assertCommandSuccess(String command, Model expectedModel, String expectedResultMessage) {
+
         executeCommand(command);
+        setUpOrderListPanel();
         assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
         assertCommandBoxShowsDefaultStyle();
         assertStatusBarUnchanged();
@@ -111,7 +113,6 @@ public class LoginCommandSystemTest extends OrderBookSystemTest {
      */
     private void assertCommandFailure(String command, String expectedResultMessage) {
         Model expectedModel = getModel();
-
         executeCommand(command);
         assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
         assertCommandBoxShowsDefaultStyle();

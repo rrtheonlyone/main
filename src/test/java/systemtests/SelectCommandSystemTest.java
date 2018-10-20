@@ -32,6 +32,7 @@ public class SelectCommandSystemTest extends OrderBookSystemTest {
         String command = loginCommand + PREFIX_USERNAME + VALID_MANAGER_USERNAME_ALICE
                 + " " + PREFIX_PASSWORD + VALID_MANAGER_PASSWORD_ALICE;
         executeCommand(command);
+        setUpOrderListPanel();
 
         String selectCommand = OrderCommand.COMMAND_WORD + " " + SelectCommand.COMMAND_WORD;
         /* ------------------------ Perform select operations on the shown unfiltered list -------------------------- */
@@ -126,6 +127,7 @@ public class SelectCommandSystemTest extends OrderBookSystemTest {
         int preExecutionSelectedCardIndex = getOrderListPanel().getSelectedCardIndex();
 
         executeCommand(command);
+        setUpOrderListPanel();
         assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
 
         assertCommandBoxShowsDefaultStyle();
@@ -148,6 +150,7 @@ public class SelectCommandSystemTest extends OrderBookSystemTest {
         Model expectedModel = getModel();
 
         executeCommand(command);
+        setUpOrderListPanel();
         assertApplicationDisplaysExpected(command, expectedResultMessage, expectedModel);
         assertSelectedCardUnchanged();
         assertCommandBoxShowsErrorStyle();

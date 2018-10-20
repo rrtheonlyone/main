@@ -28,6 +28,7 @@ public class ClearCommandSystemTest extends OrderBookSystemTest {
         String command = loginCommand + PREFIX_USERNAME + VALID_MANAGER_USERNAME_ALICE
                 + " " + PREFIX_PASSWORD + VALID_MANAGER_PASSWORD_ALICE;
         executeCommand(command);
+        setUpOrderListPanel();
 
         String clearCommand = OrderCommand.COMMAND_WORD + " " + ClearCommand.COMMAND_WORD;
 

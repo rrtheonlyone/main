@@ -7,7 +7,7 @@ import javafx.stage.Stage;
  */
 public class MainWindowHandle extends StageHandle {
 
-    private final OrderListPanelHandle orderListPanel;
+    private OrderListPanelHandle orderListPanel;
     private final ResultDisplayHandle resultDisplay;
     private final CommandBoxHandle commandBox;
     private final StatusBarFooterHandle statusBarFooter;
@@ -16,11 +16,15 @@ public class MainWindowHandle extends StageHandle {
     public MainWindowHandle(Stage stage) {
         super(stage);
 
-        orderListPanel = new OrderListPanelHandle(getChildNode(OrderListPanelHandle.ORDER_LIST_VIEW_ID));
+
         resultDisplay = new ResultDisplayHandle(getChildNode(ResultDisplayHandle.RESULT_DISPLAY_ID));
         commandBox = new CommandBoxHandle(getChildNode(CommandBoxHandle.COMMAND_INPUT_FIELD_ID));
         statusBarFooter = new StatusBarFooterHandle(getChildNode(StatusBarFooterHandle.STATUS_BAR_PLACEHOLDER));
         mainMenu = new MainMenuHandle(getChildNode(MainMenuHandle.MENU_BAR_ID));
+    }
+
+    public void setOrderListPanel() {
+        orderListPanel = new OrderListPanelHandle(getChildNode(OrderListPanelHandle.ORDER_LIST_VIEW_ID));
     }
 
     public OrderListPanelHandle getOrderListPanel() {
