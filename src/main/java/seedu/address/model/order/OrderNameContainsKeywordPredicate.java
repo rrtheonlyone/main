@@ -1,13 +1,14 @@
 package seedu.address.model.order;
 
 import java.util.List;
+import java.util.function.Predicate;
 
 import seedu.address.commons.util.StringUtil;
 
 /**
  * Tests that a {@code Order}'s {@code Name} matches any of the keywords given.
  */
-public class OrderNameContainsKeywordPredicate implements OrderContainsAnyKeywordsPredicate {
+public class OrderNameContainsKeywordPredicate implements Predicate<Order> {
     private final List<String> keywords;
 
     public OrderNameContainsKeywordPredicate(List<String> names) {

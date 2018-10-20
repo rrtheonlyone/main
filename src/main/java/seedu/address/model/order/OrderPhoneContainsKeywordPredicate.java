@@ -1,19 +1,21 @@
 package seedu.address.model.order;
 
+import java.util.function.Predicate;
+
 /**
- * Tests that a {@code Person}'s {@code Phone} matches any of the keywords given.
+ * Tests that a {@code Order}'s {@code Phone} matches any of the keywords given.
  */
-public class OrderPhoneContainsKeywordPredicate implements OrderContainsAnyKeywordsPredicate {
+public class OrderPhoneContainsKeywordPredicate implements Predicate<Order> {
     private final String keyword;
 
     public OrderPhoneContainsKeywordPredicate(String phone) {
-        phone = removeAllWhiteSpace(phone);
+        phone = removeAllWhiteSpaces(phone);
         keyword = phone;
     }
 
     @Override
     public boolean test(Order order) {
-        return keyword.equals(order.getPhone().value);
+        return order.getPhone().value.contains(keyword);
     }
 
     @Override
@@ -24,9 +26,9 @@ public class OrderPhoneContainsKeywordPredicate implements OrderContainsAnyKeywo
     }
 
     /**
-     * Remove all trailing whitespace and whitespaces in between {@code input}
+     * Remove all trailing and leading whitespace and whitespaces in between {@code input}
      */
-    private String removeAllWhiteSpace(String input) {
+    private String removeAllWhiteSpaces(String input) {
         return input.trim().replaceAll("\\s+", "");
     }
 }
