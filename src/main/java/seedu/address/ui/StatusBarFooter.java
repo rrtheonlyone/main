@@ -15,6 +15,8 @@ import javafx.fxml.FXML;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.OrderBookChangedEvent;
+import seedu.address.commons.events.model.UserLoggedInEvent;
+import seedu.address.commons.events.model.UserLoggedOutEvent;
 
 /**
  * A ui for the status bar that is displayed at the footer of the application.
@@ -23,6 +25,9 @@ public class StatusBarFooter extends UiPart<Region> {
 
     public static final String SYNC_STATUS_INITIAL = "Not updated yet in this session";
     public static final String SYNC_STATUS_UPDATED = "Last Updated: %s";
+    public static final String MESSAGE_LOGGED_IN_AS = "Logged in as : ";
+    public static final String MESSAGE_LOGGED_OUT = "Not logged in.";
+    public static final String MESSAGE_UPDATING_STATUS_BAR = "Updating status bar.";
     private static final Logger logger = LogsCenter.getLogger(StatusBarFooter.class);
     private static final String FXML = "StatusBarFooter.fxml";
     /**
@@ -38,6 +43,8 @@ public class StatusBarFooter extends UiPart<Region> {
     private StatusBar syncStatus;
     @FXML
     private StatusBar saveLocationStatus;
+    @FXML
+    private StatusBar usernameText;
 
 
     public StatusBarFooter(Path saveLocation) {
@@ -45,6 +52,7 @@ public class StatusBarFooter extends UiPart<Region> {
         setSyncStatus(SYNC_STATUS_INITIAL);
         setSaveLocation(Paths.get(".").resolve(saveLocation).toString());
         registerAsAnEventHandler(this);
+        setUsername(MESSAGE_LOGGED_OUT);
     }
 
     /**
@@ -69,11 +77,27 @@ public class StatusBarFooter extends UiPart<Region> {
         Platform.runLater(() -> syncStatus.setText(status));
     }
 
+    private void setUsername(String username) {
+        Platform.runLater(() -> usernameText.setText(username));
+    }
+
     @Subscribe
     public void handleOrderBookChangedEvent(OrderBookChangedEvent abce) {
         long now = clock.millis();
         String lastUpdated = new Date(now).toString();
         logger.info(LogsCenter.getEventHandlingLogMessage(abce, "Setting last updated status to " + lastUpdated));
         setSyncStatus(String.format(SYNC_STATUS_UPDATED, lastUpdated));
+    }
+
+    @Subscribe
+    private void handleUserLoggedInEvent(UserLoggedInEvent event) {
+        logger.info(MESSAGE_UPDATING_STATUS_BAR);
+        setUsername(MESSAGE_LOGGED_IN_AS + event.data.getUsername().toString());
+    }
+
+    @Subscribe
+    private void handleUserLogoutEvent(UserLoggedOutEvent event) {
+        logger.info(MESSAGE_UPDATING_STATUS_BAR);
+        setUsername(MESSAGE_LOGGED_OUT);
     }
 }
