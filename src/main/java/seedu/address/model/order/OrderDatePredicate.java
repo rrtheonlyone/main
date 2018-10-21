@@ -14,8 +14,6 @@ import java.util.stream.Collectors;
  * Tests that a {@code Order}'s {@code Date} matches any of the keywords given.
  */
 public class OrderDatePredicate implements Predicate<Order> {
-    public static final String MESSAGE_DATE_CONSTRAINTS =
-            "Date should be in the format dd-MM-yyyy hh:mm:ss";
     public static final int VALID_SEARCH_DATE_RANGE_SIZE = 2;
     public static final int LOWER_DATE_RANGE_INDEX = 0;
     public static final int UPPER_DATE_RANGE_INDEX = 1;
@@ -58,7 +56,7 @@ public class OrderDatePredicate implements Predicate<Order> {
         try {
             return sf.parse(stringDate);
         } catch (ParseException pE) {
-            checkArgument(false, MESSAGE_DATE_CONSTRAINTS);
+            checkArgument(false, OrderDate.MESSAGE_DATE_CONSTRAINTS);
             return null;
         }
     }
