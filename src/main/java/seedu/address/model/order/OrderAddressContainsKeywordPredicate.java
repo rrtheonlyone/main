@@ -9,12 +9,12 @@ public class OrderAddressContainsKeywordPredicate implements Predicate<Order> {
     private final String keyword;
 
     public OrderAddressContainsKeywordPredicate(String address) {
-        keyword = address.trim();
+        keyword = address.trim().toLowerCase();
     }
 
     @Override
     public boolean test(Order order) {
-        return order.getAddress().value.contains(keyword);
+        return order.getAddress().value.toLowerCase().contains(keyword);
     }
 
     @Override
