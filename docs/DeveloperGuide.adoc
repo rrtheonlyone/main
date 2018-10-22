@@ -1109,7 +1109,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |new manager |see usage instructions |refer to instructions when I forget how to use the App
 
-|`* * *` |manager |login/logout of application |able to protect my data and access it when I need do
+|`* * *` |manager |login/logout/signup of application |able to protect my data and access it when I need do
 
 |`* * *` |manager |add a new customer order | can track the current orders I
 have
@@ -1137,7 +1137,11 @@ have
 |`* *` |manager |view individual customer order history  | gain insights on
 what specific customers are ordering
 
+|`* *` |manager |find my deliverman by name     | find details about the deliveryman,
+
 |`* *` |manager |see a thumbnail of deliveryman  | can easily tell who is who in one glance
+
+|`* *` |manager |edit my order  | make changes to the order
 
 |`*` |manager |sms confirmation on succesful order  | have visibility on how my order delivery service is doing
 
