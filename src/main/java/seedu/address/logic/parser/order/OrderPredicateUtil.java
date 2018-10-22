@@ -3,6 +3,7 @@ package seedu.address.logic.parser.order;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 import java.util.function.Predicate;
@@ -27,6 +28,8 @@ public class OrderPredicateUtil {
     private static final String STRING_PREFIX_DATE = "dt/";
     private static final String STRING_PREFIX_FOOD = "f/";
 
+    private static final String MESSAGE_EMPTY_KEYWORD = "%1$s cannot be empty";
+
     private Predicate<Order> chainedPredicated;
 
     /**
@@ -43,10 +46,6 @@ public class OrderPredicateUtil {
             }
 
             List<String> keywords = argMultimap.getAllValues(prefix);
-
-            if (keywords.size() <= 0) {
-                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
-            }
 
             chainPredicate(prefix, keywords);
         }
@@ -89,7 +88,7 @@ public class OrderPredicateUtil {
             break;
 
         case STRING_PREFIX_DATE:
-            List<String> date = new OrderDateParserUtil().parseDateKeywords(keywords);
+            List<Date> date = new OrderDatePredicateUtil().parseDateKeywords(keywords);
             OrderDatePredicate datePredicate = new OrderDatePredicate(date);
 
             setToPredicate(datePredicate);
@@ -125,7 +124,7 @@ public class OrderPredicateUtil {
      * else AND the predicates
      */
     private void setToPredicate(Predicate<Order> predicate) {
-        // predicate is set
+        // predicate is not set
         if (chainedPredicated == null) {
             chainedPredicated = predicate;
         } else {
