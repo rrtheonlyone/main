@@ -1,5 +1,6 @@
 package seedu.address.logic.parser.order;
 
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_ORDER_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_FOOD;
@@ -35,8 +36,17 @@ public class FindCommandParser implements Parser<OrderCommand> {
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_ADDRESS, PREFIX_DATE, PREFIX_FOOD);
 
-        Predicate<Order> suppliedPredicates = new OrderPredicateUtil().parsePredicate(argMultimap);
-        return new FindCommand(suppliedPredicates);
+        if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_PHONE, PREFIX_ADDRESS, PREFIX_DATE, PREFIX_FOOD)
+                || !argMultimap.getPreamble().isEmpty()) {
+            throw new ParseException(String.format(MESSAGE_INVALID_ORDER_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+        }
+
+        try {
+            Predicate<Order> suppliedPredicates = new OrderPredicateUtil().parsePredicate(argMultimap);
+            return new FindCommand(suppliedPredicates);
+        } catch (ParseException pE) {
+            throw pE;
+        }
     }
 
     /**
@@ -44,6 +54,6 @@ public class FindCommandParser implements Parser<OrderCommand> {
      * {@code ArgumentMultimap}.
      */
     private static boolean arePrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
-        return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
+        return Stream.of(prefixes).anyMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
     }
 }
