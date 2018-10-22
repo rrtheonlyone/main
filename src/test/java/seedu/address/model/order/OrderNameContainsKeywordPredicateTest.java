@@ -36,7 +36,7 @@ public class OrderNameContainsKeywordPredicateTest {
         // null -> returns false
         assertFalse(firstPredicate.equals(null));
 
-        // different common -> returns false
+        // different name -> returns false
         assertFalse(firstPredicate.equals(secondPredicate));
     }
 
@@ -62,22 +62,8 @@ public class OrderNameContainsKeywordPredicateTest {
 
     @Test
     public void test_nameDoesNotContainKeywords_returnsFalse() {
-        // Zero keywords
-        OrderNameContainsKeywordPredicate predicate = new OrderNameContainsKeywordPredicate(Collections.emptyList());
-        assertFalse(predicate.test(new OrderBuilder().withName("Alice").build()));
-
         // Non-matching keyword
-        predicate = new OrderNameContainsKeywordPredicate(Arrays.asList("Carol"));
+        OrderNameContainsKeywordPredicate predicate = new OrderNameContainsKeywordPredicate(Arrays.asList("Carol"));
         assertFalse(predicate.test(new OrderBuilder().withName("Alice Bob").build()));
-
-        // Keywords match phone and address, but does not match name
-        predicate = new OrderNameContainsKeywordPredicate(Arrays.asList("12345", "Main", "Street"));
-        assertFalse(predicate.test(new OrderBuilder().withName("Alice").withPhone("12345")
-                .withAddress("Main Street").build()));
-
-        // Keywords match phone ,address and food, but does not match name
-        predicate = new OrderNameContainsKeywordPredicate(Arrays.asList("12345", "Clementi", "Prata"));
-        assertFalse(predicate.test(new OrderBuilder().withName("Alice").withPhone("12345")
-                .withAddress("Clementi").withFood("Prata").build()));
     }
 }
