@@ -24,24 +24,29 @@ public class Order extends TaggedObject {
     private final Address address;
     private final OrderDate orderDate;
     private final Set<Food> food = new HashSet<>();
+    private final OrderStatus orderStatus;
 
     /**
      * Every field must be present and not null.
      */
-    public Order(Name name, Phone phone, Address address, OrderDate orderDate, Set<Food> food) {
-        requireAllNonNull(name, phone, address, orderDate, food);
-        this.name = name;
-        this.phone = phone;
-        this.address = address;
-        this.food.addAll(food);
+    public Order(Name name, Phone phone, Address address, OrderDate orderDate,
+                 Set<Food> food) {
+        this(null, name, phone, address, orderDate, new OrderStatus(), food);
+    }
 
-        this.orderDate = orderDate;
+    /**
+     * Every field must be present and not null.
+     */
+    public Order(Name name, Phone phone, Address address, OrderDate orderDate, OrderStatus orderStatus,
+                 Set<Food> food) {
+        this(null, name, phone, address, orderDate, orderStatus, food);
     }
 
     /**
      * This constructor is used to create an {@code order} with a specified id.
      */
-    public Order(UUID id, Name name, Phone phone, Address address, OrderDate orderDate, Set<Food> food) {
+    public Order(UUID id, Name name, Phone phone, Address address, OrderDate orderDate, OrderStatus orderStatus,
+                 Set<Food> food) {
         super(id);
         requireAllNonNull(name, phone, address, orderDate, food);
         this.name = name;
@@ -50,7 +55,9 @@ public class Order extends TaggedObject {
         this.food.addAll(food);
 
         this.orderDate = orderDate;
+        this.orderStatus = orderStatus;
     }
+
     public Name getName() {
         return name;
     }
@@ -65,6 +72,10 @@ public class Order extends TaggedObject {
 
     public Address getAddress() {
         return address;
+    }
+
+    public OrderStatus getOrderStatus() {
+        return orderStatus;
     }
 
     /**
@@ -108,13 +119,14 @@ public class Order extends TaggedObject {
                 && otherOrder.getPhone().equals(getPhone())
                 && otherOrder.getAddress().equals(getAddress())
                 && (otherOrder.getDate().equals(getDate()))
-                && otherOrder.getFood().equals(getFood());
+                && otherOrder.getFood().equals(getFood())
+                && otherOrder.getOrderStatus().equals(getOrderStatus());
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, address, food);
+        return Objects.hash(name, phone, address, orderStatus, food);
     }
 
     @Override
@@ -127,6 +139,8 @@ public class Order extends TaggedObject {
                 .append(getAddress())
                 .append(" Date: ")
                 .append(getDate())
+                .append(" Status: ")
+                .append(getOrderStatus())
                 .append(" Food: ");
         getFood().forEach(builder::append);
         return builder.toString();
