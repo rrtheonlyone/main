@@ -76,7 +76,8 @@ public class XmlAdaptedOrder {
     /**
      * Constructs an {@code XmlAdaptedOrder} with the given order details.
      */
-    public XmlAdaptedOrder(String name, String phone, String address, String date, String status, List<XmlAdaptedFood> food) {
+    public XmlAdaptedOrder(String name, String phone, String address, String date, String status,
+                           List<XmlAdaptedFood> food) {
         this(UUID.randomUUID().toString(), name, phone, address, date, status, food);
     }
 
@@ -155,10 +156,12 @@ public class XmlAdaptedOrder {
         }
 
         if (status == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, OrderStatus.class.getSimpleName()));
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    OrderStatus.class.getSimpleName()));
         }
         if (!OrderStatus.isValidStatus(status)) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, OrderStatus.class.getSimpleName()));
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    OrderStatus.class.getSimpleName()));
         }
         final OrderStatus orderStatus = new OrderStatus(status);
 
