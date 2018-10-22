@@ -19,6 +19,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.common.Address;
 import seedu.address.model.common.Name;
 import seedu.address.model.common.Phone;
+import seedu.address.model.deliveryman.Deliveryman;
 import seedu.address.model.order.Food;
 import seedu.address.model.order.Order;
 import seedu.address.model.order.OrderDate;
@@ -47,6 +48,8 @@ public class XmlAdaptedOrder {
     private String status;
     @XmlElement(required = true)
     private List<XmlAdaptedFood> food = new ArrayList<>();
+    @XmlElement
+    private String deliveryman;
 
     /**
      * Constructs an XmlAdaptedOrder.
@@ -59,13 +62,14 @@ public class XmlAdaptedOrder {
      * Constructs an {@code XmlAdaptedOrder} with the given order details.
      */
     public XmlAdaptedOrder(String tag, String name, String phone, String address, String date, String status,
-                           List<XmlAdaptedFood> food) {
+                           List<XmlAdaptedFood> food, String deliveryman) {
         this.tag = tag;
         this.name = name;
         this.phone = phone;
         this.address = address;
         this.date = date;
         this.status = status;
+        this.deliveryman = deliveryman;
 
         if (food == null) {
             this.food = new ArrayList<>();
@@ -78,8 +82,8 @@ public class XmlAdaptedOrder {
      * Constructs an {@code XmlAdaptedOrder} with the given order details.
      */
     public XmlAdaptedOrder(String name, String phone, String address, String date, String status,
-                           List<XmlAdaptedFood> food) {
-        this(UUID.randomUUID().toString(), name, phone, address, date, status, food);
+                           List<XmlAdaptedFood> food, String deliveryman) {
+        this(UUID.randomUUID().toString(), name, phone, address, date, status, food, deliveryman);
     }
 
     /**
@@ -166,8 +170,15 @@ public class XmlAdaptedOrder {
         }
         final OrderStatus orderStatus = new OrderStatus(status);
 
+        final Deliveryman modelDeliveryman;
+        if (deliveryman == null) {
+            modelDeliveryman = null;
+        } else {
+            modelDeliveryman = new Deliveryman(new Name(deliveryman));
+        }
 
-        return new Order(modelTag, modelName, modelPhone, modelAddress, modelDate, orderStatus, modelFood);
+        return new Order(modelTag, modelName, modelPhone, modelAddress, modelDate, orderStatus,
+                modelFood, modelDeliveryman);
     }
 
     @Override
@@ -187,6 +198,7 @@ public class XmlAdaptedOrder {
                 && Objects.equals(address, otherOrder.address)
                 && Objects.equals(date, otherOrder.date)
                 && Objects.equals(status, otherOrder.status)
-                && food.equals(otherOrder.food);
+                && food.equals(otherOrder.food)
+                && Objects.equals(deliveryman, otherOrder.deliveryman);
     }
 }

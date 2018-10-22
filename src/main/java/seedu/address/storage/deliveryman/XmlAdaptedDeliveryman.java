@@ -2,8 +2,13 @@ package seedu.address.storage.deliveryman;
 
 import static seedu.address.model.TaggedObject.MESSAGE_INVALID_ID;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
@@ -12,6 +17,8 @@ import javax.xml.bind.annotation.XmlID;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.common.Name;
 import seedu.address.model.deliveryman.Deliveryman;
+import seedu.address.model.order.Order;
+import seedu.address.storage.XmlAdaptedOrder;
 
 /**
  * Represents the XML for storage of Deliveryman
@@ -25,6 +32,8 @@ public class XmlAdaptedDeliveryman {
 
     @XmlElement(required = true)
     private String name;
+    @XmlElement(required = true)
+    private List<XmlAdaptedOrder> orders = new ArrayList<>();
 
     public XmlAdaptedDeliveryman() {
     }
@@ -32,9 +41,14 @@ public class XmlAdaptedDeliveryman {
     /**
      * Constructs an {@code XmlAdapterDeliveryman} with the given common details.
      */
-    public XmlAdaptedDeliveryman(String tag, String name) {
+    public XmlAdaptedDeliveryman(String tag, String name, List<XmlAdaptedOrder> orders) {
         this.tag = tag;
         this.name = name;
+        if (orders == null) {
+            this.orders = new ArrayList<>();
+        } else {
+            this.orders = new ArrayList<>(orders);
+        }
     }
 
     /**
@@ -53,6 +67,9 @@ public class XmlAdaptedDeliveryman {
     public XmlAdaptedDeliveryman(Deliveryman source) {
         tag = source.getTag().toString();
         name = source.getName().fullName;
+        orders = source.getOrders().stream()
+                .map(XmlAdaptedOrder::new)
+                .collect(Collectors.toList());
     }
 
     /**
@@ -78,7 +95,13 @@ public class XmlAdaptedDeliveryman {
 
         final Name modelName = new Name(name);
 
-        return new Deliveryman(modelTag, modelName);
+        final List<Order> orderStore = new ArrayList<>();
+        for (XmlAdaptedOrder orderItem : orders) {
+            orderStore.add(orderItem.toModelType());
+        }
+        final Set<Order> modelOrder = new HashSet<>(orderStore);
+
+        return new Deliveryman(modelTag, modelName, modelOrder);
     }
 
     @Override
