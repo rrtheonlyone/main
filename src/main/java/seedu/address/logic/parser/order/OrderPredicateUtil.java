@@ -47,10 +47,23 @@ public class OrderPredicateUtil {
 
             List<String> keywords = argMultimap.getAllValues(prefix);
 
+            ensureNonEmptyField(prefix, keywords);
             chainPredicate(prefix, keywords);
         }
 
         return chainedPredicated;
+    }
+
+    /**
+     * Ensure if prefix given has a non empty field
+     * @throws ParseException if one prefix is empty
+     */
+    private void ensureNonEmptyField(Prefix prefix, List<String> keywords) throws ParseException {
+        for (String keyword : keywords) {
+            if (keyword.equals("")) {
+                throw new ParseException(String.format(MESSAGE_EMPTY_KEYWORD, prefix.toString()));
+            }
+        }
     }
 
     /**
