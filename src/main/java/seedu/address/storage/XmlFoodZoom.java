@@ -31,8 +31,8 @@ public class XmlFoodZoom {
     }
 
     public void getModelTypes() throws IllegalValueException {
-        modelDeliverymenList = deliverymenList.toModelType();
-        modelOrderBook = orderBook.toModelTypeWith(modelDeliverymenList);
+        modelOrderBook = orderBook.toModelType();
+        modelDeliverymenList = deliverymenList.toModelTypeWithOrders(modelOrderBook);
     }
 
     public OrderBook getModelOrderBook() {

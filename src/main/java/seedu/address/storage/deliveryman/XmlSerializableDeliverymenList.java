@@ -8,6 +8,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.model.OrderBook;
 import seedu.address.model.deliveryman.Deliveryman;
 import seedu.address.model.deliveryman.DeliverymenList;
 
@@ -56,6 +57,22 @@ public class XmlSerializableDeliverymenList {
         return deliverymenList;
     }
 
+    /**
+     * Converts this deliverymen list into the model's {@code DeliverymenList} object.
+     *
+     * @throws IllegalValueException if there were any data constraints violated or dupicates
+     */
+    public DeliverymenList toModelTypeWithOrders(OrderBook orderBook) throws IllegalValueException {
+        DeliverymenList deliverymenList = new DeliverymenList();
+        for (XmlAdaptedDeliveryman d : deliverymen) {
+            Deliveryman dMan = d.toModelTypeWithOrders(orderBook);
+            if (deliverymenList.hasDeliveryman(dMan)) {
+                throw new IllegalValueException(MESSAGE_DUPLICATE_DELIVERYMAN);
+            }
+            deliverymenList.addDeliveryman(dMan);
+        }
+        return deliverymenList;
+    }
     @Override
     public boolean equals(Object other) {
         if (other == this) {

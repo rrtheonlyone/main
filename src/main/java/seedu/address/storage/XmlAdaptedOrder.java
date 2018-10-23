@@ -20,7 +20,6 @@ import seedu.address.model.common.Address;
 import seedu.address.model.common.Name;
 import seedu.address.model.common.Phone;
 import seedu.address.model.deliveryman.Deliveryman;
-import seedu.address.model.deliveryman.DeliverymenList;
 import seedu.address.model.order.Food;
 import seedu.address.model.order.Order;
 import seedu.address.model.order.OrderDate;
@@ -183,63 +182,6 @@ public class XmlAdaptedOrder {
 
         return new Order(modelTag, modelName, modelPhone, modelAddress, modelDate, orderStatus,
                 modelFood, modelDeliveryman);
-    }
-
-    public Order toModelTypeWithDeliverymen(DeliverymenList deliverymenList) throws IllegalValueException {
-        final List<Food> foodStore = new ArrayList<>();
-        for (XmlAdaptedFood foodItem : food) {
-            foodStore.add(foodItem.toModelType());
-        }
-
-        if (name == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Name.class.getSimpleName()));
-        }
-        if (!Name.isValidName(name)) {
-            throw new IllegalValueException(Name.MESSAGE_NAME_CONSTRAINTS);
-        }
-        final Name modelName = new Name(name);
-
-        if (phone == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Phone.class.getSimpleName()));
-        }
-        if (!Phone.isValidPhone(phone)) {
-            throw new IllegalValueException(Phone.MESSAGE_PHONE_CONSTRAINTS);
-        }
-        final Phone modelPhone = new Phone(phone);
-
-
-        if (address == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Address.class.getSimpleName()));
-        }
-        if (!Address.isValidAddress(address)) {
-            throw new IllegalValueException(Address.MESSAGE_ADDRESS_CONSTRAINTS);
-        }
-        final Address modelAddress = new Address(address);
-
-
-        if (date == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Date.class.getSimpleName()));
-        }
-        if (!OrderDate.isValidDate(date)) {
-            throw new IllegalValueException(OrderDate.MESSAGE_DATE_CONSTRAINTS);
-        }
-        final OrderDate modelDate = new OrderDate(date);
-
-        if (foodStore.isEmpty()) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Food.class.getSimpleName()));
-        }
-
-        UUID modelTag;
-
-        try {
-            modelTag = UUID.fromString(tag);
-        } catch (NumberFormatException e) {
-            throw new IllegalValueException(MESSAGE_INVALID_ID);
-        }
-
-        final Set<Food> modelFood = new HashSet<>(foodStore);
-
-        return new Order(modelTag, modelName, modelPhone, modelAddress, modelDate, modelFood);
     }
 
     @Override

@@ -56,18 +56,6 @@ public class XmlSerializableOrderBook {
         return orderBook;
     }
 
-    public OrderBook toModelTypeWith(DeliverymenList deliverymenList) throws IllegalValueException {
-        OrderBook orderBook = new OrderBook();
-        for (XmlAdaptedOrder o : orders) {
-            Order order = o.toModelTypeWithDeliverymen(deliverymenList);
-            if (orderBook.hasOrder(order)) {
-                throw new IllegalValueException(MESSAGE_DUPLICATE_ORDER);
-            }
-            orderBook.addOrder(order);
-        }
-        return orderBook;
-    }
-
     @Override
     public boolean equals(Object other) {
         if (other == this) {
