@@ -17,11 +17,9 @@ import seedu.address.logic.commands.SignUpCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.deliveryman.DeliverymanCommand;
 import seedu.address.logic.commands.order.OrderCommand;
-import seedu.address.logic.commands.route.RouteCommand;
 import seedu.address.logic.parser.deliveryman.DeliverymanCommandParser;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.logic.parser.order.OrderCommandParser;
-import seedu.address.logic.parser.route.RouteCommandParser;
 
 /**
  * Parses user input.
@@ -70,9 +68,6 @@ public class OrderBookParser {
 
         case RedoCommand.COMMAND_WORD:
             return new RedoCommand();
-
-        case RouteCommand.COMMAND_WORD:
-            return new RouteCommandParser().parse(arguments);
 
         case SignUpCommand.COMMAND_WORD:
             return new SignUpCommandParser().parse(arguments);

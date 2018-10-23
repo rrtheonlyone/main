@@ -10,7 +10,6 @@ import static seedu.address.testutil.TypicalDeliverymen.getTypicalDeliverymenLis
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND;
 import static seedu.address.testutil.TypicalOrders.getTypicalOrderBook;
-import static seedu.address.testutil.TypicalRoutes.getTypicalRouteList;
 import static seedu.address.testutil.user.TypicalUsers.getTypicalUsersList;
 
 import org.junit.Test;
@@ -31,7 +30,7 @@ import seedu.address.model.order.Order;
  */
 public class DeleteCommandTest {
 
-    private Model model = new ModelManager(getTypicalOrderBook(), getTypicalRouteList(), getTypicalUsersList(),
+    private Model model = new ModelManager(getTypicalOrderBook(), getTypicalUsersList(),
             getTypicalDeliverymenList(), new UserPrefs());
     private CommandHistory commandHistory = new CommandHistory();
 
@@ -42,7 +41,7 @@ public class DeleteCommandTest {
 
         String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_ORDER_SUCCESS, orderToDelete);
 
-        ModelManager expectedModel = new ModelManager(model.getOrderBook(), model.getRouteList(), model.getUsersList(),
+        ModelManager expectedModel = new ModelManager(model.getOrderBook(), model.getUsersList(),
                 model.getDeliverymenList(), new UserPrefs());
         expectedModel.deleteOrder(orderToDelete);
         expectedModel.commitOrderBook();
@@ -67,7 +66,7 @@ public class DeleteCommandTest {
 
         String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_ORDER_SUCCESS, orderToDelete);
 
-        Model expectedModel = new ModelManager(model.getOrderBook(), model.getRouteList(), model.getUsersList(),
+        Model expectedModel = new ModelManager(model.getOrderBook(), model.getUsersList(),
                 model.getDeliverymenList(), new UserPrefs());
         expectedModel.deleteOrder(orderToDelete);
         expectedModel.commitOrderBook();
@@ -93,19 +92,19 @@ public class DeleteCommandTest {
     public void executeUndoRedo_validIndexUnfilteredList_success() throws Exception {
         Order orderToDelete = model.getFilteredOrderList().get(INDEX_FIRST.getZeroBased());
         DeleteCommand deleteCommand = new DeleteCommand(INDEX_FIRST);
-        Model expectedModel = new ModelManager(model.getOrderBook(), model.getRouteList(), model.getUsersList(),
+        Model expectedModel = new ModelManager(model.getOrderBook(), model.getUsersList(),
                 model.getDeliverymenList(), new UserPrefs());
         expectedModel.deleteOrder(orderToDelete);
         expectedModel.commitOrderBook();
 
-        // delete -> first person deleted
+        // delete -> first common deleted
         deleteCommand.execute(model, commandHistory);
 
-        // undo -> reverts addressbook back to previous state and filtered person list to show all persons
+        // undo -> reverts addressbook back to previous state and filtered common list to show all persons
         expectedModel.undoOrderBook();
         assertCommandSuccess(new UndoCommand(), model, commandHistory, UndoCommand.MESSAGE_SUCCESS, expectedModel);
 
-        // redo -> same first person deleted again
+        // redo -> same first common deleted again
         expectedModel.redoOrderBook();
         assertCommandSuccess(new RedoCommand(), model, commandHistory, RedoCommand.MESSAGE_SUCCESS, expectedModel);
     }
@@ -126,14 +125,14 @@ public class DeleteCommandTest {
     /**
      * 1. Deletes a {@code Order} from a filtered list.
      * 2. Undo the deletion.
-     * 3. The unfiltered list should be shown now. Verify that the index of the previously deleted person in the
+     * 3. The unfiltered list should be shown now. Verify that the index of the previously deleted common in the
      * unfiltered list is different from the index at the filtered list.
      * 4. Redo the deletion. This ensures {@code RedoCommand} deletes the order object regardless of indexing.
      */
     @Test
     public void executeUndoRedo_validIndexFilteredList_sameOrderDeleted() throws Exception {
         DeleteCommand deleteCommand = new DeleteCommand(INDEX_FIRST);
-        Model expectedModel = new ModelManager(model.getOrderBook(), model.getRouteList(), model.getUsersList(),
+        Model expectedModel = new ModelManager(model.getOrderBook(), model.getUsersList(),
                 model.getDeliverymenList(), new UserPrefs());
 
         showOrderAtIndex(model, INDEX_SECOND);
@@ -141,15 +140,15 @@ public class DeleteCommandTest {
         expectedModel.deleteOrder(orderToDelete);
         expectedModel.commitOrderBook();
 
-        // delete -> deletes second person in unfiltered person list / first person in filtered person list
+        // delete -> deletes second common in unfiltered common list / first common in filtered common list
         deleteCommand.execute(model, commandHistory);
 
-        // undo -> reverts addressbook back to previous state and filtered person list to show all persons
+        // undo -> reverts addressbook back to previous state and filtered common list to show all persons
         expectedModel.undoOrderBook();
         assertCommandSuccess(new UndoCommand(), model, commandHistory, UndoCommand.MESSAGE_SUCCESS, expectedModel);
 
         assertNotEquals(orderToDelete, model.getFilteredOrderList().get(INDEX_FIRST.getZeroBased()));
-        // redo -> deletes same second person in unfiltered person list
+        // redo -> deletes same second common in unfiltered common list
         expectedModel.redoOrderBook();
         assertCommandSuccess(new RedoCommand(), model, commandHistory, RedoCommand.MESSAGE_SUCCESS, expectedModel);
     }
@@ -172,7 +171,7 @@ public class DeleteCommandTest {
         // null -> returns false
         assertFalse(deleteFirstCommand.equals(null));
 
-        // different person -> returns false
+        // different common -> returns false
         assertFalse(deleteFirstCommand.equals(deleteSecondCommand));
     }
 

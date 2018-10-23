@@ -88,7 +88,7 @@ public class UserTest {
         // different type -> returns false
         assertFalse(ALICE_MANAGER.equals(5));
 
-        // different person -> returns false
+        // different common -> returns false
         assertFalse(ALICE_MANAGER.equals(CARL_MANAGER));
 
         // different name -> returns false

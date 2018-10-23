@@ -48,13 +48,12 @@ import seedu.address.logic.commands.order.EditCommand;
 import seedu.address.logic.commands.order.OrderCommand;
 import seedu.address.model.Model;
 import seedu.address.model.OrderBook;
+import seedu.address.model.common.Address;
+import seedu.address.model.common.Name;
+import seedu.address.model.common.Phone;
 import seedu.address.model.order.Food;
 import seedu.address.model.order.Order;
 import seedu.address.model.order.OrderDate;
-import seedu.address.model.person.Address;
-import seedu.address.model.person.Name;
-import seedu.address.model.person.Person;
-import seedu.address.model.person.Phone;
 import seedu.address.testutil.OrderBuilder;
 import seedu.address.testutil.OrderUtil;
 
@@ -234,7 +233,6 @@ public class EditCommandSystemTest extends OrderBookSystemTest {
      * the browser url and selected card remain unchanged.
      *
      * @param toEdit the index of the current model's filtered list
-     * @see EditCommandSystemTest#assertCommandSuccess(String, Index, Person, Index)
      */
     private void assertCommandSuccess(String command, Index toEdit, Order editedOrder) {
         assertCommandSuccess(command, toEdit, editedOrder, null);

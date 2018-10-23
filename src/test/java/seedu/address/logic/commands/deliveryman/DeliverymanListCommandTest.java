@@ -5,7 +5,6 @@ import static seedu.address.logic.commands.CommandTestUtil.showDeliverymanAtInde
 import static seedu.address.testutil.TypicalDeliverymen.getTypicalDeliverymenList;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST;
 import static seedu.address.testutil.TypicalOrders.getTypicalOrderBook;
-import static seedu.address.testutil.TypicalRoutes.getTypicalRouteList;
 import static seedu.address.testutil.user.TypicalUsers.getTypicalUsersList;
 
 import org.junit.Before;
@@ -24,9 +23,9 @@ public class DeliverymanListCommandTest {
 
     @Before
     public void setUp() {
-        model = new ModelManager(getTypicalOrderBook(), getTypicalRouteList(), getTypicalUsersList(),
+        model = new ModelManager(getTypicalOrderBook(), getTypicalUsersList(),
             getTypicalDeliverymenList(), new UserPrefs());
-        expectedModel = new ModelManager(model.getOrderBook(), model.getRouteList(), model.getUsersList(),
+        expectedModel = new ModelManager(model.getOrderBook(), model.getUsersList(),
             model.getDeliverymenList(), new UserPrefs());
     }
 

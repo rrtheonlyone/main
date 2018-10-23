@@ -9,7 +9,6 @@ import static seedu.address.testutil.TypicalDeliverymen.getTypicalDeliverymenLis
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND;
 import static seedu.address.testutil.TypicalOrders.getTypicalOrderBook;
-import static seedu.address.testutil.TypicalRoutes.getTypicalRouteList;
 import static seedu.address.testutil.user.TypicalUsers.getTypicalUsersList;
 
 import org.junit.Test;
@@ -23,8 +22,8 @@ import seedu.address.model.UserPrefs;
 import seedu.address.model.deliveryman.Deliveryman;
 
 public class DeliverymanDeleteCommandTest {
-    private Model model = new ModelManager(getTypicalOrderBook(), getTypicalRouteList(),
-        getTypicalUsersList(), getTypicalDeliverymenList(), new UserPrefs());
+    private Model model = new ModelManager(getTypicalOrderBook(), getTypicalUsersList(), getTypicalDeliverymenList(),
+            new UserPrefs());
     private CommandHistory commandHistory = new CommandHistory();
 
     @Test
@@ -33,10 +32,10 @@ public class DeliverymanDeleteCommandTest {
         DeliverymanDeleteCommand deleteCommand = new DeliverymanDeleteCommand(INDEX_FIRST);
 
         String expectedMessage = String.format(DeliverymanDeleteCommand.MESSAGE_DELETE_DELIVERYMAN_SUCCESS,
-            deliverymanToDelete);
+                deliverymanToDelete);
 
-        ModelManager expectedModel = new ModelManager(model.getOrderBook(), model.getRouteList(), model.getUsersList(),
-            model.getDeliverymenList(), new UserPrefs());
+        ModelManager expectedModel = new ModelManager(model.getOrderBook(), model.getUsersList(),
+                model.getDeliverymenList(), new UserPrefs());
         expectedModel.deleteDeliveryman(deliverymanToDelete);
         expectedModel.commitDeliverymenList();
 
@@ -49,7 +48,7 @@ public class DeliverymanDeleteCommandTest {
         DeliverymanDeleteCommand deleteCommand = new DeliverymanDeleteCommand(outOfBoundIndex);
 
         assertCommandFailure(deleteCommand, model, commandHistory,
-            Messages.MESSAGE_INVALID_DELIVERYMAN_DISPLAYED_INDEX);
+                Messages.MESSAGE_INVALID_DELIVERYMAN_DISPLAYED_INDEX);
     }
 
     @Test
@@ -60,10 +59,10 @@ public class DeliverymanDeleteCommandTest {
         DeliverymanDeleteCommand deleteCommand = new DeliverymanDeleteCommand(INDEX_FIRST);
 
         String expectedMessage = String.format(DeliverymanDeleteCommand.MESSAGE_DELETE_DELIVERYMAN_SUCCESS,
-            deliverymanToDelete);
+                deliverymanToDelete);
 
-        Model expectedModel = new ModelManager(model.getOrderBook(), model.getRouteList(), model.getUsersList(),
-            model.getDeliverymenList(), new UserPrefs());
+        Model expectedModel = new ModelManager(model.getOrderBook(), model.getUsersList(),
+                model.getDeliverymenList(), new UserPrefs());
         expectedModel.deleteDeliveryman(deliverymanToDelete);
         expectedModel.commitDeliverymenList();
         showNoDeliveryman(expectedModel);
@@ -82,7 +81,7 @@ public class DeliverymanDeleteCommandTest {
         DeliverymanDeleteCommand deleteCommand = new DeliverymanDeleteCommand(outOfBoundIndex);
 
         assertCommandFailure(deleteCommand, model, commandHistory,
-            Messages.MESSAGE_INVALID_DELIVERYMAN_DISPLAYED_INDEX);
+                Messages.MESSAGE_INVALID_DELIVERYMAN_DISPLAYED_INDEX);
     }
 
     @Test
@@ -103,7 +102,7 @@ public class DeliverymanDeleteCommandTest {
         // null -> returns false
         assertFalse(deleteFirstCommand.equals(null));
 
-        // different person -> returns false
+        // different common -> returns false
         assertFalse(deleteFirstCommand.equals(deleteSecondCommand));
     }
 

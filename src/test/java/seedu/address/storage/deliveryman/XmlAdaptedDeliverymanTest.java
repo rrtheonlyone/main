@@ -8,7 +8,7 @@ import static seedu.address.testutil.TypicalDeliverymen.RAJUL;
 import org.junit.Test;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.person.Name;
+import seedu.address.model.common.Name;
 import seedu.address.testutil.Assert;
 
 public class XmlAdaptedDeliverymanTest {

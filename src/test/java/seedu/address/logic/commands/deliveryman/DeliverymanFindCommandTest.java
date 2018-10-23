@@ -10,7 +10,6 @@ import static seedu.address.testutil.TypicalDeliverymen.MANIKA;
 import static seedu.address.testutil.TypicalDeliverymen.RAJUL;
 import static seedu.address.testutil.TypicalDeliverymen.getTypicalDeliverymenList;
 import static seedu.address.testutil.TypicalOrders.getTypicalOrderBook;
-import static seedu.address.testutil.TypicalRoutes.getTypicalRouteList;
 import static seedu.address.testutil.user.TypicalUsers.getTypicalUsersList;
 
 import java.util.Arrays;
@@ -29,9 +28,9 @@ import seedu.address.model.deliveryman.DeliverymanNameContainsKeywordsPredicate;
  */
 public class DeliverymanFindCommandTest {
     // TODO: Add deliveryman into Model Manager after merge
-    private Model model = new ModelManager(getTypicalOrderBook(), getTypicalRouteList(),
+    private Model model = new ModelManager(getTypicalOrderBook(),
             getTypicalUsersList(), getTypicalDeliverymenList(), new UserPrefs());
-    private Model expectedModel = new ModelManager(getTypicalOrderBook(), getTypicalRouteList(),
+    private Model expectedModel = new ModelManager(getTypicalOrderBook(),
             getTypicalUsersList(), getTypicalDeliverymenList(), new UserPrefs());
     private CommandHistory commandHistory = new CommandHistory();
 
@@ -58,7 +57,7 @@ public class DeliverymanFindCommandTest {
         // null -> returns false
         assertFalse(findFirstOrderCommand.equals(null));
 
-        // different person -> returns false
+        // different common -> returns false
         assertFalse(findFirstOrderCommand.equals(findSecondOrderCommand));
     }
 

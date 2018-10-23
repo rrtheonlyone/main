@@ -15,7 +15,6 @@ import static seedu.address.logic.commands.SignUpCommand.MESSAGE_LOGGED_IN;
 import static seedu.address.logic.commands.SignUpCommand.MESSAGE_SUCCESS;
 import static seedu.address.testutil.TypicalDeliverymen.getTypicalDeliverymenList;
 import static seedu.address.testutil.TypicalOrders.getTypicalOrderBook;
-import static seedu.address.testutil.TypicalRoutes.getTypicalRouteList;
 import static seedu.address.testutil.user.TypicalUsers.BENSON_MANAGER;
 import static seedu.address.testutil.user.TypicalUsers.HOON_MANAGER;
 import static seedu.address.testutil.user.TypicalUsers.IDA_MANAGER;
@@ -41,7 +40,7 @@ public class SignUpCommandTest {
     public ExpectedException thrown = ExpectedException.none();
 
     private CommandHistory commandHistory = new CommandHistory();
-    private Model model = new ModelManager(getTypicalOrderBook(), getTypicalRouteList(),
+    private Model model = new ModelManager(getTypicalOrderBook(),
             getTypicalUsersList(), getTypicalDeliverymenList(), new UserPrefs());
 
     @Test
@@ -123,7 +122,7 @@ public class SignUpCommandTest {
         // null -> returns false
         assertFalse(signUpAliceCommandCopy.equals(null));
 
-        // different person -> returns false
+        // different common -> returns false
         assertFalse(signUpAliceCommandCopy.equals(signUpBensonCommand));
     }
 }

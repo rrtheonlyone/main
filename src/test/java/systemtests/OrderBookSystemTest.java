@@ -188,7 +188,7 @@ public abstract class OrderBookSystemTest {
 
     /**
      * Asserts that the previously selected card is now deselected and the browser's url remains displaying the details
-     * of the previously selected person.
+     * of the previously selected common.
      *
      * @see BrowserPanelHandle#isUrlChanged()
      */
@@ -197,7 +197,7 @@ public abstract class OrderBookSystemTest {
     }
 
     /**
-     * Asserts that the browser's url and the selected card in the person list panel remain unchanged.
+     * Asserts that the browser's url and the selected card in the common list panel remain unchanged.
      *
      * @see BrowserPanelHandle#isUrlChanged()
      * @see OrderListPanelHandle#isSelectedOrderCardChanged() ()
