@@ -4,6 +4,9 @@ import seedu.address.commons.events.BaseEvent;
 import seedu.address.model.ReadOnlyOrderBook;
 import seedu.address.model.deliveryman.DeliverymenList;
 
+/**
+ * Indicates that some part of the app has changed.
+ */
 public class FoodZoomChangedEvent extends BaseEvent {
 
     public final ReadOnlyOrderBook orderBook;

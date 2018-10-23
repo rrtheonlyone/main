@@ -1,14 +1,17 @@
 package seedu.address.storage;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.OrderBook;
 import seedu.address.model.ReadOnlyOrderBook;
 import seedu.address.model.deliveryman.DeliverymenList;
 import seedu.address.storage.deliveryman.XmlSerializableDeliverymenList;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-
+/**
+ * JAXB storage of FoodZoom information - namely an orderBook and a deliverymenList.
+ */
 @XmlRootElement(name = "foodzoom")
 public class XmlFoodZoom {
     @XmlElement(required = true)

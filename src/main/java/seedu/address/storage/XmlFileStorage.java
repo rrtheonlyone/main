@@ -38,6 +38,9 @@ public class XmlFileStorage {
         }
     }
 
+    /**
+     * Saves the data for FoodZoom to the specified file.
+     */
     public static void saveFoodZoomDataToFile(Path file, XmlFoodZoom foodZoomData) throws FileNotFoundException {
         try {
             XmlUtil.saveDataToFile(file, foodZoomData);
@@ -46,6 +49,9 @@ public class XmlFileStorage {
         }
     }
 
+    /**
+     * Returns the FoodZoom data from file
+     */
     public static XmlFoodZoom loadFoodZoomDataFromSaveFile(Path file) throws FileNotFoundException {
         try {
             return XmlUtil.getDataFromFile(file, XmlFoodZoom.class);

@@ -9,7 +9,6 @@ import javax.xml.bind.annotation.XmlElement;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.OrderBook;
 import seedu.address.model.ReadOnlyOrderBook;
-import seedu.address.model.deliveryman.DeliverymenList;
 import seedu.address.model.order.Order;
 
 /**

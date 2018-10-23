@@ -1,5 +1,14 @@
 package seedu.address.storage;
 
+import static java.util.Objects.requireNonNull;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.Optional;
+import java.util.logging.Logger;
+
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.exceptions.IllegalValueException;
@@ -9,15 +18,9 @@ import seedu.address.model.ReadOnlyOrderBook;
 import seedu.address.model.deliveryman.DeliverymenList;
 import seedu.address.storage.deliveryman.XmlSerializableDeliverymenList;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.Optional;
-import java.util.logging.Logger;
-
-import static java.util.Objects.requireNonNull;
-
+/**
+ * A class to access FoodZoom data stored as an XML file.
+ */
 public class XmlFoodZoomStorage implements FoodZoomStorage {
     private static final Logger logger = LogsCenter.getLogger(XmlFoodZoomStorage.class);
 
@@ -38,6 +41,9 @@ public class XmlFoodZoomStorage implements FoodZoomStorage {
         saveFoodZoom(orderBook, deliverymenList, foodZoomFilePath);
     }
 
+    /**
+     * Saves data to the XML file in the hard disk.
+     */
     public void saveFoodZoom(ReadOnlyOrderBook orderBook, DeliverymenList deliverymenList, Path filePath)
             throws IOException {
         requireNonNull(deliverymenList);

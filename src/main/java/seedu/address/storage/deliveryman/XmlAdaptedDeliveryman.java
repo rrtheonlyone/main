@@ -3,10 +3,8 @@ package seedu.address.storage.deliveryman;
 import static seedu.address.model.TaggedObject.MESSAGE_INVALID_ID;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
@@ -17,7 +15,6 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlID;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.OrderBook;
 import seedu.address.model.common.Name;
 import seedu.address.model.deliveryman.Deliveryman;
 import seedu.address.model.order.Order;
@@ -109,31 +106,6 @@ public class XmlAdaptedDeliveryman {
         return new Deliveryman(modelTag, modelName, modelOrder);
     }
 
-    public Deliveryman toModelTypeWithOrders(OrderBook orderBook) throws IllegalValueException {
-        Map<UUID, Order> orderMap = new HashMap<>();
-        for (Order o : orderBook.getOrderList()) {
-            orderMap.put(o.getTag(),o);
-        }
-
-        if (name == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Name.class.getSimpleName()));
-        }
-        if (!Name.isValidName(name)) {
-            throw new IllegalValueException(Name.MESSAGE_NAME_CONSTRAINTS);
-        }
-
-        UUID modelTag;
-
-        try {
-            modelTag = UUID.fromString(tag);
-        } catch (NumberFormatException e) {
-            throw new IllegalValueException(MESSAGE_INVALID_ID);
-        }
-
-        final Name modelName = new Name(name);
-
-        return new Deliveryman(modelTag, modelName);
-    }
     @Override
     public boolean equals(Object other) {
         if (other == this) {
