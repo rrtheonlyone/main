@@ -72,9 +72,9 @@ public class XmlFoodZoomStorage implements FoodZoomStorage {
             return Optional.empty();
         }
 
-        XmlSerializableOrderBook xmlOrderBook = XmlFileStorage.loadDataFromSaveFile(filePath);
+        XmlFoodZoom xmlFoodZoom = XmlFileStorage.loadFoodZoomDataFromSaveFile(filePath);
         try {
-            return Optional.of(xmlOrderBook.toModelType());
+            return Optional.of(xmlFoodZoom.getOrderBook());
         } catch (IllegalValueException ive) {
             logger.info("Illegal values found in " + filePath + ": " + ive.getMessage());
             throw new DataConversionException(ive);

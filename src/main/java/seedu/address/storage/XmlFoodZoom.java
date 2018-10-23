@@ -17,9 +17,6 @@ public class XmlFoodZoom {
     @XmlElement(required = true)
     private XmlSerializableDeliverymenList deliverymenList;
 
-    private DeliverymenList modelDeliverymenList;
-    private OrderBook modelOrderBook;
-
     public XmlFoodZoom() {
         orderBook = new XmlSerializableOrderBook();
         deliverymenList = new XmlSerializableDeliverymenList();
@@ -30,11 +27,11 @@ public class XmlFoodZoom {
         deliverymenList = new XmlSerializableDeliverymenList(deliverymenSrc);
     }
 
-    public OrderBook getModelOrderBook() {
-        return modelOrderBook;
+    public OrderBook getOrderBook() throws IllegalValueException {
+        return orderBook.toModelType();
     }
 
-    public DeliverymenList getModelDeliverymenList() {
-        return modelDeliverymenList;
+    public DeliverymenList getDeliverymenList() throws IllegalValueException {
+        return deliverymenList.toModelType();
     }
 }

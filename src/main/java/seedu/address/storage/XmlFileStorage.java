@@ -38,8 +38,7 @@ public class XmlFileStorage {
         }
     }
 
-    public static void saveFoodZoomDataToFile(Path file, XmlFoodZoom foodZoomData)
-            throws FileNotFoundException {
+    public static void saveFoodZoomDataToFile(Path file, XmlFoodZoom foodZoomData) throws FileNotFoundException {
         try {
             XmlUtil.saveDataToFile(file, foodZoomData);
         } catch (JAXBException e) {
@@ -47,6 +46,13 @@ public class XmlFileStorage {
         }
     }
 
+    public static XmlFoodZoom loadFoodZoomDataFromSaveFile(Path file) throws FileNotFoundException {
+        try {
+            return XmlUtil.getDataFromFile(file, XmlFoodZoom.class);
+        } catch (JAXBException e) {
+            throw new AssertionError("Unexpected exception " + e.getMessage(), e);
+        }
+    }
     /**
      * Saves the given users list data to the specified file.
      */
