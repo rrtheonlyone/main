@@ -41,12 +41,9 @@ public class FindCommandParser implements Parser<OrderCommand> {
             throw new ParseException(String.format(MESSAGE_INVALID_ORDER_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
         }
 
-        try {
-            Predicate<Order> suppliedPredicates = new OrderPredicateUtil().parsePredicate(argMultimap);
-            return new FindCommand(suppliedPredicates);
-        } catch (ParseException pE) {
-            throw pE;
-        }
+        Predicate<Order> suppliedPredicates = new OrderPredicateUtil().parsePredicate(argMultimap);
+        return new FindCommand(suppliedPredicates);
+
     }
 
     /**

@@ -10,17 +10,11 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
-import org.junit.Rule;
 import org.junit.Test;
-
-import org.junit.rules.ExpectedException;
 
 import seedu.address.testutil.OrderBuilder;
 
 public class OrderDatePredicateTest {
-    @Rule
-    public final ExpectedException thrown = ExpectedException.none();
-
     @Test
     public void equals() {
         SimpleDateFormat sf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");

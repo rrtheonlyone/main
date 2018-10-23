@@ -26,15 +26,7 @@ public class OrderDatePredicateUtil {
         final int firstIndex = 0;
         final int lastIndex = keywords.size() - 1;
 
-        List<Date> dates = new ArrayList<>();
-
-        for (String stringDate : keywords) {
-            try {
-                dates.add(sf.parse(stringDate));
-            } catch (java.text.ParseException pE) {
-                throw new ParseException(OrderDate.MESSAGE_DATE_CONSTRAINTS);
-            }
-        }
+        List<Date> dates = parseStringToDate(keywords);
 
         Collections.sort(dates);
 
@@ -43,6 +35,24 @@ public class OrderDatePredicateUtil {
             newKeywords.add(dates.get(firstIndex));
             newKeywords.add(dates.get(lastIndex));
             return newKeywords;
+        }
+
+        return dates;
+    }
+
+    /**
+     * Parses a list of {@code stringDates} and returns a list of Date object
+     * @throws ParseException if invalid date format is supplied
+     */
+    private List<Date> parseStringToDate(List<String> stringsDates) throws ParseException {
+        List<Date> dates = new ArrayList<>();
+
+        for (String stringDate : stringsDates) {
+            try {
+                dates.add(sf.parse(stringDate));
+            } catch (java.text.ParseException pE) {
+                throw new ParseException(OrderDate.MESSAGE_DATE_CONSTRAINTS);
+            }
         }
 
         return dates;
