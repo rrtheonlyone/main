@@ -96,7 +96,7 @@ public class TestApp extends MainApp {
      * Returns a defensive copy of the model.
      */
     public Model getModel() {
-        Model copy = new ModelManager(model.getOrderBook(), model.getRouteList(), model.getUsersList(),
+        Model copy = new ModelManager(model.getOrderBook(), model.getUsersList(),
                 model.getDeliverymenList(), new UserPrefs());
         ModelHelper.setFilteredList(copy, model.getFilteredOrderList());
         return copy;

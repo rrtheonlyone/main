@@ -6,8 +6,6 @@ import javafx.collections.ObservableList;
 import seedu.address.model.deliveryman.Deliveryman;
 import seedu.address.model.deliveryman.DeliverymenList;
 import seedu.address.model.order.Order;
-import seedu.address.model.route.ReadOnlyRouteList;
-import seedu.address.model.route.Route;
 import seedu.address.model.user.User;
 
 /**
@@ -19,14 +17,13 @@ public interface Model {
      */
     Predicate<Order> PREDICATE_SHOW_ALL_ORDERS = unused -> true;
 
-    /** {@code Predicate} that always evaluate to true */
-    Predicate<Route> PREDICATE_SHOW_ALL_ROUTES = unused -> true;
-
     /**
      * {@code Predicate} that always evaluate to true
      */
     Predicate<User> PREDICATE_SHOW_ALL_USERS = unused -> true;
-    /** {@code Predicate} that always evaluates to true */
+    /**
+     * {@code Predicate} that always evaluates to true
+     */
     Predicate<Deliveryman> PREDICATE_SHOW_ALL_DELIVERYMEN = unused -> true;
 
     // ==================== order book/order related methods =======================
@@ -163,78 +160,16 @@ public interface Model {
      */
     void clearUserInSession();
 
-    // ======================== Route related methods =========================
-
-    /** Clears existing backing model and replaces with the provided new data. */
-    void resetRouteData(ReadOnlyRouteList newData);
-
-    /** Returns the RouteList */
-    ReadOnlyRouteList getRouteList();
-
-    /**
-     * Returns true if a route with the same identity as {@code route} exists in the route list.
-     */
-    boolean hasRoute(Route route);
-
-    /**
-     * Deletes the given route.
-     * The route must exist in the route list.
-     */
-    void deleteRoute(Route target);
-
-    /**
-     * Adds the given route.
-     * {@code route} must not already exist in the route list.
-     */
-    void addRoute(Route route);
-
-    /**
-     * Replaces the given route {@code target} with {@code editedRoute}.
-     * {@code target} must exist in the route list.
-     * The route identity of {@code editedRoute} must not be the same as another existing route in the route list.
-     */
-    void updateRoute(Route target, Route editedRoute);
-
-    /** Returns an unmodifiable view of the filtered route list */
-    ObservableList<Route> getFilteredRouteList();
-
-    /**
-     * Updates the filter of the filtered route list to filter by the given {@code predicate}.
-     * @throws NullPointerException if {@code predicate} is null.
-     */
-    void updateFilteredRouteList(Predicate<Route> predicate);
-
-    /**
-     * Returns true if the model has previous route list states to restore.
-     */
-    boolean canUndoRouteList();
-
-    /**
-     * Returns true if the model has undone route list states to restore.
-     */
-    boolean canRedoRouteList();
-
-    /**
-     * Restores the model's route list to its previous state.
-     */
-    void undoRouteList();
-
-    /**
-     * Restores the model's route list to its previously undone state.
-     */
-    void redoRouteList();
-
-    /**
-     * Saves the current route list state for undo/redo.
-     */
-    void commitRouteList();
-
     // ======================== Deliveryman related methods =========================
 
-    /** Clears existing backing model and replaces with the provided new data. */
+    /**
+     * Clears existing backing model and replaces with the provided new data.
+     */
     void resetDeliverymenData(DeliverymenList newData);
 
-    /** Returns the DeliverymenList */
+    /**
+     * Returns the DeliverymenList
+     */
     DeliverymenList getDeliverymenList();
 
     /**
@@ -262,11 +197,14 @@ public interface Model {
      */
     void updateDeliveryman(Deliveryman target, Deliveryman editedDeliveryman);
 
-    /** Returns an unmodifiable view of the filtered deliveryman list */
+    /**
+     * Returns an unmodifiable view of the filtered deliveryman list
+     */
     ObservableList<Deliveryman> getFilteredDeliverymenList();
 
     /**
      * Updates the filter of the filtered deliveryman list to filter by the given {@code predicate}.
+     *
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredDeliverymenList(Predicate<Deliveryman> predicate);

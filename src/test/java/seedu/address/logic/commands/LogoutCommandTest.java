@@ -7,7 +7,6 @@ import static seedu.address.logic.commands.LogoutCommand.MESSAGE_FAILURE;
 import static seedu.address.logic.commands.LogoutCommand.MESSAGE_SUCCESS;
 import static seedu.address.testutil.TypicalDeliverymen.getTypicalDeliverymenList;
 import static seedu.address.testutil.TypicalOrders.getTypicalOrderBook;
-import static seedu.address.testutil.TypicalRoutes.getTypicalRouteList;
 import static seedu.address.testutil.user.TypicalUsers.getTypicalUsersList;
 
 import org.junit.Rule;
@@ -29,8 +28,8 @@ public class LogoutCommandTest {
 
     private CommandHistory commandHistory = new CommandHistory();
 
-    private Model model = new ModelManager(getTypicalOrderBook(), getTypicalRouteList(),
-            getTypicalUsersList(), getTypicalDeliverymenList(), new UserPrefs());
+    private Model model = new ModelManager(getTypicalOrderBook(), getTypicalUsersList(), getTypicalDeliverymenList(),
+            new UserPrefs());
 
     @Test
     public void execute_noLoggedInUser_logoutFail() throws CommandException {

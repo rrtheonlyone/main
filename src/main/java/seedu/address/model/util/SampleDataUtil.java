@@ -1,7 +1,6 @@
 package seedu.address.model.util;
 
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -19,9 +18,6 @@ import seedu.address.model.deliveryman.DeliverymenList;
 import seedu.address.model.order.Food;
 import seedu.address.model.order.Order;
 import seedu.address.model.order.OrderDate;
-import seedu.address.model.route.ReadOnlyRouteList;
-import seedu.address.model.route.Route;
-import seedu.address.model.route.RouteList;
 import seedu.address.model.user.User;
 
 /**
@@ -53,20 +49,6 @@ public class SampleDataUtil {
         return orders;
     }
 
-    public static Route[] getSampleRoutes() {
-        Set<Order> orderSetA = new HashSet<>();
-        Set<Order> orderSetB = new HashSet<>();
-        orderSetA.add(getSampleOrders()[0]);
-        orderSetA.add(getSampleOrders()[1]);
-        orderSetA.add(getSampleOrders()[2]);
-        orderSetB.add(getSampleOrders()[3]);
-        orderSetB.add(getSampleOrders()[4]);
-        orderSetB.add(getSampleOrders()[5]);
-        return new Route[]{
-            new Route(orderSetA),
-            new Route(orderSetB)
-        };
-    }
 
     public static Deliveryman[] getSampleDeliverymen() {
         return new Deliveryman[]{
@@ -83,14 +65,6 @@ public class SampleDataUtil {
             sampleAb.addOrder(sampleOrder);
         }
         return sampleAb;
-    }
-
-    public static ReadOnlyRouteList getSampleRouteList() {
-        RouteList sampleRl = new RouteList();
-        for (Route sampleRoute : getSampleRoutes()) {
-            sampleRl.addRoute(sampleRoute);
-        }
-        return sampleRl;
     }
 
     public static User[] getSampleUsers() {
