@@ -16,7 +16,6 @@ import seedu.address.commons.util.FileUtil;
 import seedu.address.model.OrderBook;
 import seedu.address.model.ReadOnlyOrderBook;
 import seedu.address.model.deliveryman.DeliverymenList;
-import seedu.address.storage.deliveryman.XmlSerializableDeliverymenList;
 
 /**
  * A class to access FoodZoom data stored as an XML file.
@@ -74,7 +73,7 @@ public class XmlFoodZoomStorage implements FoodZoomStorage {
         requireNonNull(filePath);
 
         if (!Files.exists(filePath)) {
-            logger.info("OrderBook file " + filePath + " not found");
+            logger.info("FoodZoom file " + filePath + " not found");
             return Optional.empty();
         }
 
@@ -102,13 +101,13 @@ public class XmlFoodZoomStorage implements FoodZoomStorage {
         requireNonNull(filePath);
 
         if (!Files.exists(filePath)) {
-            logger.info("DeliverymenList file " + filePath + " not found");
+            logger.info("FoodZoom file " + filePath + " not found");
             return Optional.empty();
         }
 
-        XmlSerializableDeliverymenList xmlDeliverymenList = XmlFileStorage.loadDeliverymenDataFromSaveFile(filePath);
+        XmlFoodZoom xmlFoodZoom = XmlFileStorage.loadFoodZoomDataFromSaveFile(filePath);
         try {
-            return Optional.of(xmlDeliverymenList.toModelType());
+            return Optional.of(xmlFoodZoom.getDeliverymenList());
         } catch (IllegalValueException ive) {
             logger.info("Illegal values found in " + filePath + ": " + ive.getMessage());
             throw new DataConversionException(ive);

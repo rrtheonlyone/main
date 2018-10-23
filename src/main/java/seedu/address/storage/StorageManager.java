@@ -99,6 +99,7 @@ public class StorageManager extends ComponentManager implements Storage {
         return foodZoomStorage.getFoodZoomFilePath();
     }
 
+    //================================ data read methods ======================================
     @Override
     public Optional<ReadOnlyOrderBook> readOrderBook() throws DataConversionException, IOException {
         return readOrderBook(foodZoomStorage.getFoodZoomFilePath());
@@ -120,6 +121,8 @@ public class StorageManager extends ComponentManager implements Storage {
         logger.fine("Attempting to read data from file: " + filePath);
         return foodZoomStorage.readDeliverymenList(filePath);
     }
+
+    //================================ data save methods ======================================
 
     @Override
     public void saveFoodZoom(ReadOnlyOrderBook orderBook, DeliverymenList deliverymenList) throws IOException {
