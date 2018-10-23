@@ -38,6 +38,15 @@ public class XmlFileStorage {
         }
     }
 
+    public static void saveFoodZoomDataToFile(Path file, XmlFoodZoom foodZoomData)
+            throws FileNotFoundException, JAXBException {
+        try {
+            XmlUtil.saveDataToFile(file, foodZoomData);
+        } catch (JAXBException e) {
+            throw new AssertionError("Unexpected exception " + e.getMessage(), e);
+        }
+    }
+
     /**
      * Saves the given users list data to the specified file.
      */

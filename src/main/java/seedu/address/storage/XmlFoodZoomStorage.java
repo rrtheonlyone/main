@@ -2,6 +2,7 @@ package seedu.address.storage;
 
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.exceptions.DataConversionException;
+import seedu.address.commons.util.FileUtil;
 import seedu.address.model.OrderBook;
 import seedu.address.model.deliveryman.DeliverymenList;
 
@@ -41,6 +42,20 @@ public class XmlFoodZoomStorage {
             logger.info("FoodZoom file " + filePath + " not found");
         }
 
+    }
+
+    public void saveFoodZoom(DeliverymenList deliverymenList, OrderBook orderBook) throws IOException {
+        saveFoodZoom(deliverymenList, orderBook, foodZoomFilePath);
+    }
+
+    public void saveFoodZoom(DeliverymenList deliverymenList, OrderBook orderBook, Path filePath)
+            throws IOException {
+        requireNonNull(deliverymenList);
+        requireNonNull(orderBook);
+        requireNonNull(filePath);
+
+        FileUtil.createIfMissing(filePath);
+        XmlFileStorage.saveFoodZoomDataToFile(filePath, new XmlFoodZoom(orderBook, deliverymenList));
     }
 
     public Optional<DeliverymenList> getDeliverymenList() {

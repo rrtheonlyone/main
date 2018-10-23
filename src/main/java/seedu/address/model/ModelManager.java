@@ -12,6 +12,7 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.DeliverymenListChangedEvent;
+import seedu.address.commons.events.model.FoodZoomChangedEvent;
 import seedu.address.commons.events.model.OrderBookChangedEvent;
 import seedu.address.commons.events.model.UserLoggedInEvent;
 import seedu.address.commons.events.model.UserLoggedOutEvent;
@@ -108,6 +109,11 @@ public class ModelManager extends ComponentManager implements Model {
      */
     private void indicateDeliverymenListChanged() {
         raise(new DeliverymenListChangedEvent(versionedDeliverymenList));
+    }
+
+    /** Raises an event to indicate that there is an app change. */
+    private void indicateAppChanged() {
+        raise(new FoodZoomChangedEvent(versionedOrderBook, versionedDeliverymenList));
     }
 
     /**

@@ -10,6 +10,7 @@ import com.google.common.eventbus.Subscribe;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.DeliverymenListChangedEvent;
+import seedu.address.commons.events.model.FoodZoomChangedEvent;
 import seedu.address.commons.events.model.OrderBookChangedEvent;
 import seedu.address.commons.events.model.UsersListChangedEvent;
 import seedu.address.commons.events.storage.DataSavingExceptionEvent;
@@ -27,16 +28,22 @@ import seedu.address.storage.user.UsersListStorage;
 public class StorageManager extends ComponentManager implements Storage {
 
     private static final Logger logger = LogsCenter.getLogger(StorageManager.class);
+    /*
     private OrderBookStorage orderBookStorage;
     private DeliverymenListStorage deliverymenListStorage;
+    */
+    private FoodZoomStorage foodZoomStorage;
     private UserPrefsStorage userPrefsStorage;
     private UsersListStorage usersListStorage;
 
     public StorageManager(OrderBookStorage orderBookStorage, UsersListStorage usersListStorage,
                           DeliverymenListStorage deliverymenListStorage, UserPrefsStorage userPrefsStorage) {
         super();
+        /*
         this.orderBookStorage = orderBookStorage;
         this.deliverymenListStorage = deliverymenListStorage;
+        */
+        this.foodZoomStorage = foodZoomStorage;
         this.userPrefsStorage = userPrefsStorage;
         this.usersListStorage = usersListStorage;
     }
@@ -98,6 +105,7 @@ public class StorageManager extends ComponentManager implements Storage {
         userPrefsStorage.saveUserPrefs(userPrefs);
     }
 
+    /*
     // ================ OrderBook methods ==============================
 
     @Override
@@ -177,5 +185,52 @@ public class StorageManager extends ComponentManager implements Storage {
         } catch (IOException e) {
             raise(new DataSavingExceptionEvent(e));
         }
+    }
+
+    */
+
+    @Override
+    public Path getFoodZoomFilePath() {
+        return foodZoomStorage.getFoodZoomFilePath();
+    }
+
+    @Override
+    public Optional<ReadOnlyOrderBook> readOrderBook() throws DataConversionException, IOException {
+        return readOrderBook(foodZoomStorage.getFoodZoomFilePath());
+    }
+
+    @Override
+    public Optional<ReadOnlyOrderBook> readOrderBook(Path filePath) throws DataConversionException, IOException {
+        logger.fine("Attempting to read data from file: " + filePath);
+        return foodZoomStorage.readOrderBook(filePath);
+    }
+
+    @Override
+    public Optional<DeliverymenList> readDeliverymenList() throws DataConversionException, IOException {
+        return readDeliverymenList(foodZoomStorage.getFoodZoomFilePath());
+    }
+
+    @Override
+    public Optional<DeliverymenList> readDeliverymenList(Path filePath) throws DataConversionException, IOException {
+        logger.fine("Attempting to read data from file: " + filePath);
+        return foodZoomStorage.readDeliverymenList(filePath);
+    }
+
+    @Override
+    public void saveFoodZoom(ReadOnlyOrderBook orderBook, DeliverymenList deliverymenList) throws IOException {
+        saveFoodZoom(orderBook, deliverymenList, foodZoomStorage.getFoodZoomFilePath());
+    }
+
+    @Override
+    public void saveFoodZoom(ReadOnlyOrderBook orderBook, DeliverymenList deliverymenList, Path filePath) throws IOException {
+        logger.fine("Attempting to write to data file: " + filePath);
+        foodZoomStorage.saveFoodZoom(orderBook, deliverymenList, filePath);
+    }
+
+    @Override
+    @Subscribe
+    public void handleFoodZoomChangedEvent(FoodZoomChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event, "Local data changed, saving to file"));
+
     }
 }
