@@ -1,5 +1,9 @@
 package systemtests;
 
+import static seedu.address.logic.commands.CommandTestUtil.VALID_MANAGER_PASSWORD_ALICE;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_MANAGER_USERNAME_ALICE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PASSWORD;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_USERNAME;
 import static seedu.address.ui.testutil.GuiTestAssert.assertListMatching;
 
 import java.io.IOException;
@@ -8,6 +12,7 @@ import java.nio.file.Path;
 
 import org.junit.Test;
 
+import seedu.address.logic.commands.LoginCommand;
 import seedu.address.model.OrderBook;
 import seedu.address.model.order.Order;
 import seedu.address.model.util.SampleDataUtil;
@@ -45,6 +50,13 @@ public class SampleDataTest extends OrderBookSystemTest {
 
     @Test
     public void orderBook_dataFileDoesNotExist_loadSampleData() {
+        /* Login */
+        String loginCommand = LoginCommand.COMMAND_WORD + " ";
+        String command = loginCommand + PREFIX_USERNAME + VALID_MANAGER_USERNAME_ALICE
+                + " " + PREFIX_PASSWORD + VALID_MANAGER_PASSWORD_ALICE;
+        executeCommand(command);
+        setUpOrderListPanel();
+
         Order[] expectedList = SampleDataUtil.getSampleOrders();
         assertListMatching(getOrderListPanel(), expectedList);
     }

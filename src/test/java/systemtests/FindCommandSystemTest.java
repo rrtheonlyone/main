@@ -44,6 +44,7 @@ public class FindCommandSystemTest extends OrderBookSystemTest {
         String command = loginCommand + PREFIX_USERNAME + VALID_MANAGER_USERNAME_ALICE
                 + " " + PREFIX_PASSWORD + VALID_MANAGER_PASSWORD_ALICE;
         executeCommand(command);
+        setUpOrderListPanel();
 
         /* Case: find multiple persons in order book by name, command with leading spaces and trailing spaces
          * -> 2 orders found
