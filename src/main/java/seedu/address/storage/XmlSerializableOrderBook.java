@@ -5,17 +5,16 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.OrderBook;
 import seedu.address.model.ReadOnlyOrderBook;
+import seedu.address.model.deliveryman.DeliverymenList;
 import seedu.address.model.order.Order;
 
 /**
  * An Immutable OrderBook that is serializable to XML format
  */
-@XmlRootElement(name = "orderbook")
 public class XmlSerializableOrderBook {
 
     public static final String MESSAGE_DUPLICATE_ORDER = "Orders list contains duplicate order(s).";
@@ -49,6 +48,18 @@ public class XmlSerializableOrderBook {
         OrderBook orderBook = new OrderBook();
         for (XmlAdaptedOrder o : orders) {
             Order order = o.toModelType();
+            if (orderBook.hasOrder(order)) {
+                throw new IllegalValueException(MESSAGE_DUPLICATE_ORDER);
+            }
+            orderBook.addOrder(order);
+        }
+        return orderBook;
+    }
+
+    public OrderBook toModelTypeWith(DeliverymenList deliverymenList) throws IllegalValueException {
+        OrderBook orderBook = new OrderBook();
+        for (XmlAdaptedOrder o : orders) {
+            Order order = o.toModelTypeWithDeliverymen(deliverymenList);
             if (orderBook.hasOrder(order)) {
                 throw new IllegalValueException(MESSAGE_DUPLICATE_ORDER);
             }
