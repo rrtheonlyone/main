@@ -1,20 +1,22 @@
 package systemtests;
 
 import static org.junit.Assert.assertFalse;
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_ORDER_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_ORDERS_LISTED_OVERVIEW;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_MANAGER_PASSWORD_ALICE;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_MANAGER_USERNAME_ALICE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_FOOD;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PASSWORD;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_USERNAME;
+import static seedu.address.testutil.TypicalOrders.ALICE;
 import static seedu.address.testutil.TypicalOrders.BENSON;
 import static seedu.address.testutil.TypicalOrders.CARL;
 import static seedu.address.testutil.TypicalOrders.DANIEL;
+import static seedu.address.testutil.TypicalOrders.FIONA;
 import static seedu.address.testutil.TypicalOrders.KEYWORD_NAME_MATCHING_MEIER;
 import static seedu.address.testutil.TypicalOrders.KEYWORD_PHONE_MATCHING_BENSON;
 
@@ -171,24 +173,43 @@ public class FindCommandSystemTest extends OrderBookSystemTest {
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
-        /* Case: find address of order in order book -> Invalid Command */
+        /* Case: find address of order in order book -> 1 order found */
         command = findCommand + " " + PREFIX_ADDRESS + DANIEL.getAddress().value;
-        assertCommandFailure(command, String.format(MESSAGE_INVALID_ORDER_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+        ModelHelper.setFilteredList(expectedModel, DANIEL);
+        assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
-        /* Case: find food of order in order book -> Invalid Command */
+        /* Case: find food of order in order book -> 1 order found */
         List<Food> food = new ArrayList<>(DANIEL.getFood());
         command = findCommand + " " + PREFIX_FOOD + food.get(0).foodName;
-        assertCommandFailure(command, String.format(MESSAGE_INVALID_ORDER_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+        assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
-        /* Case: find phone in order book, keyword is substring of phone -> 0 orders found */
+        /* Case: find single date of order in order book -> 1 order found */
+        command = findCommand + " " + PREFIX_DATE + "04-10-2018 10:00:00";
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find phone in order book, keyword is substring of phone -> 1 order found */
         command = findCommand + " " + PREFIX_PHONE + "8765";
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find date range of orders in order book -> 3 orders found */
+        command = findCommand + " " + PREFIX_DATE + "01-10-2018 10:00:00" + " " + PREFIX_DATE + "02-10-2018 10:00:00";
+        ModelHelper.setFilteredList(expectedModel, ALICE, BENSON, FIONA);
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find with phone and address in order book -> 1 order found */
+        command = findCommand + " " + PREFIX_PHONE + "8765" + " " + PREFIX_ADDRESS + "10th street";
+        ModelHelper.setFilteredList(expectedModel, DANIEL);
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
         /* Case: find phone not in order book -> 0 orders found */
         command = findCommand + " " + PREFIX_PHONE + "4243587470";
+        ModelHelper.setFilteredList(expectedModel);
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
@@ -206,14 +227,6 @@ public class FindCommandSystemTest extends OrderBookSystemTest {
         command = findCommand + " " + KEYWORD_NAME_MATCHING_MEIER;
         expectedModel = getModel();
         ModelHelper.setFilteredList(expectedModel, DANIEL);
-        assertCommandSuccess(command, expectedModel);
-        assertSelectedCardUnchanged();
-
-        /* Case: find order by phone in empty order book -> 0 orders found */
-        deleteAllOrders();
-        command = findCommand + " " + KEYWORD_PHONE_MATCHING_BENSON;
-        expectedModel = getModel();
-        ModelHelper.setFilteredList(expectedModel, BENSON);
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 

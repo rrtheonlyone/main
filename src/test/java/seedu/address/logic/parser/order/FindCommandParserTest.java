@@ -1,14 +1,21 @@
 package seedu.address.logic.parser.order;
 
+import static org.junit.Assert.assertFalse;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_ORDER_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Date;
 
 import org.junit.Test;
 
 import seedu.address.logic.commands.order.FindCommand;
+import seedu.address.model.order.OrderAddressContainsKeywordPredicate;
+import seedu.address.model.order.OrderDatePredicate;
+import seedu.address.model.order.OrderFoodContainsKeywordPredicate;
 import seedu.address.model.order.OrderNameContainsKeywordPredicate;
 import seedu.address.model.order.OrderPhoneContainsKeywordPredicate;
 
@@ -31,14 +38,34 @@ public class FindCommandParserTest {
         assertParseSuccess(parser, " n/Alex", expectedNameFindCommand);
 
         FindCommand expectedPhoneFindCommand =
-                new FindCommand(new OrderPhoneContainsKeywordPredicate("81223455"));
+                new FindCommand(new OrderPhoneContainsKeywordPredicate(Arrays.asList("81223455")));
         assertParseSuccess(parser, " p/81223455", expectedPhoneFindCommand);
+
+        FindCommand expectedAddressFindCommand =
+                new FindCommand(new OrderAddressContainsKeywordPredicate("123, Jurong West Ave 6, #08-111"));
+        assertParseSuccess(parser, " a/123, Jurong West Ave 6, #08-111", expectedAddressFindCommand);
+
+        FindCommand expectedFoodFindCommand =
+                new FindCommand(new OrderFoodContainsKeywordPredicate(Arrays.asList("rice")));
+        assertParseSuccess(parser, " f/rice", expectedFoodFindCommand);
+
+        SimpleDateFormat sf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+        Date date = null;
+
+        try {
+            date = sf.parse("01-10-2018 10:00:00");
+        } catch (ParseException pE) {
+            assertFalse(true);
+        }
+
+        FindCommand expectedDateFindCommand =
+                new FindCommand(new OrderDatePredicate(Arrays.asList(date)));
+        assertParseSuccess(parser, " dt/01-10-2018 10:00:00", expectedDateFindCommand);
     }
 
     @Test
-    public void parse_invalidArgs_throwsParseException() {
-        // Supplying both name and phone
-        assertParseFailure(parser, " n/testname p/12345",
+    public void parse_invalidArgs_throwParseException() {
+        assertParseFailure(parser, "w/",
                 String.format(MESSAGE_INVALID_ORDER_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
     }
 }
