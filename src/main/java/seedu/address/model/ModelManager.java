@@ -78,13 +78,13 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void resetData(ReadOnlyOrderBook newData) {
         versionedOrderBook.resetData(newData);
-        indicateOrderBookChanged();
+        indicateAppChanged();
     }
 
     @Override
     public void resetDeliverymenData(DeliverymenList newData) {
         versionedDeliverymenList.resetData(newData);
-        indicateDeliverymenListChanged();
+        indicateAppChanged();
     }
 
     @Override
@@ -146,14 +146,14 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void deleteOrder(Order target) {
         versionedOrderBook.removeOrder(target);
-        indicateOrderBookChanged();
+        indicateAppChanged();
     }
 
     @Override
     public void addOrder(Order order) {
         versionedOrderBook.addOrder(order);
         updateFilteredOrderList(PREDICATE_SHOW_ALL_ORDERS);
-        indicateOrderBookChanged();
+        indicateAppChanged();
     }
 
     @Override
@@ -161,7 +161,7 @@ public class ModelManager extends ComponentManager implements Model {
         requireAllNonNull(target, editedOrder);
 
         versionedOrderBook.updateOrder(target, editedOrder);
-        indicateOrderBookChanged();
+        indicateAppChanged();
     }
 
     // =========== Deliveryman methods ====================================
@@ -175,19 +175,21 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void deleteDeliveryman(Deliveryman target) {
         versionedDeliverymenList.removeDeliveryman(target);
-        indicateDeliverymenListChanged();
+        indicateAppChanged();
     }
 
     @Override
     public void addDeliveryman(Deliveryman deliveryman) {
         versionedDeliverymenList.addDeliveryman(deliveryman);
-        indicateDeliverymenListChanged();
+        indicateAppChanged();
     }
 
     @Override
     public void updateDeliveryman(Deliveryman target, Deliveryman editedDeliveryman) {
+        requireAllNonNull(target, editedDeliveryman);
+
         versionedDeliverymenList.updateDeliveryman(target, editedDeliveryman);
-        indicateDeliverymenListChanged();
+        indicateAppChanged();
     }
 
     //=========== Filtered Orders List Accessors =============================================================

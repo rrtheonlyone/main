@@ -39,7 +39,7 @@ public class XmlFileStorage {
     }
 
     public static void saveFoodZoomDataToFile(Path file, XmlFoodZoom foodZoomData)
-            throws FileNotFoundException, JAXBException {
+            throws FileNotFoundException {
         try {
             XmlUtil.saveDataToFile(file, foodZoomData);
         } catch (JAXBException e) {

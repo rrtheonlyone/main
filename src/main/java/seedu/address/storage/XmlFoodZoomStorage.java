@@ -2,10 +2,14 @@ package seedu.address.storage;
 
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.exceptions.DataConversionException;
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.FileUtil;
 import seedu.address.model.OrderBook;
+import seedu.address.model.ReadOnlyOrderBook;
 import seedu.address.model.deliveryman.DeliverymenList;
+import seedu.address.storage.deliveryman.XmlSerializableDeliverymenList;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -14,7 +18,7 @@ import java.util.logging.Logger;
 
 import static java.util.Objects.requireNonNull;
 
-public class XmlFoodZoomStorage {
+public class XmlFoodZoomStorage implements FoodZoomStorage {
     private static final Logger logger = LogsCenter.getLogger(XmlFoodZoomStorage.class);
 
     private Path foodZoomFilePath;
@@ -30,25 +34,11 @@ public class XmlFoodZoomStorage {
         return foodZoomFilePath;
     }
 
-    public void readFoodZoomStorage() throws DataConversionException, IOException {
-        readFoodZoomStorage(foodZoomFilePath);
+    public void saveFoodZoom(ReadOnlyOrderBook orderBook, DeliverymenList deliverymenList) throws IOException {
+        saveFoodZoom(orderBook, deliverymenList, foodZoomFilePath);
     }
 
-    public void readFoodZoomStorage(Path filePath) throws DataConversionException {
-
-        requireNonNull(filePath);
-
-        if (!Files.exists(filePath)) {
-            logger.info("FoodZoom file " + filePath + " not found");
-        }
-
-    }
-
-    public void saveFoodZoom(DeliverymenList deliverymenList, OrderBook orderBook) throws IOException {
-        saveFoodZoom(deliverymenList, orderBook, foodZoomFilePath);
-    }
-
-    public void saveFoodZoom(DeliverymenList deliverymenList, OrderBook orderBook, Path filePath)
+    public void saveFoodZoom(ReadOnlyOrderBook orderBook, DeliverymenList deliverymenList, Path filePath)
             throws IOException {
         requireNonNull(deliverymenList);
         requireNonNull(orderBook);
@@ -62,8 +52,60 @@ public class XmlFoodZoomStorage {
         return deliverymenList;
     }
 
-    public Optional<OrderBook> getOrderBook() {
-        return orderBook;
+    @Override
+    public Optional<ReadOnlyOrderBook> readOrderBook() throws DataConversionException, IOException {
+        return readOrderBook(foodZoomFilePath);
     }
 
+    /**
+     * Similar to {@link #readOrderBook()} ()}
+     *
+     * @param filePath location of the data. Cannot be null
+     * @throws DataConversionException if the file is not in the correct format.
+     */
+    public Optional<ReadOnlyOrderBook> readOrderBook(Path filePath) throws DataConversionException,
+        FileNotFoundException {
+        requireNonNull(filePath);
+
+        if (!Files.exists(filePath)) {
+            logger.info("OrderBook file " + filePath + " not found");
+            return Optional.empty();
+        }
+
+        XmlSerializableOrderBook xmlOrderBook = XmlFileStorage.loadDataFromSaveFile(filePath);
+        try {
+            return Optional.of(xmlOrderBook.toModelType());
+        } catch (IllegalValueException ive) {
+            logger.info("Illegal values found in " + filePath + ": " + ive.getMessage());
+            throw new DataConversionException(ive);
+        }
+    }
+
+    @Override
+    public Optional<DeliverymenList> readDeliverymenList() throws DataConversionException, IOException {
+        return readDeliverymenList(foodZoomFilePath);
+    }
+
+    /**
+     * Similar to {@link #readDeliverymenList()}
+     * @param filePath location of the data. Cannot be null
+     * @throws DataConversionException if the file is not in the correct format.
+     */
+    public Optional<DeliverymenList> readDeliverymenList(Path filePath) throws DataConversionException,
+        FileNotFoundException {
+        requireNonNull(filePath);
+
+        if (!Files.exists(filePath)) {
+            logger.info("DeliverymenList file " + filePath + " not found");
+            return Optional.empty();
+        }
+
+        XmlSerializableDeliverymenList xmlDeliverymenList = XmlFileStorage.loadDeliverymenDataFromSaveFile(filePath);
+        try {
+            return Optional.of(xmlDeliverymenList.toModelType());
+        } catch (IllegalValueException ive) {
+            logger.info("Illegal values found in " + filePath + ": " + ive.getMessage());
+            throw new DataConversionException(ive);
+        }
+    }
 }

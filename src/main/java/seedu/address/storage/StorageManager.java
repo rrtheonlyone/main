@@ -28,21 +28,13 @@ import seedu.address.storage.user.UsersListStorage;
 public class StorageManager extends ComponentManager implements Storage {
 
     private static final Logger logger = LogsCenter.getLogger(StorageManager.class);
-    /*
-    private OrderBookStorage orderBookStorage;
-    private DeliverymenListStorage deliverymenListStorage;
-    */
     private FoodZoomStorage foodZoomStorage;
     private UserPrefsStorage userPrefsStorage;
     private UsersListStorage usersListStorage;
 
-    public StorageManager(OrderBookStorage orderBookStorage, UsersListStorage usersListStorage,
-                          DeliverymenListStorage deliverymenListStorage, UserPrefsStorage userPrefsStorage) {
+    public StorageManager(UsersListStorage usersListStorage, FoodZoomStorage foodZoomStorage,
+            UserPrefsStorage userPrefsStorage) {
         super();
-        /*
-        this.orderBookStorage = orderBookStorage;
-        this.deliverymenListStorage = deliverymenListStorage;
-        */
         this.foodZoomStorage = foodZoomStorage;
         this.userPrefsStorage = userPrefsStorage;
         this.usersListStorage = usersListStorage;
@@ -231,6 +223,10 @@ public class StorageManager extends ComponentManager implements Storage {
     @Subscribe
     public void handleFoodZoomChangedEvent(FoodZoomChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event, "Local data changed, saving to file"));
-
+        try {
+            saveFoodZoom(event.orderBook, event.deliverymenList);
+        } catch (IOException e) {
+            raise(new DataSavingExceptionEvent(e));
+        }
     }
 }

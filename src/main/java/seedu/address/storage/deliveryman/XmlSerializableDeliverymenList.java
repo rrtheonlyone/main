@@ -15,7 +15,6 @@ import seedu.address.model.deliveryman.DeliverymenList;
 /**
  * An Immutable DeliverymenList that is serializable to XML format
  */
-@XmlRootElement(name = "deliverymenlist")
 public class XmlSerializableDeliverymenList {
 
     public static final String MESSAGE_DUPLICATE_DELIVERYMAN = "Deliverymen List contains duplicate deliverymen.";
