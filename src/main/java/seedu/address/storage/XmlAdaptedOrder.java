@@ -156,6 +156,10 @@ public class XmlAdaptedOrder {
         }
         final Set<Food> modelFood = new HashSet<>(foodStore);
 
+        if (tag == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, "Tag"));
+        }
+
         UUID modelTag;
         try {
             modelTag = UUID.fromString(tag);

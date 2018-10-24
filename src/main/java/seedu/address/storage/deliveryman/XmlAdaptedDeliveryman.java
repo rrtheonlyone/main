@@ -87,6 +87,10 @@ public class XmlAdaptedDeliveryman {
             throw new IllegalValueException(Name.MESSAGE_NAME_CONSTRAINTS);
         }
 
+        if (tag == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, "Tag"));
+        }
+
         UUID modelTag;
 
         try {

@@ -53,10 +53,6 @@ public class XmlFoodZoomStorage implements FoodZoomStorage {
         XmlFileStorage.saveFoodZoomDataToFile(filePath, new XmlFoodZoom(orderBook, deliverymenList));
     }
 
-    public Optional<DeliverymenList> getDeliverymenList() {
-        return deliverymenList;
-    }
-
     @Override
     public Optional<ReadOnlyOrderBook> readOrderBook() throws DataConversionException, IOException {
         return readOrderBook(foodZoomFilePath);
