@@ -51,11 +51,7 @@ public class XmlAdaptedOrderTest {
     @Test
     public void toModelType_nullName_throwsIllegalValueException() {
         XmlAdaptedOrder order = new XmlAdaptedOrder(null,
-<<<<<<< HEAD
             VALID_PHONE, VALID_ADDRESS, VALID_DATE, VALID_STATUS, VALID_FOOD);
-=======
-                VALID_PHONE, VALID_ADDRESS, VALID_DATE, VALID_FOOD);
->>>>>>> master
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Name.class.getSimpleName());
         Assert.assertThrows(IllegalValueException.class, expectedMessage, order::toModelType);
     }
@@ -71,11 +67,7 @@ public class XmlAdaptedOrderTest {
     @Test
     public void toModelType_nullPhone_throwsIllegalValueException() {
         XmlAdaptedOrder order = new XmlAdaptedOrder(
-<<<<<<< HEAD
             VALID_NAME, null, VALID_ADDRESS, VALID_DATE, VALID_STATUS, VALID_FOOD);
-=======
-                VALID_NAME, null, VALID_ADDRESS, VALID_DATE, VALID_FOOD);
->>>>>>> master
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Phone.class.getSimpleName());
         Assert.assertThrows(IllegalValueException.class, expectedMessage, order::toModelType);
     }
