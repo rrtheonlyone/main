@@ -5,6 +5,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import javax.xml.bind.annotation.XmlRootElement;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -16,8 +17,6 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.XmlUtil;
 import seedu.address.model.deliveryman.DeliverymenList;
 import seedu.address.testutil.TypicalDeliverymen;
-
-import javax.xml.bind.annotation.XmlRootElement;
 
 public class XmlSerializableDeliverymenListTest {
 

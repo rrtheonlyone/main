@@ -36,7 +36,8 @@ public class SystemTestSetupHelper {
      * Sets up a new {@code TestApp} and returns it.
      */
     public TestApp setupApplication(Supplier<ReadOnlyOrderBook> orderBook, Supplier<DeliverymenList> deliverymenList,
-                                    Supplier<ReadOnlyUsersList> usersList, Path saveFileLocation, Path usersFileLocation) {
+                                    Supplier<ReadOnlyUsersList> usersList, Path saveFileLocation,
+                                    Path usersFileLocation) {
         try {
             FxToolkit.registerStage(Stage::new);
             FxToolkit.setupApplication(() -> testApp = new TestApp(orderBook, deliverymenList, usersList,
