@@ -35,6 +35,8 @@ import seedu.address.logic.commands.order.OrderCommand;
 import seedu.address.logic.commands.order.SelectCommand;
 import seedu.address.model.Model;
 import seedu.address.model.OrderBook;
+import seedu.address.model.deliveryman.DeliverymenList;
+import seedu.address.testutil.TypicalDeliverymen;
 import seedu.address.testutil.TypicalOrders;
 import seedu.address.ui.CommandBox;
 
@@ -62,7 +64,8 @@ public abstract class OrderBookSystemTest {
     @Before
     public void setUp() {
         setupHelper = new SystemTestSetupHelper();
-        testApp = setupHelper.setupApplication(this::getInitialData, getDataFileLocation());
+        testApp = setupHelper.setupApplication(this::getInitialOrdersData, this::getInitialDeliverymenData,
+            getDataFileLocation());
         mainWindowHandle = setupHelper.setupMainWindowHandle();
 
         assertApplicationStartingStateIsCorrect();
@@ -75,12 +78,18 @@ public abstract class OrderBookSystemTest {
     }
 
     /**
-     * Returns the data to be loaded into the file in {@link #getDataFileLocation()}.
+     * Returns the orders data to be loaded into the file in {@link #getDataFileLocation()}.
      */
-    protected OrderBook getInitialData() {
+    protected OrderBook getInitialOrdersData() {
         return TypicalOrders.getTypicalOrderBook();
     }
 
+    /**
+     * Returns the deliverymen data to be loaded into the file in {@link #getDataFileLocation()}.
+     */
+    protected DeliverymenList getInitialDeliverymenData() {
+        return TypicalDeliverymen.getTypicalDeliverymenList();
+    }
     /**
      * Returns the directory of the data file.
      */

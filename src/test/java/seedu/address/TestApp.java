@@ -16,7 +16,9 @@ import seedu.address.model.ModelManager;
 import seedu.address.model.OrderBook;
 import seedu.address.model.ReadOnlyOrderBook;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.deliveryman.DeliverymenList;
 import seedu.address.storage.UserPrefsStorage;
+import seedu.address.storage.XmlFoodZoom;
 import seedu.address.storage.XmlSerializableOrderBook;
 import seedu.address.testutil.TestUtil;
 import systemtests.ModelHelper;
@@ -32,21 +34,24 @@ public class TestApp extends MainApp {
 
     protected static final Path DEFAULT_PREF_FILE_LOCATION_FOR_TESTING =
             TestUtil.getFilePathInSandboxFolder("pref_testing.json");
-    protected Supplier<ReadOnlyOrderBook> initialDataSupplier = () -> null;
+    protected Supplier<ReadOnlyOrderBook> initialOrdersDataSupplier = () -> null;
+    protected Supplier<DeliverymenList> initialDeliverymenDataSupplier = () -> null;
     protected Path saveFileLocation = SAVE_LOCATION_FOR_TESTING;
 
     public TestApp() {
     }
 
-    public TestApp(Supplier<ReadOnlyOrderBook> initialDataSupplier, Path saveFileLocation) {
+    public TestApp(Supplier<ReadOnlyOrderBook> initialOrdersDataSupplier,
+                   Supplier<DeliverymenList> initialDeliverymenDataSupplier, Path saveFileLocation) {
         super();
-        this.initialDataSupplier = initialDataSupplier;
+        this.initialOrdersDataSupplier = initialOrdersDataSupplier;
+        this.initialDeliverymenDataSupplier = initialDeliverymenDataSupplier;
         this.saveFileLocation = saveFileLocation;
 
         // If some initial local data has been provided, write those to the file
-        if (initialDataSupplier.get() != null) {
-            createDataFileWithData(new XmlSerializableOrderBook(this.initialDataSupplier.get()),
-                    this.saveFileLocation);
+        if (initialOrdersDataSupplier.get() != null && initialDeliverymenDataSupplier.get() != null) {
+            createDataFileWithData(new XmlFoodZoom(this.initialOrdersDataSupplier.get(),
+                    this.initialDeliverymenDataSupplier.get()), this.saveFileLocation);
         }
     }
 
