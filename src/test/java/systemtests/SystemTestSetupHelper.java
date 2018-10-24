@@ -10,6 +10,7 @@ import guitests.guihandles.MainWindowHandle;
 import javafx.stage.Stage;
 import seedu.address.TestApp;
 import seedu.address.model.ReadOnlyOrderBook;
+import seedu.address.model.ReadOnlyUsersList;
 import seedu.address.model.deliveryman.DeliverymenList;
 
 /**
@@ -35,10 +36,11 @@ public class SystemTestSetupHelper {
      * Sets up a new {@code TestApp} and returns it.
      */
     public TestApp setupApplication(Supplier<ReadOnlyOrderBook> orderBook, Supplier<DeliverymenList> deliverymenList,
-                                    Path saveFileLocation) {
+                                    Supplier<ReadOnlyUsersList> usersList, Path saveFileLocation, Path usersFileLocation) {
         try {
             FxToolkit.registerStage(Stage::new);
-            FxToolkit.setupApplication(() -> testApp = new TestApp(orderBook, deliverymenList, saveFileLocation));
+            FxToolkit.setupApplication(() -> testApp = new TestApp(orderBook, deliverymenList, usersList,
+                saveFileLocation, usersFileLocation));
         } catch (TimeoutException te) {
             throw new AssertionError("Application takes too long to set up.", te);
         }

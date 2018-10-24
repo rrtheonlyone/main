@@ -35,9 +35,11 @@ import seedu.address.logic.commands.order.OrderCommand;
 import seedu.address.logic.commands.order.SelectCommand;
 import seedu.address.model.Model;
 import seedu.address.model.OrderBook;
+import seedu.address.model.UsersList;
 import seedu.address.model.deliveryman.DeliverymenList;
 import seedu.address.testutil.TypicalDeliverymen;
 import seedu.address.testutil.TypicalOrders;
+import seedu.address.testutil.user.TypicalUsers;
 import seedu.address.ui.CommandBox;
 
 /**
@@ -65,7 +67,7 @@ public abstract class OrderBookSystemTest {
     public void setUp() {
         setupHelper = new SystemTestSetupHelper();
         testApp = setupHelper.setupApplication(this::getInitialOrdersData, this::getInitialDeliverymenData,
-            getDataFileLocation());
+            this::getInitialUsersData, getDataFileLocation(), getUsersDataFileLocation());
         mainWindowHandle = setupHelper.setupMainWindowHandle();
 
         assertApplicationStartingStateIsCorrect();
@@ -90,11 +92,26 @@ public abstract class OrderBookSystemTest {
     protected DeliverymenList getInitialDeliverymenData() {
         return TypicalDeliverymen.getTypicalDeliverymenList();
     }
+
+    /**
+     * Returns the deliverymen data to be loaded into the file in {@link #getDataFileLocation()}.
+     */
+    protected UsersList getInitialUsersData() {
+        return TypicalUsers.getTypicalUsersList();
+    }
+
     /**
      * Returns the directory of the data file.
      */
     protected Path getDataFileLocation() {
         return TestApp.SAVE_LOCATION_FOR_TESTING;
+    }
+
+    /**
+     * Returns the directory of the data file.
+     */
+    protected Path getUsersDataFileLocation() {
+        return TestApp.USERS_SAVE_LOCATION_FOR_TESTING;
     }
 
     public MainWindowHandle getMainWindowHandle() {

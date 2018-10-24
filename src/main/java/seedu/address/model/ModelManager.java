@@ -97,20 +97,6 @@ public class ModelManager extends ComponentManager implements Model {
         return versionedDeliverymenList;
     }
 
-    /**
-     * Raises an event to indicate the model has changed
-     */
-    private void indicateOrderBookChanged() {
-        raise(new OrderBookChangedEvent(versionedOrderBook));
-    }
-
-    /**
-     * Raises an event to indicate the deliverymen list model has changed.
-     */
-    private void indicateDeliverymenListChanged() {
-        raise(new DeliverymenListChangedEvent(versionedDeliverymenList));
-    }
-
     /** Raises an event to indicate that there is an app change. */
     private void indicateAppChanged() {
         raise(new FoodZoomChangedEvent(versionedOrderBook, versionedDeliverymenList));
@@ -241,13 +227,13 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void undoOrderBook() {
         versionedOrderBook.undo();
-        indicateOrderBookChanged();
+        indicateAppChanged();
     }
 
     @Override
     public void redoOrderBook() {
         versionedOrderBook.redo();
-        indicateOrderBookChanged();
+        indicateAppChanged();
     }
 
     @Override
@@ -332,13 +318,13 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void undoDeliverymenList() {
         versionedDeliverymenList.undo();
-        indicateDeliverymenListChanged();
+        indicateAppChanged();
     }
 
     @Override
     public void redoDeliverymenList() {
         versionedDeliverymenList.redo();
-        indicateDeliverymenListChanged();
+        indicateAppChanged();
     }
 
     @Override
