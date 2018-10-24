@@ -45,6 +45,20 @@ public class Order extends TaggedObject {
     }
 
     /**
+     * Every field must be present and not null besides deliveryman.
+     */
+    public Order(Name name, Phone phone, Address address, OrderDate orderDate, Set<Food> food,
+                 Deliveryman deliveryman) {
+        requireAllNonNull(name, phone, address, orderDate, food);
+        this.name = name;
+        this.phone = phone;
+        this.address = address;
+        this.food.addAll(food);
+        this.orderDate = orderDate;
+        this.deliveryman = deliveryman;
+    }
+
+    /**
      * This constructor is used to create an {@code order} with a specified id.
      */
     public Order(UUID id, Name name, Phone phone, Address address, OrderDate orderDate, OrderStatus orderStatus,

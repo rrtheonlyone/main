@@ -6,6 +6,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_FOOD;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_DELIVERYMEN;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_ORDERS;
 
 import java.util.Collections;
@@ -24,6 +25,7 @@ import seedu.address.model.Model;
 import seedu.address.model.common.Address;
 import seedu.address.model.common.Name;
 import seedu.address.model.common.Phone;
+import seedu.address.model.deliveryman.Deliveryman;
 import seedu.address.model.order.Food;
 import seedu.address.model.order.Order;
 import seedu.address.model.order.OrderDate;
@@ -87,6 +89,15 @@ public class EditCommand extends OrderCommand {
             throw new CommandException(MESSAGE_DUPLICATE_ORDER);
         }
 
+        if (editedOrder.getDeliveryman() != null) {
+            Deliveryman previousDman = editedOrder.getDeliveryman();
+            Deliveryman newDman = new Deliveryman(previousDman);
+            newDman.updateOrder(orderToEdit, editedOrder);
+            model.updateDeliveryman(previousDman, newDman);
+            model.updateFilteredDeliverymenList(PREDICATE_SHOW_ALL_DELIVERYMEN);
+            model.commitDeliverymenList();
+        }
+
         model.updateOrder(orderToEdit, editedOrder);
         model.updateFilteredOrderList(PREDICATE_SHOW_ALL_ORDERS);
         model.commitOrderBook();
@@ -106,8 +117,9 @@ public class EditCommand extends OrderCommand {
         Address updatedAddress = editOrderDescriptor.getAddress().orElse(orderToEdit.getAddress());
         OrderDate updatedDate = editOrderDescriptor.getDate().orElse(orderToEdit.getDate());
         Set<Food> updatedFood = editOrderDescriptor.getFood().orElse(orderToEdit.getFood());
+        Deliveryman deliveryman = orderToEdit.getDeliveryman();
 
-        return new Order(updatedName, updatedPhone, updatedAddress, updatedDate, updatedFood);
+        return new Order(updatedName, updatedPhone, updatedAddress, updatedDate, updatedFood, deliveryman);
     }
 
     @Override
