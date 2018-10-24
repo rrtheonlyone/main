@@ -56,18 +56,6 @@ public class Deliveryman extends TaggedObject {
     }
 
     /**
-     * Updates the order in the set with the edited order.
-     */
-    public void updateOrder(Order target, Order editedOrder) {
-        requireAllNonNull(target, editedOrder);
-        assert(orders.contains(target));
-        assert(!orders.contains(editedOrder));
-        assert(target.isSameOrder(editedOrder));
-        orders.remove(target);
-        addOrder(editedOrder);
-    }
-
-    /**
      * Returns if this is the same common as {@code other}
      */
     public boolean isSameDeliveryman(Deliveryman other) {

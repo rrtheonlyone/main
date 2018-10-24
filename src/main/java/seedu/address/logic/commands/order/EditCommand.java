@@ -6,7 +6,6 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_FOOD;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_DELIVERYMEN;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_ORDERS;
 
 import java.util.Collections;
@@ -89,13 +88,9 @@ public class EditCommand extends OrderCommand {
             throw new CommandException(MESSAGE_DUPLICATE_ORDER);
         }
 
-        if (editedOrder.getDeliveryman() != null) {
-            Deliveryman previousDman = editedOrder.getDeliveryman();
-            Deliveryman newDman = new Deliveryman(previousDman);
-            newDman.updateOrder(orderToEdit, editedOrder);
-            model.updateDeliveryman(previousDman, newDman);
-            model.updateFilteredDeliverymenList(PREDICATE_SHOW_ALL_DELIVERYMEN);
-            model.commitDeliverymenList();
+        if (editedOrder.isAlreadyAssignedDeliveryman()) {
+            throw new CommandException(String.format(Messages.MESSAGE_ORDER_ALREADY_ASSIGNED_TO_DELIVERYMAN,
+                    index.getOneBased(), editedOrder.getDeliveryman()));
         }
 
         model.updateOrder(orderToEdit, editedOrder);
