@@ -17,6 +17,8 @@ import seedu.address.commons.util.XmlUtil;
 import seedu.address.model.OrderBook;
 import seedu.address.testutil.TypicalOrders;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
 public class XmlSerializableOrderBookTest {
 
     private static final Path TEST_DATA_FOLDER = Paths.get("src", "test", "data", "XmlSerializableOrderBookTest");
@@ -30,7 +32,7 @@ public class XmlSerializableOrderBookTest {
     @Test
     public void toModelType_typicalOrdersFile_success() throws Exception {
         XmlSerializableOrderBook dataFromFile = XmlUtil.getDataFromFile(TYPICAL_ORDERS_FILE,
-                XmlSerializableOrderBook.class);
+            XmlSerializableOrderBookWithRootElement.class);
         OrderBook orderBookFromFile = dataFromFile.toModelType();
         OrderBook typicalOrdersOrderBook = TypicalOrders.getTypicalOrderBook();
         assertEquals(orderBookFromFile, typicalOrdersOrderBook);
@@ -41,7 +43,7 @@ public class XmlSerializableOrderBookTest {
     @Test
     public void toModelType_invalidPersonFile_throwsIllegalValueException() throws Exception {
         XmlSerializableOrderBook dataFromFile = XmlUtil.getDataFromFile(INVALID_ORDER_FILE,
-                XmlSerializableOrderBook.class);
+            XmlSerializableOrderBookWithRootElement.class);
         thrown.expect(IllegalValueException.class);
         dataFromFile.toModelType();
     }
@@ -49,10 +51,17 @@ public class XmlSerializableOrderBookTest {
     @Test
     public void toModelType_duplicatePersons_throwsIllegalValueException() throws Exception {
         XmlSerializableOrderBook dataFromFile = XmlUtil.getDataFromFile(DUPLICATE_ORDER_FILE,
-                XmlSerializableOrderBook.class);
+            XmlSerializableOrderBookWithRootElement.class);
         thrown.expect(IllegalValueException.class);
         thrown.expectMessage(XmlSerializableOrderBook.MESSAGE_DUPLICATE_ORDER);
         dataFromFile.toModelType();
     }
 
+    /**
+     * Test class annotated with {@code XmlRootElement} to allow unmarshalling of .xml data to
+     * {@code XmlAdaptedDeliveryman} objects.
+     */
+    @XmlRootElement(name = "orderbook")
+    private static class XmlSerializableOrderBookWithRootElement extends XmlSerializableOrderBook {
+    }
 }

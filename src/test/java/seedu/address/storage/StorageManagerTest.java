@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.testutil.TypicalOrders.getTypicalOrderBook;
+import static seedu.address.testutil.TypicalDeliverymen.getTypicalDeliverymenList;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -14,14 +15,13 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 
-import seedu.address.commons.events.model.OrderBookChangedEvent;
+import seedu.address.commons.events.model.FoodZoomChangedEvent;
 import seedu.address.commons.events.storage.DataSavingExceptionEvent;
 import seedu.address.model.OrderBook;
 import seedu.address.model.ReadOnlyOrderBook;
 import seedu.address.model.ReadOnlyUsersList;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.deliveryman.DeliverymenList;
-import seedu.address.storage.deliveryman.XmlDeliverymenListStorage;
 import seedu.address.storage.user.XmlUsersListStorage;
 import seedu.address.ui.testutil.EventsCollectorRule;
 
@@ -35,13 +35,10 @@ public class StorageManagerTest {
 
     @Before
     public void setUp() {
-        XmlOrderBookStorage orderBookStorage = new XmlOrderBookStorage(getTempFilePath("ab"));
         XmlUsersListStorage usersListStorage = new XmlUsersListStorage(getTempFilePath("users"));
-        XmlDeliverymenListStorage deliverymenListStorage =
-                new XmlDeliverymenListStorage(getTempFilePath("dl"));
+        XmlFoodZoomStorage foodZoomStorage = new XmlFoodZoomStorage(getTempFilePath("foodzoom"));
         JsonUserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(getTempFilePath("prefs"));
-        storageManager = new StorageManager(orderBookStorage, usersListStorage,
-                deliverymenListStorage, userPrefsStorage);
+        storageManager = new StorageManager(usersListStorage, foodZoomStorage, userPrefsStorage);
     }
 
     private Path getTempFilePath(String fileName) {
@@ -64,45 +61,47 @@ public class StorageManagerTest {
     }
 
     @Test
-    public void orderBookReadSave() throws Exception {
+    public void foodZoomReadSave() throws Exception {
         /*
          * Note: This is an integration test that verifies the StorageManager is properly wired to the
-         * {@link XmlOrderBookStorage} class.
-         * More extensive testing of UserPref saving/reading is done in {@link XmlOrderBookStorageTest} class.
+         * {@link XmlFoodZoomStorage} class.
+         * More extensive testing of UserPref saving/reading is done in {@link XmlFoodZoomStorageTest} class.
          */
         OrderBook original = getTypicalOrderBook();
-        storageManager.saveOrderBook(original);
-        ReadOnlyOrderBook retrieved = storageManager.readOrderBook().get();
-        assertEquals(original, new OrderBook(retrieved));
+        DeliverymenList deliverymenList = getTypicalDeliverymenList();
+        storageManager.saveFoodZoom(original, deliverymenList);
+        ReadOnlyOrderBook ordersRetrieved = storageManager.readOrderBook().get();
+        assertEquals(original, new OrderBook(ordersRetrieved));
+        DeliverymenList dmenRetrieved = storageManager.readDeliverymenList().get();
+        assertEquals(deliverymenList, new DeliverymenList(dmenRetrieved));
     }
 
     @Test
-    public void getOrderBookFilePath() {
-        assertNotNull(storageManager.getOrderBookFilePath());
+    public void getFoodZoomFilePath() {
+        assertNotNull(storageManager.getFoodZoomFilePath());
     }
 
     @Test
     public void handleOrderBookChangedEvent_exceptionThrown_eventRaised() {
         // Create a StorageManager while injecting a stub that  throws an exception when the save method is called
-        Storage storage = new StorageManager(new XmlOrderBookStorageExceptionThrowingStub(Paths.get("dummy")),
-                new XmlUsersListStorageExceptionThrowingStub(Paths.get("dummy")),
-                new XmlDeliverymenListStorageExceptionThrowingStub(Paths.get("dummy2")),
+        Storage storage = new StorageManager(new XmlUsersListStorageExceptionThrowingStub(Paths.get("dummy")),
+                new XmlFoodZoomStorageExceptionThrowingStub(Paths.get("dummy2")),
                 new JsonUserPrefsStorage(Paths.get("dummy")));
-        storage.handleOrderBookChangedEvent(new OrderBookChangedEvent(new OrderBook()));
+        storage.handleFoodZoomChangedEvent(new FoodZoomChangedEvent(new OrderBook(), new DeliverymenList()));
         assertTrue(eventsCollectorRule.eventsCollector.getMostRecent() instanceof DataSavingExceptionEvent);
     }
 
     /**
      * A Stub class to throw an exception when the save method is called
      */
-    class XmlOrderBookStorageExceptionThrowingStub extends XmlOrderBookStorage {
+    class XmlFoodZoomStorageExceptionThrowingStub extends XmlFoodZoomStorage {
 
-        public XmlOrderBookStorageExceptionThrowingStub(Path filePath) {
+        public XmlFoodZoomStorageExceptionThrowingStub(Path filePath) {
             super(filePath);
         }
 
         @Override
-        public void saveOrderBook(ReadOnlyOrderBook orderBook, Path filePath) throws IOException {
+        public void saveFoodZoom(ReadOnlyOrderBook orderBook, DeliverymenList deliverymenList, Path filePath) throws IOException {
             throw new IOException("dummy exception");
         }
     }
@@ -118,21 +117,6 @@ public class StorageManagerTest {
 
         @Override
         public void saveUsersList(ReadOnlyUsersList usersList, Path filePath) throws IOException {
-            throw new IOException("dummy exception");
-        }
-    }
-
-    /**
-     * Another Stub class to throw an exception when the save method is called
-     */
-    class XmlDeliverymenListStorageExceptionThrowingStub extends XmlDeliverymenListStorage {
-
-        public XmlDeliverymenListStorageExceptionThrowingStub(Path filePath) {
-            super(filePath);
-        }
-
-        @Override
-        public void saveDeliverymenList(DeliverymenList deliverymenList, Path filePath) throws IOException {
             throw new IOException("dummy exception");
         }
     }
