@@ -51,8 +51,8 @@ public class Deliveryman extends TaggedObject {
         return orders;
     }
 
-    public void addOrder(Order o) {
-        orders.add(o);
+    public void addOrder(Order order) {
+        orders.add(order);
     }
 
     /**

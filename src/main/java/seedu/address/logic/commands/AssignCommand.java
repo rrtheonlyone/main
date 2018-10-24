@@ -27,10 +27,10 @@ public class AssignCommand extends Command {
 
     public static final String MESSAGE_SUCCESS = "Assigned order %1$s successfully to deliveryman %2$s";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Assign order to deliveryman. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Assign orders to deliveryman. "
             + "Parameters: "
             + PREFIX_DELIVERYMAN + "DELIVERYMAN_ID "
-            + PREFIX_ORDER + "PASSWORD \n"
+            + PREFIX_ORDER + "ORDER_ID \n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_DELIVERYMAN + "1 "
             + PREFIX_ORDER + "1 " + PREFIX_ORDER + "3";
@@ -39,7 +39,7 @@ public class AssignCommand extends Command {
     private final Set<Index> orderIds;
 
     /**
-     * Creates an LoginCommand to add the specified {@code user}
+     * Creates an AssignCommand to add the specified {@code user}
      */
     public AssignCommand(Index deliverymanId, Set<Index> orderIds) {
         requireAllNonNull(deliverymanId, orderIds);
@@ -63,12 +63,12 @@ public class AssignCommand extends Command {
             if (i.getZeroBased() >= lastShownOrderList.size()) {
                 throw new CommandException(Messages.MESSAGE_INVALID_ORDER_DISPLAYED_INDEX);
             }
-            Order o = lastShownOrderList.get(i.getZeroBased());
-            if (o.isAlreadyAssignedDeliveryman()) {
+            Order order = lastShownOrderList.get(i.getZeroBased());
+            if (order.isAlreadyAssignedDeliveryman()) {
                 throw new CommandException(String.format(Messages.MESSAGE_ORDER_ALREADY_ASSIGNED_TO_DELIVERYMAN,
-                        i.getOneBased(), o.getDeliveryman()));
+                        i.getOneBased(), order.getDeliveryman()));
             }
-            ordersToAdd.add(o);
+            ordersToAdd.add(order);
         }
 
         Deliveryman assignedDeliveryman = new Deliveryman(deliverymanToAssign);
