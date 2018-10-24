@@ -15,7 +15,6 @@ import javafx.fxml.FXML;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.FoodZoomChangedEvent;
-import seedu.address.commons.events.model.OrderBookChangedEvent;
 import seedu.address.commons.events.model.UserLoggedInEvent;
 import seedu.address.commons.events.model.UserLoggedOutEvent;
 
