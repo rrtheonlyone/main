@@ -22,6 +22,7 @@ import seedu.address.model.common.Phone;
 import seedu.address.model.order.Food;
 import seedu.address.model.order.Order;
 import seedu.address.model.order.OrderDate;
+import seedu.address.model.order.OrderStatus;
 
 /**
  * JAXB-friendly version of the Order.
@@ -30,7 +31,7 @@ public class XmlAdaptedOrder {
 
     public static final String MISSING_FIELD_MESSAGE_FORMAT = "Order's %s field is missing!";
 
-    @XmlAttribute
+    @XmlAttribute (required = true)
     @XmlID
     private String tag;
 
@@ -42,6 +43,8 @@ public class XmlAdaptedOrder {
     private String address;
     @XmlElement(required = true)
     private String date;
+    @XmlElement(required = true)
+    private String status;
     @XmlElement(required = true)
     private List<XmlAdaptedFood> food = new ArrayList<>();
 
@@ -55,13 +58,14 @@ public class XmlAdaptedOrder {
     /**
      * Constructs an {@code XmlAdaptedOrder} with the given order details.
      */
-    public XmlAdaptedOrder(String tag, String name, String phone, String address, String date,
+    public XmlAdaptedOrder(String tag, String name, String phone, String address, String date, String status,
                            List<XmlAdaptedFood> food) {
         this.tag = tag;
         this.name = name;
         this.phone = phone;
         this.address = address;
         this.date = date;
+        this.status = status;
 
         if (food == null) {
             this.food = new ArrayList<>();
@@ -73,18 +77,9 @@ public class XmlAdaptedOrder {
     /**
      * Constructs an {@code XmlAdaptedOrder} with the given order details.
      */
-    public XmlAdaptedOrder(String name, String phone, String address, String date, List<XmlAdaptedFood> food) {
-        this.tag = UUID.randomUUID().toString();
-        this.name = name;
-        this.phone = phone;
-        this.address = address;
-        this.date = date;
-
-        if (food == null) {
-            this.food = new ArrayList<>();
-        } else {
-            this.food = new ArrayList<>(food);
-        }
+    public XmlAdaptedOrder(String name, String phone, String address, String date, String status,
+                           List<XmlAdaptedFood> food) {
+        this(UUID.randomUUID().toString(), name, phone, address, date, status, food);
     }
 
     /**
@@ -98,6 +93,7 @@ public class XmlAdaptedOrder {
         phone = source.getPhone().value;
         address = source.getAddress().value;
         date = source.getDate().toString();
+        status = source.getOrderStatus().toString();
         food = source.getFood().stream()
                 .map(XmlAdaptedFood::new)
                 .collect(Collectors.toList());
@@ -151,18 +147,27 @@ public class XmlAdaptedOrder {
         if (foodStore.isEmpty()) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Food.class.getSimpleName()));
         }
+        final Set<Food> modelFood = new HashSet<>(foodStore);
 
         UUID modelTag;
-
         try {
             modelTag = UUID.fromString(tag);
         } catch (NumberFormatException e) {
             throw new IllegalValueException(MESSAGE_INVALID_ID);
         }
 
-        final Set<Food> modelFood = new HashSet<>(foodStore);
+        if (status == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    OrderStatus.class.getSimpleName()));
+        }
+        if (!OrderStatus.isValidStatus(status)) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    OrderStatus.class.getSimpleName()));
+        }
+        final OrderStatus orderStatus = new OrderStatus(status);
 
-        return new Order(modelTag, modelName, modelPhone, modelAddress, modelDate, modelFood);
+
+        return new Order(modelTag, modelName, modelPhone, modelAddress, modelDate, orderStatus, modelFood);
     }
 
     @Override
@@ -181,6 +186,7 @@ public class XmlAdaptedOrder {
                 && Objects.equals(phone, otherOrder.phone)
                 && Objects.equals(address, otherOrder.address)
                 && Objects.equals(date, otherOrder.date)
+                && Objects.equals(status, otherOrder.status)
                 && food.equals(otherOrder.food);
     }
 }

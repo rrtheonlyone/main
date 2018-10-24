@@ -10,6 +10,7 @@ import seedu.address.model.common.Phone;
 import seedu.address.model.order.Food;
 import seedu.address.model.order.Order;
 import seedu.address.model.order.OrderDate;
+import seedu.address.model.order.OrderStatus;
 import seedu.address.model.util.SampleDataUtil;
 
 /**
@@ -20,6 +21,7 @@ public class OrderBuilder {
     public static final String DEFAULT_NAME = "Alice Pauline";
     public static final String DEFAULT_PHONE = "85355255";
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
+    public static final String DEFAULT_STATUS = "PENDING";
     public static final String DEFAULT_DATE = "01-10-2018 10:00:00";
     public static final String DEFAULT_FOOD = "Fried Rice";
 
@@ -27,6 +29,7 @@ public class OrderBuilder {
     private Phone phone;
     private Address address;
     private OrderDate date;
+    private OrderStatus status;
     private Set<Food> food;
     private UUID id;
 
@@ -36,6 +39,7 @@ public class OrderBuilder {
         address = new Address(DEFAULT_ADDRESS);
         date = new OrderDate(DEFAULT_DATE);
         food = SampleDataUtil.getFoodSet(DEFAULT_FOOD);
+        status = new OrderStatus(DEFAULT_STATUS);
     }
 
     /**
@@ -47,6 +51,7 @@ public class OrderBuilder {
         phone = orderToCopy.getPhone();
         address = orderToCopy.getAddress();
         date = orderToCopy.getDate();
+        status = orderToCopy.getOrderStatus();
         food = new HashSet<>(orderToCopy.getFood());
     }
 
@@ -93,22 +98,29 @@ public class OrderBuilder {
     }
 
     /**
-     * Sets the {@code Phone} of the {@code Person} that we are building.
+     * Sets the {@code Phone} of the {@code Order} that we are building.
      */
     public OrderBuilder withPhone(String phone) {
         this.phone = new Phone(phone);
         return this;
     }
 
+    /**
+     * Sets the {@code Status} of the {@code Order} that we are building.
+     */
+    public OrderBuilder withStatus(String status) {
+        this.status = new OrderStatus(status);
+        return this;
+    }
 
     /**
      * Builds and returns an order.
      */
     public Order build() {
         if (id != null) {
-            return new Order(id, name, phone, address, date, food);
+            return new Order(id, name, phone, address, date, status, food);
         } else {
-            return new Order(name, phone, address, date, food);
+            return new Order(name, phone, address, date, status, food);
         }
     }
 
