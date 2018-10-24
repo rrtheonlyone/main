@@ -3,14 +3,11 @@ package seedu.address.logic.commands;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.AssignCommand.MESSAGE_SUCCESS;
-import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static seedu.address.testutil.TypicalDeliverymen.CHIKAO;
 import static seedu.address.testutil.TypicalDeliverymen.getTypicalDeliverymenList;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND;
 import static seedu.address.testutil.TypicalOrders.getTypicalOrderBook;
-import static seedu.address.testutil.TypicalRoutes.getTypicalRouteList;
 import static seedu.address.testutil.user.TypicalUsers.getTypicalUsersList;
 
 import java.util.HashSet;
@@ -34,7 +31,7 @@ public class AssignCommandTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
-    private Model model = new ModelManager(getTypicalOrderBook(), getTypicalRouteList(), getTypicalUsersList(),
+    private Model model = new ModelManager(getTypicalOrderBook(), getTypicalUsersList(),
             getTypicalDeliverymenList(), new UserPrefs());
     private Order validOrder = model.getFilteredOrderList().get(INDEX_FIRST.getZeroBased());
     private Index validOrderIndex = Index.fromOneBased(model.getFilteredOrderList().size());
@@ -71,36 +68,16 @@ public class AssignCommandTest {
         AssignCommand assignCommand = new AssignCommand(validDeliverymanIndex, orderIds);
         String expectedMessage = String.format(MESSAGE_SUCCESS, INDEX_FIRST.getOneBased(), assignedDeliveryman);
 
-        Model expectedModel = new ModelManager(model.getOrderBook(), model.getRouteList(), model.getUsersList(),
+        Model expectedModel = new ModelManager(model.getOrderBook(), model.getUsersList(),
                 model.getDeliverymenList(), new UserPrefs());
         expectedModel.updateDeliveryman(deliverymanToAssign, assignedDeliveryman);
+        expectedModel.commitDeliverymenList();
         expectedModel.updateOrder(validOrder, toAssign);
+        expectedModel.commitOrderBook();
 
         assertTrue(toAssign.getDeliveryman().equals(assignedDeliveryman));
         assertTrue(assignedDeliveryman.getOrders().contains(toAssign));
         assertCommandSuccess(assignCommand, model, commandHistory, expectedMessage, expectedModel);
-    }
-
-    @Test
-    public void execute_orderAlreadyAssignedToDeliveryman_failure() {
-        Order order = model.getFilteredOrderList().get(INDEX_FIRST.getZeroBased());
-        order.setDeliveryman(CHIKAO);
-
-        Set<Order> ordersToAdd = new HashSet<>();
-        Order toAssign = new Order(order);
-        ordersToAdd.add(toAssign);
-
-        Set<Index> orderIds = new HashSet<>();
-        orderIds.add(INDEX_FIRST);
-        Deliveryman newDeliveryman = model.getFilteredDeliverymenList().get(validDeliverymanIndex.getZeroBased());
-        AssignCommand assignCommand = new AssignCommand(validDeliverymanIndex, orderIds);
-        String expectedMessage = String.format(String.format(Messages.MESSAGE_ORDER_ALREADY_ASSIGNED_TO_DELIVERYMAN,
-                INDEX_FIRST.getOneBased(), CHIKAO));
-
-        assertCommandFailure(assignCommand, model, commandHistory, expectedMessage);
-        assertFalse(toAssign.getDeliveryman().equals(newDeliveryman));
-        assertTrue(CHIKAO.getOrders().contains(toAssign));
-        assertFalse(newDeliveryman.getOrders().contains(toAssign));
     }
 
     @Test
