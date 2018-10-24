@@ -28,6 +28,7 @@ public class ClearCommandSystemTest extends OrderBookSystemTest {
         String command = loginCommand + PREFIX_USERNAME + VALID_MANAGER_USERNAME_ALICE
                 + " " + PREFIX_PASSWORD + VALID_MANAGER_PASSWORD_ALICE;
         executeCommand(command);
+        setUpOrderListPanel();
 
         String clearCommand = OrderCommand.COMMAND_WORD + " " + ClearCommand.COMMAND_WORD;
 
@@ -49,7 +50,7 @@ public class ClearCommandSystemTest extends OrderBookSystemTest {
         assertCommandSuccess(command, expectedResultMessage, new ModelManager());
         assertSelectedCardUnchanged();
 
-        /* Case: selects first card in person list and clears address book -> cleared and no card selected */
+        /* Case: selects first card in common list and clears address book -> cleared and no card selected */
         executeCommand(UndoCommand.COMMAND_WORD); // restores the original address book
         selectOrder(Index.fromOneBased(1));
         assertCommandSuccess(clearCommand);

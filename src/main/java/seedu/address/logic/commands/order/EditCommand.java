@@ -21,12 +21,12 @@ import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
+import seedu.address.model.common.Address;
+import seedu.address.model.common.Name;
+import seedu.address.model.common.Phone;
 import seedu.address.model.order.Food;
 import seedu.address.model.order.Order;
 import seedu.address.model.order.OrderDate;
-import seedu.address.model.person.Address;
-import seedu.address.model.person.Name;
-import seedu.address.model.person.Phone;
 
 
 /**
@@ -60,7 +60,7 @@ public class EditCommand extends OrderCommand {
     private final EditOrderDescriptor editOrderDescriptor;
 
     /**
-     * @param index of the order in the filtered order list to edit
+     * @param index               of the order in the filtered order list to edit
      * @param editOrderDescriptor details to edit the order with
      */
     public EditCommand(Index index, EditOrderDescriptor editOrderDescriptor) {
@@ -139,7 +139,8 @@ public class EditCommand extends OrderCommand {
         private OrderDate orderDate;
         private Set<Food> food;
 
-        public EditOrderDescriptor() { }
+        public EditOrderDescriptor() {
+        }
 
         /**
          * Copy constructor.

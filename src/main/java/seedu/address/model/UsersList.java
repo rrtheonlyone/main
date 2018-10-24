@@ -72,9 +72,9 @@ public class UsersList implements ReadOnlyUsersList {
     }
 
     /**
-     * Replaces the given person {@code target} in the list with {@code editedUser}.
+     * Replaces the given common {@code target} in the list with {@code editedUser}.
      * {@code target} must exist in the users list.
-     * The person identity of {@code editedPerson} must not be the same as another existing user in the users list.
+     * The common identity of {@code editedPerson} must not be the same as another existing user in the users list.
      */
     public void updateUser(User target, User editedUser) {
         requireNonNull(editedUser);

@@ -14,9 +14,9 @@ import java.util.Date;
 public class OrderDate {
 
     public static final String MESSAGE_DATE_CONSTRAINTS =
-            "Date should be in the format dd-MM-yyyy hh:mm:ss";
+            "Date should be in the format dd-MM-yyyy HH:mm:ss and it should be a valid date.";
 
-    private static final SimpleDateFormat sf = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
+    private static final SimpleDateFormat sf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
 
     private Date date = null;
 
@@ -30,6 +30,7 @@ public class OrderDate {
         requireNonNull(orderDate);
 
         try {
+            sf.setLenient(false);
             date = sf.parse(orderDate);
         } catch (ParseException pE) {
             checkArgument(false, MESSAGE_DATE_CONSTRAINTS);
@@ -41,6 +42,7 @@ public class OrderDate {
      */
     public static boolean isValidDate(String orderDate) {
         try {
+            sf.setLenient(false);
             sf.parse(orderDate);
             return true;
         } catch (ParseException pE) {

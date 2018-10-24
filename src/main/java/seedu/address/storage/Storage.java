@@ -6,7 +6,6 @@ import java.util.Optional;
 
 import seedu.address.commons.events.model.DeliverymenListChangedEvent;
 import seedu.address.commons.events.model.OrderBookChangedEvent;
-import seedu.address.commons.events.model.RouteListChangedEvent;
 import seedu.address.commons.events.model.UsersListChangedEvent;
 import seedu.address.commons.events.storage.DataSavingExceptionEvent;
 import seedu.address.commons.exceptions.DataConversionException;
@@ -14,16 +13,13 @@ import seedu.address.model.ReadOnlyOrderBook;
 import seedu.address.model.ReadOnlyUsersList;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.deliveryman.DeliverymenList;
-import seedu.address.model.route.ReadOnlyRouteList;
 import seedu.address.storage.deliveryman.DeliverymenListStorage;
-import seedu.address.storage.route.RouteListStorage;
 import seedu.address.storage.user.UsersListStorage;
 
 /**
  * API of the Storage component
  */
-public interface Storage extends OrderBookStorage, RouteListStorage, UserPrefsStorage,
-        UsersListStorage, DeliverymenListStorage {
+public interface Storage extends OrderBookStorage, UserPrefsStorage, UsersListStorage, DeliverymenListStorage {
 
     @Override
     Optional<UserPrefs> readUserPrefs() throws DataConversionException, IOException;
@@ -46,19 +42,6 @@ public interface Storage extends OrderBookStorage, RouteListStorage, UserPrefsSt
      * Raises {@link DataSavingExceptionEvent} if there was an error during saving.
      */
     void handleOrderBookChangedEvent(OrderBookChangedEvent abce);
-
-    @Override
-    Path getRouteListFilePath();
-
-    @Override
-    Optional<ReadOnlyRouteList> readRouteList() throws DataConversionException, IOException;
-
-    /**
-     * Saves the current version of the Route List to the hard disk.
-     *   Creates the data file if it is missing.
-     * Raises {@link DataSavingExceptionEvent} if there was an error during saving.
-     */
-    void handleRouteListChangedEvent(RouteListChangedEvent abce);
 
     @Override
     Path getUsersListFilePath();

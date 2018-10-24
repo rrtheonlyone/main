@@ -40,37 +40,38 @@ public class DeleteCommandSystemTest extends OrderBookSystemTest {
         String command = loginCommand + PREFIX_USERNAME + VALID_MANAGER_USERNAME_ALICE
                 + " " + PREFIX_PASSWORD + VALID_MANAGER_PASSWORD_ALICE;
         executeCommand(command);
+        setUpOrderListPanel();
 
-        /* Case: delete the first person in the list, command with leading spaces and trailing spaces -> deleted */
+        /* Case: delete the first common in the list, command with leading spaces and trailing spaces -> deleted */
         Model expectedModel = getModel();
         command = "     " + DELETE_COMMAND + "      " + INDEX_FIRST.getOneBased() + "       ";
         Order deletedOrder = removeOrder(expectedModel, INDEX_FIRST);
         String expectedResultMessage = String.format(MESSAGE_DELETE_ORDER_SUCCESS, deletedOrder);
         assertCommandSuccess(command, expectedModel, expectedResultMessage);
 
-        /* Case: delete the last person in the list -> deleted */
+        /* Case: delete the last common in the list -> deleted */
         Model modelBeforeDeletingLast = getModel();
         Index lastPersonIndex = getLastIndex(modelBeforeDeletingLast);
         assertCommandSuccess(lastPersonIndex);
 
-        /* Case: undo deleting the last person in the list -> last person restored */
+        /* Case: undo deleting the last common in the list -> last common restored */
         command = UndoCommand.COMMAND_WORD;
         expectedResultMessage = UndoCommand.MESSAGE_SUCCESS;
         assertCommandSuccess(command, modelBeforeDeletingLast, expectedResultMessage);
 
-        /* Case: redo deleting the last person in the list -> last person deleted again */
+        /* Case: redo deleting the last common in the list -> last common deleted again */
         command = RedoCommand.COMMAND_WORD;
         removeOrder(modelBeforeDeletingLast, lastPersonIndex);
         expectedResultMessage = RedoCommand.MESSAGE_SUCCESS;
         assertCommandSuccess(command, modelBeforeDeletingLast, expectedResultMessage);
 
-        /* Case: delete the middle person in the list -> deleted */
+        /* Case: delete the middle common in the list -> deleted */
         Index middlePersonIndex = getMidIndex(getModel());
         assertCommandSuccess(middlePersonIndex);
 
-        /* --------------------- Performing delete operation while a person card is selected ------------------------ */
+        /* --------------------- Performing delete operation while a common card is selected ------------------------ */
 
-        /* Case: delete the selected person -> person list panel selects the person before the deleted person */
+        /* Case: delete the selected common -> common list panel selects the common before the deleted common */
         showAllOrders();
         expectedModel = getModel();
         Index selectedIndex = getLastIndex(expectedModel);
@@ -110,7 +111,7 @@ public class DeleteCommandSystemTest extends OrderBookSystemTest {
     /**
      * Removes the {@code Person} at the specified {@code index} in {@code model}'s address book.
      *
-     * @return the removed person
+     * @return the removed common
      */
     private Order removeOrder(Model model, Index index) {
         Order targetOrder = getOrder(model, index);
@@ -119,7 +120,7 @@ public class DeleteCommandSystemTest extends OrderBookSystemTest {
     }
 
     /**
-     * Deletes the person at {@code toDelete} by creating a default {@code DeleteCommand} using {@code toDelete} and
+     * Deletes the common at {@code toDelete} by creating a default {@code DeleteCommand} using {@code toDelete} and
      * performs the same verification as {@code assertCommandSuccess(String, Model, String)}.
      *
      * @see DeleteCommandSystemTest#assertCommandSuccess(String, Model, String)
@@ -159,6 +160,7 @@ public class DeleteCommandSystemTest extends OrderBookSystemTest {
     private void assertCommandSuccess(String command, Model expectedModel, String expectedResultMessage,
                                       Index expectedSelectedCardIndex) {
         executeCommand(command);
+        setUpOrderListPanel();
         assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
 
         assertCommandBoxShowsDefaultStyle();

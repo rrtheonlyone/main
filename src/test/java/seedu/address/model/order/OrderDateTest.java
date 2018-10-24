@@ -32,10 +32,13 @@ public class OrderDateTest {
         assertFalse(OrderDate.isValidDate("12/13/2018")); // wrong date format
         assertFalse(OrderDate.isValidDate("12-13 10:00:00")); // wrong date format
         assertFalse(OrderDate.isValidDate("2018-12-10 10:00")); // wrong date format
+        assertFalse(OrderDate.isValidDate("31-04-2018 01:00:00")); // invalid date value
+        assertFalse(OrderDate.isValidDate("29-02-2018 00:00:00")); // invalid date value
 
         // valid date
         assertTrue(OrderDate.isValidDate("10-10-18 10:00:00"));
         assertTrue(OrderDate.isValidDate("09-04-2017 12:00:00"));
         assertTrue(OrderDate.isValidDate("06-11-2018 06:00:00"));
+        assertTrue(OrderDate.isValidDate("29-02-2016 00:00:00"));
     }
 }

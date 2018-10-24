@@ -24,8 +24,6 @@ import seedu.address.model.ReadOnlyUsersList;
 import seedu.address.model.deliveryman.Deliveryman;
 import seedu.address.model.deliveryman.DeliverymenList;
 import seedu.address.model.order.Order;
-import seedu.address.model.route.ReadOnlyRouteList;
-import seedu.address.model.route.Route;
 import seedu.address.model.user.User;
 import seedu.address.testutil.OrderBuilder;
 
@@ -87,7 +85,7 @@ public class AddCommandTest {
         // null -> returns false
         assertFalse(addAliceCommand.equals(null));
 
-        // different person -> returns false
+        // different common -> returns false
         assertFalse(addAliceCommand.equals(addBobCommand));
     }
 
@@ -226,14 +224,7 @@ public class AddCommandTest {
         }
 
         @Override
-        public void resetRouteData(ReadOnlyRouteList newData) {
-
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
-        public ReadOnlyRouteList getRouteList() {
-
+        public void clearUserInSession() {
             throw new AssertionError("This method should not be called.");
         }
 
@@ -248,27 +239,12 @@ public class AddCommandTest {
         }
 
         @Override
-        public boolean hasRoute(Route route) {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
         public void updateDeliveryman(Deliveryman target, Deliveryman editedDeliveryman) {
             throw new AssertionError("This method should not be called.");
         }
 
         @Override
-        public void deleteRoute(Route target) {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
         public ObservableList<Deliveryman> getFilteredDeliverymenList() {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
-        public void addRoute(Route route) {
             throw new AssertionError("This method should not be called.");
         }
 
@@ -302,46 +278,6 @@ public class AddCommandTest {
             throw new AssertionError("This method should not be called.");
         }
 
-        @Override
-        public void updateRoute(Route target, Route editedRoute) {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
-        public ObservableList<Route> getFilteredRouteList() {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
-        public void updateFilteredRouteList(Predicate<Route> predicate) {
-            throw new AssertionError("This method should not be called.");
-        }
-
-
-        @Override
-        public boolean canUndoRouteList() {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
-        public boolean canRedoRouteList() {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
-        public void undoRouteList() {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
-        public void redoRouteList() {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
-        public void commitRouteList() {
-            throw new AssertionError("This method should not be called.");
-        }
     }
 
     /**

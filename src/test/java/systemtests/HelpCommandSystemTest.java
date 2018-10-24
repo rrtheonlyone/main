@@ -44,10 +44,6 @@ public class HelpCommandSystemTest extends OrderBookSystemTest {
         getMainMenu().openHelpWindowUsingAccelerator();
         assertHelpWindowOpen();
 
-        getOrderListPanel().click();
-        getMainMenu().openHelpWindowUsingAccelerator();
-        assertHelpWindowOpen();
-
         //use menu button
         getMainMenu().openHelpWindowUsingMenu();
         assertHelpWindowOpen();
@@ -65,6 +61,7 @@ public class HelpCommandSystemTest extends OrderBookSystemTest {
         String command = loginCommand + PREFIX_USERNAME + VALID_MANAGER_USERNAME_ALICE
                 + " " + PREFIX_PASSWORD + VALID_MANAGER_PASSWORD_ALICE;
         executeCommand(command);
+        setUpOrderListPanel();
 
         // assert that while the help window is open the UI updates correctly for a command execution
         executeCommand(OrderCommand.COMMAND_WORD + " " + SelectCommand.COMMAND_WORD + " "

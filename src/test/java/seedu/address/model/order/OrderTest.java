@@ -61,7 +61,7 @@ public class OrderTest {
         // different type -> returns false
         assertFalse(ALICE.equals(5));
 
-        // different person -> returns false
+        // different common -> returns false
         assertFalse(ALICE.equals(BENSON));
 
         // different name -> returns false

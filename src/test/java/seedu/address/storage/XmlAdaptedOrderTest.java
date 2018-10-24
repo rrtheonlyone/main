@@ -11,11 +11,11 @@ import java.util.stream.Collectors;
 import org.junit.Test;
 
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.model.common.Address;
+import seedu.address.model.common.Name;
+import seedu.address.model.common.Phone;
 import seedu.address.model.order.Food;
 import seedu.address.model.order.OrderDate;
-import seedu.address.model.person.Address;
-import seedu.address.model.person.Name;
-import seedu.address.model.person.Phone;
 import seedu.address.testutil.Assert;
 
 public class XmlAdaptedOrderTest {
@@ -51,7 +51,11 @@ public class XmlAdaptedOrderTest {
     @Test
     public void toModelType_nullName_throwsIllegalValueException() {
         XmlAdaptedOrder order = new XmlAdaptedOrder(null,
+<<<<<<< HEAD
             VALID_PHONE, VALID_ADDRESS, VALID_DATE, VALID_STATUS, VALID_FOOD);
+=======
+                VALID_PHONE, VALID_ADDRESS, VALID_DATE, VALID_FOOD);
+>>>>>>> master
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Name.class.getSimpleName());
         Assert.assertThrows(IllegalValueException.class, expectedMessage, order::toModelType);
     }
@@ -67,7 +71,11 @@ public class XmlAdaptedOrderTest {
     @Test
     public void toModelType_nullPhone_throwsIllegalValueException() {
         XmlAdaptedOrder order = new XmlAdaptedOrder(
+<<<<<<< HEAD
             VALID_NAME, null, VALID_ADDRESS, VALID_DATE, VALID_STATUS, VALID_FOOD);
+=======
+                VALID_NAME, null, VALID_ADDRESS, VALID_DATE, VALID_FOOD);
+>>>>>>> master
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Phone.class.getSimpleName());
         Assert.assertThrows(IllegalValueException.class, expectedMessage, order::toModelType);
     }

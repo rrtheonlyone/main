@@ -5,9 +5,9 @@ import java.util.Objects;
 import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.person.Name;
-import seedu.address.model.person.Password;
-import seedu.address.model.person.Username;
+import seedu.address.model.common.Name;
+import seedu.address.model.common.Password;
+import seedu.address.model.common.Username;
 import seedu.address.model.user.User;
 
 /**
@@ -33,7 +33,7 @@ public class XmlAdaptedUser {
 
 
     /**
-     * Constructs an {@code XmlAdaptedUser} with the given person details.
+     * Constructs an {@code XmlAdaptedUser} with the given common details.
      */
     public XmlAdaptedUser(String name, String username, String password) {
         this.name = name;
@@ -53,7 +53,7 @@ public class XmlAdaptedUser {
     }
 
     /**
-     * Converts this jaxb-friendly adapted person object into the model's User object.
+     * Converts this jaxb-friendly adapted common object into the model's User object.
      *
      * @throws IllegalValueException if there were any data constraints violated in the adapted user
      */

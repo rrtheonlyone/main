@@ -6,7 +6,7 @@ import java.util.Objects;
 import java.util.UUID;
 
 import seedu.address.model.TaggedObject;
-import seedu.address.model.person.Name;
+import seedu.address.model.common.Name;
 
 /**
  * Represents a Deliveryman in FoodZoom.
@@ -34,7 +34,7 @@ public class Deliveryman extends TaggedObject {
     }
 
     /**
-     * Returns if this is the same person as {@code other}
+     * Returns if this is the same common as {@code other}
      */
     public boolean isSameDeliveryman(Deliveryman other) {
         if (other == this) {

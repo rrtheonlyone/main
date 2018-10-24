@@ -32,17 +32,18 @@ public class SelectCommandSystemTest extends OrderBookSystemTest {
         String command = loginCommand + PREFIX_USERNAME + VALID_MANAGER_USERNAME_ALICE
                 + " " + PREFIX_PASSWORD + VALID_MANAGER_PASSWORD_ALICE;
         executeCommand(command);
+        setUpOrderListPanel();
 
         String selectCommand = OrderCommand.COMMAND_WORD + " " + SelectCommand.COMMAND_WORD;
         /* ------------------------ Perform select operations on the shown unfiltered list -------------------------- */
 
-        /* Case: select the first card in the person list, command with leading spaces and trailing spaces
+        /* Case: select the first card in the common list, command with leading spaces and trailing spaces
          * -> selected
          */
         command = "   " + selectCommand + " " + INDEX_FIRST.getOneBased() + "   ";
         assertCommandSuccess(command, INDEX_FIRST);
 
-        /* Case: select the last card in the person list -> selected */
+        /* Case: select the last card in the common list -> selected */
         Index orderCount = getLastIndex(getModel());
         command = selectCommand + " " + orderCount.getOneBased();
         assertCommandSuccess(command, orderCount);
@@ -57,7 +58,7 @@ public class SelectCommandSystemTest extends OrderBookSystemTest {
         expectedResultMessage = RedoCommand.MESSAGE_FAILURE;
         assertCommandFailure(command, expectedResultMessage);
 
-        /* Case: select the middle card in the person list -> selected */
+        /* Case: select the middle card in the common list -> selected */
         Index middleIndex = getMidIndex(getModel());
         command = selectCommand + " " + middleIndex.getOneBased();
         assertCommandSuccess(command, middleIndex);
@@ -67,7 +68,7 @@ public class SelectCommandSystemTest extends OrderBookSystemTest {
 
         /* ------------------------ Perform select operations on the shown filtered list ---------------------------- */
 
-        /* Case: filtered person list, select index within bounds of order book and person list -> selected */
+        /* Case: filtered common list, select index within bounds of order book and common list -> selected */
         Index validIndex = Index.fromOneBased(1);
         assertTrue(validIndex.getZeroBased() < getModel().getFilteredOrderList().size());
         command = selectCommand + " " + validIndex.getOneBased();
@@ -109,7 +110,7 @@ public class SelectCommandSystemTest extends OrderBookSystemTest {
      * 1. Command box displays an empty string.<br>
      * 2. Command box has the default style class.<br>
      * 3. Result display box displays the success message of executing select command with the
-     * {@code expectedSelectedCardIndex} of the selected person.<br>
+     * {@code expectedSelectedCardIndex} of the selected common.<br>
      * 4. {@code Storage} and {@code PersonListPanel} remain unchanged.<br>
      * 5. Selected card is at {@code expectedSelectedCardIndex} and the browser url is updated accordingly.<br>
      * 6. Status bar remains unchanged.<br>
@@ -126,6 +127,7 @@ public class SelectCommandSystemTest extends OrderBookSystemTest {
         int preExecutionSelectedCardIndex = getOrderListPanel().getSelectedCardIndex();
 
         executeCommand(command);
+        setUpOrderListPanel();
         assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
 
         assertCommandBoxShowsDefaultStyle();
@@ -148,6 +150,7 @@ public class SelectCommandSystemTest extends OrderBookSystemTest {
         Model expectedModel = getModel();
 
         executeCommand(command);
+        setUpOrderListPanel();
         assertApplicationDisplaysExpected(command, expectedResultMessage, expectedModel);
         assertSelectedCardUnchanged();
         assertCommandBoxShowsErrorStyle();

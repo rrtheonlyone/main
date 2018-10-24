@@ -8,8 +8,8 @@ import java.util.List;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import seedu.address.model.person.exceptions.DuplicatePersonException;
-import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.common.exceptions.DuplicatePersonException;
+import seedu.address.model.common.exceptions.PersonNotFoundException;
 
 /**
  * A list of unique deliverymen
@@ -18,7 +18,7 @@ public class UniqueDeliverymenList implements Iterable<Deliveryman> {
     private final ObservableList<Deliveryman> internalList = FXCollections.observableArrayList();
 
     /**
-     * Returns true if the list contains an equivalent person as the given argument.
+     * Returns true if the list contains an equivalent common as the given argument.
      */
     public boolean contains(Deliveryman toCheck) {
         requireNonNull(toCheck);

@@ -12,8 +12,8 @@ import seedu.address.logic.parser.Parser;
 import seedu.address.logic.parser.ParserUtil;
 import seedu.address.logic.parser.Prefix;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.common.Name;
 import seedu.address.model.deliveryman.Deliveryman;
-import seedu.address.model.person.Name;
 
 /**
  * Parses input arguments and creates a new DeliverymanAddCommand object
@@ -22,6 +22,7 @@ public class DeliverymanAddCommandParser implements Parser<DeliverymanAddCommand
 
     /**
      * Parses a user command into a DeliverymanAddCommand.
+     *
      * @throws ParseException
      */
     public DeliverymanAddCommand parse(String args) throws ParseException {
@@ -30,7 +31,7 @@ public class DeliverymanAddCommandParser implements Parser<DeliverymanAddCommand
 
         if (!arePrefixesPresent(argumentMultimap, PREFIX_NAME) || !argumentMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                DeliverymanAddCommand.MESSAGE_USAGE));
+                    DeliverymanAddCommand.MESSAGE_USAGE));
         }
 
         Name name = ParserUtil.parseName(argumentMultimap.getValue(PREFIX_NAME).get());

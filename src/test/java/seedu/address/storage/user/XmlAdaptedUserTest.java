@@ -7,9 +7,9 @@ import static seedu.address.testutil.user.TypicalUsers.CARL_MANAGER;
 import org.junit.Test;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.person.Name;
-import seedu.address.model.person.Password;
-import seedu.address.model.person.Username;
+import seedu.address.model.common.Name;
+import seedu.address.model.common.Password;
+import seedu.address.model.common.Username;
 import seedu.address.testutil.Assert;
 
 

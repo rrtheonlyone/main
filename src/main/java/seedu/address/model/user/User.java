@@ -2,9 +2,9 @@ package seedu.address.model.user;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
-import seedu.address.model.person.Name;
-import seedu.address.model.person.Password;
-import seedu.address.model.person.Username;
+import seedu.address.model.common.Name;
+import seedu.address.model.common.Password;
+import seedu.address.model.common.Username;
 
 /**
  * Represents a User in the FoodZoom.
