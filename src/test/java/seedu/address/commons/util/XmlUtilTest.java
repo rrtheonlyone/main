@@ -93,7 +93,7 @@ public class XmlUtilTest {
         XmlAdaptedOrder actualOrder = XmlUtil.getDataFromFile(
                 MISSING_ORDER_FIELD_FILE, XmlAdaptedOrderWithRootElement.class);
         XmlAdaptedOrder expectedOrder = new XmlAdaptedOrder(
-                VALID_ID, null, VALID_PHONE, VALID_ADDRESS, VALID_DATE, VALID_STATUS, VALID_FOOD);
+                VALID_ID, null, VALID_PHONE, VALID_ADDRESS, VALID_DATE, VALID_STATUS, VALID_FOOD, null);
         assertEquals(expectedOrder, actualOrder);
     }
 
@@ -102,7 +102,7 @@ public class XmlUtilTest {
         XmlAdaptedOrder actualOrder = XmlUtil.getDataFromFile(
                 INVALID_ORDER_FIELD_FILE, XmlAdaptedOrderWithRootElement.class);
         XmlAdaptedOrder expectedOrder = new XmlAdaptedOrder(
-                VALID_ID, VALID_NAME, INVALID_PHONE, VALID_ADDRESS, VALID_DATE, VALID_STATUS, VALID_FOOD);
+                VALID_ID, VALID_NAME, INVALID_PHONE, VALID_ADDRESS, VALID_DATE, VALID_STATUS, VALID_FOOD, null);
         assertEquals(expectedOrder, actualOrder);
 
         XmlAdaptedDeliveryman actualDeliveryman = XmlUtil.getDataFromFile(
@@ -116,12 +116,12 @@ public class XmlUtilTest {
         XmlAdaptedOrder actualOrder = XmlUtil.getDataFromFile(
                 VALID_ORDER_FILE, XmlAdaptedOrderWithRootElement.class);
         XmlAdaptedOrder expectedOrder = new XmlAdaptedOrder(
-                VALID_ID, VALID_NAME, VALID_PHONE, VALID_ADDRESS, VALID_DATE, VALID_STATUS, VALID_FOOD);
+                VALID_ID, VALID_NAME, VALID_PHONE, VALID_ADDRESS, VALID_DATE, VALID_STATUS, VALID_FOOD, null);
         assertEquals(expectedOrder, actualOrder);
 
         XmlAdaptedDeliveryman actualDeliveryman = XmlUtil.getDataFromFile(
             VALID_DELIVERYMAN_FILE, XmlAdaptedDeliverymanWithRootElement.class);
-        XmlAdaptedDeliveryman expectedDeliveryman = new XmlAdaptedDeliveryman(VALID_ID, VALID_NAME);
+        XmlAdaptedDeliveryman expectedDeliveryman = new XmlAdaptedDeliveryman(VALID_ID, VALID_NAME, null);
         assertEquals(expectedDeliveryman, actualDeliveryman);
     }
 

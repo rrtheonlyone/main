@@ -101,6 +101,9 @@ public class XmlAdaptedOrder {
         food = source.getFood().stream()
                 .map(XmlAdaptedFood::new)
                 .collect(Collectors.toList());
+        if (source.getDeliveryman() != null) {
+            deliveryman = source.getDeliveryman().getName().fullName;
+        }
     }
 
     /**

@@ -47,15 +47,9 @@ public class Order extends TaggedObject {
     /**
      * Every field must be present and not null besides deliveryman.
      */
-    public Order(Name name, Phone phone, Address address, OrderDate orderDate, Set<Food> food,
+    public Order(Name name, Phone phone, Address address, OrderDate orderDate, OrderStatus orderStatus, Set<Food> food,
                  Deliveryman deliveryman) {
-        requireAllNonNull(name, phone, address, orderDate, food);
-        this.name = name;
-        this.phone = phone;
-        this.address = address;
-        this.food.addAll(food);
-        this.orderDate = orderDate;
-        this.deliveryman = deliveryman;
+        this(null, name, phone, address, orderDate, orderStatus, food, deliveryman);
     }
 
     /**
@@ -78,7 +72,8 @@ public class Order extends TaggedObject {
      * This constructor is used to create a new copy of {@code order}.
      */
     public Order(Order order) {
-        this(null, order.name, order.phone, order.address, order.orderDate, order.orderStatus, order.food, order.deliveryman);
+        this(null, order.name, order.phone, order.address, order.orderDate, order.orderStatus, order.food,
+                order.deliveryman);
     }
 
     public Name getName() {
@@ -100,7 +95,7 @@ public class Order extends TaggedObject {
     public OrderStatus getOrderStatus() {
         return orderStatus;
     }
-    
+
     public Deliveryman getDeliveryman() {
         return deliveryman;
     }

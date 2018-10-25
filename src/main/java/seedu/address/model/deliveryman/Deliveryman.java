@@ -33,7 +33,9 @@ public class Deliveryman extends TaggedObject {
         super(id);
         requireAllNonNull(name);
         this.name = name;
-        this.orders.addAll(orders);
+        if (orders != null) {
+            this.orders.addAll(orders);
+        }
     }
 
     /**

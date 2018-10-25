@@ -28,6 +28,7 @@ import seedu.address.model.deliveryman.Deliveryman;
 import seedu.address.model.order.Food;
 import seedu.address.model.order.Order;
 import seedu.address.model.order.OrderDate;
+import seedu.address.model.order.OrderStatus;
 
 
 /**
@@ -112,9 +113,10 @@ public class EditCommand extends OrderCommand {
         Address updatedAddress = editOrderDescriptor.getAddress().orElse(orderToEdit.getAddress());
         OrderDate updatedDate = editOrderDescriptor.getDate().orElse(orderToEdit.getDate());
         Set<Food> updatedFood = editOrderDescriptor.getFood().orElse(orderToEdit.getFood());
+        OrderStatus orderStatus = orderToEdit.getOrderStatus();
         Deliveryman deliveryman = orderToEdit.getDeliveryman();
 
-        return new Order(updatedName, updatedPhone, updatedAddress, updatedDate, updatedFood, deliveryman);
+        return new Order(updatedName, updatedPhone, updatedAddress, updatedDate, orderStatus, updatedFood, deliveryman);
     }
 
     @Override
