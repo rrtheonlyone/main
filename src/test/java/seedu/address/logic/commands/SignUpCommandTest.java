@@ -62,11 +62,14 @@ public class SignUpCommandTest {
         assertEquals(EMPTY_COMMAND_HISTORY, commandHistory);
 
         User anotherUser = new UserBuilder(IDA_MANAGER).build();
-        commandResult = new SignUpCommand(anotherUser).execute(model, commandHistory);
+
         expectedResult = String.format(MESSAGE_ALREADY_LOGGED_IN, validUser.getUsername())
                 + "\n"
                 + MESSAGE_REDIRECT_TO_LOGOUT;
-        assertEquals(expectedResult, commandResult.feedbackToUser);
+        thrown.expect(CommandException.class);
+        thrown.expectMessage(expectedResult);
+        new SignUpCommand(anotherUser).execute(model, commandHistory);
+
         assertEquals(EMPTY_COMMAND_HISTORY, commandHistory);
 
     }

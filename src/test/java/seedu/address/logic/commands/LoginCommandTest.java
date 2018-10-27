@@ -17,6 +17,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import seedu.address.logic.CommandHistory;
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
@@ -56,11 +57,12 @@ public class LoginCommandTest {
                 .withPassword(VALID_MANAGER_PASSWORD_BENSON)
                 .build();
 
-        commandResult = new LoginCommand(anotherUser).execute(model, commandHistory);
         String expectedResult = String.format(LoginCommand.MESSAGE_ALREADY_LOGGED_IN, validUser.getUsername())
                 + "\n"
                 + LoginCommand.MESSAGE_REDIRECT_TO_LOGOUT;
-        assertEquals(expectedResult, commandResult.feedbackToUser);
+        thrown.expect(CommandException.class);
+        thrown.expectMessage(expectedResult);
+        new LoginCommand(anotherUser).execute(model, commandHistory);
     }
 
     @Test
