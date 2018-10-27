@@ -45,7 +45,7 @@ public class LogicManager extends ComponentManager implements Logic {
             if (model.isUserLoggedIn() || isNotAuthenticatedCommand(command)) {
                 return command.execute(model, history);
             } else {
-                return new CommandResult(MESSAGE_REQUIRE_LOGIN);
+                throw new CommandException(MESSAGE_REQUIRE_LOGIN);
             }
         } finally {
             history.add(commandText);

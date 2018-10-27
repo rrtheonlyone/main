@@ -51,7 +51,7 @@ public class SignUpCommand extends Command {
             String result = String.format(MESSAGE_ALREADY_LOGGED_IN, loggedInUser.getUsername())
                     + "\n"
                     + MESSAGE_REDIRECT_TO_LOGOUT;
-            return new CommandResult(result);
+            throw new CommandException(result);
         }
 
         if (model.hasUser(toAdd)) {
