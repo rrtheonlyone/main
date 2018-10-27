@@ -12,8 +12,6 @@ import javafx.scene.input.KeyCode;
 import seedu.address.logic.Logic;
 import seedu.address.logic.LogicManager;
 import seedu.address.logic.commands.HelpCommand;
-import seedu.address.logic.commands.order.ListCommand;
-import seedu.address.logic.commands.order.OrderCommand;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 
