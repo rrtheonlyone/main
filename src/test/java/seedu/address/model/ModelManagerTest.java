@@ -122,7 +122,7 @@ public class ModelManagerTest {
 
         // different userPrefs -> returns true
         UserPrefs differentUserPrefs = new UserPrefs();
-        differentUserPrefs.setAddressBookFilePath(Paths.get("differentFilePath"));
+        differentUserPrefs.setFoodZoomFilePath(Paths.get("differentFilePath"));
         assertTrue(modelManager.equals(new ModelManager(orderBook, usersList,
                 deliverymenList, differentUserPrefs)));
     }

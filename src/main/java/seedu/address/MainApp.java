@@ -70,7 +70,7 @@ public class MainApp extends Application {
 
         UserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(config.getUserPrefsFilePath());
         userPrefs = initPrefs(userPrefsStorage);
-        FoodZoomStorage foodZoomStorage = new XmlFoodZoomStorage(userPrefs.getAddressBookFilePath());
+        FoodZoomStorage foodZoomStorage = new XmlFoodZoomStorage(userPrefs.getFoodZoomFilePath());
         UsersListStorage usersListStorage = new XmlUsersListStorage(userPrefs.getUsersListFilePath());
         storage = new StorageManager(usersListStorage, foodZoomStorage, userPrefsStorage);
 
