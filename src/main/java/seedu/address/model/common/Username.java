@@ -9,13 +9,14 @@ import static java.util.Objects.requireNonNull;
 public class Username {
 
     public static final String MESSAGE_USERNAME_CONSTRAINTS =
-            "Username should only contain alphanumeric characters and it should not be blank";
+            "Username should only contain alphanumeric characters, it should not be blank "
+                    + "and be 3 to 64 characters long.";
 
     /*
      * The first character of the username must not be a whitespace,
      * otherwise " " (a blank string) becomes a valid input.
      */
-    public static final String USERNAME_VALIDATION_REGEX = "[\\p{Alnum}]+";
+    public static final String USERNAME_VALIDATION_REGEX = "[\\p{Alnum}]{3,64}";
     public final String value;
 
 
