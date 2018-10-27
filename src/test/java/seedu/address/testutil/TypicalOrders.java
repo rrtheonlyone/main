@@ -36,7 +36,7 @@ public class TypicalOrders {
 
     public static final Order ALICE = new OrderBuilder().withName("Alice Pauline")
             .withId(ALICE_ID)
-            .withAddress("123, Jurong West Ave 6, #08-111")
+            .withAddress("123, Jurong West Ave 6, #08-111, 612321")
             .withPhone("94351253")
             .withDate("01-10-2018 10:00:00")
             .withStatus("PENDING")
@@ -44,34 +44,34 @@ public class TypicalOrders {
 
     public static final Order BENSON = new OrderBuilder().withName("Benson Meier")
             .withId(BENSON_ID)
-            .withAddress("311, Clementi Ave 2, #02-25")
+            .withAddress("311, Clementi Ave 2, #02-25, 612334")
             .withPhone("98765432")
             .withDate("02-10-2018 10:00:00")
             .withStatus("PENDING")
             .withFood("Egg Fried Rice", "Milo").build();
 
     public static final Order CARL = new OrderBuilder().withId(CARL_ID).withName("Carl Kurz").withPhone("95352563")
-            .withAddress("wall street").withDate("03-10-2018 10:00:00").withStatus("PENDING")
+            .withAddress("wall street, 612321").withDate("03-10-2018 10:00:00").withStatus("PENDING")
             .withFood("Milkshake").build();
     public static final Order DANIEL = new OrderBuilder().withId(DANIEL_ID).withName("Daniel Meier")
-            .withPhone("87652533").withAddress("10th street").withDate("04-10-2018 10:00:00").withStatus("PENDING")
+            .withPhone("87652533").withAddress("10th street, 612321").withDate("04-10-2018 10:00:00").withStatus("PENDING")
             .withFood("Fish and Chips").build();
     public static final Order ELLE = new OrderBuilder().withId(ELLE_ID).withName("Elle Meyer").withPhone("9482224")
-            .withAddress("michegan ave").withDate("05-10-2018 10:00:00").withStatus("PENDING").withFood("Chicken Chop")
+            .withAddress("michegan ave, 612321").withDate("05-10-2018 10:00:00").withStatus("PENDING").withFood("Chicken Chop")
             .build();
     public static final Order FIONA = new OrderBuilder().withId(FIONA_ID).withName("Fiona Kunz").withPhone("9482427")
-            .withAddress("little tokyo").withDate("01-10-2018 10:00:00").withStatus("PENDING").withFood("Tuna Sandwich")
+            .withAddress("little tokyo, 612321").withDate("01-10-2018 10:00:00").withStatus("PENDING").withFood("Tuna Sandwich")
             .build();
     public static final Order GEORGE = new OrderBuilder().withId(GEORGE_ID).withName("George Best").withPhone("9482442")
-            .withAddress("4th street").withDate("03-10-2018 14:00:00").withStatus("PENDING").withFood("Ice cream")
+            .withAddress("4th street, 612321").withDate("03-10-2018 14:00:00").withStatus("PENDING").withFood("Ice cream")
             .build();
 
     //Manually added
     public static final Order HOON = new OrderBuilder().withId(HOON_ID).withName("Hoon Meier").withPhone("8482424")
-            .withAddress("little india").withDate("01-10-2018 10:00:00").withStatus("PENDING")
+            .withAddress("little india, 612321").withDate("01-10-2018 10:00:00").withStatus("PENDING")
             .withFood("Chocolate Milkshake").build();
     public static final Order IDA = new OrderBuilder().withId(IDA_ID).withName("Ida Mueller").withPhone("8482131")
-            .withAddress("chicago ave").withDate("01-10-2018 10:00:00").withStatus("PENDING").withFood("Bubble Tea")
+            .withAddress("chicago ave, 612321").withDate("01-10-2018 10:00:00").withStatus("PENDING").withFood("Bubble Tea")
             .build();
 
     // Manually added - Order's details found in {@code CommandTestUtil}
