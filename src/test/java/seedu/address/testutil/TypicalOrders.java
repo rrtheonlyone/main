@@ -46,7 +46,7 @@ public class TypicalOrders {
             .withId(BENSON_ID)
             .withAddress("311, Clementi Ave 2, #02-25")
             .withPhone("98765432")
-            .withDate("01-10-2018 10:00:00")
+            .withDate("02-10-2018 10:00:00")
             .withStatus("PENDING")
             .withFood("Egg Fried Rice", "Milo").build();
 
@@ -63,7 +63,7 @@ public class TypicalOrders {
             .withAddress("little tokyo").withDate("01-10-2018 10:00:00").withStatus("PENDING").withFood("Tuna Sandwich")
             .build();
     public static final Order GEORGE = new OrderBuilder().withId(GEORGE_ID).withName("George Best").withPhone("9482442")
-            .withAddress("4th street").withDate("03-10-2018 10:00:00").withStatus("PENDING").withFood("Ice cream")
+            .withAddress("4th street").withDate("03-10-2018 14:00:00").withStatus("PENDING").withFood("Ice cream")
             .build();
 
     //Manually added
