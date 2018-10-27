@@ -118,7 +118,7 @@ public class OrderBuilder {
      */
     public Order build() {
         if (id != null) {
-            return new Order(id, name, phone, address, date, status, food);
+            return new Order(id, name, phone, address, date, status, food, null);
         } else {
             return new Order(name, phone, address, date, status, food);
         }

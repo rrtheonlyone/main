@@ -11,6 +11,7 @@ import seedu.address.model.TaggedObject;
 import seedu.address.model.common.Address;
 import seedu.address.model.common.Name;
 import seedu.address.model.common.Phone;
+import seedu.address.model.deliveryman.Deliveryman;
 
 /**
  * Represents an Order in the order book.
@@ -25,13 +26,14 @@ public class Order extends TaggedObject {
     private final OrderDate orderDate;
     private final Set<Food> food = new HashSet<>();
     private final OrderStatus orderStatus;
+    private Deliveryman deliveryman;
 
     /**
      * Every field must be present and not null.
      */
     public Order(Name name, Phone phone, Address address, OrderDate orderDate,
                  Set<Food> food) {
-        this(null, name, phone, address, orderDate, new OrderStatus(), food);
+        this(null, name, phone, address, orderDate, new OrderStatus(), food, null);
     }
 
     /**
@@ -39,23 +41,39 @@ public class Order extends TaggedObject {
      */
     public Order(Name name, Phone phone, Address address, OrderDate orderDate, OrderStatus orderStatus,
                  Set<Food> food) {
-        this(null, name, phone, address, orderDate, orderStatus, food);
+        this(null, name, phone, address, orderDate, orderStatus, food, null);
+    }
+
+    /**
+     * Every field must be present and not null besides deliveryman.
+     */
+    public Order(Name name, Phone phone, Address address, OrderDate orderDate, OrderStatus orderStatus, Set<Food> food,
+                 Deliveryman deliveryman) {
+        this(null, name, phone, address, orderDate, orderStatus, food, deliveryman);
     }
 
     /**
      * This constructor is used to create an {@code order} with a specified id.
      */
     public Order(UUID id, Name name, Phone phone, Address address, OrderDate orderDate, OrderStatus orderStatus,
-                 Set<Food> food) {
+                 Set<Food> food, Deliveryman deliveryman) {
         super(id);
         requireAllNonNull(name, phone, address, orderDate, food);
         this.name = name;
         this.phone = phone;
         this.address = address;
         this.food.addAll(food);
-
         this.orderDate = orderDate;
         this.orderStatus = orderStatus;
+        this.deliveryman = deliveryman;
+    }
+
+    /**
+     * This constructor is used to create a new copy of {@code order}.
+     */
+    public Order(Order order) {
+        this(null, order.name, order.phone, order.address, order.orderDate, order.orderStatus, order.food,
+                order.deliveryman);
     }
 
     public Name getName() {
@@ -78,11 +96,25 @@ public class Order extends TaggedObject {
         return orderStatus;
     }
 
+    public Deliveryman getDeliveryman() {
+        return deliveryman;
+    }
+
     /**
      * Returns a food set
      */
     public Set<Food> getFood() {
         return food;
+    }
+
+    public void setDeliveryman(Deliveryman newDeliveryman) {
+        assert(deliveryman == null);
+        deliveryman = newDeliveryman;
+        newDeliveryman.addOrder(this);
+    }
+
+    public boolean isAlreadyAssignedDeliveryman() {
+        return deliveryman != null;
     }
 
     /**

@@ -24,9 +24,11 @@ import seedu.address.model.Model;
 import seedu.address.model.common.Address;
 import seedu.address.model.common.Name;
 import seedu.address.model.common.Phone;
+import seedu.address.model.deliveryman.Deliveryman;
 import seedu.address.model.order.Food;
 import seedu.address.model.order.Order;
 import seedu.address.model.order.OrderDate;
+import seedu.address.model.order.OrderStatus;
 
 
 /**
@@ -87,6 +89,11 @@ public class EditCommand extends OrderCommand {
             throw new CommandException(MESSAGE_DUPLICATE_ORDER);
         }
 
+        if (editedOrder.isAlreadyAssignedDeliveryman()) {
+            throw new CommandException(String.format(Messages.MESSAGE_ORDER_ALREADY_ASSIGNED_TO_DELIVERYMAN,
+                    index.getOneBased(), editedOrder.getDeliveryman()));
+        }
+
         model.updateOrder(orderToEdit, editedOrder);
         model.updateFilteredOrderList(PREDICATE_SHOW_ALL_ORDERS);
         model.commitOrderBook();
@@ -106,8 +113,10 @@ public class EditCommand extends OrderCommand {
         Address updatedAddress = editOrderDescriptor.getAddress().orElse(orderToEdit.getAddress());
         OrderDate updatedDate = editOrderDescriptor.getDate().orElse(orderToEdit.getDate());
         Set<Food> updatedFood = editOrderDescriptor.getFood().orElse(orderToEdit.getFood());
+        OrderStatus orderStatus = orderToEdit.getOrderStatus();
+        Deliveryman deliveryman = orderToEdit.getDeliveryman();
 
-        return new Order(updatedName, updatedPhone, updatedAddress, updatedDate, updatedFood);
+        return new Order(updatedName, updatedPhone, updatedAddress, updatedDate, orderStatus, updatedFood, deliveryman);
     }
 
     @Override

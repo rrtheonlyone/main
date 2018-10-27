@@ -49,7 +49,7 @@ public class DeliverymanBuilder {
      */
     public Deliveryman build() {
         if (id != null) {
-            return new Deliveryman(id, name);
+            return new Deliveryman(id, name, null);
         } else {
             return new Deliveryman(name);
         }
