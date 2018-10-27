@@ -3,30 +3,44 @@ package seedu.address.logic.commands.order;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_ORDER_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_ORDERS_LISTED_OVERVIEW;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_FOOD;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.testutil.TypicalDeliverymen.getTypicalDeliverymenList;
+import static seedu.address.testutil.TypicalOrders.ALICE;
+import static seedu.address.testutil.TypicalOrders.BENSON;
 import static seedu.address.testutil.TypicalOrders.CARL;
-import static seedu.address.testutil.TypicalOrders.ELLE;
 import static seedu.address.testutil.TypicalOrders.FIONA;
+import static seedu.address.testutil.TypicalOrders.GEORGE;
 import static seedu.address.testutil.TypicalOrders.getTypicalOrderBook;
 import static seedu.address.testutil.user.TypicalUsers.getTypicalUsersList;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.function.Predicate;
+import java.util.stream.Stream;
 
 import org.junit.Test;
 
 import seedu.address.logic.CommandHistory;
+import seedu.address.logic.parser.ArgumentMultimap;
+import seedu.address.logic.parser.ArgumentTokenizer;
+import seedu.address.logic.parser.Prefix;
+import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.logic.parser.order.OrderPredicateUtil;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.order.OrderContainsAnyKeywordsPredicate;
+import seedu.address.model.order.Order;
 import seedu.address.model.order.OrderNameContainsKeywordPredicate;
-import seedu.address.model.order.OrderPhoneContainsKeywordPredicate;
 
 /**
- * Contains integration tests (interaction with the Model) for {@code OrderFindCommand}.
+ * Contains integration tests (interaction with the Model) for {@code FindCommand}.
  */
 public class FindCommandTest {
     private Model model = new ModelManager(getTypicalOrderBook(), getTypicalUsersList(),
@@ -37,9 +51,9 @@ public class FindCommandTest {
 
     @Test
     public void equals() {
-        OrderContainsAnyKeywordsPredicate firstPredicate =
+        Predicate<Order> firstPredicate =
                 new OrderNameContainsKeywordPredicate(Collections.singletonList("first"));
-        OrderContainsAnyKeywordsPredicate secondPredicate =
+        Predicate<Order> secondPredicate =
                 new OrderNameContainsKeywordPredicate(Collections.singletonList("second"));
 
         FindCommand findFirstOrderCommand = new FindCommand(firstPredicate);
@@ -63,63 +77,142 @@ public class FindCommandTest {
     }
 
     @Test
-    public void execute_zeroKeywords_noOrderFound() {
+    public void execute_singlePrefixSingleKeyword_oneOrderFound() throws ParseException {
+        String expectedMessage = String.format(MESSAGE_ORDERS_LISTED_OVERVIEW, 1);
+        Predicate<Order> predicate = preparePredicate(" n/alice");
+        FindCommand command = new FindCommand(predicate);
+        expectedModel.updateFilteredOrderList(predicate);
+        assertCommandSuccess(command, model, commandHistory, expectedMessage, expectedModel);
+        assertEquals(Arrays.asList(ALICE), model.getFilteredOrderList());
+    }
+
+    @Test
+    public void execute_singlePrefixSingleKeyword_multipleOrderFound() throws ParseException {
+        String expectedMessage = String.format(MESSAGE_ORDERS_LISTED_OVERVIEW, 2);
+        Predicate<Order> predicate = preparePredicate(" dt/01-10-2018 10:00:00");
+        FindCommand command = new FindCommand(predicate);
+        expectedModel.updateFilteredOrderList(predicate);
+        assertCommandSuccess(command, model, commandHistory, expectedMessage, expectedModel);
+        assertEquals(Arrays.asList(ALICE, FIONA), model.getFilteredOrderList());
+    }
+
+    @Test
+    public void execute_singlePrefixMultipleKeywords_multipleOrdersFound() throws ParseException {
+        String expectedMessage = String.format(MESSAGE_ORDERS_LISTED_OVERVIEW, 2);
+        Predicate<Order> predicate = preparePredicate(" n/alice carl");
+        FindCommand command = new FindCommand(predicate);
+        expectedModel.updateFilteredOrderList(predicate);
+        assertCommandSuccess(command, model, commandHistory, expectedMessage, expectedModel);
+        assertEquals(Arrays.asList(ALICE, CARL), model.getFilteredOrderList());
+    }
+
+    @Test
+    public void execute_multiplePrefixSingleKeywords_oneOrderFound() throws ParseException {
+        String expectedMessage = String.format(MESSAGE_ORDERS_LISTED_OVERVIEW, 1);
+        Predicate<Order> predicate = preparePredicate(" p/94351253 f/Prata");
+        FindCommand command = new FindCommand(predicate);
+        expectedModel.updateFilteredOrderList(predicate);
+        assertCommandSuccess(command, model, commandHistory, expectedMessage, expectedModel);
+        assertEquals(Arrays.asList(ALICE), model.getFilteredOrderList());
+    }
+
+    @Test
+    public void execute_multiplePrefixSingleKeywords_zeroOrderFound() throws ParseException {
         String expectedMessage = String.format(MESSAGE_ORDERS_LISTED_OVERVIEW, 0);
-
-        OrderContainsAnyKeywordsPredicate namePredicate = prepareNamePredicate(" ");
-        FindCommand commandName = new FindCommand(namePredicate);
-        expectedModel.updateFilteredOrderList(namePredicate);
-        assertCommandSuccess(commandName, model, commandHistory, expectedMessage, expectedModel);
-        assertEquals(Collections.emptyList(), model.getFilteredOrderList());
-
-        OrderContainsAnyKeywordsPredicate phonePredicate = preparePhonePredicate(" ");
-        FindCommand commandPhone = new FindCommand(phonePredicate);
-        expectedModel.updateFilteredOrderList(phonePredicate);
-        assertCommandSuccess(commandPhone, model, commandHistory, expectedMessage, expectedModel);
+        Predicate<Order> predicate = preparePredicate(" dt/01-10-2018 10:00:00 f/Chicken");
+        FindCommand command = new FindCommand(predicate);
+        expectedModel.updateFilteredOrderList(predicate);
+        assertCommandSuccess(command, model, commandHistory, expectedMessage, expectedModel);
         assertEquals(Collections.emptyList(), model.getFilteredOrderList());
     }
 
     @Test
-    public void execute_multipleKeywords_multipleOrdersFound() {
+    public void execute_multiplePrefixMultipleKeywords_multipleOrdersFound() throws ParseException {
+        String expectedMessage = String.format(MESSAGE_ORDERS_LISTED_OVERVIEW, 2);
+        Predicate<Order> predicate = preparePredicate(" f/Prata Sandwich dt/01-10-2018 10:00:00");
+        FindCommand command = new FindCommand(predicate);
+        expectedModel.updateFilteredOrderList(predicate);
+        assertCommandSuccess(command, model, commandHistory, expectedMessage, expectedModel);
+        assertEquals(Arrays.asList(ALICE, FIONA), model.getFilteredOrderList());
+    }
+
+    @Test
+    public void execute_multiplePrefixMultipleKeywords_zeroOrderFound() throws ParseException {
+        String expectedMessage = String.format(MESSAGE_ORDERS_LISTED_OVERVIEW, 0);
+        Predicate<Order> predicate =
+                preparePredicate(" f/Milo Chicken a/Jurong");
+        FindCommand command = new FindCommand(predicate);
+        expectedModel.updateFilteredOrderList(predicate);
+        assertCommandSuccess(command, model, commandHistory, expectedMessage, expectedModel);
+        assertEquals(Collections.emptyList(), model.getFilteredOrderList());
+    }
+
+    @Test
+    public void execute_singleRepeatedPrefixSingleKeywordTakeLast_multipleOrdersFound() throws ParseException {
+        String expectedMessage = String.format(MESSAGE_ORDERS_LISTED_OVERVIEW, 1);
+        Predicate<Order> predicate = preparePredicate(" f/Prata f/Sandwich");
+        FindCommand command = new FindCommand(predicate);
+        expectedModel.updateFilteredOrderList(predicate);
+        assertCommandSuccess(command, model, commandHistory, expectedMessage, expectedModel);
+        assertEquals(Arrays.asList(FIONA), model.getFilteredOrderList());
+    }
+
+    @Test
+    public void execute_singleRepeatedPrefixSingleKeywordTakeRange_multipleOrdersFound() throws ParseException {
         String expectedMessage = String.format(MESSAGE_ORDERS_LISTED_OVERVIEW, 3);
-        OrderContainsAnyKeywordsPredicate predicate = prepareNamePredicate("Kurz Elle Kunz");
+        Predicate<Order> predicate = preparePredicate(" dt/02-10-2018 10:00:00 dt/03-10-2018 14:00:00");
         FindCommand command = new FindCommand(predicate);
         expectedModel.updateFilteredOrderList(predicate);
         assertCommandSuccess(command, model, commandHistory, expectedMessage, expectedModel);
-        assertEquals(Arrays.asList(CARL, ELLE, FIONA), model.getFilteredOrderList());
+        assertEquals(Arrays.asList(BENSON, CARL, GEORGE), model.getFilteredOrderList());
     }
 
     @Test
-    public void execute_fullNameKeyword_singleOrderFound() {
+    public void execute_allSupportedPrefixesSingleKeyword_oneOrderFound() throws ParseException {
         String expectedMessage = String.format(MESSAGE_ORDERS_LISTED_OVERVIEW, 1);
-        OrderContainsAnyKeywordsPredicate predicate = prepareNamePredicate("Carl Kurz");
+        Predicate<Order> predicate =
+                preparePredicate(" n/alice p/94351253 a/Jurong West Ave 6 dt/01-10-2018 10:00:00 f/prata");
         FindCommand command = new FindCommand(predicate);
         expectedModel.updateFilteredOrderList(predicate);
         assertCommandSuccess(command, model, commandHistory, expectedMessage, expectedModel);
-        assertEquals(Arrays.asList(CARL), model.getFilteredOrderList());
+        assertEquals(Arrays.asList(ALICE), model.getFilteredOrderList());
     }
 
     @Test
-    public void execute_phoneKeyword_singleOrderFound() {
-        String expectedMessage = String.format(MESSAGE_ORDERS_LISTED_OVERVIEW, 1);
-        OrderContainsAnyKeywordsPredicate predicate = preparePhonePredicate(" 8765 2533 ");
+    public void execute_allSupportedPrefixesSingleKeyword_zeroOrderFound() throws ParseException {
+        String expectedMessage = String.format(MESSAGE_ORDERS_LISTED_OVERVIEW, 0);
+        Predicate<Order> predicate =
+                preparePredicate(" n/alice dt/01-10-2018 10:00:00 f/Chicken p/1223214 a/Block 38");
         FindCommand command = new FindCommand(predicate);
         expectedModel.updateFilteredOrderList(predicate);
         assertCommandSuccess(command, model, commandHistory, expectedMessage, expectedModel);
+        assertEquals(Collections.emptyList(), model.getFilteredOrderList());
     }
 
     /**
-     * Parses {@code userInput} into a {@code OrderContainsAnyKeywordsPredicate}.
+     * Parses {@code userInput} into a {@code FindCommand}.
      */
-    private OrderContainsAnyKeywordsPredicate prepareNamePredicate(String userInput) {
-        return new OrderNameContainsKeywordPredicate(Arrays.asList(userInput.split("\\s+")));
+    private Predicate<Order> preparePredicate(String userInput) throws ParseException {
+        ArgumentMultimap argMultimap = parseStringInput(userInput);
+
+        if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_PHONE, PREFIX_ADDRESS, PREFIX_DATE, PREFIX_FOOD)
+                || !argMultimap.getPreamble().isEmpty()) {
+            throw new ParseException(String.format(MESSAGE_INVALID_ORDER_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+        }
+
+        return new OrderPredicateUtil().parsePredicate(argMultimap);
+    }
+
+    private ArgumentMultimap parseStringInput(String input) {
+        return ArgumentTokenizer.tokenize(input, PREFIX_NAME, PREFIX_PHONE, PREFIX_ADDRESS, PREFIX_DATE, PREFIX_FOOD);
     }
 
     /**
-     * Parses {@code userInput} into a {@code OrderContainsAnyKeywordsPredicate}.
+     * Returns true if none of the prefixes contains empty {@code Optional} values in the given
+     * {@code ArgumentMultimap}.
      */
-    private OrderContainsAnyKeywordsPredicate preparePhonePredicate(String userInput) {
-        return new OrderPhoneContainsKeywordPredicate(userInput.trim().replaceAll("\\s+", ""));
+    private static boolean arePrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
+        return Stream.of(prefixes).anyMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
     }
 }
 

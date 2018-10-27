@@ -1,10 +1,13 @@
 package seedu.address.logic.parser.order;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_ORDER_COMMAND_FORMAT;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_FOOD;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 
-import java.util.Arrays;
+import java.util.function.Predicate;
 import java.util.stream.Stream;
 
 import seedu.address.logic.commands.order.FindCommand;
@@ -14,8 +17,7 @@ import seedu.address.logic.parser.ArgumentTokenizer;
 import seedu.address.logic.parser.Parser;
 import seedu.address.logic.parser.Prefix;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.order.OrderNameContainsKeywordPredicate;
-import seedu.address.model.order.OrderPhoneContainsKeywordPredicate;
+import seedu.address.model.order.Order;
 
 /**
  * Parses the given {@code String} of arguments in the context of the OrderFindCommand
@@ -32,22 +34,16 @@ public class FindCommandParser implements Parser<OrderCommand> {
     @Override
     public OrderCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE);
+                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_ADDRESS, PREFIX_DATE, PREFIX_FOOD);
 
-        if (arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_PHONE)) {
+        if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_PHONE, PREFIX_ADDRESS, PREFIX_DATE, PREFIX_FOOD)
+                || !argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_ORDER_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
         }
 
-        if (argMultimap.getValue(PREFIX_NAME).isPresent()) {
-            String name = argMultimap.getValue(PREFIX_NAME).get().trim();
-            String[] nameKeywords = name.split("\\s+");
-            return new FindCommand(new OrderNameContainsKeywordPredicate(Arrays.asList(nameKeywords)));
-        } else if (argMultimap.getValue(PREFIX_PHONE).isPresent()) {
-            String phone = argMultimap.getValue(PREFIX_PHONE).get();
-            return new FindCommand(new OrderPhoneContainsKeywordPredicate(phone));
-        } else {
-            throw new ParseException(String.format(MESSAGE_INVALID_ORDER_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
-        }
+        Predicate<Order> suppliedPredicates = new OrderPredicateUtil().parsePredicate(argMultimap);
+        return new FindCommand(suppliedPredicates);
+
     }
 
     /**
@@ -55,6 +51,6 @@ public class FindCommandParser implements Parser<OrderCommand> {
      * {@code ArgumentMultimap}.
      */
     private static boolean arePrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
-        return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
+        return Stream.of(prefixes).anyMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
     }
 }

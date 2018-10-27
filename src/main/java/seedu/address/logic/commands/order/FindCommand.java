@@ -2,12 +2,14 @@ package seedu.address.logic.commands.order;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.function.Predicate;
+
 import seedu.address.commons.core.Messages;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
-import seedu.address.model.order.OrderContainsAnyKeywordsPredicate;
+import seedu.address.model.order.Order;
 
 
 /**
@@ -18,15 +20,16 @@ public class FindCommand extends OrderCommand {
     public static final String COMMAND_WORD = "find";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Finds the order whose name or phone number contain any of "
+            + ": Finds the order whose keywords contain any of "
             + "the specified keywords (case-insensitive) and displays them as a list with index numbers.\n"
-            + "Parameters: n/NAME p/PHONE\n"
-            + "Example: " + OrderCommand.COMMAND_WORD + " " + COMMAND_WORD + " n/John \n"
-            + "Example: " + OrderCommand.COMMAND_WORD + " " + COMMAND_WORD + " p/1234578";
+            + "Parameters: [n/NAME] [p/PHONE] [a/ADDRESS] [dt/DATETIME] [f/FOOD]\n"
+            + "Example: " + OrderCommand.COMMAND_WORD + " " + COMMAND_WORD + " n/John f/Ice Milo\n"
+            + "Example: " + OrderCommand.COMMAND_WORD + " " + COMMAND_WORD
+            + " dt/01-10-2018 10:00:00 dt/03-10-2018 10:00:00";
 
-    private final OrderContainsAnyKeywordsPredicate predicate;
+    private final Predicate<Order> predicate;
 
-    public FindCommand(OrderContainsAnyKeywordsPredicate predicate) {
+    public FindCommand(Predicate<Order> predicate) {
         this.predicate = predicate;
     }
 

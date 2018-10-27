@@ -50,6 +50,9 @@ public class OrderDate {
         }
     }
 
+    public Date getDate() {
+        return date;
+    }
 
     @Override
     public String toString() {

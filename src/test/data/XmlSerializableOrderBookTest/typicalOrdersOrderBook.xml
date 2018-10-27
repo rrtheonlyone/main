@@ -13,7 +13,7 @@
         <name>Benson Meier</name>
         <phone>98765432</phone>
         <address>311, Clementi Ave 2, #02-25</address>
-        <date>01-10-2018 10:00:00</date>
+        <date>02-10-2018 10:00:00</date>
         <status>PENDING</status>
         <food>Egg Fried Rice</food>
         <food>Milo</food>
@@ -22,7 +22,7 @@
         <name>Carl Kurz</name>
         <phone>95352563</phone>
         <address>wall street</address>
-        <date>01-10-2018 10:00:00</date>
+        <date>03-10-2018 10:00:00</date>
         <status>PENDING</status>
         <food>Milkshake</food>
     </orders>
@@ -30,7 +30,7 @@
         <name>Daniel Meier</name>
         <phone>87652533</phone>
         <address>10th street</address>
-        <date>01-10-2018 10:00:00</date>
+        <date>04-10-2018 10:00:00</date>
         <status>PENDING</status>
         <food>Fish and Chips</food>
     </orders>
@@ -38,7 +38,7 @@
         <name>Elle Meyer</name>
         <phone>9482224</phone>
         <address>michegan ave</address>
-        <date>01-10-2018 10:00:00</date>
+        <date>05-10-2018 10:00:00</date>
         <status>PENDING</status>
         <food>Chicken Chop</food>
     </orders>
@@ -54,7 +54,7 @@
         <name>George Best</name>
         <phone>9482442</phone>
         <address>4th street</address>
-        <date>01-10-2018 10:00:00</date>
+        <date>03-10-2018 14:00:00</date>
         <status>PENDING</status>
         <food>Ice cream</food>
     </orders>
