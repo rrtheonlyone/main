@@ -2,9 +2,12 @@ package seedu.address.ui.util;
 
 import java.util.Map;
 
+/**
+ * A cache that maps postal codes to districts on the Singapore map
+ */
 public class MapDataUtil {
 
-    static public final Map<String, Integer> POSTAL_CODE_CACHE = Map.ofEntries(
+    public static final Map<String, Integer> POSTAL_CODE_CACHE = Map.ofEntries(
             Map.entry("01", 1),
             Map.entry("02", 1),
             Map.entry("03", 1),
@@ -115,7 +118,7 @@ public class MapDataUtil {
             Map.entry("80", 28)
     );
 
-    static public final Map<Integer, Integer[]> DISTRICT_CACHE = Map.ofEntries(
+    public static final Map<Integer, Integer[]> DISTRICT_CACHE = Map.ofEntries(
             Map.entry(1, new Integer[]{8, 5}),
             Map.entry(2, new Integer[]{9, 5}),
             Map.entry(3, new Integer[]{8, 4}),

@@ -6,14 +6,12 @@ import static seedu.address.ui.util.MapDataUtil.POSTAL_CODE_CACHE;
 import java.util.HashMap;
 import java.util.logging.Logger;
 
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.model.order.Order;
 
 /**
  * An UI component that displays a map along with placeholders for pending {@code Order}.
@@ -43,7 +41,7 @@ public class MapPanel extends UiPart<Region> {
         // for each postal code
         for (String code : orderMap.keySet()) {
 
-            String postalCodeKey = code.substring(0,2);
+            String postalCodeKey = code.substring(0, 2);
             if (POSTAL_CODE_CACHE.containsKey(postalCodeKey)) {
                 int regionCode = POSTAL_CODE_CACHE.get(postalCodeKey);
                 Integer[] coordinates = DISTRICT_CACHE.get(regionCode);

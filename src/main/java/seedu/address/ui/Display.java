@@ -13,7 +13,6 @@ import javafx.scene.layout.StackPane;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.OrderPanelSelectionChangedEvent;
 import seedu.address.model.order.Order;
-import seedu.address.model.order.OrderStatus;
 
 /**
  * Panel containing the main display - map and side content.
