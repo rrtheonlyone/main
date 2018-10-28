@@ -11,9 +11,9 @@ import seedu.address.logic.Logic;
 /**
  * Panel containing the main split pane.
  */
-public class LoggedInPanel extends UiPart<Region> {
+public class Dashboard extends UiPart<Region> {
 
-    private static final String FXML = "LoggedInPanel.fxml";
+    private static final String FXML = "Dashboard.fxml";
     private final Logger logger = LogsCenter.getLogger(LoginPanel.class);
 
     private Display display;
@@ -31,7 +31,7 @@ public class LoggedInPanel extends UiPart<Region> {
     private StackPane deliveryMenListPanelPlaceholder;
 
 
-    public LoggedInPanel(Logic logic) {
+    public Dashboard(Logic logic) {
         super(FXML);
         display = new Display();
         displayPlaceholder.getChildren().add(display.getRoot());
