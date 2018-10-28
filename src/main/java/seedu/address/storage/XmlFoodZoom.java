@@ -31,12 +31,10 @@ public class XmlFoodZoom {
     }
 
     public OrderBook getOrderBook() throws IllegalValueException {
-        deliverymenList.toModelType();
         return orderBook.toModelType();
     }
 
     public DeliverymenList getDeliverymenList() throws IllegalValueException {
-        orderBook.toModelType();
         return deliverymenList.toModelType();
     }
 }

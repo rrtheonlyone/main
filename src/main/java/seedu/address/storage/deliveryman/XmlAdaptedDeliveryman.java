@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlID;
+import javax.xml.bind.annotation.XmlIDREF;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.common.Name;
@@ -33,10 +34,8 @@ public class XmlAdaptedDeliveryman {
     @XmlElement(required = true)
     private String name;
     @XmlElement(required = true)
+    @XmlIDREF
     private List<XmlAdaptedOrder> orders = new ArrayList<>();
-
-    @XmlElement
-    private List<String> orderIds;
 
     public XmlAdaptedDeliveryman() {}
 
