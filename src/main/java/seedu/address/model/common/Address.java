@@ -13,8 +13,8 @@ import java.util.regex.Pattern;
 public class Address {
 
     public static final String MESSAGE_ADDRESS_CONSTRAINTS =
-            "Addresses can take any values, and it should not be blank. The last 6 characters should be a valid " +
-                    "postal code";
+            "Addresses can take any values, and it should not be blank. The last 6 characters should be a valid "
+                    + "postal code";
 
     /*
      * The first character of the address must not be a whitespace,
