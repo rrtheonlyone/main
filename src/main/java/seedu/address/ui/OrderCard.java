@@ -31,6 +31,8 @@ public class OrderCard extends UiPart<Region> {
     private Label foodList;
     @FXML
     private Label orderDate;
+    @FXML
+    private Label orderStatus;
 
     public OrderCard(Order order, int displayedIndex) {
         super(FXML);
@@ -46,6 +48,7 @@ public class OrderCard extends UiPart<Region> {
         foodList.setText(sb.toString());
 
         orderDate.setText(order.getDate().toString());
+        orderStatus.setText(order.getOrderStatus().toString());
     }
 
     @Override
