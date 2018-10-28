@@ -33,7 +33,7 @@ public class Dashboard extends UiPart<Region> {
 
     public Dashboard(Logic logic) {
         super(FXML);
-        display = new Display();
+        display = new Display(logic.getFilteredOrderList());
         displayPlaceholder.getChildren().add(display.getRoot());
 
         orderListPanel = new OrderListPanel(logic.getFilteredOrderList());
