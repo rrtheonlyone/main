@@ -180,7 +180,7 @@ public class ParserUtil {
         if (!Username.isValidUsername(trimmedUsername)) {
             throw new ParseException(Username.MESSAGE_USERNAME_CONSTRAINTS);
         }
-        return new Username(trimmedUsername);
+        return new Username(trimmedUsername.toLowerCase());
     }
 
     /**
