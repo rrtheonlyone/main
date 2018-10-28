@@ -1,11 +1,7 @@
 package seedu.address.model.common;
 
-import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
-import static seedu.address.testutil.TypicalOrders.ALICE;
-import static seedu.address.testutil.TypicalOrders.BENSON;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-
 
 import org.junit.Test;
 
@@ -29,8 +25,8 @@ public class AddressTest {
     @Test
     public void getPostalCode() {
         String[] postalCodes = {"654321", "100321", "100000", "123456"};
-        String[] directory = {"1234 Johnson Street 654321", "Block 123, Fire Road, #10-10, 100321"
-                            , "Block 546, 100000", "Triad Street, 123456"};
+        String[] directory = {"1234 Johnson Street 654321", "Block 123, Fire Road, #10-10, 100321, "
+                + "Block 546, 100000", "Triad Street, 123456"};
 
         for (int i = 0; i < directory.length; i++) {
             Order order = new OrderBuilder().withAddress(directory[i]).build();

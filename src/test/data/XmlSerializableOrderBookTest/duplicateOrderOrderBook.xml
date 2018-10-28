@@ -4,7 +4,7 @@
     <orders tag="e7dc53e1-a1a0-4208-8f29-a6b24f215ff9">
         <name>Alice Pauline</name>
         <phone>94351253</phone>
-        <address>123, Jurong West Ave 6, #08-111</address>
+        <address>123, Jurong West Ave 6, #08-111, 612234</address>
         <date>01-10-2018 10:00:00</date>
         <status>PENDING</status>
         <food>chocolate milk</food>
@@ -14,7 +14,7 @@
     <orders tag="e7dc53e1-a1a0-4208-8f29-a6b24f215ff9">
         <name>Alice Pauline</name>
         <phone>94351253</phone>
-        <address>4th street</address>
+        <address>4th street, 612234</address>
         <date>01-10-2018 10:00:00</date>
         <status>PENDING</status>
         <food>tea</food>

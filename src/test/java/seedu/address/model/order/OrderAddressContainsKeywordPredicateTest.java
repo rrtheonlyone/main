@@ -41,27 +41,27 @@ public class OrderAddressContainsKeywordPredicateTest {
     public void test_addressContainsKeywords_returnsTrue() {
         // Exact match
         OrderAddressContainsKeywordPredicate predicate =
-                new OrderAddressContainsKeywordPredicate("Block 312, Amy Street 1");
-        assertTrue(predicate.test(new OrderBuilder().withAddress("Block 312, Amy Street 1").build()));
+                new OrderAddressContainsKeywordPredicate("Block 312, Amy Street 1, 612234");
+        assertTrue(predicate.test(new OrderBuilder().withAddress("Block 312, Amy Street 1, 612234").build()));
 
         // Partial match
         predicate = new OrderAddressContainsKeywordPredicate("Block 312");
-        assertTrue(predicate.test(new OrderBuilder().withAddress("Block 312, Amy Street 1").build()));
+        assertTrue(predicate.test(new OrderBuilder().withAddress("Block 312, Amy Street 1, 612234").build()));
 
         // Leading and trailing whitespaces
         predicate = new OrderAddressContainsKeywordPredicate("    Block 312, Amy Street 1    ");
-        assertTrue(predicate.test(new OrderBuilder().withAddress("Block 312, Amy Street 1").build()));
+        assertTrue(predicate.test(new OrderBuilder().withAddress("Block 312, Amy Street 1, 612234").build()));
 
         // Mixed-case keywords
         predicate = new OrderAddressContainsKeywordPredicate("bLoCk 31");
-        assertTrue(predicate.test(new OrderBuilder().withAddress("Block 31").build()));
+        assertTrue(predicate.test(new OrderBuilder().withAddress("Block 31, 612234").build()));
     }
 
     @Test
     public void test_addressDoesNotContainKeywords_returnsFalse() {
         // Non-matching keyword
         OrderAddressContainsKeywordPredicate predicate =
-                new OrderAddressContainsKeywordPredicate("Block 123, Bobby Street 3");
-        assertFalse(predicate.test(new OrderBuilder().withAddress("Block 312, Amy Street 1").build()));
+                new OrderAddressContainsKeywordPredicate("Block 123, Bobby Street 3, 612234");
+        assertFalse(predicate.test(new OrderBuilder().withAddress("Block 312, Amy Street 1, 612234").build()));
     }
 }
