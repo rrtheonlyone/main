@@ -2,6 +2,7 @@ package seedu.address.logic;
 
 import static org.junit.Assert.assertEquals;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_ORDER_DISPLAYED_INDEX;
+import static seedu.address.commons.core.Messages.MESSAGE_REQUIRE_LOGIN;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_MANAGER_NAME_IDA;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_MANAGER_PASSWORD_IDA;
@@ -17,6 +18,7 @@ import org.junit.rules.ExpectedException;
 
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.HistoryCommand;
+import seedu.address.logic.commands.LogoutCommand;
 import seedu.address.logic.commands.SignUpCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.commands.order.ListCommand;
@@ -70,6 +72,15 @@ public class LogicManagerTest {
     public void getFilteredPersonList_modifyList_throwsUnsupportedOperationException() {
         thrown.expect(UnsupportedOperationException.class);
         logic.getFilteredOrderList().remove(0);
+    }
+
+    @Test
+    public void execute_validCommand_notLogin() {
+        String logoutCommand = LogoutCommand.COMMAND_WORD;
+        assertCommandSuccess(logoutCommand, LogoutCommand.MESSAGE_SUCCESS, model);
+
+        String listCommand = OrderCommand.COMMAND_WORD + " " + ListCommand.COMMAND_WORD;
+        assertCommandException(listCommand, MESSAGE_REQUIRE_LOGIN);
     }
 
     /**

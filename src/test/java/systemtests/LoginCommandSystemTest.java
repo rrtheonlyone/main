@@ -37,7 +37,7 @@ public class LoginCommandSystemTest extends OrderBookSystemTest {
                 + " " + PREFIX_PASSWORD + VALID_MANAGER_PASSWORD_HOON;
         expectedResultMessage = String.format(LoginCommand.MESSAGE_ALREADY_LOGGED_IN,
                 VALID_MANAGER_USERNAME_ALICE) + "\n" + LoginCommand.MESSAGE_REDIRECT_TO_LOGOUT;
-        assertCommandSuccess(command, expectedModel, expectedResultMessage);
+        assertCommandLoginFailure(command, expectedResultMessage);
     }
 
     @Test
@@ -82,15 +82,7 @@ public class LoginCommandSystemTest extends OrderBookSystemTest {
 
 
     /**
-     * Executes {@code command} and verifies that the command box displays an empty string, the result display
-     * box displays {@code Messages#MESSAGE_ORDERS_LISTED_OVERVIEW} with the number of people in the filtered list,
-     * and the model related components equal to {@code expectedModel}.
-     * These verifications are done by
-     * {@code OrderBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
-     * Also verifies that the status bar remains unchanged, and the command box has the default style class, and the
-     * selected card updated accordingly, depending on {@code cardStatus}.
-     *
-     * @see OrderBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
+     * Assert that login command succeed with order panel showing. Command box should be empty and default style.
      */
     private void assertCommandSuccess(String command, Model expectedModel, String expectedResultMessage) {
 
@@ -102,20 +94,24 @@ public class LoginCommandSystemTest extends OrderBookSystemTest {
     }
 
     /**
-     * Executes {@code command} and verifies that the command box displays {@code command}, the result display
-     * box displays {@code expectedResultMessage} and the model related components equal to the current model.
-     * These verifications are done by
-     * {@code OrderBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
-     * Also verifies that the browser url, selected card and status bar remain unchanged, and the command box has the
-     * error style.
-     *
-     * @see OrderBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
+     * Assert that login command fails. Command box should be empty and default style.
      */
     private void assertCommandFailure(String command, String expectedResultMessage) {
         Model expectedModel = getModel();
         executeCommand(command);
         assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
         assertCommandBoxShowsDefaultStyle();
+        assertStatusBarUnchanged();
+    }
+
+    /**
+     * Assert that after login, user cannot login again.
+     */
+    private void assertCommandLoginFailure(String command, String expectedResultMessage) {
+        Model expectedModel = getModel();
+        executeCommand(command);
+        assertApplicationDisplaysExpected(command, expectedResultMessage, expectedModel);
+        assertCommandBoxShowsErrorStyle();
         assertStatusBarUnchanged();
     }
 }
