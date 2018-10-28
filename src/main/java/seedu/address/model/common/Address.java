@@ -48,7 +48,6 @@ public class Address {
     public String getPostalCode() {
         Pattern pattern = Pattern.compile(ADDRESS_VALIDATION_REGEX);
         Matcher matcher = pattern.matcher(value);
-        System.out.println(value);
 
         matcher.matches();
 
