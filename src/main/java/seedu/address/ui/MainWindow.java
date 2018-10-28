@@ -44,7 +44,7 @@ public class MainWindow extends UiPart<Stage> {
     private HelpWindow helpWindow;
 
     private LoginPanel loginPanel;
-    private LoggedInPanel loggedInPanel;
+    private Dashboard loggedInPanel;
 
     @FXML
     private StackPane commandBoxPlaceholder;
@@ -143,7 +143,7 @@ public class MainWindow extends UiPart<Stage> {
     void displayLoggedInPanel() {
         mainDisplayPlaceholder.getChildren().removeAll(loginPanel.getRoot());
 
-        loggedInPanel = new LoggedInPanel(logic);
+        loggedInPanel = new Dashboard(logic);
         mainDisplayPlaceholder.getChildren().add(loggedInPanel.getRoot());
     }
 

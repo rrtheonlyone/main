@@ -11,7 +11,8 @@
     <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
           AnchorPane.topAnchor="0.0">
         <SplitPane fx:id="mainSplitPane" dividerPositions="0.4" VBox.vgrow="ALWAYS">
-            <VBox fx:id="personList" minWidth="260" prefWidth="260" SplitPane.resizableWithParent="false">
+
+            <VBox minWidth="260" maxWidth="260" SplitPane.resizableWithParent="false">
                 <padding>
                     <Insets bottom="10" left="10" right="10" top="10"/>
                 </padding>
@@ -19,13 +20,13 @@
             </VBox>
 
             <VBox>
-                <StackPane fx:id="displayPlaceholder" prefWidth="340">
+                <StackPane fx:id="displayPlaceholder" prefWidth="340" VBox.vgrow="ALWAYS">
                     <padding>
                         <Insets bottom="10" left="10" right="10" top="10"/>
                     </padding>
                 </StackPane>
 
-                <StackPane fx:id="deliveryMenListPanelPlaceholder">
+                <StackPane minHeight="200" maxHeight="200" fx:id="deliveryMenListPanelPlaceholder">
                     <padding>
                         <Insets bottom="10" left="10" right="10" top="10"/>
                     </padding>
