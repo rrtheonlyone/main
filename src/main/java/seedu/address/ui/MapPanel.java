@@ -19,7 +19,7 @@ import seedu.address.commons.core.LogsCenter;
 public class MapPanel extends UiPart<Region> {
 
     private static final String FXML = "MapPanel.fxml";
-    private static final String PLACEHOLDER_IMAGE_PATH = "/images/receipt.png";
+    private static final String PLACEHOLDER_IMAGE_PATH = "/images/order_placeholder.png";
 
     private final Logger logger = LogsCenter.getLogger(MapPanel.class);
 
@@ -39,16 +39,18 @@ public class MapPanel extends UiPart<Region> {
      */
     public void initialise(HashMap<String, Integer> orderMap) {
         // for each postal code
-        for (String code : orderMap.keySet()) {
+        for (String postalCodeKey : orderMap.keySet()) {
 
-            String postalCodeKey = code.substring(0, 2);
             if (POSTAL_CODE_CACHE.containsKey(postalCodeKey)) {
+
+                logger.info(postalCodeKey + " " + orderMap.get(postalCodeKey));
+
                 int regionCode = POSTAL_CODE_CACHE.get(postalCodeKey);
                 Integer[] coordinates = DISTRICT_CACHE.get(regionCode);
 
                 placeholderContainer = new ImageView(placeholder);
 
-                int count = orderMap.get(code);
+                int count = orderMap.get(postalCodeKey);
                 int increment = 16 + count * 2;
 
                 placeholderContainer.setPreserveRatio(true);

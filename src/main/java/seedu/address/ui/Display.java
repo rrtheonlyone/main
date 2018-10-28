@@ -42,12 +42,14 @@ public class Display extends UiPart<Region> {
 
                     directory = new HashMap<>();
                     for (Order o : change.getList()) {
+                        logger.info("UPDATE " + o.toString());
                         if (o.getOrderStatus().toString().equals("PENDING")) {
                             String postalCode = o.getAddress().getPostalCode();
-                            if (directory.containsKey(postalCode)) {
-                                directory.put(postalCode, directory.get(postalCode) + 1);
+                            String postalCodeKey = postalCode.substring(0, 2);
+                            if (directory.containsKey(postalCodeKey)) {
+                                directory.put(postalCodeKey, directory.get(postalCodeKey) + 1);
                             } else {
-                                directory.put(postalCode, 1);
+                                directory.put(postalCodeKey, 1);
                             }
                         }
                     }
@@ -60,11 +62,12 @@ public class Display extends UiPart<Region> {
                         logger.info("REMOVED " + o.toString());
                         if (o.getOrderStatus().toString().equals("PENDING")) {
                             String postalCode = o.getAddress().getPostalCode();
-                            if (directory.containsKey(postalCode)) {
-                                if (directory.get(postalCode) <= 1) {
-                                    directory.remove(postalCode);
+                            String postalCodeKey = postalCode.substring(0, 2);
+                            if (directory.containsKey(postalCodeKey)) {
+                                if (directory.get(postalCodeKey) <= 1) {
+                                    directory.remove(postalCodeKey);
                                 } else {
-                                    directory.put(postalCode, directory.get(postalCode) - 1);
+                                    directory.put(postalCodeKey, directory.get(postalCodeKey) - 1);
                                 }
                             }
                         }
@@ -74,10 +77,11 @@ public class Display extends UiPart<Region> {
                         logger.info("ADDED " + o.toString());
                         if (o.getOrderStatus().toString().equals("PENDING")) {
                             String postalCode = o.getAddress().getPostalCode();
-                            if (directory.containsKey(postalCode)) {
-                                directory.put(postalCode, directory.get(postalCode) + 1);
+                            String postalCodeKey = postalCode.substring(0, 2);
+                            if (directory.containsKey(postalCodeKey)) {
+                                directory.put(postalCodeKey, directory.get(postalCodeKey) + 1);
                             } else {
-                                directory.put(postalCode, 1);
+                                directory.put(postalCodeKey, 1);
                             }
                         }
                     }
@@ -102,10 +106,12 @@ public class Display extends UiPart<Region> {
             // map all pending orders
             if (o.getOrderStatus().toString().equals("PENDING")) {
                 String postalCode = o.getAddress().getPostalCode();
-                if (directory.containsKey(postalCode)) {
-                    directory.put(postalCode, directory.get(postalCode) + 1);
+                String postalCodeKey = postalCode.substring(0, 2);
+
+                if (directory.containsKey(postalCodeKey)) {
+                    directory.put(postalCodeKey, directory.get(postalCodeKey) + 1);
                 } else {
-                    directory.put(postalCode, 1);
+                    directory.put(postalCodeKey, 1);
                 }
             }
         }
