@@ -9,6 +9,7 @@ import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
+import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.LoginCommand;
@@ -73,7 +74,7 @@ public class LogicManager extends ComponentManager implements Logic {
     private boolean isNotAuthenticatedCommand(Command command) {
         return command instanceof LoginCommand || command instanceof SignUpCommand
                 || command instanceof HelpCommand || command instanceof HistoryCommand
-                || command instanceof LogoutCommand;
+                || command instanceof LogoutCommand || command instanceof ExitCommand;
 
     }
 }
