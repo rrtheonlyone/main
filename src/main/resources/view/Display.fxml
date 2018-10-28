@@ -21,15 +21,9 @@
             <ProgressBar fx:id="progressBar" prefWidth="200.0" progress="0.5" />
          </children>
       </HBox>
+
         <StackPane fx:id="mapWrapper">
-         <children>
-            <ImageView fitHeight="300.0" fitWidth="550.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../images/sgmap.png" />
-               </image>
-            </ImageView>
-         </children>
-      </StackPane>
+        </StackPane>
 
     </VBox>
 
