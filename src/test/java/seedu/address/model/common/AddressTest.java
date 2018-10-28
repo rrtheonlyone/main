@@ -25,8 +25,8 @@ public class AddressTest {
     @Test
     public void getPostalCode() {
         String[] postalCodes = {"654321", "100321", "100000", "123456"};
-        String[] directory = {"1234 Johnson Street 654321", "Block 123, Fire Road, #10-10, 100321, "
-                + "Block 546, 100000", "Triad Street, 123456"};
+        String[] directory = {"1234 Johnson Street 654321", "Block 123, Fire Road, #10-10, 100321",
+            "Block 546, 100000", "Triad Street, 123456"};
 
         for (int i = 0; i < directory.length; i++) {
             Order order = new OrderBuilder().withAddress(directory[i]).build();
@@ -48,6 +48,11 @@ public class AddressTest {
         assertFalse(Address.isValidAddress("Blk 456, Den Road, #01-355"));
         assertFalse(Address.isValidAddress("-")); // one character
         assertFalse(Address.isValidAddress("Leng Inc; 1234 Market St; San Francisco CA 2349879; USA"));
+
+        // invalid address - postal code not at the end
+        assertFalse(Address.isValidAddress("Blk 456, Den Road, 600123, #01-355"));
+        assertFalse(Address.isValidAddress("Blk 456, Den Road, #01-355, 600123, "));
+        assertFalse(Address.isValidAddress("Blk 456, Den Road, #01-355, 600123 "));
 
         // valid address
         assertTrue(Address.isValidAddress("Blk 456, Den Road, #01-355, 610123"));
