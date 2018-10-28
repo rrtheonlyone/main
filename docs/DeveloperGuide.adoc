@@ -524,11 +524,14 @@ a `ParseException` would be thrown.
 ** Pros: Allows for greater flexibility in how deliverymen interact with other resources like order/routes - better separation of concerns.
 ** Cons: Harder to implement & maintain
 
-* **Alternative 2:** Deliverymen are stored in the same file as `Order` s
+* **Alternative 2:** Deliverymen are stored in the same file as `Order`
 ** Pros: Easier to implement & maintain
 ** Cons: Deliveryman can only be accessed & treated as parts of an `Order`
 
-=== Create Route Feature
+=== Create Route Feature [deprecated since v1.2.1]
+This feature is deprecated as there was a design change regarding the relationship between delivery man and order.
+Previously, route was the middleman between delivery men and orders. Now, delivery men and orders are directly related.
+Route is removed as its existence will complicate implementations of other features without adding much benefit.
 
 ==== Current Implementation
 The `create` route command allows creation of routes in FoodZoom.
