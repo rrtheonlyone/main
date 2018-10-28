@@ -57,7 +57,14 @@ Format: `/help`
 
 === Sign up for system : `/signup` `[Since v1.1]`
 
+Sign up for a new manager account so that the manager can use the application. Once you sign up, you will be
+automatically logged into the application.
+
 Format: `/signup n/NAME u/USERNAME pw/PASSWORD`
+
+* *NAME*: Can be alphanumeric and spaces are allowed, it should not be blank and be 1 to 64 characters long.
+* *USERNAME*: Can be alphanumeric and spaces are *NOT* allowed, it should not be blank and be 3 to 64 characters long.
+* *PASSWORD*: Can be alphanumeric, should be at least *6* characters long and spaces are *NOT* allowed.
 
 Examples:
 
@@ -65,13 +72,22 @@ Examples:
 
 === Login to system : `/login` `[Since v1.1]`
 
+Login into the application so that the manager can use the application. Once you login, you can use the authenticated
+ commands.
+
 Format: `/login u/USERNAME pw/PASSWORD`
+
+* *USERNAME*: Can be alphanumeric and spaces are *NOT* allowed, it should not be blank and be 3 to 64 characters long.
+* *PASSWORD*: Can be alphanumeric, should be at least *6* characters long and spaces are *NOT* allowed.
 
 Examples:
 
 * `/login u/manager pw/password`
 
-=== Logout from system : `/logout` `[Coming in v2.0]`
+
+=== Logout from system : `/logout` `[Since v1.3]`
+
+Logout from the application.
 
 Format: `/logout`
 

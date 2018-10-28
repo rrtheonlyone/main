@@ -401,6 +401,19 @@ store locally.
 ** Cons: Would break the SRP (Single Responsibility Principle) because `User` class should only be about the user and
  nothing to do with login at all.
 
+===== Aspect: Checking if user is logged in
+
+* **Alternative 1 (current choice):** Check if user is logged in after command is parsed
+** Pros: It is easy to implement and it doesn't violate the SRP because it wouldn't make sense to check if the user
+is logged in inside a method that is supposed to be parsing the user input.
+** Cons: User is able to type authenticated commands like `/order add` and receive a parse exception which is the
+incorrect behavior.
+
+* **Alternative 2:** Check if user is logged in before command is parsed
+** Pros: It is easy to implement.
+** Cons: It breaks the SRP because `parseCommand` method should only be used to parse commands and not check for user
+ logged in status.
+
 === Find Order Feature
 
 ==== Current Implementation
