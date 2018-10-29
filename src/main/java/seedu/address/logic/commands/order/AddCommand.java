@@ -29,7 +29,7 @@ public class AddCommand extends OrderCommand {
             + "Example: " + OrderCommand.COMMAND_WORD + " " + COMMAND_WORD + " "
             + PREFIX_NAME + "John Doe "
             + PREFIX_PHONE + "98765432 "
-            + PREFIX_ADDRESS + "311, Clementi Ave 2, #02-25 "
+            + PREFIX_ADDRESS + "311, Clementi Ave 2, #02-25, 612344 "
             + PREFIX_FOOD + "Roti Prata "
             + PREFIX_FOOD + "Ice Milo "
             + PREFIX_DATE + "12-10-2018 00:00:00";

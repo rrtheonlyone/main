@@ -20,7 +20,7 @@ public class OrderBuilder {
 
     public static final String DEFAULT_NAME = "Alice Pauline";
     public static final String DEFAULT_PHONE = "85355255";
-    public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
+    public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111, 612321";
     public static final String DEFAULT_STATUS = "PENDING";
     public static final String DEFAULT_DATE = "01-10-2018 10:00:00";
     public static final String DEFAULT_FOOD = "Fried Rice";

@@ -40,9 +40,9 @@ public class CommandTestUtil {
     public static final String VALID_PHONE_BOB = "22222222";
     public static final String VALID_EMAIL_AMY = "amy@example.com";
     public static final String VALID_EMAIL_BOB = "bob@example.com";
-    public static final String VALID_ADDRESS_AMY = "Block 312, Amy Street 1";
-    public static final String VALID_ADDRESS_BOB = "Block 123, Bobby Street 3";
-    public static final String VALID_ADDRESS_ANGMOKIO = "123 Ang Mo Kio St";
+    public static final String VALID_ADDRESS_AMY = "Block 312, Amy Street 1, 612321";
+    public static final String VALID_ADDRESS_BOB = "Block 123, Bobby Street 3, 612321";
+    public static final String VALID_ADDRESS_ANGMOKIO = "123 Ang Mo Kio St, 612321";
     public static final String VALID_DATE_AMY = "01-10-2018 10:00:00";
     public static final String VALID_DATE_BOB = "02-10-2018 10:00:00";
     public static final String VALID_TAG_HUSBAND = "husband";
