@@ -19,7 +19,7 @@ import guitests.guihandles.OrderCardHandle;
 import guitests.guihandles.OrderListPanelHandle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import seedu.address.commons.events.ui.JumpToListRequestEvent;
+import seedu.address.commons.events.ui.JumpToOrderListRequestEvent;
 import seedu.address.commons.util.FileUtil;
 import seedu.address.commons.util.XmlUtil;
 import seedu.address.model.order.Order;
@@ -29,7 +29,8 @@ public class OrderListPanelTest extends GuiUnitTest {
     private static final ObservableList<Order> TYPICAL_ORDERS =
             FXCollections.observableList(getTypicalOrders());
 
-    private static final JumpToListRequestEvent JUMP_TO_SECOND_EVENT = new JumpToListRequestEvent(INDEX_SECOND);
+    private static final JumpToOrderListRequestEvent JUMP_TO_SECOND_EVENT =
+            new JumpToOrderListRequestEvent(INDEX_SECOND);
 
     private static final Path TEST_DATA_FOLDER = Paths.get("src", "test", "data", "sandbox");
 

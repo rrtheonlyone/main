@@ -71,7 +71,8 @@
 }
 
 #orderListView .list-cell:filled:selected {
-    -fx-background-color: #424d5f;
+    -fx-background-color: #ffdef6;
+    -fx-font-weight: bold;
 }
 
 .scroll-bar {
