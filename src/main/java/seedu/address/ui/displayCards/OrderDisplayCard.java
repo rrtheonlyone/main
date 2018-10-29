@@ -3,7 +3,6 @@ package seedu.address.ui.displayCards;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Region;
-import seedu.address.model.common.Name;
 import seedu.address.model.deliveryman.Deliveryman;
 import seedu.address.model.order.Order;
 import seedu.address.ui.UiPart;

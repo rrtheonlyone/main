@@ -64,8 +64,6 @@
     -fx-background-color: #e5ffde;
 }
 
-
-
 #orderListView .list-cell:filled:odd {
     -fx-background-color: derive(#e5ffde, 30%);
 }
@@ -145,8 +143,6 @@
 #deliverymanListView .list-cell:filled:even {
     -fx-background-color: #f8deff;
 }
-
-
 
 #deliverymanListView .list-cell:filled:odd {
     -fx-background-color: derive(#f8deff, 30%);

@@ -19,14 +19,14 @@ public class DeliverymanDisplayCard extends UiPart<Region> {
     @FXML
     private Label name;
     @FXML
-    private ListView<Order> orderListView;
+    private ListView<Order> orderListViewForCard;
 
     public DeliverymanDisplayCard(Deliveryman deliveryman) {
         super(FXML);
         this.deliveryman = deliveryman;
         name.setText(deliveryman.getName().fullName);
-        orderListView.setItems(FXCollections.observableArrayList(deliveryman.getOrders()));
-        orderListView.setCellFactory(listView -> new OrderListViewCell());
+        orderListViewForCard.setItems(FXCollections.observableArrayList(deliveryman.getOrders()));
+        orderListViewForCard.setCellFactory(listView -> new OrderListViewCell());
     }
 
     @Override
@@ -58,7 +58,7 @@ public class DeliverymanDisplayCard extends UiPart<Region> {
                 setGraphic(null);
                 setText(null);
             } else {
-                setGraphic(new OrderCard(order, getIndex() + 1).getRoot());
+                setGraphic(new OrderDisplayListCard(order).getRoot());
             }
         }
     }

@@ -1,9 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/javafx/1">
-    <Label fx:id="name" text="\$first" alignment="CENTER"/>
-    <Label fx:id="deliverymanName" text="\$first" alignment="CENTER"/>
-</VBox>
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="350.0" prefWidth="250.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <padding>
+      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+   </padding>
+   <center>
+        <VBox BorderPane.alignment="CENTER_LEFT">
+            <Label fx:id="name" text="\$first" style="-fx-font-weight:bold;"/>
+            <Label fx:id="deliverymanName" text="\$first" />
+        </VBox>
+   </center>
+</BorderPane>
