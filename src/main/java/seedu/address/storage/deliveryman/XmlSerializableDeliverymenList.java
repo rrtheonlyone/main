@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.deliveryman.Deliveryman;
@@ -14,7 +13,6 @@ import seedu.address.model.deliveryman.DeliverymenList;
 /**
  * An Immutable DeliverymenList that is serializable to XML format
  */
-@XmlRootElement(name = "deliverymenlist")
 public class XmlSerializableDeliverymenList {
 
     public static final String MESSAGE_DUPLICATE_DELIVERYMAN = "Deliverymen List contains duplicate deliverymen.";

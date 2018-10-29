@@ -7,7 +7,6 @@ import javax.xml.bind.JAXBException;
 
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.util.XmlUtil;
-import seedu.address.storage.deliveryman.XmlSerializableDeliverymenList;
 import seedu.address.storage.user.XmlSerializableUsersList;
 
 /**
@@ -15,29 +14,26 @@ import seedu.address.storage.user.XmlSerializableUsersList;
  */
 public class XmlFileStorage {
     /**
-     * Saves the given orderBook data to the specified file.
+     * Saves the data for FoodZoom to the specified file.
      */
-    public static void saveDataToFile(Path file, XmlSerializableOrderBook orderBook)
-            throws FileNotFoundException {
+    public static void saveFoodZoomDataToFile(Path file, XmlFoodZoom foodZoomData) throws FileNotFoundException {
         try {
-            XmlUtil.saveDataToFile(file, orderBook);
+            XmlUtil.saveDataToFile(file, foodZoomData);
         } catch (JAXBException e) {
             throw new AssertionError("Unexpected exception " + e.getMessage(), e);
         }
     }
 
     /**
-     * Returns address book in the file or an empty address book.
+     * Returns the FoodZoom data from file
      */
-    public static XmlSerializableOrderBook loadDataFromSaveFile(Path file) throws DataConversionException,
-            FileNotFoundException {
+    public static XmlFoodZoom loadFoodZoomDataFromSaveFile(Path file) throws FileNotFoundException {
         try {
-            return XmlUtil.getDataFromFile(file, XmlSerializableOrderBook.class);
+            return XmlUtil.getDataFromFile(file, XmlFoodZoom.class);
         } catch (JAXBException e) {
-            throw new DataConversionException(e);
+            throw new AssertionError("Unexpected exception " + e.getMessage(), e);
         }
     }
-
     /**
      * Saves the given users list data to the specified file.
      */
@@ -57,30 +53,6 @@ public class XmlFileStorage {
                                                                                        FileNotFoundException {
         try {
             return XmlUtil.getDataFromFile(file, XmlSerializableUsersList.class);
-        } catch (JAXBException e) {
-            throw new DataConversionException(e);
-        }
-    }
-
-    /**
-     * Saves the given deliverymen data to the specified file.
-     */
-    public static void saveDeliverymenDataToFile(Path file, XmlSerializableDeliverymenList deliverymenList)
-            throws FileNotFoundException {
-        try {
-            XmlUtil.saveDataToFile(file, deliverymenList);
-        } catch (JAXBException e) {
-            throw new AssertionError("Unexpected exception " + e.getMessage(), e);
-        }
-    }
-
-    /**
-     * Returns deliverymen list in the file or an empty deliverymen list
-     */
-    public static XmlSerializableDeliverymenList loadDeliverymenDataFromSaveFile(Path file)
-        throws DataConversionException, FileNotFoundException {
-        try {
-            return XmlUtil.getDataFromFile(file, XmlSerializableDeliverymenList.class);
         } catch (JAXBException e) {
             throw new DataConversionException(e);
         }

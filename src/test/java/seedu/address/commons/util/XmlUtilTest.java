@@ -20,9 +20,12 @@ import seedu.address.model.OrderBook;
 import seedu.address.model.deliveryman.DeliverymenList;
 import seedu.address.storage.XmlAdaptedFood;
 import seedu.address.storage.XmlAdaptedOrder;
+import seedu.address.storage.XmlFoodZoom;
 import seedu.address.storage.XmlSerializableOrderBook;
 import seedu.address.storage.deliveryman.XmlAdaptedDeliveryman;
 import seedu.address.storage.deliveryman.XmlSerializableDeliverymenList;
+import seedu.address.testutil.DeliverymanBuilder;
+import seedu.address.testutil.DeliverymenListBuilder;
 import seedu.address.testutil.OrderBookBuilder;
 import seedu.address.testutil.OrderBuilder;
 import seedu.address.testutil.TestUtil;
@@ -81,10 +84,11 @@ public class XmlUtilTest {
 
     @Test
     public void getDataFromFile_validFile_validResult() throws Exception {
-        OrderBook dataFromFile = XmlUtil.getDataFromFile(VALID_FILE, XmlSerializableOrderBook.class).toModelType();
+        OrderBook dataFromFile = XmlUtil.getDataFromFile(VALID_FILE,
+                XmlSerializableOrderBookWithRootElement.class).toModelType();
         assertEquals(9, dataFromFile.getOrderList().size());
         DeliverymenList deliverymenDataFromFile = XmlUtil.getDataFromFile(VALID_DELIVERYMEN_LIST_FILE,
-                XmlSerializableDeliverymenList.class).toModelType();
+                XmlSerializableDeliverymenListWithRootElement.class).toModelType();
         assertEquals(2, deliverymenDataFromFile.getDeliverymenList().size());
     }
 
@@ -146,18 +150,22 @@ public class XmlUtilTest {
     @Test
     public void saveDataToFile_validFile_dataSaved() throws Exception {
         FileUtil.createFile(TEMP_FILE);
-        XmlSerializableOrderBook dataToWrite = new XmlSerializableOrderBook(new OrderBook());
+        XmlFoodZoom dataToWrite = new XmlFoodZoom(new OrderBook(), new DeliverymenList());
         XmlUtil.saveDataToFile(TEMP_FILE, dataToWrite);
-        XmlSerializableOrderBook dataFromFile = XmlUtil.getDataFromFile(TEMP_FILE, XmlSerializableOrderBook.class);
-        assertEquals(dataToWrite, dataFromFile);
+        XmlFoodZoom dataFromFile = XmlUtil.getDataFromFile(TEMP_FILE,
+            XmlFoodZoom.class);
+        assertEquals(new OrderBook(), dataFromFile.getOrderBook());
+        assertEquals(new DeliverymenList(), dataFromFile.getDeliverymenList());
 
-        OrderBookBuilder builder = new OrderBookBuilder(new OrderBook());
-        dataToWrite = new XmlSerializableOrderBook(
-                builder.withOrder(new OrderBuilder().build()).build());
+        OrderBookBuilder builder = new OrderBookBuilder(new OrderBook()).withOrder(new OrderBuilder().build());
+        DeliverymenListBuilder dBuilder = new DeliverymenListBuilder(new DeliverymenList())
+            .withDeliveryman(new DeliverymanBuilder().build());
+        dataToWrite = new XmlFoodZoom(builder.build(), dBuilder.build());
 
         XmlUtil.saveDataToFile(TEMP_FILE, dataToWrite);
-        dataFromFile = XmlUtil.getDataFromFile(TEMP_FILE, XmlSerializableOrderBook.class);
-        assertEquals(dataToWrite, dataFromFile);
+        dataFromFile = XmlUtil.getDataFromFile(TEMP_FILE, XmlFoodZoom.class);
+        assertEquals(dataToWrite.getOrderBook(), dataFromFile.getOrderBook());
+        assertEquals(dataToWrite.getDeliverymenList(), dataFromFile.getDeliverymenList());
 
     }
 
@@ -174,4 +182,19 @@ public class XmlUtilTest {
      */
     @XmlRootElement(name = "deliveryman")
     private static class XmlAdaptedDeliverymanWithRootElement extends XmlAdaptedDeliveryman {}
+
+    /**
+     * Test class annotated with {@code XmlRootElement} to allow unmarshalling of .xml data to
+     * {@code XmlAdaptedDeliveryman} objects.
+     */
+    @XmlRootElement(name = "deliverymenlist")
+    private static class XmlSerializableDeliverymenListWithRootElement extends XmlSerializableDeliverymenList {}
+
+    /**
+     * Test class annotated with {@code XmlRootElement} to allow unmarshalling of .xml data to
+     * {@code XmlAdaptedDeliveryman} objects.
+     */
+    @XmlRootElement(name = "orderbook")
+    private static class XmlSerializableOrderBookWithRootElement extends XmlSerializableOrderBook {
+    }
 }

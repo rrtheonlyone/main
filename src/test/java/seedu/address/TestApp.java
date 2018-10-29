@@ -15,9 +15,12 @@ import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.OrderBook;
 import seedu.address.model.ReadOnlyOrderBook;
+import seedu.address.model.ReadOnlyUsersList;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.deliveryman.DeliverymenList;
 import seedu.address.storage.UserPrefsStorage;
-import seedu.address.storage.XmlSerializableOrderBook;
+import seedu.address.storage.XmlFoodZoom;
+import seedu.address.storage.user.XmlSerializableUsersList;
 import seedu.address.testutil.TestUtil;
 import systemtests.ModelHelper;
 
@@ -28,25 +31,40 @@ import systemtests.ModelHelper;
 public class TestApp extends MainApp {
 
     public static final Path SAVE_LOCATION_FOR_TESTING = TestUtil.getFilePathInSandboxFolder("sampleData.xml");
+    public static final Path USERS_SAVE_LOCATION_FOR_TESTING = TestUtil.getFilePathInSandboxFolder("sampleUsers.xml");
     public static final String APP_TITLE = "Test App";
 
     protected static final Path DEFAULT_PREF_FILE_LOCATION_FOR_TESTING =
             TestUtil.getFilePathInSandboxFolder("pref_testing.json");
-    protected Supplier<ReadOnlyOrderBook> initialDataSupplier = () -> null;
+    protected Supplier<ReadOnlyOrderBook> initialOrdersDataSupplier = () -> null;
+    protected Supplier<DeliverymenList> initialDeliverymenDataSupplier = () -> null;
+    protected Supplier<ReadOnlyUsersList> initialUsersListSupplier = () -> null;
     protected Path saveFileLocation = SAVE_LOCATION_FOR_TESTING;
+    protected Path usersSaveFileLocation = USERS_SAVE_LOCATION_FOR_TESTING;
 
     public TestApp() {
     }
 
-    public TestApp(Supplier<ReadOnlyOrderBook> initialDataSupplier, Path saveFileLocation) {
+    public TestApp(Supplier<ReadOnlyOrderBook> initialOrdersDataSupplier,
+                   Supplier<DeliverymenList> initialDeliverymenDataSupplier,
+                   Supplier<ReadOnlyUsersList> initialUsersListSupplier,
+                   Path saveFileLocation, Path usersSaveFileLocation) {
         super();
-        this.initialDataSupplier = initialDataSupplier;
+        this.initialOrdersDataSupplier = initialOrdersDataSupplier;
+        this.initialDeliverymenDataSupplier = initialDeliverymenDataSupplier;
+        this.initialUsersListSupplier = initialUsersListSupplier;
         this.saveFileLocation = saveFileLocation;
+        this.usersSaveFileLocation = usersSaveFileLocation;
 
-        // If some initial local data has been provided, write those to the file
-        if (initialDataSupplier.get() != null) {
-            createDataFileWithData(new XmlSerializableOrderBook(this.initialDataSupplier.get()),
-                    this.saveFileLocation);
+        // If some initial local data for both orders and deliverymen has been provided, write those to the file
+        if (initialOrdersDataSupplier.get() != null && initialDeliverymenDataSupplier.get() != null) {
+            createDataFileWithData(new XmlFoodZoom(this.initialOrdersDataSupplier.get(),
+                    this.initialDeliverymenDataSupplier.get()), this.saveFileLocation);
+        }
+
+        if (initialUsersListSupplier.get() != null) {
+            createDataFileWithData(new XmlSerializableUsersList(this.initialUsersListSupplier.get()),
+                    this.usersSaveFileLocation);
         }
     }
 
@@ -68,7 +86,8 @@ public class TestApp extends MainApp {
         double x = Screen.getPrimary().getVisualBounds().getMinX();
         double y = Screen.getPrimary().getVisualBounds().getMinY();
         userPrefs.updateLastUsedGuiSetting(new GuiSettings(600.0, 600.0, (int) x, (int) y));
-        userPrefs.setAddressBookFilePath(saveFileLocation);
+        userPrefs.setFoodZoomFilePath(saveFileLocation);
+        userPrefs.setUsersListFilePath(usersSaveFileLocation);
         return userPrefs;
     }
 
@@ -89,7 +108,7 @@ public class TestApp extends MainApp {
      * Returns the file path of the storage file.
      */
     public Path getStorageSaveLocation() {
-        return storage.getOrderBookFilePath();
+        return storage.getFoodZoomFilePath();
     }
 
     /**

@@ -11,8 +11,7 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.events.model.DeliverymenListChangedEvent;
-import seedu.address.commons.events.model.OrderBookChangedEvent;
+import seedu.address.commons.events.model.FoodZoomChangedEvent;
 import seedu.address.commons.events.model.UserLoggedInEvent;
 import seedu.address.commons.events.model.UserLoggedOutEvent;
 import seedu.address.commons.events.model.UsersListChangedEvent;
@@ -77,13 +76,13 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void resetData(ReadOnlyOrderBook newData) {
         versionedOrderBook.resetData(newData);
-        indicateOrderBookChanged();
+        indicateAppChanged();
     }
 
     @Override
     public void resetDeliverymenData(DeliverymenList newData) {
         versionedDeliverymenList.resetData(newData);
-        indicateDeliverymenListChanged();
+        indicateAppChanged();
     }
 
     @Override
@@ -96,18 +95,9 @@ public class ModelManager extends ComponentManager implements Model {
         return versionedDeliverymenList;
     }
 
-    /**
-     * Raises an event to indicate the model has changed
-     */
-    private void indicateOrderBookChanged() {
-        raise(new OrderBookChangedEvent(versionedOrderBook));
-    }
-
-    /**
-     * Raises an event to indicate the deliverymen list model has changed.
-     */
-    private void indicateDeliverymenListChanged() {
-        raise(new DeliverymenListChangedEvent(versionedDeliverymenList));
+    /** Raises an event to indicate that there is an app change. */
+    private void indicateAppChanged() {
+        raise(new FoodZoomChangedEvent(versionedOrderBook, versionedDeliverymenList));
     }
 
     /**
@@ -140,14 +130,14 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void deleteOrder(Order target) {
         versionedOrderBook.removeOrder(target);
-        indicateOrderBookChanged();
+        indicateAppChanged();
     }
 
     @Override
     public void addOrder(Order order) {
         versionedOrderBook.addOrder(order);
         updateFilteredOrderList(PREDICATE_SHOW_ALL_ORDERS);
-        indicateOrderBookChanged();
+        indicateAppChanged();
     }
 
     @Override
@@ -155,7 +145,7 @@ public class ModelManager extends ComponentManager implements Model {
         requireAllNonNull(target, editedOrder);
 
         versionedOrderBook.updateOrder(target, editedOrder);
-        indicateOrderBookChanged();
+        indicateAppChanged();
     }
 
     // =========== Deliveryman methods ====================================
@@ -169,19 +159,21 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void deleteDeliveryman(Deliveryman target) {
         versionedDeliverymenList.removeDeliveryman(target);
-        indicateDeliverymenListChanged();
+        indicateAppChanged();
     }
 
     @Override
     public void addDeliveryman(Deliveryman deliveryman) {
         versionedDeliverymenList.addDeliveryman(deliveryman);
-        indicateDeliverymenListChanged();
+        indicateAppChanged();
     }
 
     @Override
     public void updateDeliveryman(Deliveryman target, Deliveryman editedDeliveryman) {
+        requireAllNonNull(target, editedDeliveryman);
+
         versionedDeliverymenList.updateDeliveryman(target, editedDeliveryman);
-        indicateDeliverymenListChanged();
+        indicateAppChanged();
     }
 
     //=========== Filtered Orders List Accessors =============================================================
@@ -233,13 +225,13 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void undoOrderBook() {
         versionedOrderBook.undo();
-        indicateOrderBookChanged();
+        indicateAppChanged();
     }
 
     @Override
     public void redoOrderBook() {
         versionedOrderBook.redo();
-        indicateOrderBookChanged();
+        indicateAppChanged();
     }
 
     @Override
@@ -324,13 +316,13 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void undoDeliverymenList() {
         versionedDeliverymenList.undo();
-        indicateDeliverymenListChanged();
+        indicateAppChanged();
     }
 
     @Override
     public void redoDeliverymenList() {
         versionedDeliverymenList.redo();
-        indicateDeliverymenListChanged();
+        indicateAppChanged();
     }
 
     @Override

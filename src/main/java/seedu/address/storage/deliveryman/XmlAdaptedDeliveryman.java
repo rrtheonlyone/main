@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlID;
+import javax.xml.bind.annotation.XmlIDREF;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.common.Name;
@@ -33,10 +34,10 @@ public class XmlAdaptedDeliveryman {
     @XmlElement(required = true)
     private String name;
     @XmlElement(required = true)
+    @XmlIDREF
     private List<XmlAdaptedOrder> orders = new ArrayList<>();
 
-    public XmlAdaptedDeliveryman() {
-    }
+    public XmlAdaptedDeliveryman() {}
 
     /**
      * Constructs an {@code XmlAdapterDeliveryman} with the given common details.
@@ -83,6 +84,10 @@ public class XmlAdaptedDeliveryman {
         }
         if (!Name.isValidName(name)) {
             throw new IllegalValueException(Name.MESSAGE_NAME_CONSTRAINTS);
+        }
+
+        if (tag == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, "Tag"));
         }
 
         UUID modelTag;

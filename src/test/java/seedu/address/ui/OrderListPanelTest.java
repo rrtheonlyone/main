@@ -23,7 +23,7 @@ import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.commons.util.FileUtil;
 import seedu.address.commons.util.XmlUtil;
 import seedu.address.model.order.Order;
-import seedu.address.storage.XmlSerializableOrderBook;
+import seedu.address.storage.XmlFoodZoom;
 
 public class OrderListPanelTest extends GuiUnitTest {
     private static final ObservableList<Order> TYPICAL_ORDERS =
@@ -82,9 +82,9 @@ public class OrderListPanelTest extends GuiUnitTest {
      */
     private ObservableList<Order> createBackingList(int orderCount) throws Exception {
         Path xmlFile = createXmlFileWithOrders(orderCount);
-        XmlSerializableOrderBook xmlOrderBook =
-                XmlUtil.getDataFromFile(xmlFile, XmlSerializableOrderBook.class);
-        return FXCollections.observableArrayList(xmlOrderBook.toModelType().getOrderList());
+        XmlFoodZoom xmlFoodZoom =
+                XmlUtil.getDataFromFile(xmlFile, XmlFoodZoom.class);
+        return FXCollections.observableArrayList(xmlFoodZoom.getOrderBook().getOrderList());
     }
 
     /**
@@ -93,6 +93,7 @@ public class OrderListPanelTest extends GuiUnitTest {
     private Path createXmlFileWithOrders(int orderCount) throws Exception {
         StringBuilder builder = new StringBuilder();
         builder.append("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n");
+        builder.append("<foodzoom>\n");
         builder.append("<orderbook>\n");
         for (int i = 0; i < orderCount; i++) {
             builder.append("<orders tag=\"" + UUID.randomUUID().toString() + "\">\n");
@@ -105,6 +106,9 @@ public class OrderListPanelTest extends GuiUnitTest {
             builder.append("</orders>\n");
         }
         builder.append("</orderbook>\n");
+        builder.append("<deliverymenList>\n");
+        builder.append("</deliverymenList>\n");
+        builder.append("</foodzoom>\n");
 
         Path manyOrdersFile = Paths.get(TEST_DATA_FOLDER + "manyOrders.xml");
         FileUtil.createFile(manyOrdersFile);

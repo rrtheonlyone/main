@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.OrderBook;
@@ -15,7 +14,6 @@ import seedu.address.model.order.Order;
 /**
  * An Immutable OrderBook that is serializable to XML format
  */
-@XmlRootElement(name = "orderbook")
 public class XmlSerializableOrderBook {
 
     public static final String MESSAGE_DUPLICATE_ORDER = "Orders list contains duplicate order(s).";
