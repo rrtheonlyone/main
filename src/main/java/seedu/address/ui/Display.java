@@ -3,14 +3,15 @@ package seedu.address.ui;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
+
 import javafx.fxml.FXML;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.DeliveryManPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.OrderPanelSelectionChangedEvent;
-import seedu.address.ui.displayCards.DeliverymanDisplayCard;
-import seedu.address.ui.displayCards.OrderDisplayCard;
+import seedu.address.ui.display.DeliverymanDisplayCard;
+import seedu.address.ui.display.OrderDisplayCard;
 
 /**
  * Panel containing the list of orders.

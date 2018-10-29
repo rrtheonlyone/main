@@ -1,4 +1,4 @@
-package seedu.address.ui.displayCards;
+package seedu.address.ui.display;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -7,8 +7,11 @@ import seedu.address.model.order.Food;
 import seedu.address.model.order.Order;
 import seedu.address.ui.UiPart;
 
+/**
+ * UI Component representing the display of a single order in a list.
+ */
 public class OrderDisplayListCard extends UiPart<Region> {
-    private static final String FXML = "displayCards/OrderDisplayListCard.fxml";
+    private static final String FXML = "display/OrderDisplayListCard.fxml";
     private static final String NAME_LABEL_FORMAT = "Contact: %1$s (%2$s)";
     private static final String FOOD_LABEL_FORMAT = "Order: %s";
 

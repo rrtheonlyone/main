@@ -1,4 +1,4 @@
-package seedu.address.ui.displayCards;
+package seedu.address.ui.display;
 
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -8,11 +8,13 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
 import seedu.address.model.deliveryman.Deliveryman;
 import seedu.address.model.order.Order;
-import seedu.address.ui.OrderCard;
 import seedu.address.ui.UiPart;
 
+/**
+ * UI Component that displays relevant information of a deliveryman.
+ */
 public class DeliverymanDisplayCard extends UiPart<Region> {
-    private static final String FXML = "displayCards/DeliverymanDisplayCard.fxml";
+    private static final String FXML = "display/DeliverymanDisplayCard.fxml";
 
     public final Deliveryman deliveryman;
 
