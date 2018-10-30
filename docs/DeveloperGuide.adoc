@@ -414,66 +414,99 @@ incorrect behavior.
 ** Cons: It breaks the SRP because `parseCommand` method should only be used to parse commands and not check for user
  logged in status.
 
+=== Add Order Feature
+
+==== Current Implementation
+The `add` order command allows the `Manager` to create a new order and add it to the list of orders.
+Adding a new order requires the customer's `name`, customer's `phone` number, customer's `address`, `food` and the `datetime`. +
+The format of the `add` command is `/order add f/FOOD n/NAME p/PHONE a/ADDRESS dt/DATETIME`.
+
+The following sequence shows the sequence when the `add` command is execute by the `Manager`:
+
+image::OrderAddSequenceDiagram.png[width="650"]
+Figure 3.3.1.1 Sequence Diagram for order `find` command
+
+From the diagram above:
+
+.  `LogicManager`'s execute is called when the `Manager` keys in `/order add` and it calls upon `parseCommand` of `OrderBookParser` to parse the command
+.  `OrderBookParser` will initialize `OrderCommandParser` and invoke the method `parse` to further parse `order` command
+.  `AddCommandParser` will be invoked and passed the parameters of the add command.
+.  If all the arguments of the `add` commands are valid, `AddCommand` will be returned to the `LogicManager`
+.  `LogicManger` will then calls the method `execute` method of `AddCommand`
+.  `AddCommand` will call `addOrder` passing `Order` as an argument to `Model` and after calls `commitOrderBook` method from `Model`
+.  A `CommandResult` will be returned at the end,
+
+==== Design Consideration
+===== Aspect: Data Structure of list of order
+* **Alternative 1 (Current Approach):** Using a `UniqueOrderList`
+** Pros: The comparison is not as rigid. You can create orders with similar names/address as long as it passes a less stringent criteria.
+** Cons: You need additional overhead. You need to create an extra class and function to check.
+
+* **Alternative 2:** Using a `Set`
+** Pros: Do not need an extra function. You can use use `equals` for comparison
+** Cons: It is a strict check and as a result you will not be allowed to create orders with same address/same name etc.
+
+===== Aspect: Data Structure of `Order`
+* **Alternative 1 (Current Approach):** All parameters in `Order` are abstracted out to have a class of its own.
+** Pros: It adheres to the Single Responsibility Principles (SRP) and the Separation of Concerns (SoC) as each parameter checks whether it is valid
+** Cons: Many different classes are created which increases the complexity of the code
+
+* **Alternative 2:** Store all parameters of `Order` as `String`
+** Pros: Easy to implement.
+** Cons: Violates SRP as one single class will need to check if the arguments are valid.
+
 === Find Order Feature
 
 ==== Current Implementation
-The `find` order command allows searching of orders in FoodZoom.
-It allows finding of orders based on either the name or phone specified in the order.
+The order `find` command allows searching of orders in FoodZoom. It allows searching for orders with any order fields.
 
 The following sequence diagram shows the sequence flow from the `LogicManager` to the `ModelManager` when a user enter a `find` command:
 
 image::OrderFindSequenceDiagram.png[width="650"]
-Figure 3.3.1.1 Sequence Diagram for order `find` command
+Figure 3.4.1.1 Sequence Diagram for order `find` command
 
 From the sequence diagram:
 
-.  When `LogicManager` receive the `execute` command, it class the `parseCommand` method in `OrderBookParser`.
+.  When `LogicManager` receive the `execute` command, it calls the `parseCommand` method in `OrderBookParser`.
 .  `OrderBookParser` will receive `/order` as the command and instantiate `OrderCommandParser` to further parse the command.
-.  If the arguments specified in the `find` command are valid, a `FindCommand` will be created and return back to the `LogicManger`
-.  `LogicManger` will proceed to call the `execute` command of `FindCommand`
-.  `FindCommand` will updated the list in the `Model` and create a new `CommandResult` to be returned.
+.  `OrderCommandParser` receive `find` as the command and calls `FindCommandParser` to handle the fields for the find command.
+.  If at least one field is provided, `FindCommandParser` will call `parsePredicate` of `OrderPredicateUtil` to handle the given fields.
+.  `OrderPredicateUtil` will call its own `chainPredicate` to create the predicate for the relevant fields.
+.  If all fields give are valid, `FindCommand` will be created and return back to `LogicManager`.
+.  `LogicManager` will proceed to call execute of `FindCommand`.
+.  `FindCommand` will update the list in the `Model` and create a new `CommandResult` to be returned.
 
-Currently, FoodZoom only allows find for other based on name or phone, but not specifying both name and phone together.
+The differentiation is handled by `OrderPredicateUtil` which checks for the fields provided. It throws `ParseException` if a invalid order field is specified or when any field is given without any value.
 
-This differentiation is handled by `FindCommandParser` which checks for the fields specified.
-It throws a `ParseException` error if either both name and phone is specified together or when fields other than name or phone is being specified.
+`OrderPredicateUtil` will chain up the different fields and return a `Predicate<Order>` to narrow the scope
+of the search.
 
-`FindCommandParser` will return an `OrderNameContainsKeywordPredicate` if a valid name is specified or return an `OrderPhoneContainsKeyPredicate`.
+`Datetime` search can be performed in two ways. Below is a sequence diagram to show flow of how `datetime` search:
 
-In order for `FindCommand` to take a general predicate, both `OrderNameContainsKeywordPredicate` and `OrderPhoneContainsKeywordPredicate` implements the interface `OrderContainsKeywordPredicated` and `OrderContainsKeywordPredicate` extends from a `Predicate` of `Order`.  +
-The following shows how is one of the predicate implemented:
-[source,java]
-----
-/**
- * Tests that a {@code Order}'s {@code Name} matches any of the keywords given.
- */
-public class OrderNameContainsKeywordPredicate implements OrderContainsAnyKeywordsPredicate {
+image::OrderDatePredicate.png[width="650"]
+Figure 3.4.1.2 Sequence Diagram for `datetime` search
 
-    @Override
-    public boolean test(Order order) {
-        // test method...
-    }
+* If one `datetime` field is given, `OrderDatePredicate` creates a `OrderDateSinglePredicate` object and run its' `test` method.
 
-}
-----
+* If more than one `datetime` field is given, `OrderDatePredicate` creates a `OrderDateRangePredicate` object and run its' `test` method.
 
 ==== Design Consideration
 
 ===== Aspect: Implementation of `FindCommand`
-* **Alternative 1 (current choice):** Name and Phone has its own predicate having its own test method.
-** Pros: It adheres to the Single Responsibility Principle (SRP) and the Separation of Concern (SoC). Each Predicate will only handles its own search parameters.
-** Cons: More classes will be needed, which results in more code being written
-* **Alternative 2:** One predicate class which handles name and phone.
+* **Alternative 1 (current choice):** All different order field having its own test method.
+** Pros: It adheres to the Single Responsibility Principle (SRP) and the Separation of Concern (SoC). Each predicate handles its own search values.
+** Cons: More classes will be needed, which results in higher complexity of the code base.
+* **Alternative 2:** One predicate class to handle all the predicates.
 ** Pros: Reduces the number of classes, which makes it for new developers to understand.
 ** Cons: It decreases the cohesion as one class will need to handle different predicates.
 
 ===== Aspect: Implementation of `FindCommandParser`
-* **Alternative 1 (current choice):** `FindCommandParser` handles all the parsing
-** Pros: It makes it easy for new developers to understand as `FindCommandParser` handles all the parsing of the predicates.
-** Cons: It violates the Single Responsibility Principles (SRP). `FindCommandParser` has to break down the arguments as well as check which argument is present.
-* **Alternative 2:** Having a utilities class to handle the break down and checking of which command is present.
-** Pros: It adheres to SRP as handling of argument is pass on to a utility class.
-** Cons: Increase in the complexity of the code for new developers as more classes are needed and more lines of code will be written
+* **Alternative 1 (current choice):** Further parsing of the predicates are passed to `OrderPredicateUtil` to handle
+** Pros: It adheres to SRP as the handling of the predicates are passed on to `OrderPredicateUtil` class.
+** Cons: Increase in the complexity of the code as more classes are needed, with more lines of code being written
+* **Alternative 2:** `FindCommandParser` to handles the predicates.
+** Pros: It makes it easy for new developers to understand the code as `FindCommandParser` handles all the parsing of the predicates
+** Cons: It violates SRP. `FindCommandParser` has to break down the fields as well as check which fields are present.
 
 === Add deliveryman feature
 
@@ -486,9 +519,9 @@ The following diagram shows the sequence flow from the `LogicManager` to the `Mo
 command:
 
 image::DeliverymanAddCommandSequenceDiagram.png[width="650"]
-Figure 3.4.1.1 Sequence Diagram for deliveryman `add` command
+Figure 3.5.1.1 Sequence Diagram for deliveryman `add` command
 
-From Figure 3.4.1.1:
+From Figure 3.5.1.1:
 
 1. When `LogicManager` receives the `execute` command from the App, it calls the `parseCommand` method in `OrderBookParser`.
 
@@ -540,10 +573,10 @@ It allows creating routes based on the order ids.
 The following sequence diagram shows the sequence flow from the `LogicManager` to the `ModelManager` when a user enter a `/route create` command:
 
 image::CreateRouteCommandSequenceDiagram1.png[width=800]
-Figure 3.5.1.1 Sequence diagram to illustrate `Logic` component interactions for route `create` command.
+Figure 3.6.1.1 Sequence diagram to illustrate `Logic` component interactions for route `create` command.
 
 image::CreateRouteCommandSequenceDiagram2.png[width=800]
-Figure 3.5.1.2 Sequence diagram to illustrate `Logic` and `Model` component interactions for route `create` command.
+Figure 3.6.1.2 Sequence diagram to illustrate `Logic` and `Model` component interactions for route `create` command.
 
 From the sequence diagram:
 
@@ -565,47 +598,6 @@ From the sequence diagram:
 * **Alternative 2:** `CreateRouteCommand` is parsed straight from `OrderBookParser`.
 ** Pros: Easier to manage the file structure.
 ** Cons: Poor modularization of the `Command` classes.
-
-=== Add Order Feature
-
-==== Current Implementation
-The `add` order command allows the `Manager` to create a new order and add it to the list of orders.
-Adding a new order requires the customer's `name`, customer's `phone` number, customer's `address`, `food` and the `datetime`. +
-The format of the `add` command is `/order add f/FOOD n/NAME p/PHONE a/ADDRESS dt/DATETIME`.
-
-The following sequence shows the sequence when the `add` command is execute by the `Manager`:
-
-image::OrderAddSequenceDiagram.png[width="650"]
-Figure 3.6.1.1 Sequence Diagram for order `find` command
-
-From the diagram above:
-
-.  `LogicManager`'s execute is called when the `Manager` keys in `/order add` and it calls upon `parseCommand` of `OrderBookParser` to parse the command
-.  `OrderBookParser` will initialize `OrderCommandParser` and invoke the method `parse` to further parse `order` command
-.  `AddCommandParser` will be invoked and passed the parameters of the add command.
-.  If all the arguments of the `add` commands are valid, `AddCommand` will be returned to the `LogicManager`
-.  `LogicManger` will then calls the method `execute` method of `AddCommand`
-.  `AddCommand` will call `addOrder` passing `Order` as an argument to `Model` and after calls `commitOrderBook` method from `Model`
-.  A `CommandResult` will be returned at the end,
-
-==== Design Consideration
-===== Aspect: Data Structure of list of order
-* **Alternative 1 (Current Approach):** Using a `UniqueOrderList`
-** Pros: The comparison is not as rigid. You can create orders with similar names/address as long as it passes a less stringent criteria.
-** Cons: You need additional overhead. You need to create an extra class and function to check.
-
-* **Alternative 2:** Using a `Set`
-** Pros: Do not need an extra function. You can use use `equals` for comparison
-** Cons: It is a strict check and as a result you will not be allowed to create orders with same address/same name etc.
-
-===== Aspect: Data Structure of `Order`
-* **Alternative 1 (Current Approach):** All parameters in `Order` are abstracted out to have a class of its own.
-** Pros: It adheres to the Single Responsibility Principles (SRP) and the Separation of Concerns (SoC) as each parameter checks whether it is valid
-** Cons: Many different classes are created which increases the complexity of the code
-
-* **Alternative 2:** Store all parameters of `Order` as `String`
-** Pros: Easy to implement.
-** Cons: Violates SRP as one single class will need to check if the arguments are valid.
 
 === Logging
 
