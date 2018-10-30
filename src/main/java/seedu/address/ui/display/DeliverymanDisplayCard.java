@@ -15,11 +15,15 @@ import seedu.address.ui.UiPart;
  */
 public class DeliverymanDisplayCard extends UiPart<Region> {
     private static final String FXML = "display/DeliverymanDisplayCard.fxml";
+    private static final String BUSY_LABEL_CLASS = "busy";
+    private static final String AVAILABLE_LABEL_CLASS = "available";
 
     public final Deliveryman deliveryman;
 
     @FXML
     private Label name;
+    @FXML
+    private Label deliverymanStatus;
     @FXML
     private ListView<Order> orderListViewForCard;
 
@@ -27,8 +31,21 @@ public class DeliverymanDisplayCard extends UiPart<Region> {
         super(FXML);
         this.deliveryman = deliveryman;
         name.setText(deliveryman.getName().fullName);
+        setDeliverymanStatus();
         orderListViewForCard.setItems(FXCollections.observableArrayList(deliveryman.getOrders()));
         orderListViewForCard.setCellFactory(listView -> new OrderListViewCell());
+    }
+
+    private void setDeliverymanStatus() {
+        if (deliveryman.getOrders().size() > 0) {
+            deliverymanStatus.setText("Delivering");
+            deliverymanStatus.getStyleClass().clear();
+            deliverymanStatus.getStyleClass().add(BUSY_LABEL_CLASS);
+        } else {
+            deliverymanStatus.setText("Available");
+            deliverymanStatus.getStyleClass().clear();
+            deliverymanStatus.getStyleClass().add(AVAILABLE_LABEL_CLASS);
+        }
     }
 
     @Override

@@ -1,5 +1,7 @@
 package seedu.address.ui.display;
 
+import java.util.stream.Collectors;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Region;
@@ -30,12 +32,8 @@ public class OrderDisplayListCard extends UiPart<Region> {
         address.setText(order.getAddress().toString());
         name.setText(String.format(NAME_LABEL_FORMAT, order.getName().fullName, order.getPhone().toString()));
 
-        StringBuilder sb = new StringBuilder();
-        for (Food food : order.getFood()) {
-            sb.append(food.foodName + ", ");
-        }
-
-        food.setText(String.format(FOOD_LABEL_FORMAT, sb.toString()));
+        food.setText(String.format(FOOD_LABEL_FORMAT, String.join(", ",
+            order.getFood().stream().map(Food::toString).collect(Collectors.toSet()))));
     }
 
     @Override

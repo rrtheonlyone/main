@@ -1,5 +1,7 @@
 package seedu.address.ui;
 
+import java.util.stream.Collectors;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Region;
@@ -39,11 +41,8 @@ public class OrderCard extends UiPart<Region> {
 
         address.setText(order.getAddress().value);
 
-        StringBuilder sb = new StringBuilder();
-        for (Food food : order.getFood()) {
-            sb.append(food.foodName + ",");
-        }
-        foodList.setText(sb.toString());
+        foodList.setText(String.join(", ",
+            order.getFood().stream().map(Food::toString).collect(Collectors.toSet())));
 
         orderDate.setText(order.getDate().toString());
     }

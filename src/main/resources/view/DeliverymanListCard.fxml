@@ -18,6 +18,6 @@
       <Label fx:id="name" text="\$first" BorderPane.alignment="CENTER"/>
    </bottom>
    <top>
-      <Label fx:id="deliverymanStatus" text="Available" BorderPane.alignment="TOP_RIGHT" />
+      <Label fx:id="deliverymanIndicator" text="Available" BorderPane.alignment="TOP_RIGHT" />
    </top>
 </BorderPane>

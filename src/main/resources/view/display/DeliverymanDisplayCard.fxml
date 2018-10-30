@@ -13,7 +13,9 @@
    <center>
         <VBox spacing="5.0" BorderPane.alignment="CENTER">
             <Label fx:id="name" alignment="CENTER" prefHeight="38.0" prefWidth="230.0" text="\$first" textAlignment="CENTER" style="-fx-font-weight:bold;"/>
-             <Label text="Orders Assigned:" />
+            <Label text="Current Status:" />
+            <Label fx:id="deliverymanStatus" text="Available" BorderPane.alignment="TOP_RIGHT" />
+            <Label text="Orders Assigned:" />
             <ListView fx:id="orderListViewForCard" prefWidth="230.0" />
         </VBox>
    </center>
