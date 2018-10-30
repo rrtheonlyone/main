@@ -21,6 +21,9 @@ public class OrderCard extends UiPart<Region> {
      * @see <a href="https://github.com/se-edu/addressbook-level4/issues/336">The issue on OrderBook level 4</a>
      */
 
+    public static final String STATUS_PENDING = "PENDING";
+    public static final String STATUS_ONGOING = "ONGOING";
+    public static final String STATUS_COMPLETED = "COMPLETED";
     public final Order order;
 
     @FXML
@@ -48,9 +51,23 @@ public class OrderCard extends UiPart<Region> {
         foodList.setText(sb.toString());
 
         orderDate.setText(order.getDate().toString());
+
         orderStatus.setText(order.getOrderStatus().toString().substring(0, 1).toUpperCase()
                 + order.getOrderStatus().toString().substring(1).toLowerCase());
+        setOrderStatusColor();
     }
+
+    private void setOrderStatusColor() {
+        orderStatus.getStyleClass().clear();
+        if (order.getOrderStatus().toString().equals(STATUS_PENDING)) {
+            orderStatus.getStyleClass().add("pending");
+        } else if (order.getOrderStatus().toString().equals(STATUS_ONGOING)) {
+            orderStatus.getStyleClass().add("ongoing");
+        } else if (order.getOrderStatus().toString().equals(STATUS_COMPLETED)){
+            orderStatus.getStyleClass().add("completed");
+        }
+    }
+
 
     @Override
     public boolean equals(Object other) {
