@@ -121,6 +121,7 @@ Format: `/order edit INDEX [f/FOOD] [n/NAME] [p/PHONE] [a/ADDRESS] [dt/DATETIME]
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
 * When a parameter is specified, e.g. `f/`, `n/`, empty fields are not allowed. Value must be specified.
+* Orders that are already assigned to a deliveryman cannot be edited.
 ****
 
 Examples:
@@ -159,6 +160,7 @@ Format: `/order delete INDEX`
 * Deletes an order at the specified `INDEX`.
 * The index refers to the index number shown in the displayed order list.
 * The index *must be a positive integer* 1, 2, 3, ...
+* Orders that are already assigned to a deliveryman cannot be deleted.
 ****
 
 Examples:
@@ -235,6 +237,7 @@ Format: `/deliveryman delete INDEX`
 * Deletes a delivery man at the specified `INDEX`.
 * The index refers to the index number shown in the displayed delivery men list.
 * The index *must be a positive integer* 1, 2, 3, ...
+* Deliveryman that already have orders assigned cannot be deleted.
 ****
 
 Examples:
@@ -265,7 +268,7 @@ Examples:
 
 * `/route create o/1 o/3`
 
-=== Assign route to delivery man : `/assign` `[Since v1.3]`
+=== Assign orders to a delivery man : `/assign` `[Since v1.3]`
 
 Assign multiple orders to a delivery man +
 Format: `/assign d/DELIVERYMAN_INDEX o/ORDER_INDEX`
@@ -277,6 +280,7 @@ Format: `/assign d/DELIVERYMAN_INDEX o/ORDER_INDEX`
 respectively.
 * There must be at least 1 order and 1 delivery man.
 * Add more than 1 orders by specifying more tags. e.g. `o/1 o/2 o/3`.
+* Orders that are already assigned to a deliveryman cannot be reassigned.
 ****
 
 Examples:
@@ -305,12 +309,6 @@ Format: `/exit`
 
 FoodZoom data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
-
-// tag::dataencryption[]
-=== Encrypting data files `[Coming in v2.0]`
-
-_{explain how the user can enable/disable data encryption}_
-// end::dataencryption[]
 
 === Viewing help : `/help` `(Deliveryman Command)` `[Coming in v2.0]`
 
