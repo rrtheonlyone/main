@@ -23,6 +23,8 @@ public class Messages {
             + "already assigned to a deliveryman.";
     public static final String MESSAGE_ORDER_ALREADY_ASSIGNED_TO_DELIVERYMAN = "Order %1$s is already assigned to "
             + "deliveryman %2$s, cannot be edited or reassigned to another deliveryman!";
+    public static final String MESSAGE_ORDER_ALREADY_ASSIGNED_TO_DELIVERYMAN_CANNOT_CLEAR = "There is an order already "
+            + "assigned to a deliveryman, order list cannot be cleared.";
     public static final String MESSAGE_REQUIRE_LOGIN = "Please login first!";
 
 }
