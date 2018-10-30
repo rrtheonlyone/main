@@ -180,13 +180,11 @@ Format: `/order clear`
 === Adding a delivery man : `/deliveryman add` `[Since v1.2]`
 
 Adds a delivery man to the list of delivery men +
-Format: `/deliveryman add n/NAME p/PHONE [a/ADDRESS]`
+Format: `/deliveryman add n/NAME`
 
 Examples:
 
-* `/deliveryman add n/John Smith p/12345678 a/block 123, Clementi Drive, #01-01`
-* `/deliveryman add a/block 55 Computing Drive n/Harry p/81889111`
-* `/deliveryman add n/Willy p/23456789`
+* `/deliveryman add n/John Smith`
 
 === Listing all delivery men : `/deliveryman list` `[Since v1.2]`
 
@@ -368,10 +366,10 @@ e.g. `/deliveryman find n/James Jake`
 * *Delete delivery man* : `/deliveryman delete INDEX` +
 e.g. `/deliveryman delete 3`
 * *Clear delivery men* (Coming in v2.0) : `/deliveryman clear`
-* *Create a route* : `/route create o/ORDER_ID` [DEPRECATED] +
+* *Create a route* [DEPRECATED] : `/route create o/ORDER_INDEX` +
 e.g. `/route create o/1 o/3`
-* *Assign route to delivery man* : `/assign d/DELIVERYMAN_INDEX o/ORDER_INDEX` +
-e.g. `/assign d/1 o/1`
+* *Assign orders to a delivery man* : `/assign d/DELIVERYMAN_INDEX o/ORDER_INDEX` +
+e.g. `/assign d/1 o/1 o/3`
 * *Help* : `/help`
 * *History* : `/history`
 * *Exit the program* : `/exit`
