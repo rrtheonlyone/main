@@ -64,7 +64,7 @@ e.g. typing *`/help`* and pressing kbd:[Enter] will open the help window.
 
 |FOOD | Should only contain alphanumeric characters and spaces, and it should not be blank
 
-|DATETIME | Must conform to the format _dd-MM-YYYY h:m:s_, where _dd_ is date, _MM_ is month, _YYYY_ is year, _h_ is 24 hour of the day, _m_ is minutes and _s_ is seconds. e.g. `14-10-2018 23:30:00`
+|DATETIME | Must conform to the format `dd-MM-YYYY h:m:s`, where _dd_ is date, _MM_ is month, _YYYY_ is year, _h_ is 24 hour of the day, _m_ is minutes and _s_ is seconds. e.g. `14-10-2018 23:30:00`
 
 |USERNAME | Can be alphanumeric and spaces are *NOT* allowed, it should not be blank and be 3 to 64 characters long.
 
