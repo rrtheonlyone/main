@@ -48,7 +48,8 @@ public class OrderCard extends UiPart<Region> {
         foodList.setText(sb.toString());
 
         orderDate.setText(order.getDate().toString());
-        orderStatus.setText(order.getOrderStatus().toString());
+        orderStatus.setText(order.getOrderStatus().toString().substring(0, 1).toUpperCase()
+                + order.getOrderStatus().toString().substring(1).toLowerCase());
     }
 
     @Override
