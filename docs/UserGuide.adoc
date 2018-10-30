@@ -53,7 +53,7 @@ e.g. typing *`/help`* and pressing kbd:[Enter] will open the help window.
 
 ====
 *Fields restrictions*:
-[width="100%",cols="20%,<80%",options="header",]
+[width="100%",cols="20%,<80%"]
 |=======================================================================
 
 |NAME | Can only be alphanumeric and spaces are allowed, it should not be blank and be 1 to 64 characters long
