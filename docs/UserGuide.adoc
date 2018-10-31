@@ -121,6 +121,7 @@ Format: `/order edit INDEX [f/FOOD] [n/NAME] [p/PHONE] [a/ADDRESS] [dt/DATETIME]
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
 * When a parameter is specified, e.g. `f/`, `n/`, empty fields are not allowed. Value must be specified.
+* Orders that are already assigned to a deliveryman cannot be edited.
 ****
 
 Examples:
@@ -159,6 +160,7 @@ Format: `/order delete INDEX`
 * Deletes an order at the specified `INDEX`.
 * The index refers to the index number shown in the displayed order list.
 * The index *must be a positive integer* 1, 2, 3, ...
+* Orders that are already assigned to a deliveryman cannot be deleted.
 ****
 
 Examples:
@@ -182,13 +184,11 @@ Format: `/order clear`
 === Adding a delivery man : `/deliveryman add` `[Since v1.2]`
 
 Adds a delivery man to the list of delivery men +
-Format: `/deliveryman add n/NAME p/PHONE [a/ADDRESS]`
+Format: `/deliveryman add n/NAME`
 
 Examples:
 
-* `/deliveryman add n/John Smith p/12345678 a/block 123, Clementi Drive, #01-01`
-* `/deliveryman add a/block 55 Computing Drive n/Harry p/81889111`
-* `/deliveryman add n/Willy p/23456789`
+* `/deliveryman add n/John Smith`
 
 === Listing all delivery men : `/deliveryman list` `[Since v1.2]`
 
@@ -239,6 +239,7 @@ Format: `/deliveryman delete INDEX`
 * Deletes a delivery man at the specified `INDEX`.
 * The index refers to the index number shown in the displayed delivery men list.
 * The index *must be a positive integer* 1, 2, 3, ...
+* Deliveryman that already have orders assigned cannot be deleted.
 ****
 
 Examples:
@@ -269,7 +270,7 @@ Examples:
 
 * `/route create o/1 o/3`
 
-=== Assign route to delivery man : `/assign` `[Since v1.3]`
+=== Assign orders to a delivery man : `/assign` `[Since v1.3]`
 
 Assign multiple orders to a delivery man +
 Format: `/assign d/DELIVERYMAN_INDEX o/ORDER_INDEX`
@@ -281,6 +282,7 @@ Format: `/assign d/DELIVERYMAN_INDEX o/ORDER_INDEX`
 respectively.
 * There must be at least 1 order and 1 delivery man.
 * Add more than 1 orders by specifying more tags. e.g. `o/1 o/2 o/3`.
+* Orders that are already assigned to a deliveryman cannot be reassigned.
 ****
 
 Examples:
@@ -309,12 +311,6 @@ Format: `/exit`
 
 FoodZoom data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
-
-// tag::dataencryption[]
-=== Encrypting data files `[Coming in v2.0]`
-
-_{explain how the user can enable/disable data encryption}_
-// end::dataencryption[]
 
 === Viewing help : `/help` `(Deliveryman Command)` `[Coming in v2.0]`
 
@@ -364,28 +360,28 @@ e.g. `/order find n/James Jake`
 * *Delete order* : `/order delete INDEX` +
 e.g. `/order delete 3`
 * *Clear order* : `/order clear`
-* *Add delivery man* : `/deliveryman add n/NAME p/PHONE_NUMBER [a/ADDRESS]` +
-e.g. `/deliveryman add n/James Ho p/22224444 a/block 123, Clementi Rd, 1234665`
+* *Add delivery man* : `/deliveryman add n/NAME` +
+e.g. `/deliveryman add n/James Ho`
 * *Listing delivery men* : `/deliveryman list`
-* *Edit delivery man* : `/deliveryman edit INDEX [n/NAME] [p/PHONE_NUMBER] [a/ADDRESS]` +
+* *Edit delivery man* (Coming in v2.0) : `/deliveryman edit INDEX [n/NAME] [p/PHONE_NUMBER] [a/ADDRESS]` +
 e.g. `/deliveryman edit 2 n/James Lee`
 * *Find delivery man* : `/deliveryman find n/NAME` +
 e.g. `/deliveryman find n/James Jake`
 * *Delete delivery man* : `/deliveryman delete INDEX` +
 e.g. `/deliveryman delete 3`
-* *Clear delivery men* : `/deliveryman clear`
-* *Create a route* : `/route create o/ORDER_ID` *[DEPRECATED]* +
+* *Clear delivery men* (Coming in v2.0) : `/deliveryman clear`
+* *Create a route* [DEPRECATED] : `/route create o/ORDER_INDEX` +
 e.g. `/route create o/1 o/3`
-* *Assign route to delivery man* : `/assign d/DELIVERYMAN_INDEX o/ORDER_INDEX` +
-e.g. `/assign d/1 o/1`
+* *Assign orders to a delivery man* : `/assign d/DELIVERYMAN_INDEX o/ORDER_INDEX` +
+e.g. `/assign d/1 o/1 o/3`
 * *Help* : `/help`
 * *History* : `/history`
 * *Exit the program* : `/exit`
 
-* *Login (Deliveryman)* : `/login u/USERNAME pw/PASSWORD` +
+* *Login (Deliveryman)* (Coming in v2.0) : `/login u/USERNAME pw/PASSWORD` +
 e.g. `/login u/deliveryman pw/password`
-* *Logout (Deliveryman)* : `/logout`
-* *View delivery route (Deliveryman)* : `/route list`
-* *View assigned orders (Deliveryman)* : `/order list`
-* *Help (Deliveryman)* : `/help`
-* *Exit the program (Deliveryman)* : `/exit`
+* *Logout (Deliveryman)* (Coming in v2.0) : `/logout`
+* *View delivery route (Deliveryman)* (Coming in v2.0) : `/route list`
+* *View assigned orders (Deliveryman)* (Coming in v2.0) : `/order list`
+* *Help (Deliveryman)* (Coming in v2.0) : `/help`
+* *Exit the program (Deliveryman)* (Coming in v2.0) : `/exit`
