@@ -19,7 +19,7 @@ import seedu.address.commons.core.LogsCenter;
 public class MapPanel extends UiPart<Region> {
 
     private static final String FXML = "MapPanel.fxml";
-    private static final String PLACEHOLDER_IMAGE_PATH = "/images/order_placeholder.png";
+    private static final String PLACEHOLDER_IMAGE_PATH = "/images/red_placeholder.png";
 
     private final Logger logger = LogsCenter.getLogger(MapPanel.class);
 
