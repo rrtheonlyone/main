@@ -5,10 +5,7 @@
 <?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.control.SplitPane?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
@@ -17,8 +14,7 @@
     <VBox minWidth="260" prefWidth="260" SplitPane.resizableWithParent="false">
       <HBox prefHeight="50.0" prefWidth="200.0">
          <children>
-            <Label fx:id="displayPending" text="Total Pending Orders" />
-            <ProgressBar fx:id="progressBar" prefWidth="200.0" progress="0.5" />
+            <Label fx:id="displayPending" prefHeight="17.0" prefWidth="350.0" text="Location Information of Orders" />
          </children>
       </HBox>
 
