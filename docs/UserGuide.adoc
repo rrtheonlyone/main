@@ -381,7 +381,7 @@ e.g. `/order delete 3`
 * *Add delivery man* : `/deliveryman add n/NAME` +
 e.g. `/deliveryman add n/James Ho`
 * *Listing delivery men* : `/deliveryman list`
-* *Edit delivery man* (Coming in v2.0) : `/deliveryman edit INDEX n/NAME` *[Coming in v2.0]* +
+* *Edit delivery man* (Coming in v2.0) : `/deliveryman edit INDEX n/NAME` +
 e.g. `/deliveryman edit 2 n/James Lee`
 * *Find delivery man* : `/deliveryman find n/NAME` +
 e.g. `/deliveryman find n/James Jake`
