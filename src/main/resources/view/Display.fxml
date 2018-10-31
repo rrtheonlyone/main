@@ -34,6 +34,7 @@
     </VBox>
 
     <VBox>
+      <StackPane fx:id="displayPanelPlaceholder">
         <StackPane prefWidth="340">
             <padding>
                 <Insets bottom="10" left="10" right="10" top="10" />
@@ -45,13 +46,14 @@
                 <Insets bottom="10" left="10" right="10" top="10" />
             </padding>
         </StackPane>
-      <BarChart prefHeight="220.0" prefWidth="125.0" title="Orders Completed over Time">
-        <xAxis>
-          <CategoryAxis side="BOTTOM" />
-        </xAxis>
-        <yAxis>
-          <NumberAxis side="LEFT" />
-        </yAxis>
-      </BarChart>
+        <BarChart prefHeight="220.0" prefWidth="125.0" title="Orders Completed over Time">
+          <xAxis>
+            <CategoryAxis side="BOTTOM" />
+          </xAxis>
+          <yAxis>
+            <NumberAxis side="LEFT" />
+          </yAxis>
+        </BarChart>
+      </StackPane>
     </VBox>
 </SplitPane>

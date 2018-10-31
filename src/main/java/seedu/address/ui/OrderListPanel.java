@@ -11,6 +11,7 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.DeliveryManPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.JumpToOrderListRequestEvent;
 import seedu.address.commons.events.ui.OrderPanelSelectionChangedEvent;
 import seedu.address.model.order.Order;
@@ -64,6 +65,10 @@ public class OrderListPanel extends UiPart<Region> {
         scrollTo(event.targetIndex);
     }
 
+    @Subscribe
+    private void handleDeliverymanPanelSelectionChangedEvent(DeliveryManPanelSelectionChangedEvent event) {
+        orderListView.getSelectionModel().clearSelection();
+    }
     /**
      * Custom {@code ListCell} that displays the graphics of a {@code Order} using a {@code OrderCard}.
      */
