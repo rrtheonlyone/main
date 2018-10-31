@@ -175,6 +175,10 @@ Deletes the 1st order in the results of the `find` command.
 Clears all entries from the list of orders. +
 Format: `/order clear`
 
+****
+* If there is an order already assigned to a deliveryman, order list cannot be cleared.
+****
+
 === Adding a delivery man : `/deliveryman add` `[Since v1.2]`
 
 Adds a delivery man to the list of delivery men +

@@ -110,6 +110,18 @@
     -fx-font-size: 11;
 }
 
+#orderStatus.pending {
+    -fx-background-color: #b20603;
+}
+
+#orderStatus.ongoing {
+    -fx-background-color: #c9a100;
+}
+
+#orderStatus.completed {
+    -fx-background-color: #147026;
+}
+
 #id {
     -fx-font-family: "Verdana";
     -fx-font-size: 14;
