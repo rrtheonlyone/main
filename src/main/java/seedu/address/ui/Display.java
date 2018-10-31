@@ -7,12 +7,18 @@ import com.google.common.eventbus.Subscribe;
 
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
+
 import javafx.fxml.FXML;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import seedu.address.commons.core.LogsCenter;
+
 import seedu.address.commons.events.ui.OrderPanelSelectionChangedEvent;
 import seedu.address.model.order.Order;
+
+import seedu.address.commons.events.ui.DeliveryManPanelSelectionChangedEvent;
+import seedu.address.ui.display.DeliverymanDisplayCard;
+import seedu.address.ui.display.OrderDisplayCard;
 
 /**
  * Panel containing the main display - map and side content.
@@ -24,6 +30,9 @@ public class Display extends UiPart<Region> {
 
     @FXML
     private StackPane mapWrapper;
+
+    @FXML
+    private StackPane displayPanelPlaceholder;
 
     private MapPanel mapPanel;
     private ObservableList<Order> orderList;
@@ -119,8 +128,23 @@ public class Display extends UiPart<Region> {
         mapPanel.initialise(directory);
     }
 
+
+
+
+    public Display() {
+        super(FXML);
+        registerAsAnEventHandler(this);
+    }
+
     @Subscribe
-    private void handleOrderPanelSelectionChangedEvent(OrderPanelSelectionChangedEvent event) {
+    public void handleOrderPanelSelectionChangedEvent(OrderPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        displayPanelPlaceholder.getChildren().setAll(new OrderDisplayCard(event.getNewSelection()).getRoot());
+    }
+
+    @Subscribe
+    public void handleDeliveryPanelSelectionChangedEvent(DeliveryManPanelSelectionChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        displayPanelPlaceholder.getChildren().setAll(new DeliverymanDisplayCard(event.getNewSelection()).getRoot());
     }
 }

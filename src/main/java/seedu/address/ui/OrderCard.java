@@ -1,5 +1,7 @@
 package seedu.address.ui;
 
+import java.util.stream.Collectors;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Region;
@@ -11,6 +13,9 @@ import seedu.address.model.order.Order;
  */
 public class OrderCard extends UiPart<Region> {
 
+    public static final String STATUS_PENDING = "PENDING";
+    public static final String STATUS_ONGOING = "ONGOING";
+    public static final String STATUS_COMPLETED = "COMPLETED";
     private static final String FXML = "OrderListCard.fxml";
 
     /**
@@ -31,6 +36,8 @@ public class OrderCard extends UiPart<Region> {
     private Label foodList;
     @FXML
     private Label orderDate;
+    @FXML
+    private Label orderStatus;
 
     public OrderCard(Order order, int displayedIndex) {
         super(FXML);
@@ -39,14 +46,27 @@ public class OrderCard extends UiPart<Region> {
 
         address.setText(order.getAddress().value);
 
-        StringBuilder sb = new StringBuilder();
-        for (Food food : order.getFood()) {
-            sb.append(food.foodName + ",");
-        }
-        foodList.setText(sb.toString());
+        foodList.setText(String.join(", ",
+            order.getFood().stream().map(Food::toString).collect(Collectors.toSet())));
 
         orderDate.setText(order.getDate().toString());
+
+        orderStatus.setText(order.getOrderStatus().toString().substring(0, 1).toUpperCase()
+                + order.getOrderStatus().toString().substring(1).toLowerCase());
+        setOrderStatusColor();
     }
+
+    private void setOrderStatusColor() {
+        orderStatus.getStyleClass().clear();
+        if (order.getOrderStatus().toString().equals(STATUS_PENDING)) {
+            orderStatus.getStyleClass().add("pending");
+        } else if (order.getOrderStatus().toString().equals(STATUS_ONGOING)) {
+            orderStatus.getStyleClass().add("ongoing");
+        } else if (order.getOrderStatus().toString().equals(STATUS_COMPLETED)) {
+            orderStatus.getStyleClass().add("completed");
+        }
+    }
+
 
     @Override
     public boolean equals(Object other) {

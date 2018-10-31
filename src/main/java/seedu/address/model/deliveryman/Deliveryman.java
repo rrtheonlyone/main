@@ -57,6 +57,10 @@ public class Deliveryman extends TaggedObject {
         orders.add(order);
     }
 
+    public boolean hasOrders() {
+        return !orders.isEmpty();
+    }
+
     /**
      * Returns if this is the same common as {@code other}
      */

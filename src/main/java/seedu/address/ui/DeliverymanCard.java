@@ -12,6 +12,8 @@ import seedu.address.model.deliveryman.Deliveryman;
 public class DeliverymanCard extends UiPart<Region> {
 
     private static final String FXML = "DeliverymanListCard.fxml";
+    private static final String BUSY_LABEL_CLASS = "busy";
+    private static final String AVAILABLE_LABEL_CLASS = "available";
 
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
@@ -27,11 +29,26 @@ public class DeliverymanCard extends UiPart<Region> {
     private VBox cardPane;
     @FXML
     private Label name;
+    @FXML
+    private Label deliverymanIndicator;
 
     public DeliverymanCard(Deliveryman deliveryman, int displayedIndex) {
         super(FXML);
         this.deliveryman = deliveryman;
         name.setText(deliveryman.getName().fullName);
+        setDeliverymanStatus();
+    }
+
+    private void setDeliverymanStatus() {
+        if (deliveryman.getOrders().size() > 0) {
+            deliverymanIndicator.getStyleClass().clear();
+            deliverymanIndicator.getStyleClass().add(BUSY_LABEL_CLASS);
+            deliverymanIndicator.setText("Assigned: " + deliveryman.getOrders().size());
+        } else {
+            deliverymanIndicator.getStyleClass().clear();
+            deliverymanIndicator.getStyleClass().add(AVAILABLE_LABEL_CLASS);
+            deliverymanIndicator.setText("Available");
+        }
     }
 
     @Override

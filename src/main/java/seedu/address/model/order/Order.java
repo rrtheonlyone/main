@@ -25,7 +25,7 @@ public class Order extends TaggedObject {
     private final Address address;
     private final OrderDate orderDate;
     private final Set<Food> food = new HashSet<>();
-    private final OrderStatus orderStatus;
+    private OrderStatus orderStatus;
     private Deliveryman deliveryman;
 
     /**
@@ -108,9 +108,14 @@ public class Order extends TaggedObject {
     }
 
     public void setDeliveryman(Deliveryman newDeliveryman) {
-        assert(deliveryman == null);
+        assert(!isAlreadyAssignedDeliveryman());
         deliveryman = newDeliveryman;
+        updateStatusOngoing();
         newDeliveryman.addOrder(this);
+    }
+
+    private void updateStatusOngoing() {
+        orderStatus = new OrderStatus("ONGOING");
     }
 
     public boolean isAlreadyAssignedDeliveryman() {

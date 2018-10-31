@@ -42,6 +42,11 @@ public class DeliverymanDeleteCommand extends DeliverymanCommand {
         }
 
         Deliveryman deliverymanToDelete = lastShownList.get(targetIndex.getZeroBased());
+
+        if (deliverymanToDelete.hasOrders()) {
+            throw new CommandException(String.format(Messages.MESSAGE_DELIVERYMEN_HAS_ORDERS_CANNOT_DELETE,
+                    deliverymanToDelete));
+        }
         model.deleteDeliveryman(deliverymanToDelete);
         model.commitDeliverymenList();
         return new CommandResult(String.format(MESSAGE_DELETE_DELIVERYMAN_SUCCESS, deliverymanToDelete));

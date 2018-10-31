@@ -17,8 +17,14 @@ public class Messages {
     public static final String MESSAGE_INVALID_DELIVERYMAN_COMMAND_FORMAT =
         "Invalid deliveryman command format! \n%1$s";
     public static final String MESSAGE_DELIVERYMEN_LISTED_OVERVIEW = "%1$d deliverymen listed!";
+    public static final String MESSAGE_DELIVERYMEN_HAS_ORDERS_CANNOT_DELETE = "Unable to delete deliveryman %1$s, "
+            + "currently assigned to some orders.";
+    public static final String MESSAGE_ORDER_HAS_DELIVERYMAN_CANNOT_DELETE = "Unable to delete order, "
+            + "already assigned to a deliveryman.";
     public static final String MESSAGE_ORDER_ALREADY_ASSIGNED_TO_DELIVERYMAN = "Order %1$s is already assigned to "
             + "deliveryman %2$s, cannot be edited or reassigned to another deliveryman!";
+    public static final String MESSAGE_ORDER_ALREADY_ASSIGNED_TO_DELIVERYMAN_CANNOT_CLEAR = "There is an order already "
+            + "assigned to a deliveryman, order list cannot be cleared.";
     public static final String MESSAGE_REQUIRE_LOGIN = "Please login first!";
 
 }

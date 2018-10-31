@@ -40,7 +40,7 @@ public class OrderCardHandle extends NodeHandle<Node> {
     }
 
     public List<String> getFood() {
-        return Arrays.asList(foodLabel.getText().split(","));
+        return Arrays.asList(foodLabel.getText().split(", "));
     }
 
     /**
