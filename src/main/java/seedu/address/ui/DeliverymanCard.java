@@ -40,13 +40,14 @@ public class DeliverymanCard extends UiPart<Region> {
     }
 
     private void setDeliverymanStatus() {
-        deliverymanIndicator.setText(Integer.toString(deliveryman.getOrders().size()));
         if (deliveryman.getOrders().size() > 0) {
             deliverymanIndicator.getStyleClass().clear();
             deliverymanIndicator.getStyleClass().add(BUSY_LABEL_CLASS);
+            deliverymanIndicator.setText("Assigned: " + deliveryman.getOrders().size());
         } else {
             deliverymanIndicator.getStyleClass().clear();
             deliverymanIndicator.getStyleClass().add(AVAILABLE_LABEL_CLASS);
+            deliverymanIndicator.setText("Available");
         }
     }
 
