@@ -16,6 +16,7 @@
     <icons>
         <Image url="@/images/scooter.png"/>
     </icons>
+
     <scene>
         <Scene>
             <stylesheets>
@@ -51,4 +52,5 @@
             </VBox>
         </Scene>
     </scene>
+
 </fx:root>

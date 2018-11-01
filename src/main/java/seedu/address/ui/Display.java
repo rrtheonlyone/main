@@ -15,6 +15,7 @@ import javafx.fxml.FXML;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.BackToHomeEvent;
 import seedu.address.commons.events.ui.DeliveryManPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.OrderPanelSelectionChangedEvent;
 import seedu.address.model.order.Food;
@@ -305,6 +306,16 @@ public class Display extends UiPart<Region> {
         }
 
         logger.info(orderHistory.toString());
+    }
+
+    @Subscribe
+    public void handleBackToHomeRequest(BackToHomeEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+
+        statisticsPanel = new StatisticsPanel();
+        displayPanelPlaceholder.getChildren().setAll(statisticsPanel.getRoot());
+
+        setupStatistics();
     }
 
     @Subscribe

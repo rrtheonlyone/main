@@ -11,6 +11,7 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.BackToHomeEvent;
 import seedu.address.commons.events.ui.DeliveryManPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.JumpToDeliveryManListRequestEvent;
 import seedu.address.commons.events.ui.OrderPanelSelectionChangedEvent;
@@ -67,6 +68,11 @@ public class DeliverymanListPanel extends UiPart<Region> {
 
     @Subscribe
     private void handleOrderPanelSelectionChangedEvent(OrderPanelSelectionChangedEvent event) {
+        deliverymanListView.getSelectionModel().clearSelection();
+    }
+
+    @Subscribe
+    private void handleBackToHomeRequest(BackToHomeEvent event) {
         deliverymanListView.getSelectionModel().clearSelection();
     }
 
