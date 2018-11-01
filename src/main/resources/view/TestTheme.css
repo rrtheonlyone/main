@@ -218,3 +218,14 @@
     -fx-background-color: derive(#14281D, 20%);
 }
 
+#countWrapper {
+    -fx-padding: 5;
+}
+
+#progressWrapper {
+    -fx-padding: 5;
+}
+
+#trendingWrapper {
+    -fx-padding: 5;
+}

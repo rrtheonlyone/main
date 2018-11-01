@@ -54,6 +54,15 @@ public class OrderDate {
         return date;
     }
 
+    public Date getShortenedDate() {
+        try {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM");
+            return dateFormat.parse(dateFormat.format(date));
+        } catch (ParseException pE) {
+            return date;
+        }
+    }
+
     @Override
     public String toString() {
         return sf.format(date);

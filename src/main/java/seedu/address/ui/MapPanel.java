@@ -43,8 +43,6 @@ public class MapPanel extends UiPart<Region> {
 
             if (POSTAL_CODE_CACHE.containsKey(postalCodeKey)) {
 
-                logger.info(postalCodeKey + " " + orderMap.get(postalCodeKey));
-
                 int regionCode = POSTAL_CODE_CACHE.get(postalCodeKey);
                 Integer[] coordinates = DISTRICT_CACHE.get(regionCode);
 

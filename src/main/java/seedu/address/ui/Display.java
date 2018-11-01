@@ -1,6 +1,11 @@
 package seedu.address.ui;
 
+import java.util.Comparator;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Set;
+import java.util.TreeMap;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
@@ -13,9 +18,14 @@ import javafx.scene.layout.StackPane;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.DeliveryManPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.OrderPanelSelectionChangedEvent;
+import seedu.address.model.order.Food;
 import seedu.address.model.order.Order;
+
 import seedu.address.ui.display.DeliverymanDisplayCard;
 import seedu.address.ui.display.OrderDisplayCard;
+
+import seedu.address.model.order.OrderDate;
+
 
 /**
  * Panel containing the main display - map and side content.
@@ -31,6 +41,15 @@ public class Display extends UiPart<Region> {
     @FXML
     private StackPane displayPanelPlaceholder;
 
+    @FXML
+    private StackPane statisticsWrapper;
+
+    private StatisticsPanel statisticsPanel;
+    private TreeMap<Date, Integer> orderHistory;
+    private HashMap<String, Integer> purchaseHistory;
+    private double progress;
+    private int total;
+
     private MapPanel mapPanel;
     private ObservableList<Order> orderList;
     private HashMap<String, Integer> directory;
@@ -38,63 +57,52 @@ public class Display extends UiPart<Region> {
     public Display(ObservableList<Order> orderList) {
         super(FXML);
         this.orderList = orderList;
+        this.progress = 0;
+        this.total = orderList.size();
 
         fillInnerParts();
         setupMap();
+        setupStatistics();
 
         this.orderList.addListener((ListChangeListener.Change<? extends Order> change) -> {
             while (change.next()) {
+
                 if (change.wasUpdated()) {
 
-                    directory = new HashMap<>();
-                    for (Order o : change.getList()) {
-                        logger.info("UPDATE " + o.toString());
-                        if (o.getOrderStatus().toString().equals("PENDING")) {
-                            String postalCode = o.getAddress().getPostalCode();
-                            String postalCodeKey = postalCode.substring(0, 2);
-                            if (directory.containsKey(postalCodeKey)) {
-                                directory.put(postalCodeKey, directory.get(postalCodeKey) + 1);
-                            } else {
-                                directory.put(postalCodeKey, 1);
-                            }
-                        }
-                    }
+                    this.progress = 0;
+                    this.total = 0;
 
-                    mapPanel.clear();
-                    mapPanel.initialise(directory);
+                    directory = new HashMap<>();
+                    updateMapCache(change.getList());
+
+                    orderHistory = new TreeMap<>();
+                    updateOrderHistory(change.getList());
+
+                    purchaseHistory = new HashMap<>();
+                    addFoodItems(change.getList());
+
+                    total = change.getList().size();
 
                 } else {
-                    for (Order o : change.getRemoved()) {
-                        logger.info("REMOVED " + o.toString());
-                        if (o.getOrderStatus().toString().equals("PENDING")) {
-                            String postalCode = o.getAddress().getPostalCode();
-                            String postalCodeKey = postalCode.substring(0, 2);
-                            if (directory.containsKey(postalCodeKey)) {
-                                if (directory.get(postalCodeKey) <= 1) {
-                                    directory.remove(postalCodeKey);
-                                } else {
-                                    directory.put(postalCodeKey, directory.get(postalCodeKey) - 1);
-                                }
-                            }
-                        }
-                    }
+                    removeFromMapCache(change.getRemoved());
+                    updateMapCache(change.getAddedSubList());
 
-                    for (Order o : change.getAddedSubList()) {
-                        logger.info("ADDED " + o.toString());
-                        if (o.getOrderStatus().toString().equals("PENDING")) {
-                            String postalCode = o.getAddress().getPostalCode();
-                            String postalCodeKey = postalCode.substring(0, 2);
-                            if (directory.containsKey(postalCodeKey)) {
-                                directory.put(postalCodeKey, directory.get(postalCodeKey) + 1);
-                            } else {
-                                directory.put(postalCodeKey, 1);
-                            }
-                        }
-                    }
+                    removeFromOrderHistory(change.getRemoved());
+                    updateOrderHistory(change.getAddedSubList());
 
-                    mapPanel.clear();
-                    mapPanel.initialise(directory);
+                    removeFoodItems(change.getRemoved());
+                    addFoodItems(change.getAddedSubList());
+
+                    total += change.getAddedSubList().size();
+                    total -= change.getRemoved().size();
                 }
+
+                mapPanel.clear();
+                mapPanel.initialise(directory);
+
+                statisticsPanel.clear();
+                statisticsPanel.initialize(orderHistory);
+                statisticsPanel.updateLabels(total, progress / total, getTrendingFood());
             }
         });
 
@@ -104,25 +112,148 @@ public class Display extends UiPart<Region> {
     private void fillInnerParts() {
         mapPanel = new MapPanel();
         mapWrapper.getChildren().add(mapPanel.getRoot());
+
+        statisticsPanel = new StatisticsPanel();
+        statisticsWrapper.getChildren().add(statisticsPanel.getRoot());
+    }
+
+    public void trackProgress(List<? extends Order> changeList, boolean toRemove) {
+        for (Order o : changeList) {
+            if (o.getOrderStatus().toString().equals("PENDING")) {
+                if (toRemove) {
+                    progress--;
+                } else {
+                    progress++;
+                }
+            }
+        }
+    }
+
+    private String getTrendingFood() {
+        String bestFood = "";
+        int bestVal = -1;
+
+        for (String food : purchaseHistory.keySet()) {
+            if (purchaseHistory.get(food) > bestVal) {
+                bestVal = purchaseHistory.get(food);
+                bestFood = food;
+            }
+        }
+
+        return bestFood;
+    }
+
+
+    private void addFoodItems(List<? extends Order> changeList) {
+        for (Order o : changeList) {
+            Set<Food> foodList = o.getFood();
+            for (Food item : foodList) {
+                String foodKey = item.toString();
+                if (purchaseHistory.containsKey(foodKey)) {
+                    purchaseHistory.put(foodKey, purchaseHistory.get(foodKey) + 1);
+                } else {
+                    purchaseHistory.put(foodKey, 1);
+                }
+            }
+        }
+    }
+
+    private void removeFoodItems(List<? extends Order> changeList) {
+        for (Order o : changeList) {
+            Set<Food> foodList = o.getFood();
+            for (Food item : foodList) {
+                String foodKey = item.toString();
+                if (purchaseHistory.containsKey(foodKey)) {
+                    if (purchaseHistory.get(foodKey) <= 1) {
+                        purchaseHistory.remove(foodKey);
+                    } else {
+                        purchaseHistory.put(foodKey, purchaseHistory.get(foodKey) - 1);
+                    }
+                }
+            }
+        }
     }
 
     private void setupMap() {
         directory = new HashMap<>();
-        for (Order o : orderList) {
-            // map all pending orders
+        updateMapCache(orderList);
+        mapPanel.initialise(directory);
+    }
+
+    private void setupStatistics() {
+        orderHistory = new TreeMap<>();
+        purchaseHistory = new HashMap<>();
+
+        addFoodItems(orderList);
+        trackProgress(orderList, false);
+        updateOrderHistory(orderList);
+
+        statisticsPanel.initialize(orderHistory);
+        statisticsPanel.updateLabels(total, progress / total, getTrendingFood());
+    }
+
+    private void removeFromMapCache(List<? extends Order> changeList) {
+        for (Order o : changeList) {
             if (o.getOrderStatus().toString().equals("PENDING")) {
                 String postalCode = o.getAddress().getPostalCode();
                 String postalCodeKey = postalCode.substring(0, 2);
+                if (directory.containsKey(postalCodeKey)) {
+                    if (directory.get(postalCodeKey) <= 1) {
+                        directory.remove(postalCodeKey);
+                    } else {
+                        directory.put(postalCodeKey, directory.get(postalCodeKey) - 1);
+                    }
+                }
 
+                progress -= 1;
+            }
+        }
+    }
+
+    private void updateMapCache(List<? extends Order> changeList) {
+        for (Order o : changeList) {
+            if (o.getOrderStatus().toString().equals("PENDING")) {
+                String postalCode = o.getAddress().getPostalCode();
+                String postalCodeKey = postalCode.substring(0, 2);
                 if (directory.containsKey(postalCodeKey)) {
                     directory.put(postalCodeKey, directory.get(postalCodeKey) + 1);
                 } else {
                     directory.put(postalCodeKey, 1);
                 }
+
+                progress += 1;
+            }
+        }
+    }
+
+    private void updateOrderHistory(List<? extends Order> changeList) {
+        for (Order o : changeList) {
+            Date dateKey = o.getDate().getShortenedDate();
+            logger.info("ADDED " + o.toString());
+            if (orderHistory.containsKey(dateKey)) {
+                orderHistory.put(dateKey, orderHistory.get(dateKey) + 1);
+            } else {
+                orderHistory.put(dateKey, 1);
             }
         }
 
-        mapPanel.initialise(directory);
+        logger.info(orderHistory.toString());
+    }
+
+    private void removeFromOrderHistory(List<? extends Order> changeList) {
+        for (Order o : changeList) {
+            Date dateKey = o.getDate().getShortenedDate();
+            logger.info("REMOVED " + o.toString());
+            if (orderHistory.containsKey(dateKey)) {
+                if (orderHistory.get(dateKey) <= 1) {
+                    orderHistory.remove(dateKey);
+                } else {
+                    orderHistory.put(dateKey, orderHistory.get(dateKey) - 1);
+                }
+            }
+        }
+
+        logger.info(orderHistory.toString());
     }
 
     @Subscribe
