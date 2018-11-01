@@ -204,9 +204,9 @@
 }
 
 #displayPending {
-    -fx-font-family: Chalkboard;
+    -fx-font-family: ".SF NS Display";
     -fx-font-style: bold;
-    -fx-font-size: 14;
+    -fx-font-size: 16;
     -fx-padding: 10;
 }
 
