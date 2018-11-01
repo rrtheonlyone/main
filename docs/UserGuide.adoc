@@ -75,6 +75,52 @@ e.g. typing *`/help`* and pressing kbd:[Enter] will open the help window.
 |=======================================================================
 ====
 
+====
+*Commands*:
+[cols="s,a"]
+|=======================================================================
+
+| That don't require login
+|`/help`
+
+`/signup`
+
+`/login`
+
+`/logout`
+
+`/exit`
+
+`/history`
+
+|That require login
+| `/order add`
+
+`/order list`
+
+`/order edit`
+
+`/order find`
+
+`/order delete`
+
+`/order clear`
+
+`/deliveryman add`
+
+`/deliveryman list`
+
+`/deliveryman find`
+
+`/deliveryman delete`
+
+`/assign`
+
+`/home`
+
+|=======================================================================
+====
+
 === Viewing help : `/help` `[Since v1.1]`
 
 Format: `/help`
