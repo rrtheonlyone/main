@@ -1,12 +1,7 @@
 package seedu.address.ui;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
 import java.util.Stack;
 import java.util.TreeMap;
@@ -21,7 +16,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.model.order.OrderDate;
 
 /**
  * Panel containing the statistics of orders.
@@ -53,6 +47,12 @@ public class StatisticsPanel extends UiPart<Region> {
         super(FXML);
     }
 
+    /**
+     * Updates the bar graph in the component with orders over the past 7 days. It does this by calling
+     * the pollLastEntry method from a balanced binary search tree
+     *
+     * @param historyDate TreeMap of order count arranged by their day/month
+     */
     public void initialize(TreeMap<Date, Integer> historyDate) {
         xAxis.setLabel("Date");
         yAxis.setLabel("Order Count");
@@ -84,6 +84,13 @@ public class StatisticsPanel extends UiPart<Region> {
         barChart.getData().add(series1);
     }
 
+    /**
+     * Updates the labels in the statistics panel based on information given
+     *
+     * @param count Total count of orders
+     * @param progress Percentage of orders that are pending
+     *  @param food The most popular food item
+     */
     public void updateLabels(int count, double progress, String food) {
 
         logger.info("PROGRESS " + progress);

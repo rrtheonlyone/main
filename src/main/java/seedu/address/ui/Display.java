@@ -1,6 +1,5 @@
 package seedu.address.ui;
 
-import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -20,11 +19,8 @@ import seedu.address.commons.events.ui.DeliveryManPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.OrderPanelSelectionChangedEvent;
 import seedu.address.model.order.Food;
 import seedu.address.model.order.Order;
-
 import seedu.address.ui.display.DeliverymanDisplayCard;
 import seedu.address.ui.display.OrderDisplayCard;
-
-import seedu.address.model.order.OrderDate;
 
 
 /**
@@ -54,6 +50,12 @@ public class Display extends UiPart<Region> {
     private ObservableList<Order> orderList;
     private HashMap<String, Integer> directory;
 
+
+    /**
+     * Constructor for this panel. Process information related to order and updates respective UI components
+     *
+     * @param orderList the current list of orders in-memory
+     */
     public Display(ObservableList<Order> orderList) {
         super(FXML);
         this.orderList = orderList;
@@ -109,6 +111,33 @@ public class Display extends UiPart<Region> {
         registerAsAnEventHandler(this);
     }
 
+    /**
+     * Initializes and sets up the variables needed for map component
+     */
+    private void setupMap() {
+        directory = new HashMap<>();
+        updateMapCache(orderList);
+        mapPanel.initialise(directory);
+    }
+
+    /**
+     * Initializes and sets up the variables needed for statistics component
+     */
+    private void setupStatistics() {
+        orderHistory = new TreeMap<>();
+        purchaseHistory = new HashMap<>();
+
+        addFoodItems(orderList);
+        trackProgress(orderList, false);
+        updateOrderHistory(orderList);
+
+        statisticsPanel.initialize(orderHistory);
+        statisticsPanel.updateLabels(total, progress / total, getTrendingFood());
+    }
+
+    /**
+     * Fills the panel with the map and statistics
+     */
     private void fillInnerParts() {
         mapPanel = new MapPanel();
         mapWrapper.getChildren().add(mapPanel.getRoot());
@@ -117,6 +146,12 @@ public class Display extends UiPart<Region> {
         statisticsWrapper.getChildren().add(statisticsPanel.getRoot());
     }
 
+    /**
+     * This updates the progress bar in the statistics panel with % of pending orders
+     *
+     * @param changeList list of orders that have to be changed
+     * @param toRemove a flag to indicate whether to update or remove
+     */
     public void trackProgress(List<? extends Order> changeList, boolean toRemove) {
         for (Order o : changeList) {
             if (o.getOrderStatus().toString().equals("PENDING")) {
@@ -129,6 +164,11 @@ public class Display extends UiPart<Region> {
         }
     }
 
+    /**
+     * Looks through hashmap to find the most popular food item ordered
+     *
+     * @return a String that represents the food item ordered the most
+     */
     private String getTrendingFood() {
         String bestFood = "";
         int bestVal = -1;
@@ -143,7 +183,11 @@ public class Display extends UiPart<Region> {
         return bestFood;
     }
 
-
+    /**
+     * Adds food items onto the purchase history hashmap once there is a change
+     *
+     * @param changeList orders that were changed
+     */
     private void addFoodItems(List<? extends Order> changeList) {
         for (Order o : changeList) {
             Set<Food> foodList = o.getFood();
@@ -158,6 +202,11 @@ public class Display extends UiPart<Region> {
         }
     }
 
+    /**
+     * Removes food items from the purchase history hashmap once there is a change
+     *
+     * @param changeList orders that were changed
+     */
     private void removeFoodItems(List<? extends Order> changeList) {
         for (Order o : changeList) {
             Set<Food> foodList = o.getFood();
@@ -174,24 +223,11 @@ public class Display extends UiPart<Region> {
         }
     }
 
-    private void setupMap() {
-        directory = new HashMap<>();
-        updateMapCache(orderList);
-        mapPanel.initialise(directory);
-    }
-
-    private void setupStatistics() {
-        orderHistory = new TreeMap<>();
-        purchaseHistory = new HashMap<>();
-
-        addFoodItems(orderList);
-        trackProgress(orderList, false);
-        updateOrderHistory(orderList);
-
-        statisticsPanel.initialize(orderHistory);
-        statisticsPanel.updateLabels(total, progress / total, getTrendingFood());
-    }
-
+    /**
+     * Removes addresses from the directory hashmap once there is a change
+     *
+     * @param changeList orders that were changed
+     */
     private void removeFromMapCache(List<? extends Order> changeList) {
         for (Order o : changeList) {
             if (o.getOrderStatus().toString().equals("PENDING")) {
@@ -210,6 +246,11 @@ public class Display extends UiPart<Region> {
         }
     }
 
+    /**
+     * Adds addresses onto the directory hashmap once there is a change
+     *
+     * @param changeList orders that were changed
+     */
     private void updateMapCache(List<? extends Order> changeList) {
         for (Order o : changeList) {
             if (o.getOrderStatus().toString().equals("PENDING")) {
@@ -226,6 +267,11 @@ public class Display extends UiPart<Region> {
         }
     }
 
+    /**
+     * Adds orders onto the orderHistory treemap once there is a change
+     *
+     * @param changeList orders that were changed
+     */
     private void updateOrderHistory(List<? extends Order> changeList) {
         for (Order o : changeList) {
             Date dateKey = o.getDate().getShortenedDate();
@@ -240,6 +286,11 @@ public class Display extends UiPart<Region> {
         logger.info(orderHistory.toString());
     }
 
+    /**
+     * Removes orders from the orderHistory treemap once there is a change
+     *
+     * @param changeList orders that were changed
+     */
     private void removeFromOrderHistory(List<? extends Order> changeList) {
         for (Order o : changeList) {
             Date dateKey = o.getDate().getShortenedDate();
