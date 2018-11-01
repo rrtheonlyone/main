@@ -149,7 +149,7 @@ Edits the phone number and name of the 1st order to be `91234567` and `Jonathan`
 `/order edit 2 f/Maggi Goreng f/Ice Milo` +
 Edits the food of the 2nd order to be `Maggi Goreng, Ice Milo`.
 
-=== Finding orders by name or phone : `/order find` `[Since v1.2]`
+=== Finding orders : `/order find` `[Since v1.2]`
 
 Find any order/s with any given order fields. +
 Format: `/order find [n/NAME] [p/PHONE] [a/ADDRESS] [f/food] [dt/DATETIME]` +
@@ -161,6 +161,8 @@ Format: `/order find [n/NAME] [p/PHONE] [a/ADDRESS] [f/food] [dt/DATETIME]` +
 * Partial match is allowed for name, phone and food. e.g. `alex` will match `alex lim`
 * To find for orders with a date range, use 2 date fields. e.g. `dt/01-10-2018 10:00:00 dt/03-10-2018
   10:00:00` will return order/s within the 2 dates.
+* To find for orders from a specific date, use 1 date field. e.g `dt/01-10-2018 10:00:00` will return order/s on that
+ date.
 ****
 
 Examples:
