@@ -228,4 +228,22 @@
 
 #trendingWrapper {
     -fx-padding: 5;
+    -fx-background-color: #f4f1f5;
+}
+
+#orderCount {
+    -fx-font-style: bold;
+    -fx-font-family: Courier;
+    -fx-font-size: 16;
+}
+
+#progressLabel {
+    -fx-font-family: Courier;
+}
+
+#trendingFood {
+    -fx-padding: 5;
+    -fx-font-style: bold;
+    -fx-font-family: Courier;
+    -fx-font-size: 16;
 }
