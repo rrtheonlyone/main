@@ -53,7 +53,7 @@ e.g. typing *`/help`* and pressing kbd:[Enter] will open the help window.
 
 ====
 *Fields restrictions*:
-[width="100%",cols="20%,<80%"]
+[width="100%",cols=""]
 |=======================================================================
 
 |NAME | Can only be alphanumeric and spaces are allowed, it should not be blank and be 1 to 64 characters long
@@ -71,6 +71,52 @@ e.g. typing *`/help`* and pressing kbd:[Enter] will open the help window.
 |PASSWORD | Can be alphanumeric, should be at least *6* characters long and spaces are *NOT* allowed.
 
 |INDEX | Refers to the index number shown by the order / deliveryman list command & it must be a positive integer 1, 2, 3, ...
+
+|=======================================================================
+====
+
+====
+*Commands*:
+[cols="s,a"]
+|=======================================================================
+
+| That don't require login
+|`/help`
+
+`/signup`
+
+`/login`
+
+`/logout`
+
+`/exit`
+
+`/history`
+
+|That require login
+| `/order add`
+
+`/order list`
+
+`/order edit`
+
+`/order find`
+
+`/order delete`
+
+`/order clear`
+
+`/deliveryman add`
+
+`/deliveryman list`
+
+`/deliveryman find`
+
+`/deliveryman delete`
+
+`/assign`
+
+`/home`
 
 |=======================================================================
 ====
