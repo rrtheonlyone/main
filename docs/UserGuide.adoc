@@ -177,7 +177,7 @@ Format: `/order add f/FOOD n/NAME p/PHONE a/ADDRESS dt/DATETIME`
 ****
 * Able to add more than 1 food items by specifying more food tags. e.g. `f/Roti Prata f/Ice Milo`.
 * Address must be a valid address that exists in Singapore to be displayed on the map.
-* If the postal code is longer thatn 6 digits, much like any other field, only the last 6 will be taken into
+* If the postal code is longer than 6 digits, much like any other field, only the last 6 digits will be taken into
 consideration
 ****
 
