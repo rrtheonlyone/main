@@ -16,20 +16,33 @@ public class OrderDisplayCard extends UiPart<Region> {
     public final Order order;
 
     @FXML
-    private Label name;
+    private Label foodL;
     @FXML
-    private Label deliverymanName;
+    private Label dateL;
+    @FXML
+    private Label phoneL;
+    @FXML
+    private Label addressL;
+    @FXML
+    private Label nameL;
+    @FXML
+    private Label deliverymanL;
 
     public OrderDisplayCard(Order order) {
         super(FXML);
         this.order = order;
-        name.setText(order.getName().fullName);
-        deliverymanName.setText(getFullNameOrNull(order.getDeliveryman()));
+
+        nameL.setText("Name: " + order.getName().fullName);
+        dateL.setText("Date: " + order.getDate().toString());
+        foodL.setText("Food: " + order.getFood().toString());
+        phoneL.setText("Phone: " + order.getPhone().toString());
+        addressL.setText("Address: " + order.getAddress().toString());
+        deliverymanL.setText("Deliveryman: " + getFullNameOrNull(order.getDeliveryman()));
     }
 
     private String getFullNameOrNull(Deliveryman deliveryman) {
         if (deliveryman == null) {
-            return "Not assigned to deliveryman.";
+            return "Not assigned.";
         }
         return deliveryman.getName().fullName;
     }
