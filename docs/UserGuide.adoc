@@ -25,7 +25,7 @@ FoodZoom is a food delivery management platform targeted at food business lookin
 .  Ensure you have Java version `9` or later installed in your Computer.
 .  Download the latest `foodzoom.jar` link:{repoURL}/releases[here].
 .  Copy the file to the folder you want to use as the home folder for your FoodZoom.
-.  Double-click the file to start the app. The GUI should appear in a few seconds.
+.  Double-click the file to start the app. The GUI should appear in a few seconds (the below screen is after you signup/login).
 +
 image::Ui.png[width="790"]
 +
@@ -33,15 +33,18 @@ image::Ui.png[width="790"]
 e.g. typing *`/help`* and pressing kbd:[Enter] will open the help window.
 .  Some example commands you can try:
 
+* *`/signup n/John Doe u/johndoe pw/johndoepassword`*: Sign into the application
 * *`/order list`* : lists all orders
-* **`/order add`**`f/Roti Prata n/John Smith p/12345678 a/block 123, Clementi Drive, #01-01 dt/10-10-2018 10:10:10` : adds the food `Roti Prata`, customers phone number `12345678`, customer address `block 123, Clementi Drive, #01-01` and order date and time to `10-10`2018 10:10:10` to the list of orders.
-* **`/order delete`**`3` : deletes the 3rd order shown in the current list of orders
+* *`/order find n/david`* : finds the order david has ordered
 * *`/exit`* : exits the app
 
 .  Refer to <<Features>> for details of each command.
 
 [[Features]]
 == Features
+
+Before starting on the application, read through the below sections. They cover
+the format to be used for all the commands and the syntax that is to be followed.
 
 ====
 *Command Format*
@@ -76,7 +79,7 @@ e.g. typing *`/help`* and pressing kbd:[Enter] will open the help window.
 ====
 
 ====
-*Commands*:
+*Available Commands*:
 [cols="s,a"]
 |=======================================================================
 
@@ -154,6 +157,18 @@ Logout from the application.
 
 Format: `/logout`
 
+=== Return to Home Page : `/home` `[Since v1.3]`
+
+If any selection is done, allows you to return back to the home page with the dashboard
+Format: `/home`
+
+****
+* Renders a bar graph which shows the order history (limited to the latest 7 orders by date)
+* Shows a map - the map gives a reasonable *estimate* for the locations of the pending orders. It is
+designed to work offline and give you a rough gauge of where your orders are
+* This dashboard dynamically updates itself when the order list is changed (try /order find!)
+****
+
 === Adding an order : `/order add` `[Since v1.1]`
 
 Adds an order to the list of orders +
@@ -161,12 +176,15 @@ Format: `/order add f/FOOD n/NAME p/PHONE a/ADDRESS dt/DATETIME`
 
 ****
 * Able to add more than 1 food items by specifying more food tags. e.g. `f/Roti Prata f/Ice Milo`.
+* Address must be a valid address that exists in Singapore to be displayed on the map.
+* If the postal code is longer than 6 digits, much like any other field, only the last 6 digits will be taken into
+consideration
 ****
 
 Examples:
 
-* `/order add f/Roti Prata n/John Smith p/12345678 a/block 123, Clementi Drive, #01-01 dt/26-12-2018 10:10:54`
-* `/order add a/block 55 Computing Drive n/Harry f/Tissue Prata f/Nasi Briyani p/81889111 dt/14-12-2018 14:10:54`
+* `/order add f/Roti Prata n/John Smith p/12345678 a/block 123, Clementi Drive, #01-01 610123 dt/26-12-2018 10:10:54`
+* `/order add a/block 55 Computing Drive 117417 n/Harry f/Tissue Prata f/Nasi Briyani p/81889111 dt/14-12-2018 14:10:54`
 
 === Listing all orders : `/order list` `[Since v1.1]`
 
@@ -239,6 +257,25 @@ Deletes the 2nd order in the list of orders.
 * `/order find n/tom` +
 `/order delete 1` +
 Deletes the 1st order in the results of the `find` command.
+
+=== Selecting an order : `/order select` `[Since v1.1]`
+
+Deletes the specified order from the list of order. +
+Format: `/order select INDEX`
+
+****
+* Select an order at the specified `INDEX`.
+* Renders a new view for the select order - use /home to return the original view
+****
+
+Examples:
+
+* `/order list` +
+`/order select 2` +
+Selects the 2nd order in the list of orders.
+* `/order find n/david` +
+`/order select 1` +
+Selects the 1st order in the results of the `find` command.
 
 === Clearing all order entries : `/order clear` `[Since v1.1]`
 
@@ -416,6 +453,7 @@ e.g. `/signup n/John Doe u/johndoe pw/johndoepassword`
 * *Login* : `/login u/USERNAME pw/PASSWORD` +
 e.g. `/login u/manager pw/password`
 * *Logout* : `/logout`
+* *Return to Home* : `/home`
 * *Add order* : `/order add f/FOOD n/NAME p/PHONE_NUMBER a/ADDRESS dt/DATETIME` +
 e.g. `/order add f/Roti Prata n/James Ho p/22224444 a/block 123, Clementi Rd, 1234665 dt/14-12-2018 10:18:00`
 * *Listing orders* : `/order list`
@@ -425,6 +463,8 @@ e.g. `/order edit 2 n/James Lee`
 e.g. `/order find n/James Jake`
 * *Delete order* : `/order delete INDEX` +
 e.g. `/order delete 3`
+* *Select order* : `/order select INDEX` +
+e.g. `/order select 3`
 * *Clear order* : `/order clear`
 * *Add delivery man* : `/deliveryman add n/NAME` +
 e.g. `/deliveryman add n/James Ho`
