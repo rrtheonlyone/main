@@ -113,7 +113,7 @@
 }
 
 #orderStatus.ongoing {
-    -fx-background-color: #c9a100;
+    -fx-background-color: #c99000;
 }
 
 #orderStatus.completed {
@@ -173,7 +173,6 @@
 #deliverymanIndicator {
     -fx-font-size: 14;
     -fx-font-family: Verdana;
-    -fx-font-weight: bold;
 }
 
 #deliverymanStatus {
@@ -204,7 +203,7 @@
 }
 
 #displayPending {
-    -fx-font-family: ".SF NS Display";
+    -fx-font-family: "Rockwell";
     -fx-font-style: bold;
     -fx-font-size: 16;
     -fx-padding: 10;
@@ -233,17 +232,17 @@
 
 #orderCount {
     -fx-font-style: bold;
-    -fx-font-family: Courier;
+    -fx-font-family: Rockwell;
     -fx-font-size: 16;
 }
 
 #progressLabel {
-    -fx-font-family: Courier;
+    -fx-font-family: Rockwell;
 }
 
 #trendingFood {
     -fx-padding: 5;
     -fx-font-style: bold;
-    -fx-font-family: Courier;
+    -fx-font-family: Rockwell;
     -fx-font-size: 16;
 }
