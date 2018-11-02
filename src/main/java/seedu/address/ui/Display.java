@@ -84,6 +84,7 @@ public class Display extends UiPart<Region> {
                     purchaseHistory = new HashMap<>();
                     addFoodItems(change.getList());
 
+                    trackProgress(change.getList(), false);
                     total = change.getList().size();
 
                 } else {
@@ -95,6 +96,9 @@ public class Display extends UiPart<Region> {
 
                     removeFoodItems(change.getRemoved());
                     addFoodItems(change.getAddedSubList());
+
+                    trackProgress(change.getRemoved(), true);
+                    trackProgress(change.getAddedSubList(), false);
 
                     total += change.getAddedSubList().size();
                     total -= change.getRemoved().size();
@@ -128,11 +132,16 @@ public class Display extends UiPart<Region> {
         orderHistory = new TreeMap<>();
         purchaseHistory = new HashMap<>();
 
+        logger.info(progress + "   " + total);
+
         addFoodItems(orderList);
         trackProgress(orderList, false);
         updateOrderHistory(orderList);
 
         statisticsPanel.initialize(orderHistory);
+
+        logger.info(progress + "   " + total);
+
         statisticsPanel.updateLabels(total, progress / total, getTrendingFood());
     }
 
@@ -241,8 +250,6 @@ public class Display extends UiPart<Region> {
                         directory.put(postalCodeKey, directory.get(postalCodeKey) - 1);
                     }
                 }
-
-                progress -= 1;
             }
         }
     }
@@ -262,8 +269,6 @@ public class Display extends UiPart<Region> {
                 } else {
                     directory.put(postalCodeKey, 1);
                 }
-
-                progress += 1;
             }
         }
     }
