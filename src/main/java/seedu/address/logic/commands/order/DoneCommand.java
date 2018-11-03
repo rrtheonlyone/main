@@ -65,6 +65,7 @@ public class DoneCommand extends OrderCommand {
         model.updateOrder(orderToBeCompleted, completedOrder);
         model.updateDeliveryman(deliverymanToRemoveOrder, updatedDeliveryman);
         model.commitOrderBook();
+        model.commitDeliverymenList();
 
         return new CommandResult(String.format(MESSAGE_COMPLETED_ORDER_SUCCESS, completedOrder));
     }
