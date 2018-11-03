@@ -64,7 +64,7 @@ public class OrderCommandParser implements Parser<OrderCommand> {
             return new EditCommandParser().parse(arguments);
 
         case DoneCommand.COMMAND_WORD:
-            return null;
+            return new DoneCommandParser().parse(arguments);
 
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
