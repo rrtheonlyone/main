@@ -1,9 +1,12 @@
 package seedu.address.testutil;
 
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 import seedu.address.model.common.Name;
 import seedu.address.model.deliveryman.Deliveryman;
+import seedu.address.model.order.Order;
 
 /**
  * A utility class to help build a deliveryman
@@ -13,6 +16,7 @@ public class DeliverymanBuilder {
 
     private Name name;
     private UUID id;
+    private Set<Order> orders = new HashSet<>();
 
     public DeliverymanBuilder() {
         name = new Name(DEFAULT_NAME);
@@ -41,6 +45,14 @@ public class DeliverymanBuilder {
      */
     public DeliverymanBuilder withId(String idString) {
         this.id = UUID.fromString(idString);
+        return this;
+    }
+
+    /**
+     * Add the {@code Order} of the {@code Deliveryman} that we are building.
+     */
+    public DeliverymanBuilder withOrder(Order order) {
+        this.orders.add(order);
         return this;
     }
 

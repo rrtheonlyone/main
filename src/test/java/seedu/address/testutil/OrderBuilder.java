@@ -7,6 +7,7 @@ import java.util.UUID;
 import seedu.address.model.common.Address;
 import seedu.address.model.common.Name;
 import seedu.address.model.common.Phone;
+import seedu.address.model.deliveryman.Deliveryman;
 import seedu.address.model.order.Food;
 import seedu.address.model.order.Order;
 import seedu.address.model.order.OrderDate;
@@ -32,6 +33,7 @@ public class OrderBuilder {
     private OrderStatus status;
     private Set<Food> food;
     private UUID id;
+    private Deliveryman deliveryman;
 
     public OrderBuilder() {
         name = new Name(DEFAULT_NAME);
@@ -110,6 +112,14 @@ public class OrderBuilder {
      */
     public OrderBuilder withStatus(String status) {
         this.status = new OrderStatus(status);
+        return this;
+    }
+
+    /**
+     * Sets the {@code Deliveryman} of the {@code Order} that we are building.
+     */
+    public OrderBuilder withDeliveryman(Deliveryman deliveryman) {
+        this.deliveryman = deliveryman;
         return this;
     }
 
