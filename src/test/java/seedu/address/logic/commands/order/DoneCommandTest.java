@@ -45,18 +45,16 @@ public class DoneCommandTest {
         Model expectedModel = new ModelManager(model.getOrderBook(), model.getUsersList(),
                 model.getDeliverymenList(), new UserPrefs());
 
-        expectedModel.commitOrderBook();
-        expectedModel.commitDeliverymenList();
-        expectedModel.commitOrderBook();
-        expectedModel.commitDeliverymenList();
-
+        //get ongoing order.
         Order orderTobeCompleted = model.getFilteredOrderList().get(0);
         Deliveryman deliveryman = new DeliverymanBuilder(CHIKAO).build();
         deliveryman.addOrder(orderTobeCompleted);
 
+        //mark order as completed.
         Order completedOrder = new OrderBuilder(orderTobeCompleted).build();
         completedOrder.setStatusCompleted();
 
+        //remove order from deliveryman
         Deliveryman updatedDeliveryman = orderTobeCompleted.getDeliveryman();
         updatedDeliveryman.removeOrder(orderTobeCompleted);
 
@@ -64,7 +62,7 @@ public class DoneCommandTest {
         expectedModel.commitOrderBook();
         expectedModel.updateDeliveryman(deliveryman, updatedDeliveryman);
         expectedModel.commitDeliverymenList();
-        
+
         assertExecutionSuccess(INDEX_FIRST, expectedOrder, expectedModel);
     }
 
