@@ -75,4 +75,11 @@ public class DoneCommand extends OrderCommand {
 
         return targetDeliveryman;
     }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof DoneCommand // instanceof handles nulls
+                && targetIndex.equals(((DoneCommand) other).targetIndex)); // state check
+    }
 }
