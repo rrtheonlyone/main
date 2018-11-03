@@ -100,6 +100,9 @@ public class Order extends TaggedObject {
         return deliveryman;
     }
 
+    public void setStatusCompleted() {
+        orderStatus = new OrderStatus("COMPLETED");
+    }
     /**
      * Returns a food set
      */
