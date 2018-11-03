@@ -42,6 +42,7 @@ public class OrderBuilder {
         date = new OrderDate(DEFAULT_DATE);
         food = SampleDataUtil.getFoodSet(DEFAULT_FOOD);
         status = new OrderStatus(DEFAULT_STATUS);
+        deliveryman = null;
     }
 
     /**
@@ -55,6 +56,7 @@ public class OrderBuilder {
         date = orderToCopy.getDate();
         status = orderToCopy.getOrderStatus();
         food = new HashSet<>(orderToCopy.getFood());
+        deliveryman = orderToCopy.getDeliveryman();
     }
 
     /**
@@ -128,7 +130,7 @@ public class OrderBuilder {
      */
     public Order build() {
         if (id != null) {
-            return new Order(id, name, phone, address, date, status, food, null);
+            return new Order(id, name, phone, address, date, status, food, deliveryman);
         } else {
             return new Order(name, phone, address, date, status, food);
         }

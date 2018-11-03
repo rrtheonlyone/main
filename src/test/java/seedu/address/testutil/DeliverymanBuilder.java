@@ -61,7 +61,7 @@ public class DeliverymanBuilder {
      */
     public Deliveryman build() {
         if (id != null) {
-            return new Deliveryman(id, name, null);
+            return new Deliveryman(id, name, orders);
         } else {
             return new Deliveryman(name);
         }
