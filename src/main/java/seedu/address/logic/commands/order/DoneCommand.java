@@ -92,6 +92,7 @@ public class DoneCommand extends OrderCommand {
      */
     private static Deliveryman removeOrderFromDeliveryman(Deliveryman targetDeliveryman, Order targetOrder) {
         assert targetDeliveryman != null;
+        assert targetOrder != null;
 
         targetDeliveryman.removeOrder(targetOrder);
 
