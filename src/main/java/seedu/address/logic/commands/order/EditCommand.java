@@ -48,7 +48,7 @@ public class EditCommand extends OrderCommand {
             + "[" + PREFIX_ADDRESS + "ADDRESS] "
             + "[" + PREFIX_DATE + "DATE] "
             + "[" + PREFIX_FOOD + "FOOD]...\n"
-            + "Example: " + OrderCommand.COMMAND_WORD + COMMAND_WORD + " 1 "
+            + "Example: " + OrderCommand.COMMAND_WORD + " " + COMMAND_WORD + " 1 "
             + PREFIX_PHONE + "91234567 "
             + PREFIX_FOOD + "Roti Prata "
             + PREFIX_FOOD + "Ice Milo";
