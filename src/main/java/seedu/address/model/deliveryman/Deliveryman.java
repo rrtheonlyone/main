@@ -57,6 +57,10 @@ public class Deliveryman extends TaggedObject {
         orders.add(order);
     }
 
+    public void removeOrder(Order order) {
+        orders.remove(order);
+    }
+
     public boolean hasOrders() {
         return !orders.isEmpty();
     }
