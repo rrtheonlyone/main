@@ -3,7 +3,6 @@ package seedu.address.logic.commands.order;
 import static java.util.Objects.requireNonNull;
 
 import java.util.List;
-import java.util.Set;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
@@ -11,13 +10,8 @@ import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
-import seedu.address.model.common.Address;
-import seedu.address.model.common.Name;
-import seedu.address.model.common.Phone;
 import seedu.address.model.deliveryman.Deliveryman;
-import seedu.address.model.order.Food;
 import seedu.address.model.order.Order;
-import seedu.address.model.order.OrderDate;
 import seedu.address.model.order.OrderStatus;
 
 /**
@@ -58,34 +52,16 @@ public class DoneCommand extends OrderCommand {
             throw new CommandException(MESSAGE_ONGOING_ORDER);
         }
 
-        Order completedOrder = createCompletedOrder(orderToBeCompleted);
+        orderToBeCompleted.setStatusCompleted();
         Deliveryman deliverymanToRemoveOrder = orderToBeCompleted.getDeliveryman();
         Deliveryman updatedDeliveryman = removeOrderFromDeliveryman(deliverymanToRemoveOrder, orderToBeCompleted);
 
-        model.updateOrder(orderToBeCompleted, completedOrder);
+        model.updateOrder(orderToBeCompleted, orderToBeCompleted);
         model.updateDeliveryman(deliverymanToRemoveOrder, updatedDeliveryman);
         model.commitOrderBook();
         model.commitDeliverymenList();
 
-        return new CommandResult(String.format(MESSAGE_COMPLETED_ORDER_SUCCESS, completedOrder));
-    }
-
-    /**
-     * Creates and returns a {@code Order} with the details of {@code orderToEdit}
-     * edited with OrderStatus as COMPLETED.
-     */
-    private static Order createCompletedOrder(Order orderToBeCompleted) {
-        assert orderToBeCompleted != null;
-
-        Name updatedName = orderToBeCompleted.getName();
-        Phone updatedPhone = orderToBeCompleted.getPhone();
-        Address updatedAddress = orderToBeCompleted.getAddress();
-        OrderDate updatedDate = orderToBeCompleted.getDate();
-        Set<Food> updatedFood = orderToBeCompleted.getFood();
-        OrderStatus orderStatus = new OrderStatus("COMPLETED");
-        Deliveryman deliveryman = orderToBeCompleted.getDeliveryman();
-
-        return new Order(updatedName, updatedPhone, updatedAddress, updatedDate, orderStatus, updatedFood, deliveryman);
+        return new CommandResult(String.format(MESSAGE_COMPLETED_ORDER_SUCCESS, orderToBeCompleted));
     }
 
     /**
