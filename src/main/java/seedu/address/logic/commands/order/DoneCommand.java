@@ -1,5 +1,6 @@
 package seedu.address.logic.commands.order;
 
+import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -16,6 +17,12 @@ public class DoneCommand extends OrderCommand {
             + ": Marks an order as COMPLETED \n"
             + "Parameters: INDEX (must be a positive integer) ";
 
+
+    private final Index targetIndex;
+
+    public DoneCommand(Index targetIndex) {
+        this.targetIndex = targetIndex;
+    }
 
     @Override
     public CommandResult execute(Model model, CommandHistory history) throws CommandException {
