@@ -11,6 +11,7 @@ import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.order.Order;
+import seedu.address.model.order.OrderStatus;
 
 /**
  * Deletes an order identified using it's displayed index from the order book.
@@ -42,7 +43,7 @@ public class DeleteCommand extends OrderCommand {
         }
 
         Order orderToDelete = lastShownList.get(targetIndex.getZeroBased());
-        if (orderToDelete.isAlreadyAssignedDeliveryman()) {
+        if (orderToDelete.isAlreadyAssignedDeliveryman() && isOngoingStatus(orderToDelete)) {
             throw new CommandException(Messages.MESSAGE_ORDER_HAS_DELIVERYMAN_CANNOT_DELETE);
         }
 
@@ -56,5 +57,12 @@ public class DeleteCommand extends OrderCommand {
         return other == this // short circuit if same object
                 || (other instanceof DeleteCommand // instanceof handles nulls
                 && targetIndex.equals(((DeleteCommand) other).targetIndex)); // state check
+    }
+
+    /**
+     * Checks if the order is ongoing.
+     */
+    private boolean isOngoingStatus(Order orderToDelete) {
+        return orderToDelete.getOrderStatus().equals(new OrderStatus("ONGOING"));
     }
 }
