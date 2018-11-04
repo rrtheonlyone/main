@@ -1,5 +1,9 @@
 package seedu.address.logic.commands.deliveryman;
 
+import static java.util.Objects.requireNonNull;
+
+import java.util.List;
+
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
@@ -10,10 +14,9 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.deliveryman.Deliveryman;
 
-import java.util.List;
-
-import static java.util.Objects.requireNonNull;
-
+/**
+ * The Command that selects a deliveryman identified using its displayed index
+ */
 public class DeliverymanSelectCommand extends DeliverymanCommand {
     public static final String COMMAND_WORD = "select";
 
