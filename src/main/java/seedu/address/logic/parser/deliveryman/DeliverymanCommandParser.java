@@ -12,6 +12,7 @@ import seedu.address.logic.commands.deliveryman.DeliverymanCommand;
 import seedu.address.logic.commands.deliveryman.DeliverymanDeleteCommand;
 import seedu.address.logic.commands.deliveryman.DeliverymanFindCommand;
 import seedu.address.logic.commands.deliveryman.DeliverymanListCommand;
+import seedu.address.logic.commands.deliveryman.DeliverymanSelectCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
@@ -40,6 +41,9 @@ public class DeliverymanCommandParser {
 
         case DeliverymanAddCommand.COMMAND_WORD:
             return new DeliverymanAddCommandParser().parse(arguments);
+
+        case DeliverymanSelectCommand.COMMAND_WORD:
+            return new DeliverymanSelectCommandParser().parse(arguments);
 
         case DeliverymanDeleteCommand.COMMAND_WORD:
             return new DeliverymanDeleteCommandParser().parse(arguments);
