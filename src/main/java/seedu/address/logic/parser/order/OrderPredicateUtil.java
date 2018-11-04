@@ -18,6 +18,9 @@ import seedu.address.model.order.OrderDatePredicate;
 import seedu.address.model.order.OrderFoodContainsKeywordPredicate;
 import seedu.address.model.order.OrderNameContainsKeywordPredicate;
 import seedu.address.model.order.OrderPhoneContainsKeywordPredicate;
+import seedu.address.model.order.OrderStatus;
+import seedu.address.model.order.OrderStatusContainsKeywordPredicate;
+
 /**
  * Util to parse order's predicate
  */
@@ -29,6 +32,7 @@ public class OrderPredicateUtil {
     private static final String STRING_PREFIX_ADDRESS = "a/";
     private static final String STRING_PREFIX_DATE = "dt/";
     private static final String STRING_PREFIX_FOOD = "f/";
+    private static final String STRING_PREFIX_STATUS = "st/";
 
     private Predicate<Order> chainedPredicated;
 
@@ -115,6 +119,17 @@ public class OrderPredicateUtil {
                     new OrderFoodContainsKeywordPredicate(Arrays.asList(foodKeywords));
 
             setToPredicate(foodPredicate);
+
+            break;
+
+        case STRING_PREFIX_STATUS:
+            String status = getLastValueFromList(keywords);
+            String[] statusKeywords = trimAndSplitStringByWhiteSpaces(status);
+            List<OrderStatus> orderStatus =
+                    new OrderStatusPredicateUtil().parseOrderStatusKeywords(Arrays.asList(statusKeywords));
+            OrderStatusContainsKeywordPredicate statusPredicate = new OrderStatusContainsKeywordPredicate(orderStatus);
+
+            setToPredicate(statusPredicate);
 
             break;
 
