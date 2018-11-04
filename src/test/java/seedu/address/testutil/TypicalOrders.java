@@ -55,13 +55,13 @@ public class TypicalOrders {
             .withFood("Milkshake").build();
     public static final Order DANIEL = new OrderBuilder().withId(DANIEL_ID).withName("Daniel Meier")
             .withPhone("87652533").withAddress("10th street, 612234").withDate("04-10-2018 10:00:00")
-            .withStatus("PENDING").withFood("Fish and Chips").build();
+            .withStatus("COMPLETED").withFood("Fish and Chips").build();
     public static final Order ELLE = new OrderBuilder().withId(ELLE_ID).withName("Elle Meyer").withPhone("9482224")
             .withAddress("michegan ave, 612234").withDate("05-10-2018 10:00:00").withStatus("PENDING")
             .withFood("Chicken Chop")
             .build();
     public static final Order FIONA = new OrderBuilder().withId(FIONA_ID).withName("Fiona Kunz").withPhone("9482427")
-            .withAddress("little tokyo, 612234").withDate("01-10-2018 10:00:00").withStatus("PENDING")
+            .withAddress("little tokyo, 612234").withDate("01-10-2018 10:00:00").withStatus("ONGOING")
             .withFood("Tuna Sandwich")
             .build();
     public static final Order GEORGE = new OrderBuilder().withId(GEORGE_ID).withName("George Best").withPhone("9482442")

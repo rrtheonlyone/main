@@ -6,6 +6,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_FOOD;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_STATUS;
 
 import java.util.Collections;
 import java.util.List;
@@ -34,14 +35,55 @@ public class OrderPredicateUtilTest {
         List<String> name = Collections.singletonList("alex");
         Predicate<Order> expectedPredicate = new OrderNameContainsKeywordPredicate(name);
 
+<<<<<<< d49219fb5e138b1a75d473643c000c31596d51d2
         ArgumentMultimap argMultimap = tokenizeInput(" n/alex");
         Predicate<Order> predicate = new OrderPredicateUtil().parsePredicate(argMultimap);
+=======
+        ArgumentMultimap emptyAddress = tokenizeInput(" a/");
+        Predicate<Order> predicate = new OrderPredicateUtil().parsePredicate(emptyAddress);
+    }
+
+    @Test
+    public void test_emptyDateTag_throwsParseException() throws ParseException {
+        thrown.expect(ParseException.class);
+
+        ArgumentMultimap emptyDate = tokenizeInput(" dt/");
+        Predicate<Order> predicate = new OrderPredicateUtil().parsePredicate(emptyDate);
+    }
+
+    @Test
+    public void test_emptyFoodTag_throwsParseException() throws ParseException {
+        thrown.expect(ParseException.class);
+
+        ArgumentMultimap emptyFood = tokenizeInput(" f/");
+        Predicate<Order> predicate = new OrderPredicateUtil().parsePredicate(emptyFood);
+    }
+
+    @Test
+    public void test_emptyStatusTag_throwsParseException() throws ParseException {
+        thrown.expect(ParseException.class);
+
+        ArgumentMultimap emptyStatus = tokenizeInput(" st/");
+        Predicate<Order> predicate = new OrderPredicateUtil().parsePredicate(emptyStatus);
+    }
+
+    @Test
+    public void test_singlePredicate() throws ParseException {
+        Predicate<Order> expectedPredicate;
+
+        ArgumentMultimap emptyName = tokenizeInput(" n/alex");
+        Predicate<Order> predicate = new OrderPredicateUtil().parsePredicate(emptyName);
+
+        List<String> names = Collections.singletonList("alex");
+        expectedPredicate = new OrderNameContainsKeywordPredicate(names);
+>>>>>>> Add and update tests for find order by status
 
         assertEquals(predicate, expectedPredicate);
     }
 
     private ArgumentMultimap tokenizeInput(String input) {
-        return ArgumentTokenizer.tokenize(input, PREFIX_NAME, PREFIX_PHONE, PREFIX_ADDRESS, PREFIX_DATE, PREFIX_FOOD);
+        return ArgumentTokenizer.tokenize(
+                input, PREFIX_NAME, PREFIX_PHONE, PREFIX_ADDRESS, PREFIX_DATE, PREFIX_FOOD, PREFIX_STATUS);
     }
 
     /**

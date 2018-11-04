@@ -31,7 +31,7 @@
             <phone>87652533</phone>
             <address>10th street, 612234</address>
             <date>04-10-2018 10:00:00</date>
-            <status>PENDING</status>
+            <status>COMPLETED</status>
             <food>Fish and Chips</food>
         </orders>
         <orders tag="d0abc707-2363-46b2-8c45-92667f3d9e0e">
@@ -47,7 +47,7 @@
             <phone>9482427</phone>
             <address>little tokyo, 612234</address>
             <date>01-10-2018 10:00:00</date>
-            <status>PENDING</status>
+            <status>ONGOING</status>
             <food>Tuna Sandwich</food>
         </orders>
         <orders tag="e7dc53e1-a1a0-4208-8f29-a6b24f215ff9">
