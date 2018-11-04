@@ -24,6 +24,7 @@ import seedu.address.model.Model;
 import seedu.address.model.OrderBook;
 import seedu.address.model.deliveryman.Deliveryman;
 import seedu.address.model.deliveryman.DeliverymanNameContainsKeywordsPredicate;
+import seedu.address.model.deliveryman.DeliverymenList;
 import seedu.address.model.order.NameContainsKeywordsPredicate;
 import seedu.address.model.order.Order;
 import seedu.address.testutil.EditOrderDescriptorBuilder;
@@ -148,6 +149,8 @@ public class CommandTestUtil {
         // only do so by copying its components.
         OrderBook expectedOrderBook = new OrderBook(actualModel.getOrderBook());
         List<Order> expectedFilteredList = new ArrayList<>(actualModel.getFilteredOrderList());
+        DeliverymenList expectedDeliverymenList = new DeliverymenList(actualModel.getDeliverymenList());
+        List<Deliveryman> expectedFilteredDeliverymenList = new ArrayList<>(actualModel.getFilteredDeliverymenList());
 
         CommandHistory expectedCommandHistory = new CommandHistory(actualCommandHistory);
 
@@ -158,6 +161,8 @@ public class CommandTestUtil {
             assertEquals(expectedMessage, e.getMessage());
             assertEquals(expectedOrderBook, actualModel.getOrderBook());
             assertEquals(expectedFilteredList, actualModel.getFilteredOrderList());
+            assertEquals(expectedDeliverymenList, actualModel.getDeliverymenList());
+            assertEquals(expectedFilteredDeliverymenList, actualModel.getFilteredDeliverymenList());
             assertEquals(expectedCommandHistory, actualCommandHistory);
         }
     }
