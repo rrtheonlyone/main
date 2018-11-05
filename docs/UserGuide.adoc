@@ -395,6 +395,28 @@ Examples:
 `/assign d/2 o/1 o/2` +
 Assigns order number 1 and 2 to delivery man number 2.
 
+=== Mark an order as completed : `/order done` `[Since v1.4]`
+
+Mark an order as completed.
+Format: `/order done ORDER_INDEX`
+
+****
+* Mark ORDER_INDEX as completed.
+* The index refers to the index number shown in the orders list.
+* The index *must be a positive integer* 1, 2, 3, ... and must be within the number of displayed orders.
+* There must be only 1 order index.
+* Only `ongoing` orders can be marked as completed.
+****
+
+Examples:
+
+* `/order list` +
+`/deliveryman list` +
+`/assign d/2 o/1` +
+`/order done 1`
+Mark order number 1 as completed.
+
+
 === Listing entered commands : `/history` `[Since v1.1]`
 
 Lists all the commands that you have entered in reverse chronological order. +
@@ -480,6 +502,8 @@ e.g. `/deliveryman delete 3`
 e.g. `/route create o/1 o/3`
 * *Assign orders to a delivery man* : `/assign d/DELIVERYMAN_INDEX o/ORDER_INDEX` +
 e.g. `/assign d/1 o/1 o/3`
+* *Mark an order as completed* : `/order done ORDER_INDEX` +
+e.g. `/order done 1`
 * *Help* : `/help`
 * *History* : `/history`
 * *Exit the program* : `/exit`
