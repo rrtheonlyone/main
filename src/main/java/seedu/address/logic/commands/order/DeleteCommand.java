@@ -11,7 +11,6 @@ import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.order.Order;
-import seedu.address.model.order.OrderStatus;
 
 /**
  * Deletes an order identified using it's displayed index from the order book.
