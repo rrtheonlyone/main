@@ -41,6 +41,7 @@ public class DoneCommand extends OrderCommand {
         requireNonNull(model);
 
         List<Order> lastShownList = model.getFilteredOrderList();
+        List<Deliveryman> lastShowDeliverymanList = model.getFilteredDeliverymenList();
 
         if (targetIndex.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_ORDER_DISPLAYED_INDEX);
@@ -53,12 +54,19 @@ public class DoneCommand extends OrderCommand {
         }
 
         orderToBeCompleted.setStatusCompleted();
+
+        //fetch deliveryman from index because order's deliveryman not reliable.
         Deliveryman deliverymanToRemoveOrder = orderToBeCompleted.getDeliveryman();
-        Deliveryman updatedDeliveryman = removeOrderFromDeliveryman(deliverymanToRemoveOrder, orderToBeCompleted);
+        int indexOfDeliveryman = lastShowDeliverymanList.indexOf(deliverymanToRemoveOrder);
+        Deliveryman correctDeliveryman = lastShowDeliverymanList.get(indexOfDeliveryman);
+        Deliveryman updatedDeliveryman = removeOrderFromDeliveryman(correctDeliveryman, orderToBeCompleted);
 
         model.updateOrder(orderToBeCompleted, orderToBeCompleted);
-        model.updateDeliveryman(deliverymanToRemoveOrder, updatedDeliveryman);
+        model.updateFilteredOrderList(Model.PREDICATE_SHOW_ALL_ORDERS);
         model.commitOrderBook();
+        
+        model.updateDeliveryman(correctDeliveryman, updatedDeliveryman);
+        model.updateFilteredDeliverymenList(Model.PREDICATE_SHOW_ALL_DELIVERYMEN);
         model.commitDeliverymenList();
 
         return new CommandResult(String.format(MESSAGE_COMPLETED_ORDER_SUCCESS, orderToBeCompleted));
@@ -71,9 +79,10 @@ public class DoneCommand extends OrderCommand {
         assert targetDeliveryman != null;
         assert targetOrder != null;
 
-        targetDeliveryman.removeOrder(targetOrder);
+        Deliveryman removedOrderDeliveryman = new Deliveryman(targetDeliveryman);
+        removedOrderDeliveryman.removeOrder(targetOrder);
 
-        return targetDeliveryman;
+        return removedOrderDeliveryman;
     }
 
     @Override
