@@ -27,8 +27,6 @@ import org.junit.Test;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.LoginCommand;
-import seedu.address.logic.commands.RedoCommand;
-import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.order.DeleteCommand;
 import seedu.address.logic.commands.order.FindCommand;
 import seedu.address.logic.commands.order.OrderCommand;
@@ -131,16 +129,6 @@ public class FindCommandSystemTest extends OrderBookSystemTest {
         command = findCommand + " " + PREFIX_PHONE + "9876    5432";
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
-
-        /* Case: undo previous find command -> rejected */
-        command = UndoCommand.COMMAND_WORD;
-        String expectedResultMessage = UndoCommand.MESSAGE_FAILURE;
-        assertCommandFailure(command, expectedResultMessage);
-
-        /* Case: redo previous find command -> rejected */
-        command = RedoCommand.COMMAND_WORD;
-        expectedResultMessage = RedoCommand.MESSAGE_FAILURE;
-        assertCommandFailure(command, expectedResultMessage);
 
         /* Case: find same orders in order book after deleting 1 of them -> 1 order found */
         executeCommand(OrderCommand.COMMAND_WORD + " " + DeleteCommand.COMMAND_WORD + " 1");

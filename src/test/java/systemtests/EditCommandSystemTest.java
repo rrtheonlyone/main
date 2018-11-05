@@ -42,8 +42,6 @@ import org.junit.Test;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.LoginCommand;
-import seedu.address.logic.commands.RedoCommand;
-import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.order.EditCommand;
 import seedu.address.logic.commands.order.OrderCommand;
 import seedu.address.model.Model;
@@ -79,18 +77,6 @@ public class EditCommandSystemTest extends OrderBookSystemTest {
                 + PHONE_DESC_BOB + " " + DATE_DESC_BOB + "  " + ADDRESS_DESC_BOB + " " + FOOD_DESC_BURGER + " ";
         Order editedOrder = new OrderBuilder(BOB).withFood(VALID_FOOD_BURGER).build();
         assertCommandSuccess(command, index, editedOrder);
-
-        /* Case: undo editing the last order in the list -> last order restored */
-        command = UndoCommand.COMMAND_WORD;
-        String expectedResultMessage = UndoCommand.MESSAGE_SUCCESS;
-        assertCommandSuccess(command, model, expectedResultMessage);
-
-        /* Case: redo editing the last order in the list -> last order edited again */
-        command = RedoCommand.COMMAND_WORD;
-        expectedResultMessage = RedoCommand.MESSAGE_SUCCESS;
-        model.updateOrder(
-                getModel().getFilteredOrderList().get(INDEX_FIRST.getZeroBased()), editedOrder);
-        assertCommandSuccess(command, model, expectedResultMessage);
 
         /* Case: edit a order with new values same as existing values -> edited */
         command = editCommand + " " + index.getOneBased() + NAME_DESC_BOB + PHONE_DESC_BOB + DATE_DESC_BOB

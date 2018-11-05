@@ -14,8 +14,6 @@ import org.junit.rules.ExpectedException;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
-import seedu.address.logic.commands.RedoCommand;
-import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.deliveryman.DeliverymanCommand;
 import seedu.address.logic.commands.order.OrderCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -64,18 +62,6 @@ public class OrderBookParserTest {
         thrown.expect(ParseException.class);
         thrown.expectMessage(String.format(MESSAGE_INVALID_DELIVERYMAN_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE));
         parser.parseCommand(DeliverymanCommand.COMMAND_WORD);
-    }
-
-    @Test
-    public void parseCommand_redoCommandWord_returnsRedoCommand() throws Exception {
-        assertTrue(parser.parseCommand(RedoCommand.COMMAND_WORD) instanceof RedoCommand);
-        assertTrue(parser.parseCommand("/redo 1") instanceof RedoCommand);
-    }
-
-    @Test
-    public void parseCommand_undoCommandWord_returnsUndoCommand() throws Exception {
-        assertTrue(parser.parseCommand(UndoCommand.COMMAND_WORD) instanceof UndoCommand);
-        assertTrue(parser.parseCommand("/undo 3") instanceof UndoCommand);
     }
 
     @Test

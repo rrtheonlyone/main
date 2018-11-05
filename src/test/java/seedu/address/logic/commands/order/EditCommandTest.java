@@ -2,7 +2,6 @@ package seedu.address.logic.commands.order;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.DESC_BOB;
@@ -24,8 +23,6 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
-import seedu.address.logic.commands.RedoCommand;
-import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.commands.order.EditCommand.EditOrderDescriptor;
 import seedu.address.model.Model;
@@ -176,14 +173,6 @@ public class EditCommandTest {
 
         // edit -> first order edited
         editCommand.execute(model, commandHistory);
-
-        // undo -> reverts orderbook back to previous state and filtered order list to show all orders
-        expectedModel.undoOrderBook();
-        assertCommandSuccess(new UndoCommand(), model, commandHistory, UndoCommand.MESSAGE_SUCCESS, expectedModel);
-
-        // redo -> same first order edited again
-        expectedModel.redoOrderBook();
-        assertCommandSuccess(new RedoCommand(), model, commandHistory, RedoCommand.MESSAGE_SUCCESS, expectedModel);
     }
 
     @Test
@@ -194,10 +183,6 @@ public class EditCommandTest {
 
         // execution failed -> order book state not added into model
         assertCommandFailure(editCommand, model, commandHistory, Messages.MESSAGE_INVALID_ORDER_DISPLAYED_INDEX);
-
-        // single order book state in model -> undoCommand and redoCommand fail
-        assertCommandFailure(new UndoCommand(), model, commandHistory, UndoCommand.MESSAGE_FAILURE);
-        assertCommandFailure(new RedoCommand(), model, commandHistory, RedoCommand.MESSAGE_FAILURE);
     }
 
     @Test
@@ -215,15 +200,6 @@ public class EditCommandTest {
 
         // edit -> edits second order in unfiltered order list / first order in filtered order list
         editCommand.execute(model, commandHistory);
-
-        // undo -> reverts orderbook back to previous state and filtered order list to show all orders
-        expectedModel.undoOrderBook();
-        assertCommandSuccess(new UndoCommand(), model, commandHistory, UndoCommand.MESSAGE_SUCCESS, expectedModel);
-
-        assertNotEquals(model.getFilteredOrderList().get(INDEX_FIRST.getZeroBased()), orderToEdit);
-        // redo -> edits same second order in unfiltered order list
-        expectedModel.redoOrderBook();
-        assertCommandSuccess(new RedoCommand(), model, commandHistory, RedoCommand.MESSAGE_SUCCESS, expectedModel);
     }
 
     @Test
