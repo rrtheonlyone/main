@@ -334,8 +334,8 @@ Format: `/deliveryman find n/NAME` +
 
 Examples:
 
-* `/deliveryman find n/john` +
-Returns `john` and `John Doe`
+* `/deliveryman find n/John Smith` +
+Returns all delivery men with the names `John` or `Smith` e.g. `John Smith`, `John Doe`, and `Michael Smith`
 
 === Deleting a delivery man : `/deliveryman delete` `[Since v1.2]`
 
