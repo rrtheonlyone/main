@@ -71,7 +71,8 @@ the format to be used for all the commands and the syntax that is to be followed
 
 |USERNAME | Can be alphanumeric and spaces are *NOT* allowed, it should not be blank and be 3 to 64 characters long.
 
-|PASSWORD | Can be alphanumeric, should be at least *6* characters long and spaces are *NOT* allowed.
+|PASSWORD | Can be alphanumeric, should be at least *6* characters long and spaces are *NOT* allowed. Not encrypted
+in current releases.
 
 |INDEX | Refers to the index number shown by the order / deliveryman list command & it must be a positive integer 1, 2, 3, ...
 
@@ -131,7 +132,7 @@ Format: `/help`
 === Sign up for system : `/signup` `[Since v1.1]`
 
 Sign up for a new manager account so that the manager can use the application. Once you sign up, you will be
-automatically logged into the application.
+automatically logged into the application. Since the managers using the application is working for one stall, they will have access to that stall data and see the same home screen
 
 Format: `/signup n/NAME u/USERNAME pw/PASSWORD`
 
@@ -142,7 +143,7 @@ Examples:
 === Login to system : `/login` `[Since v1.1]`
 
 Login into the application so that the manager can use the application. Once you login, you can use the authenticated
- commands.
+ commands. Since the managers using the application is working for one stall, they will have access to that stall data and see the same home screen
 
 Format: `/login u/USERNAME pw/PASSWORD`
 
