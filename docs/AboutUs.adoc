@@ -26,9 +26,9 @@ Roles: Code quality and testing +
 
 '''
 
-=== Monika Manuela
+=== Monika Manuela Hengki
 image::monmanuela.png[width="150", align="left"]
-{empty}[http://github.com/yijinl[github]] [https://www.linkedin.com/in/monika-manuela-hengki-a9383a54[portfolio]]
+{empty}[http://github.com/monmanuela[github]] [<<monikamanuela#, portfolio>>]
 
 Roles: Team lead, UI +
 
