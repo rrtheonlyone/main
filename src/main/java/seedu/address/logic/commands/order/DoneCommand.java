@@ -64,7 +64,7 @@ public class DoneCommand extends OrderCommand {
         model.updateOrder(orderToBeCompleted, orderToBeCompleted);
         model.updateFilteredOrderList(Model.PREDICATE_SHOW_ALL_ORDERS);
         model.commitOrderBook();
-        
+
         model.updateDeliveryman(correctDeliveryman, updatedDeliveryman);
         model.updateFilteredDeliverymenList(Model.PREDICATE_SHOW_ALL_DELIVERYMEN);
         model.commitDeliverymenList();
