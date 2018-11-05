@@ -344,6 +344,7 @@ image::UndoRedoActivityDiagram.png[width="650"]
 ** Cons: Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things.
 // end::undoredo[]
 
+// tag::loginfeature[]
 === Login Command
 ==== Current Implementation
 
@@ -413,6 +414,7 @@ incorrect behavior.
 ** Pros: It is easy to implement.
 ** Cons: It breaks the SRP because `parseCommand` method should only be used to parse commands and not check for user
  logged in status.
+// end::loginfeature[]
 
 === Add Order Feature
 

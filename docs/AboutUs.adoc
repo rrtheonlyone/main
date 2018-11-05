@@ -36,7 +36,7 @@ Roles: Team lead, UI +
 
 === Koh Chi Hao
 image::kohchihao.png[width="150", align="left"]
-{empty}[https://github.com/kohchihao[github]] [https://www.kohchihao.com/[portfolio]]
+{empty}[https://github.com/kohchihao[github]] [<<kohchihao#, portfolio>>]
 
 Roles: Scheduling and tracking deliverables and deadlines +
 

@@ -128,6 +128,7 @@ the format to be used for all the commands and the syntax that is to be followed
 
 Format: `/help`
 
+// tag::signup[]
 === Sign up for system : `/signup` `[Since v1.1]`
 
 Sign up for a new manager account so that the manager can use the application. Once you sign up, you will be
@@ -138,7 +139,9 @@ Format: `/signup n/NAME u/USERNAME pw/PASSWORD`
 Examples:
 
 * `/signup n/John Doe u/johndoe pw/johndoepassword`
+// end::signup[]
 
+// tag::login[]
 === Login to system : `/login` `[Since v1.1]`
 
 Login into the application so that the manager can use the application. Once you login, you can use the authenticated
@@ -149,13 +152,15 @@ Format: `/login u/USERNAME pw/PASSWORD`
 Examples:
 
 * `/login u/manager pw/password`
+// end::login[]
 
-
+// tag::logout[]
 === Logout from system : `/logout` `[Since v1.3]`
 
 Logout from the application.
 
 Format: `/logout`
+// end::logout[]
 
 === Return to Home Page : `/home` `[Since v1.3]`
 
