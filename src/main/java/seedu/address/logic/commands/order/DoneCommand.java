@@ -54,7 +54,7 @@ public class DoneCommand extends OrderCommand {
             throw new CommandException(MESSAGE_ONGOING_ORDER);
         }
 
-        orderToBeCompleted.setStatusCompleted();
+
 
         //fetch deliveryman from index because order's deliveryman not reliable.
         Deliveryman deliverymanToRemoveOrder = orderToBeCompleted.getDeliveryman();
@@ -64,7 +64,7 @@ public class DoneCommand extends OrderCommand {
                 .orElseThrow(() -> new CommandException(MESSAGE_DELIVERYMAN_NOT_EXIST));
         Deliveryman updatedDeliveryman = removeOrderFromDeliveryman(correctDeliveryman, orderToBeCompleted);
 
-
+        orderToBeCompleted.setStatusCompleted();
 
         model.updateOrder(orderToBeCompleted, orderToBeCompleted);
         model.updateFilteredOrderList(Model.PREDICATE_SHOW_ALL_ORDERS);
