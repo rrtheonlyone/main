@@ -29,6 +29,7 @@ public class DoneCommand extends OrderCommand {
 
     public static final String MESSAGE_COMPLETED_ORDER_SUCCESS = "Order %1$s have been completed.";
     public static final String MESSAGE_ONGOING_ORDER = "Only ONGOING status can be marked as completed.";
+    public static final String MESSAGE_DELIVERYMAN_NOT_EXIST = "Deliveryman does not exist inside deliveryman list.";
 
     private final Index targetIndex;
 
@@ -57,9 +58,13 @@ public class DoneCommand extends OrderCommand {
 
         //fetch deliveryman from index because order's deliveryman not reliable.
         Deliveryman deliverymanToRemoveOrder = orderToBeCompleted.getDeliveryman();
-        int indexOfDeliveryman = lastShowDeliverymanList.indexOf(deliverymanToRemoveOrder);
-        Deliveryman correctDeliveryman = lastShowDeliverymanList.get(indexOfDeliveryman);
+        Deliveryman correctDeliveryman = lastShowDeliverymanList.stream()
+                .filter(deliveryman -> deliveryman.equals(deliverymanToRemoveOrder))
+                .findFirst()
+                .orElseThrow(() -> new CommandException(MESSAGE_DELIVERYMAN_NOT_EXIST));
         Deliveryman updatedDeliveryman = removeOrderFromDeliveryman(correctDeliveryman, orderToBeCompleted);
+
+
 
         model.updateOrder(orderToBeCompleted, orderToBeCompleted);
         model.updateFilteredOrderList(Model.PREDICATE_SHOW_ALL_ORDERS);
