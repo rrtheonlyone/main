@@ -461,6 +461,7 @@ a `ParseException` would be thrown.
 ** Pros: Easier to implement & maintain
 ** Cons: Deliveryman can only be accessed & treated as parts of an `Order`
 
+// tag::route[]
 === Create Route Feature [deprecated since v1.2.1]
 This feature is deprecated as there was a design change regarding the relationship between delivery man and order.
 Previously, route was the middleman between delivery men and orders. Now, delivery men and orders are directly related.
@@ -483,7 +484,7 @@ From the sequence diagram:
 .  When `LogicManager` receive the `execute` command, it calls the `parseCommand` method in `OrderBookParser`.
 .  `OrderBookParser` will receive `/route` as the command and instantiate `RouteCommandParser` to further parse the command.
 .  If the arguments specified in the `create` command are valid, a `CreateRouteCommand` will be created and return back to the `LogicManger`
-.  `LogicManger` will proceed to call the `execute` command of `CreateRouteCommand`
+.  `LogicManager` will proceed to call the `execute` command of `CreateRouteCommand`
 .  `CreateRouteCommand` will proceed to call the `getFilteredOrderList` method of `Model`
 .  Iterate through the `orderIds`, if valid, add the `Index` and the corresponding `Order` to the set of `Index` and `Order` respectively.
 .  Create a `Route` from the set of `Order`
@@ -498,6 +499,45 @@ From the sequence diagram:
 * **Alternative 2:** `CreateRouteCommand` is parsed straight from `OrderBookParser`.
 ** Pros: Easier to manage the file structure.
 ** Cons: Poor modularization of the `Command` classes.
+// end::route[]
+
+// tag::assign[]
+=== Assign feature
+==== Current Implementation
+The `/assign` command allows assigning of multiple orders to a delivery man in FoodZoom.
+
+The following sequence diagram shows the sequence flow from the `LogicManager` to the `ModelManager` when a user enter a `/assign` command:
+
+image::AssignCommandSequenceDiagram1.png[width=800]
+Figure 3.6.1.1 Sequence diagram to illustrate `Logic` component interactions for `/assign` command.
+
+image::AssignCommandSequenceDiagram2.png[width=800]
+Figure 3.6.1.2 Sequence diagram to illustrate `Logic` and `Model` component interactions for route `create` command.
+
+From the sequence diagram:
+
+.  When `LogicManager` receive the `execute` command, it calls the `parseCommand` method in `OrderBookParser`.
+.  `OrderBookParser` will receive `/assign` as the command and instantiate `AssignCommandParser` to further parse the command.
+.  If the arguments specified in the `/assign` command are valid, a `AssignCommand` will be created and return back to the `LogicManger`
+.  `LogicManager` will proceed to call the `execute` command of `AssignCommand`
+.  `AssignCommand` will proceed to call the `getFilteredOrderList` and `getFilteredDeliverymanList` method of `Model`
+.  Iterate through the `orderIds`, if valid, add the `order` corresponding to that `index` to the set of `Order`.
+.  Create a new `Deliveryman` to be assigned from the `deliveryman` corresponding to the deliveryman index.
+.  Iterate through the orders, call `setDeliveryman`.
+.  A new route would be added and create a new `CommandResult` to be returned.
+
+==== Design Consideration
+
+===== Aspect: Relationship between `Order` and `Deliveryman`
+* **Alternative 1 (current choice):** Two way associations between the `Order` and `Deliveryman`
+** Pros: Performing update operations such as assigning orders or marking orders as completed and displaying information on each order and
+delivery man are more effective as they are aware of one another.
+** Cons: More complicated to implement the assigning of order, and subsequently other features regarding this relationship such as removing of order.
+* **Alternative 2:** Only the `Deliveryman` is aware of the `Order`
+** Pros: Easier to implement the feature and manage the order and deliveryman states.
+** Cons: Performing the update operations mentioned above will be ineffective, and it will be more difficult to display information on which delivery man an order is assigned to.
+
+// end::assign[]
 
 === Logging
 
