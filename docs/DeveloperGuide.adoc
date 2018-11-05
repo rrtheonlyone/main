@@ -455,6 +455,7 @@ From the diagram above:
 ** Pros: Easy to implement.
 ** Cons: Violates SRP as one single class will need to check if the arguments are valid.
 
+// tag::orderfindfeature[]
 === Find Order Feature
 
 ==== Current Implementation
@@ -507,6 +508,7 @@ Figure 3.4.1.2 Sequence Diagram for `datetime` search
 * **Alternative 2:** `FindCommandParser` to handles the predicates.
 ** Pros: It makes it easy for new developers to understand the code as `FindCommandParser` handles all the parsing of the predicates
 ** Cons: It violates SRP. `FindCommandParser` has to break down the fields as well as check which fields are present.
+// end::orderfindfeature[]
 
 === Add deliveryman feature
 
