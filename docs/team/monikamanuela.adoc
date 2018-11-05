@@ -42,6 +42,8 @@ to be delivered by their deliverymen conveniently.
 ** Improved checking for the date of the order to prevent invalid dates.
 ** Modified command words of some commands to unify the patterns.
 
+* *Code contributions*: https://github.com/CS2103-AY1819S1-T16-3/main/search?q=author%3Amonmanuela&unscoped_q=author%3Amonmanuela[Issues and Pull requests opened by me.]
+
 * *Other contributions*:
 
 ** Project management:
@@ -72,6 +74,7 @@ Issue https://github.com/CS2103-AY1819S1-W13-4/main/issues/172[#172],
 |===
 
 include::../UserGuide.adoc[tag=assignfeature]
+
 include::../UserGuide.adoc[tag=routecreatefeature]
 
 == Contributions to Developer Guide
@@ -81,4 +84,5 @@ include::../UserGuide.adoc[tag=routecreatefeature]
 |===
 
 include::../DeveloperGuide.adoc[tag=assign]
+
 include::../DeveloperGuide.adoc[tag=route]
