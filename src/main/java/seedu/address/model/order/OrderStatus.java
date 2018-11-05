@@ -37,6 +37,13 @@ public class OrderStatus {
     }
 
     /**
+     * Checks if the status is ongoing.
+     */
+    public boolean isOngoingStatus() {
+        return orderState.equals(Status.ONGOING);
+    }
+
+    /**
      * Returns true if a given string is a valid status.
      */
     public static boolean isValidStatus(String orderStatus) {
