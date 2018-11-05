@@ -218,7 +218,7 @@ Edits the food of the 2nd order to be `Maggi Goreng, Ice Milo`.
 === Finding orders : `/order find` `[Since v1.2]`
 
 Find any order/s with any given order fields. +
-Format: `/order find [n/NAME] [p/PHONE] [a/ADDRESS] [f/food] [dt/DATETIME]` +
+Format: `/order find [n/NAME] [p/PHONE] [a/ADDRESS] [f/FOOD] [dt/DATETIME]` +
 
 ****
 * All fields are optional. However, at least one field must be specified.
@@ -461,7 +461,7 @@ e.g. `/order add f/Roti Prata n/James Ho p/22224444 a/block 123, Clementi Rd, 12
 * *Listing orders* : `/order list`
 * *Edit order* : `/order edit INDEX [f/FOOD] [n/NAME] [p/PHONE_NUMBER] [a/ADDRESS] [dt/DATETIME]` +
 e.g. `/order edit 2 n/James Lee`
-* *Find order* : `/order find [n/NAME] [p/PHONE] [a/ADDRESS] [f/food] [dt/DATETIME]` +
+* *Find order* : `/order find [n/NAME] [p/PHONE] [a/ADDRESS] [f/FOOD] [dt/DATETIME]` +
 e.g. `/order find n/James Jake`
 * *Delete order* : `/order delete INDEX` +
 e.g. `/order delete 3`
