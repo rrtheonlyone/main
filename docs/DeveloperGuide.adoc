@@ -1499,18 +1499,18 @@ These instructions only provide a starting point for testers to work on; testers
 .. Re-launch the app by double-clicking the jar file. +
    Expected: The most recent window size and location is retained.
 
-_{ more test cases ... }_
+=== Deleting an order
 
-=== Deleting a person
+. Deleting an order while all order are listed
 
-. Deleting a person while all persons are listed
-
-.. Prerequisites: List all persons using the `list` command. Multiple persons in the list.
-.. Test case: `delete 1` +
-   Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
-.. Test case: `delete 0` +
-   Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.
-.. Other incorrect delete commands to try: `delete`, `delete x` (where x is larger than the list size) _{give more}_ +
+.. Prerequisites: List all orders using the `/order list` command. Multiple orders in the list.
+.. Test case: `/order delete 1` +
+   Expected: First order is deleted from the list. Details of the deleted order shown in the status message.
+   Timestamp in the status bar is updated.
+.. Test case: `/order delete 0` +
+   Expected: No order is deleted. Error details shown in the status message. Status bar remains the same.
+.. Other incorrect delete commands to try: `/order delete`, `/order delete x` (where x is larger than the list size)
+_{give more}_ +
    Expected: Similar to previous.
 
 _{ more test cases ... }_
