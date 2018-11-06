@@ -49,13 +49,13 @@ the format to be used for all the commands and the syntax that is to be followed
 ====
 *Command Format*
 
-* Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
+* Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `/order add n/NAME`, `NAME` is a parameter which can be used as `/order add n/John Doe`.
 * Items in square brackets are optional e.g `n/NAME [p/PHONE]` can be used as `n/John Doe p/9112` or as `n/John Doe`.
 * Parameters can be in any order e.g. if the command specifies `n/NAME a/ADDRESS`, `a/ADDRESS n/NAME` is also acceptable.
 ====
 
 ====
-*Fields restrictions*:
+*Fields restrictions*
 [width="100%",cols="20%,<80%"]
 |=======================================================================
 
@@ -69,6 +69,8 @@ the format to be used for all the commands and the syntax that is to be followed
 
 |DATETIME | Must conform to the format `dd-MM-YYYY h:m:s`, where _dd_ is date, _MM_ is month, _YYYY_ is year, _h_ is 24 hour of the day, _m_ is minutes and _s_ is seconds. e.g. `14-10-2018 23:30:00`
 
+|ORDER_STATUS | Only `PENDING`, `ONGOING` or `COMPLETED` are allowed
+
 |USERNAME | Can be alphanumeric and spaces are *NOT* allowed, it should not be blank and be 3 to 64 characters long.
 
 |PASSWORD | Can be alphanumeric, should be at least *6* characters long and spaces are *NOT* allowed. Not encrypted
@@ -80,7 +82,7 @@ in current releases.
 ====
 
 ====
-*Available Commands*:
+*Available Commands*
 [cols="s,a"]
 |=======================================================================
 
@@ -106,15 +108,21 @@ in current releases.
 
 `/order find`
 
+`/order select`
+
 `/order delete`
 
 `/order clear`
+
+`/order done`
 
 `/deliveryman add`
 
 `/deliveryman list`
 
 `/deliveryman find`
+
+`/deliveryman select`
 
 `/deliveryman delete`
 
@@ -183,7 +191,7 @@ Format: `/order add f/FOOD n/NAME p/PHONE a/ADDRESS dt/DATETIME`
 ****
 * Able to add more than 1 food items by specifying more food tags. e.g. `f/Roti Prata f/Ice Milo`.
 * Address must be a valid address that exists in Singapore to be displayed on the map.
-* If the postal code is longer than 6 digits, much like any other field, only the last 6 digits will be taken into
+* If the postal code is longer than 6 digits, much like any other field, only the *last 6 digits* will be taken into
 consideration
 * The manager is able to add dates from any time period as long as it is valid.
 * Two orders are considered the same if they have the same name, phone, and date time.
@@ -227,17 +235,17 @@ Edits the food of the 2nd order to be `Maggi Goreng, Ice Milo`.
 === Finding orders : `/order find` `[Since v1.2]`
 
 Find any order/s with any given order fields. +
-Format: `/order find [n/NAME] [p/PHONE] [a/ADDRESS] [f/FOOD] [dt/DATETIME]` +
+Format: `/order find [n/NAME] [p/PHONE] [a/ADDRESS] [f/FOOD] [dt/DATETIME] [st\ORDER_STATUS]` +
 
 ****
 * All fields are optional. However, at least one field must be specified.
 * Empty value after any fields are not allowed. e.g. `n/`
 * The search is case insensitive. e.g `tom` will match `Tom`
-* Partial match is allowed for name, phone and food. e.g. `alex` will match `alex lim`
-* To find for orders with a date range, use 2 date fields. e.g. `dt/01-10-2018 10:00:00 dt/03-10-2018
-  10:00:00` will return order/s within the 2 dates.
+* Partial match is allowed for name, phone and food. e.g. `alex` will match `alex lim` and `al` will match `alex lim`
 * To find for orders from a specific date, use 1 date field. e.g `dt/01-10-2018 10:00:00` will return order/s on that
  date.
+* To find for orders with a date range, use 2 date fields. e.g. `dt/01-10-2018 10:00:00 dt/03-10-2018
+  10:00:00` will return order/s within the 2 dates.
 ****
 
 Examples:
@@ -315,7 +323,7 @@ Format: `/deliveryman list`
 === Editing a delivery man : `/deliveryman edit` `[Coming in v2.0]`
 
 Edits an existing delivery man in the list of delivery men. +
-Format: `/delivery man edit INDEX n/NAME`
+Format: `/deliveryman edit INDEX n/NAME`
 
 ****
 * Edits the delivery man at the specified `INDEX`.
@@ -390,22 +398,6 @@ Selects the 1st deliveryman in the results of the `find` command.
 Clears all entries from the list of delivery men. +
 Format: `/deliveryman clear`
 
-// tag::routecreatefeature[]
-=== Creating a new route: `/route create` `[Deprecated since v1.2.1]`
-
-Creates a route with a set of orders +
-Format: `/route create o/ORDER_ID`
-
-****
-* All fields need to have at least a value. e.g. `o/` is not allowed.
-* Able to add more than 1 orders by specifying more tags. e.g. `o/1 o/2 o/3`.
-****
-
-Examples:
-
-* `/route create o/1 o/3`
-// end::routecreatefeature[]
-
 // tag::assignfeature[]
 === Assign orders to a delivery man : `/assign` `[Since v1.3]`
 
@@ -414,9 +406,6 @@ Format: `/assign d/DELIVERYMAN_INDEX o/ORDER_INDEX`
 
 ****
 * Assigns orders at the specific `ORDER_INDEX` to the delivery man at the `DELIVERYMAN_INDEX`
-* The index refers to the index number shown in the displayed delivery men list or orders list respectively.
-* The index *must be a positive integer* 1, 2, 3, ... and must be within the number of displayed delivery men or orders
-respectively.
 * There must be at least 1 order and 1 delivery man.
 * Add more than 1 orders by specifying more tags. e.g. `o/1 o/2 o/3`.
 * Orders that are already assigned to a deliveryman cannot be reassigned.
@@ -444,6 +433,22 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 
 Exits the program. +
 Format: `/exit`
+
+// tag::routecreatefeature[]
+=== Creating a new route: `/route create` `[Deprecated since v1.2.1]`
+
+Creates a route with a set of orders +
+Format: `/route create o/ORDER_ID`
+
+****
+* All fields need to have at least a value. e.g. `o/` is not allowed.
+* Able to add more than 1 orders by specifying more tags. e.g. `o/1 o/2 o/3`.
+****
+
+Examples:
+
+* `/route create o/1 o/3`
+// end::routecreatefeature[]
 
 === Saving the data
 
@@ -489,12 +494,12 @@ e.g. `/signup n/John Doe u/johndoe pw/johndoepassword`
 e.g. `/login u/manager pw/password`
 * *Logout* : `/logout`
 * *Return to Home* : `/home`
-* *Add order* : `/order add f/FOOD n/NAME p/PHONE_NUMBER a/ADDRESS dt/DATETIME` +
+* *Add order* : `/order add f/FOOD n/NAME p/PHONE a/ADDRESS dt/DATETIME` +
 e.g. `/order add f/Roti Prata n/James Ho p/22224444 a/block 123, Clementi Rd, 1234665 dt/14-12-2018 10:18:00`
 * *Listing orders* : `/order list`
-* *Edit order* : `/order edit INDEX [f/FOOD] [n/NAME] [p/PHONE_NUMBER] [a/ADDRESS] [dt/DATETIME]` +
+* *Edit order* : `/order edit INDEX [f/FOOD] [n/NAME] [p/PHONE] [a/ADDRESS] [dt/DATETIME]` +
 e.g. `/order edit 2 n/James Lee`
-* *Find order* : `/order find [n/NAME] [p/PHONE] [a/ADDRESS] [f/FOOD] [dt/DATETIME]` +
+* *Find order* : `/order find [n/NAME] [p/PHONE] [a/ADDRESS] [f/FOOD] [dt/DATETIME] [st\ORDER_STATUS]` +
 e.g. `/order find n/James Jake`
 * *Delete order* : `/order delete INDEX` +
 e.g. `/order delete 3`
@@ -510,14 +515,16 @@ e.g. `/deliveryman edit 2 n/James Lee`
 e.g. `/deliveryman find n/James Jake`
 * *Delete delivery man* : `/deliveryman delete INDEX` +
 e.g. `/deliveryman delete 3`
+* *Select delivery man* : `/deliveryman select INDEX` +
+e.g. `/deliveryman select 1`
 * *Clear delivery men* (Coming in v2.0) : `/deliveryman clear`
-* *Create a route* [DEPRECATED] : `/route create o/ORDER_INDEX` +
-e.g. `/route create o/1 o/3`
 * *Assign orders to a delivery man* : `/assign d/DELIVERYMAN_INDEX o/ORDER_INDEX` +
 e.g. `/assign d/1 o/1 o/3`
 * *Help* : `/help`
 * *History* : `/history`
 * *Exit the program* : `/exit`
+* *Create a route* [DEPRECATED] : `/route create o/ORDER_INDEX` +
+e.g. `/route create o/1 o/3`
 
 * *Login (Deliveryman)* (Coming in v2.0) : `/login u/USERNAME pw/PASSWORD` +
 e.g. `/login u/deliveryman pw/password`
