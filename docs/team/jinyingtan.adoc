@@ -2,11 +2,15 @@
 :imagesDir: ../images
 :stylesDir: ../stylesheets
 
+My name is Jin Ying, a Year 2 Student reading Computer Science at National University of Singapore. This
+project portfolio documents my contributions to the project.
+
 == Project: FoodZoom
 
 ---
 
 == Overview
+image::Ui.png[width="800"]
 
 FoodZoom is a desktop application providing food businesses a delivery management platform for them to streamline their delivery process. FoodZooms' responsiveness and quickness allows manager to plan for route through a Command Line Interface (CLI). The platform also allows delivery man to view their delivery routes and increase their efficiency. FoodZoom is created by 5 students, namely Tan Jin Ying, Monika Manuela, Julius Sander, Rahul Rajesh and Koh Chi Hao.
 
@@ -25,6 +29,8 @@ FoodZoom is a desktop application providing food businesses a delivery managemen
 *** Highlights: This enhancement creates a new `Order` object and any future commands that need a reference to the original `Order` object need to be able to track a change in the object.
 
 * *Minor enhancement*: added a find command to search for existing deliveryman
+
+* *Code Contribution*: https://github.com/CS2103-AY1819S1-T16-3/main/search?p=2&q=author%3Ajinyingtan&unscoped_q=author%3Ajinyingtan[Issue/PRs by opened]
 
 * *Other contributions*:
 
