@@ -7,6 +7,7 @@ import java.util.UUID;
 import seedu.address.model.common.Address;
 import seedu.address.model.common.Name;
 import seedu.address.model.common.Phone;
+import seedu.address.model.deliveryman.Deliveryman;
 import seedu.address.model.order.Food;
 import seedu.address.model.order.Order;
 import seedu.address.model.order.OrderDate;
@@ -32,6 +33,7 @@ public class OrderBuilder {
     private OrderStatus status;
     private Set<Food> food;
     private UUID id;
+    private Deliveryman deliveryman;
 
     public OrderBuilder() {
         name = new Name(DEFAULT_NAME);
@@ -40,6 +42,7 @@ public class OrderBuilder {
         date = new OrderDate(DEFAULT_DATE);
         food = SampleDataUtil.getFoodSet(DEFAULT_FOOD);
         status = new OrderStatus(DEFAULT_STATUS);
+        deliveryman = null;
     }
 
     /**
@@ -53,6 +56,7 @@ public class OrderBuilder {
         date = orderToCopy.getDate();
         status = orderToCopy.getOrderStatus();
         food = new HashSet<>(orderToCopy.getFood());
+        deliveryman = orderToCopy.getDeliveryman();
     }
 
     /**
@@ -114,11 +118,19 @@ public class OrderBuilder {
     }
 
     /**
+     * Sets the {@code Deliveryman} of the {@code Order} that we are building.
+     */
+    public OrderBuilder withDeliveryman(Deliveryman deliveryman) {
+        this.deliveryman = deliveryman;
+        return this;
+    }
+
+    /**
      * Builds and returns an order.
      */
     public Order build() {
         if (id != null) {
-            return new Order(id, name, phone, address, date, status, food, null);
+            return new Order(id, name, phone, address, date, status, food, deliveryman);
         } else {
             return new Order(name, phone, address, date, status, food);
         }
