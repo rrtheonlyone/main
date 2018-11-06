@@ -21,6 +21,8 @@ import seedu.address.model.deliveryman.DeliverymanNameContainsKeywordsPredicate;
  * @throws ParseException if the user input does not conform the expected format
  */
 public class DeliverymanFindCommandParser implements Parser<DeliverymanCommand> {
+    public static final String MESSAGE_EMPTY_NAME_FIELD = "n/ cannot be empty";
+
     /**
      * Parses the given {@code String} of arguments in the context of the DeliverymanFindCommand
      * and returns an DeliverymanFindCommand object for execution.
@@ -38,6 +40,11 @@ public class DeliverymanFindCommandParser implements Parser<DeliverymanCommand> 
         }
 
         String name = argMultimap.getValue(PREFIX_NAME).get().trim();
+
+        if (isEmptyField(name)) {
+            throw new ParseException(MESSAGE_EMPTY_NAME_FIELD);
+        }
+
         String[] nameKeywords = name.split("\\s+");
 
         return new DeliverymanFindCommand(new DeliverymanNameContainsKeywordsPredicate(Arrays.asList(nameKeywords)));
@@ -49,5 +56,9 @@ public class DeliverymanFindCommandParser implements Parser<DeliverymanCommand> 
      */
     private static boolean arePrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
         return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
+    }
+
+    private static boolean isEmptyField(String field) {
+        return field.equals("");
     }
 }
