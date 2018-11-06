@@ -8,10 +8,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_USERNAME;
 
 import org.junit.Test;
 
-import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.LoginCommand;
-import seedu.address.logic.commands.RedoCommand;
-import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.order.ClearCommand;
 import seedu.address.logic.commands.order.OrderCommand;
 import seedu.address.model.Model;
@@ -37,24 +34,6 @@ public class ClearCommandSystemTest extends OrderBookSystemTest {
          */
         assertCommandSuccess("   " + clearCommand + " ab12   ");
         assertSelectedCardUnchanged();
-
-        /* Case: undo clearing address book -> original address book restored */
-        command = UndoCommand.COMMAND_WORD;
-        String expectedResultMessage = UndoCommand.MESSAGE_SUCCESS;
-        assertCommandSuccess(command, expectedResultMessage, defaultModel);
-        assertSelectedCardUnchanged();
-
-        /* Case: redo clearing address book -> cleared */
-        command = RedoCommand.COMMAND_WORD;
-        expectedResultMessage = RedoCommand.MESSAGE_SUCCESS;
-        assertCommandSuccess(command, expectedResultMessage, new ModelManager());
-        assertSelectedCardUnchanged();
-
-        /* Case: selects first card in common list and clears address book -> cleared and no card selected */
-        executeCommand(UndoCommand.COMMAND_WORD); // restores the original address book
-        selectOrder(Index.fromOneBased(1));
-        assertCommandSuccess(clearCommand);
-        assertSelectedCardDeselected();
 
         /* Case: clear empty address book -> cleared */
         assertCommandSuccess(clearCommand);

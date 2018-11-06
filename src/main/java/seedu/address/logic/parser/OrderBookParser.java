@@ -14,9 +14,7 @@ import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.HomeCommand;
 import seedu.address.logic.commands.LoginCommand;
 import seedu.address.logic.commands.LogoutCommand;
-import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SignUpCommand;
-import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.deliveryman.DeliverymanCommand;
 import seedu.address.logic.commands.order.OrderCommand;
 import seedu.address.logic.parser.deliveryman.DeliverymanCommandParser;
@@ -64,12 +62,6 @@ public class OrderBookParser {
 
         case HelpCommand.COMMAND_WORD:
             return new HelpCommand();
-
-        case UndoCommand.COMMAND_WORD:
-            return new UndoCommand();
-
-        case RedoCommand.COMMAND_WORD:
-            return new RedoCommand();
 
         case SignUpCommand.COMMAND_WORD:
             return new SignUpCommandParser().parse(arguments);

@@ -33,8 +33,6 @@ import org.junit.Test;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.LoginCommand;
-import seedu.address.logic.commands.RedoCommand;
-import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.order.AddCommand;
 import seedu.address.logic.commands.order.OrderCommand;
 import seedu.address.model.Model;
@@ -69,17 +67,6 @@ public class AddCommandSystemTest extends OrderBookSystemTest {
         command = "   " + addCommand + "  " + NAME_DESC_AMY + "  " + PHONE_DESC_AMY + " "
                 + "   " + ADDRESS_DESC_AMY + "   " + DATE_DESC_AMY + "  " + FOOD_DESC_BURGER + " ";
         assertCommandSuccess(command, toAdd);
-
-        /* Case: undo adding Amy to the list -> Amy deleted */
-        command = UndoCommand.COMMAND_WORD;
-        String expectedResultMessage = UndoCommand.MESSAGE_SUCCESS;
-        assertCommandSuccess(command, model, expectedResultMessage);
-
-        /* Case: redo adding Amy to the list -> Amy added again */
-        command = RedoCommand.COMMAND_WORD;
-        model.addOrder(toAdd);
-        expectedResultMessage = RedoCommand.MESSAGE_SUCCESS;
-        assertCommandSuccess(command, model, expectedResultMessage);
 
         /* Case: add an order with all fields same as another order in the order book except name -> added */
         toAdd = new OrderBuilder(AMY).withName(VALID_NAME_BOB).build();

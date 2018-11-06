@@ -17,8 +17,6 @@ import org.junit.Test;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.LoginCommand;
-import seedu.address.logic.commands.RedoCommand;
-import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.order.DeleteCommand;
 import seedu.address.logic.commands.order.OrderCommand;
 import seedu.address.model.Model;
@@ -53,17 +51,6 @@ public class DeleteCommandSystemTest extends OrderBookSystemTest {
         Model modelBeforeDeletingLast = getModel();
         Index lastPersonIndex = getLastIndex(modelBeforeDeletingLast);
         assertCommandSuccess(lastPersonIndex);
-
-        /* Case: undo deleting the last common in the list -> last common restored */
-        command = UndoCommand.COMMAND_WORD;
-        expectedResultMessage = UndoCommand.MESSAGE_SUCCESS;
-        assertCommandSuccess(command, modelBeforeDeletingLast, expectedResultMessage);
-
-        /* Case: redo deleting the last common in the list -> last common deleted again */
-        command = RedoCommand.COMMAND_WORD;
-        removeOrder(modelBeforeDeletingLast, lastPersonIndex);
-        expectedResultMessage = RedoCommand.MESSAGE_SUCCESS;
-        assertCommandSuccess(command, modelBeforeDeletingLast, expectedResultMessage);
 
         /* Case: delete the middle common in the list -> deleted */
         Index middlePersonIndex = getMidIndex(getModel());
