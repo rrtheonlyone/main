@@ -488,6 +488,33 @@ statistics manager once a change to the observable list is detected.
 how the entire listener pattern is established.
 
 
+===== Aspect: Gathering Location Data
+* **Alternative 1 (Current Approach):** Use a cache to map points based
+on the first 2 digits of postal code
+** Pros:
+- The application would work offline.
+- There is no reliance on an external API service for the application to
+function. If the API service fails to function at any point of time, the
+map may not work anymore.
+** Cons:
+- There are inaccuracies in the data that is displayed on the map. It is also
+not very precise. e.g. You cannot zoom into the map and locate where
+exactly the orders are.
+
+* **Alternative 2 :** Make use of an external API service like Google
+Maps to render the location placeholders on the map
+
+** Pros:
+- The location data would be much more accurate and precise. Locations
+can be mapped exactly as they are. Relying on a powerful service could
+mean that this map feature can even be extended to work globally (not
+just Singapore).
+** Cons:
+- As mentioned above, there will now be a reliance on this service for this
+application to work. This would also introduce more overhead to the code e.g
+there is now a need to check for internet connection and render loaders so
+that the user experience is not affected.
+
 
 === Add Order Feature
 
