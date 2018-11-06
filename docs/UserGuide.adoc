@@ -71,9 +71,10 @@ the format to be used for all the commands and the syntax that is to be followed
 
 |USERNAME | Can be alphanumeric and spaces are *NOT* allowed, it should not be blank and be 3 to 64 characters long.
 
-|PASSWORD | Can be alphanumeric, should be at least *6* characters long and spaces are *NOT* allowed.
+|PASSWORD | Can be alphanumeric, should be at least *6* characters long and spaces are *NOT* allowed. Not encrypted
+in current releases.
 
-|INDEX | Refers to the index number shown by the order / deliveryman list command & it must be a positive integer 1, 2, 3, ...
+|INDEX | Refers to the index number shown by the order / deliveryman list command & it must be a positive integer 1, 2, 3, ... and no larger than 2147483647.
 
 |=======================================================================
 ====
@@ -128,34 +129,39 @@ the format to be used for all the commands and the syntax that is to be followed
 
 Format: `/help`
 
+// tag::signup[]
 === Sign up for system : `/signup` `[Since v1.1]`
 
 Sign up for a new manager account so that the manager can use the application. Once you sign up, you will be
-automatically logged into the application.
+automatically logged into the application. Since the managers using the application is working for one stall, they will have access to that stall data and see the same home screen
 
 Format: `/signup n/NAME u/USERNAME pw/PASSWORD`
 
 Examples:
 
 * `/signup n/John Doe u/johndoe pw/johndoepassword`
+// end::signup[]
 
+// tag::login[]
 === Login to system : `/login` `[Since v1.1]`
 
 Login into the application so that the manager can use the application. Once you login, you can use the authenticated
- commands.
+ commands. Since the managers using the application is working for one stall, they will have access to that stall data and see the same home screen
 
 Format: `/login u/USERNAME pw/PASSWORD`
 
 Examples:
 
 * `/login u/manager pw/password`
+// end::login[]
 
-
+// tag::logout[]
 === Logout from system : `/logout` `[Since v1.3]`
 
 Logout from the application.
 
 Format: `/logout`
+// end::logout[]
 
 === Return to Home Page : `/home` `[Since v1.3]`
 
@@ -179,6 +185,8 @@ Format: `/order add f/FOOD n/NAME p/PHONE a/ADDRESS dt/DATETIME`
 * Address must be a valid address that exists in Singapore to be displayed on the map.
 * If the postal code is longer than 6 digits, much like any other field, only the last 6 digits will be taken into
 consideration
+* The manager is able to add dates from any time period as long as it is valid.
+* Two orders are considered the same if they have the same name, phone, and date time.
 ****
 
 Examples:
@@ -191,6 +199,7 @@ Examples:
 Shows a list of all orders in chronological order +
 Format: `/order list`
 
+// tag::orderedit[]
 === Editing an order : `/order edit` `[Since v1.2]`
 
 Edits an existing order in the list of orders. +
@@ -212,11 +221,13 @@ Edits the phone number and name of the 1st order to be `91234567` and `Jonathan`
 * `/order list` +
 `/order edit 2 f/Maggi Goreng f/Ice Milo` +
 Edits the food of the 2nd order to be `Maggi Goreng, Ice Milo`.
+// end::orderedit[]
 
+// tag::orderfind[]
 === Finding orders : `/order find` `[Since v1.2]`
 
 Find any order/s with any given order fields. +
-Format: `/order find [n/NAME] [p/PHONE] [a/ADDRESS] [f/food] [dt/DATETIME]` +
+Format: `/order find [n/NAME] [p/PHONE] [a/ADDRESS] [f/FOOD] [dt/DATETIME]` +
 
 ****
 * All fields are optional. However, at least one field must be specified.
@@ -238,6 +249,7 @@ Returns orders with phone number of `81231233` and address of `block 123,
 Clementi Drive, #01-01`
 * `/order find dt/01-10-2018 10:00:00 dt/03-10-2018 10:00:00` +
 Returns for orders that are within the datetime `01-10-2018 10:00:00 and 03-10-2018 10:00:00`
+// end::orderfind[]
 
 === Deleting an order : `/order delete` `[Since v1.1]`
 
@@ -260,7 +272,7 @@ Deletes the 1st order in the results of the `find` command.
 
 === Selecting an order : `/order select` `[Since v1.1]`
 
-Deletes the specified order from the list of order. +
+Selects the specified order from the list of order. +
 Format: `/order select INDEX`
 
 ****
@@ -332,8 +344,8 @@ Format: `/deliveryman find n/NAME` +
 
 Examples:
 
-* `/deliveryman find n/john` +
-Returns `john` and `John Doe`
+* `/deliveryman find n/John Smith` +
+Returns all delivery men with the names `John` or `Smith` e.g. `John Smith`, `John Doe`, and `Michael Smith`
 
 === Deleting a delivery man : `/deliveryman delete` `[Since v1.2]`
 
@@ -353,6 +365,25 @@ Deletes the 2nd delivery man in the list of delivery men.
 * `/deliveryman find n/tom` +
 `/deliveryman delete 1` +
 Deletes the 1st delivery man in the results of the `find` command.
+
+=== Selecting a deliveryman : `/deliveryman select` `[Since v1.4]`
+
+Selects the specified deliveryman from the list of deliverymen. +
+Format: `/deliveryman select INDEX`
+
+****
+* Select an deliveryman at the specified `INDEX`.
+* Renders a new view for the selected deliveryman - use /home to return the original view
+****
+
+Examples:
+
+* `/deliveryman list` +
+`/deliveryman select 2` +
+Selects the 2nd deliveryman in the list of deliverymen.
+* `/deliveryman find n/david` +
+`/deliveryman select 1` +
+Selects the 1st deliveryman in the results of the `find` command.
 
 === Clearing all delivery men entries : `/deliveryman clear` `[Coming in v2.0]`
 
@@ -463,7 +494,7 @@ e.g. `/order add f/Roti Prata n/James Ho p/22224444 a/block 123, Clementi Rd, 12
 * *Listing orders* : `/order list`
 * *Edit order* : `/order edit INDEX [f/FOOD] [n/NAME] [p/PHONE_NUMBER] [a/ADDRESS] [dt/DATETIME]` +
 e.g. `/order edit 2 n/James Lee`
-* *Find order* : `/order find [n/NAME] [p/PHONE] [a/ADDRESS] [f/food] [dt/DATETIME]` +
+* *Find order* : `/order find [n/NAME] [p/PHONE] [a/ADDRESS] [f/FOOD] [dt/DATETIME]` +
 e.g. `/order find n/James Jake`
 * *Delete order* : `/order delete INDEX` +
 e.g. `/order delete 3`
