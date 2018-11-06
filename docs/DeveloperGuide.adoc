@@ -323,6 +323,7 @@ The dashboard for this application is the main screen that the user first sees w
 she logs into the application. It looks like this:
 
 image::Ui.png[width="790"]
+Figure 3.2.1.1 Main Screen showing the dashboard with the Map and Statistics Panel
 
 The 2 main components in the dashboard are the:
 
@@ -337,9 +338,15 @@ if `/order find n/john` is executed, the dashboard will also show orders that ar
 to john.
 
 This is done by using the observer pattern. A higher-level component, `Display.java` listens for
-changes and renders the user interface for the dashboard screen. This is done by attaching
-a listener to the Observable List of orders. The code snippet demonstrating this is
-as follows:
+changes and renders the user interface for the dashboard screen. This component attaches
+a listener to the Observable List of Orders. The following activity diagram summarize
+what happens inside the `Display` Component when a user executes a new command:
+
+image::UIListenerActivityDiagram.png[width="800"]
+Figure 3.2.1.1 Activity Diagram showing what happens inside the `Display` component when a user
+executes a command
+
+The code snippet for the listener being attached is shown below:
 
 ```
 this.orderList.addListener((ListChangeListener.Change<? extends Order> change) -> {
@@ -355,24 +362,18 @@ this.orderList.addListener((ListChangeListener.Change<? extends Order> change) -
 });
 ```
 
-The following activity diagram summarize what happens inside the
-`Display` Component when a user executes a new command:
-
-image::UIListenerActivityDiagram.png[width="800"]
-
-The `Display` component as such controls the flow of the dashboard. It is responsible for
+Through this, the `Display` component is able to control the flow of the dashboard. It is responsible for
 rendering the Map and Statistics components along with passing in the data that
-they need.
-
-The controller helps to process the list of Orders and pass it to the 2 components in a
-specific format so that the data can be rendered. The next two subsections in 3.2 would
-elaborate on how this data processing is done.
+they need. The data to be passed in has to be processed into a specific format so that
+they can be easily rendered. The next two subsections in 3.2 would elaborate on how this
+data processing is done.
 
 ==== Map Component
 
 The Map shows the locations of the pending orders.
 
 image::MapPanel.png[width="600"]
+Figure 3.2.2.1 A closer look at the Map on the dashboard.
 
 The functionality that the map provides is as follows:
 
@@ -384,9 +385,11 @@ like Google Maps
 In order to work offline, the map makes use of the postal code that is given
 with the order address to give a *reasonable* approximation of its location in Singapore.
 The reason this can be done is because the first 2 digits of a Singapore postal code
-refers to a specific district in Singapore.
+refers to a specific district in Singapore. The demarcation diagram is show below:
 
 image::SingaporeDemarcation.png[width="790"]
+Figure 3.2.1.2 Diagram to illustrate how the regions are split up in Singapore. Each of the
+regions above corresponds to a specifc postal code tag
 
 For example, if the first 2 digits of the given postal code is "61", the
 Order falls under district 22 (with reference to the image above). If the first 2 digits are
@@ -460,7 +463,8 @@ of orders without relying on any internet connection.
 
 Another aspect for the dashboard is the statistics panel.
 
-image::statisticsPanel.png[width="790"]
+image::StatisticsPanel.png[width="790"]
+Figure 3.2.3.1 A closer look at the statistics panel in the dashboard
 
 The statistics panel has four key indicators:
 
@@ -558,7 +562,7 @@ The format of the `add` command is `/order add n/NAME p/PHONE a/ADDRESS f/FOOD d
 The following sequence shows the sequence when the `add` command is execute by the `Manager`:
 
 image::OrderAddSequenceDiagram.png[width="650"]
-Figure 3.2.1.1 Sequence Diagram for order `find` command
+Figure 3.3.1.1 Sequence Diagram for order `find` command
 
 From the diagram above:
 
@@ -598,7 +602,7 @@ The order `find` command allows searching of orders in FoodZoom. It allows searc
 The following sequence diagram shows the sequence flow from the `LogicManager` to the `ModelManager` when a user enter a `find` command:
 
 image::OrderFindSequenceDiagram.png[width="650"]
-Figure 3.3.1.1 Sequence Diagram for order `find` command
+Figure 3.4.1.1 Sequence Diagram for order `find` command
 
 From the sequence diagram:
 
@@ -619,7 +623,7 @@ of the search.
 `Datetime` search can be performed in two ways. Below is a sequence diagram to show flow of how `datetime` search:
 
 image::OrderDatePredicate.png[width="650"]
-Figure 3.3.1.2 Sequence Diagram for `datetime` search
+Figure 3.4.1.2 Sequence Diagram for `datetime` search
 
 * If one `datetime` field is given, `OrderDatePredicate` creates a `OrderDateSinglePredicate` object and run its' `test` method.
 
@@ -655,9 +659,9 @@ The following diagram shows the sequence flow from the `LogicManager` to the `Mo
 command:
 
 image::DeliverymanAddCommandSequenceDiagram.png[width="650"]
-Figure 3.4.1.1 Sequence Diagram for deliveryman `add` command
+Figure 3.5.1.1 Sequence Diagram for deliveryman `add` command
 
-From Figure 3.4.1.1:
+From Figure 3.5.1.1:
 
 1. When `LogicManager` receives the `execute` command from the App, it calls the `parseCommand` method in `OrderBookParser`.
 
@@ -710,10 +714,10 @@ It allows creating routes based on the order ids.
 The following sequence diagram shows the sequence flow from the `LogicManager` to the `ModelManager` when a user enter a `/route create` command:
 
 image::CreateRouteCommandSequenceDiagram1.png[width=800]
-Figure 3.5.1.1 Sequence diagram to illustrate `Logic` component interactions for route `create` command.
+Figure 3.6.1.1 Sequence diagram to illustrate `Logic` component interactions for route `create` command.
 
 image::CreateRouteCommandSequenceDiagram2.png[width=800]
-Figure 3.5.1.2 Sequence diagram to illustrate `Logic` and `Model` component interactions for route `create` command.
+Figure 3.6.1.2 Sequence diagram to illustrate `Logic` and `Model` component interactions for route `create` command.
 
 From the sequence diagram:
 
@@ -745,10 +749,10 @@ The `/assign` command allows assigning of multiple orders to a delivery man in F
 The following sequence diagram shows the sequence flow from the `LogicManager` to the `ModelManager` when a user enter a `/assign` command:
 
 image::AssignCommandSequenceDiagram1.png[width=800]
-Figure 3.6.1.1 Sequence diagram to illustrate `Logic` component interactions for `/assign` command.
+Figure 3.7.1.1 Sequence diagram to illustrate `Logic` component interactions for `/assign` command.
 
 image::AssignCommandSequenceDiagram2.png[width=800]
-Figure 3.6.1.2 Sequence diagram to illustrate `Logic` and `Model` component interactions for route `create` command.
+Figure 3.7.1.2 Sequence diagram to illustrate `Logic` and `Model` component interactions for route `create` command.
 
 From the sequence diagram:
 
