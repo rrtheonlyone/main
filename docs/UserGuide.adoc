@@ -390,6 +390,7 @@ Selects the 1st deliveryman in the results of the `find` command.
 Clears all entries from the list of delivery men. +
 Format: `/deliveryman clear`
 
+// tag::routecreatefeature[]
 === Creating a new route: `/route create` `[Deprecated since v1.2.1]`
 
 Creates a route with a set of orders +
@@ -403,7 +404,9 @@ Format: `/route create o/ORDER_ID`
 Examples:
 
 * `/route create o/1 o/3`
+// end::routecreatefeature[]
 
+// tag::assignfeature[]
 === Assign orders to a delivery man : `/assign` `[Since v1.3]`
 
 Assign multiple orders to a delivery man +
@@ -425,6 +428,7 @@ Examples:
 `/deliveryman list` +
 `/assign d/2 o/1 o/2` +
 Assigns order number 1 and 2 to delivery man number 2.
+// end::assignfeature[]
 
 === Listing entered commands : `/history` `[Since v1.1]`
 

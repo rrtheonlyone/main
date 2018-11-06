@@ -246,106 +246,6 @@ Classes used by multiple components are in the `seedu.addressbook.commons` packa
 
 This section describes some noteworthy details on how certain features are implemented.
 
-// tag::undoredo[]
-=== Undo/Redo feature
-==== Current Implementation
-
-The undo/redo mechanism is facilitated by `VersionedOrderBook`.
-It extends `OrderBook` with an undo/redo history, stored internally as an `orderBookStateList` and
-`currentStatePointer`.
-Additionally, it implements the following operations:
-
-* `VersionedOrderBook#commit()` -- Saves the current order book state in its history.
-* `VersionedOrderBook#undo()` -- Restores the previous order book state from its history.
-* `VersionedOrderBook#redo()` -- Restores a previously undone order book state from its history.
-
-These operations are exposed in the `Model` interface as `Model#commitOrderBook()`, `Model#undoOrderBook()` and
-`Model#redoOrderBook()` respectively.
-
-Given below is an example usage scenario and how the undo/redo mechanism behaves at each step.
-
-Step 1. The user launches the application for the first time. The `VersionedOrderBook` will be initialized with the
-initial order book state, and the `currentStatePointer` pointing to that single order book state.
-
-image::UndoRedoStartingStateListDiagram.png[width="800"]
-
-Step 2. The user executes `delete 5` command to delete the 5th order in the order book. The `delete` command calls
-`Model#commitOrderBook()`, causing the modified state of the order book after the `delete 5` command executes to be
-saved in the `orderBookStateList`, and the `currentStatePointer` is shifted to the newly inserted order book state.
-
-image::UndoRedoNewCommand1StateListDiagram.png[width="800"]
-
-Step 3. The user executes `/order add ...` to add a new order. The `add` command also calls
-`Model#commitOrderBook()`, causing another modified order book state to be saved into the `orderBookStateList`.
-
-image::UndoRedoNewCommand2StateListDiagram.png[width="800"]
-
-[NOTE]
-If a command fails its execution, it will not call `Model#commitOrderBook()`, so the order book state will not be saved
-into the `orderBookStateList`.
-
-Step 4. The user now decides that adding the order was a mistake, and decides to undo that action by executing the
-`undo` command. The `undo` command will call `Model#undoOrderBook()`, which will shift the `currentStatePointer` once
- to the left, pointing it to the previous order book state, and restores the order book to that state.
-
-image::UndoRedoExecuteUndoStateListDiagram.png[width="800"]
-
-[NOTE]
-If the `currentStatePointer` is at index 0, pointing to the initial order book state, then there are no previous
-order book states to restore. The `undo` command uses `Model#canUndoOrderBook()` to check if this is the case. If so,
-it will return an error to the user rather than attempting to perform the undo.
-
-The following sequence diagram shows how the undo operation works:
-
-image::UndoRedoSequenceDiagram.png[width="800"]
-
-The `redo` command does the opposite -- it calls `Model#redoOrderBook()`, which shifts the `currentStatePointer` once
- to the right, pointing to the previously undone state, and restores the address book to that state.
-
-[NOTE]
-If the `currentStatePointer` is at index `orderBookStateList.size() - 1`, pointing to the latest order book state,
-then there are no undone order book states to restore. The `redo` command uses `Model#canRedoOrderBook()` to check if
-this is the case. If so, it will return an error to the user rather than attempting to perform the redo.
-
-Step 5. The user then decides to execute the command `/order list`. Commands that do not modify the order book, such
- as `list`, will usually not call `Model#commitOrderBook()`, `Model#undoOrderBook()` or `Model#redoOrderBook()`.
- Thus, the `orderBookStateList` remains unchanged.
-
-image::UndoRedoNewCommand3StateListDiagram.png[width="800"]
-
-Step 6. The user executes `/order clear`, which calls `Model#commitOrderBook()`. Since the `currentStatePointer` is not
-pointing at the end of the `orderBookStateList`, all order book states after the `currentStatePointer` will be
-purged. We designed it this way because it no longer makes sense to redo the `/order add ...` command. This is
-the behavior that most modern desktop applications follow.
-
-image::UndoRedoNewCommand4StateListDiagram.png[width="800"]
-
-The following activity diagram summarizes what happens when a user executes a new command:
-
-image::UndoRedoActivityDiagram.png[width="650"]
-
-==== Design Considerations
-
-===== Aspect: How undo & redo executes
-
-* **Alternative 1 (current choice):** Saves the entire order book.
-** Pros: Easy to implement.
-** Cons: May have performance issues in terms of memory usage.
-* **Alternative 2:** Individual command knows how to undo/redo by itself.
-** Pros: Will use less memory (e.g. for `delete`, just save the person being deleted).
-** Cons: We must ensure that the implementation of each individual command are correct.
-
-===== Aspect: Data structure to support the undo/redo commands
-
-* **Alternative 1 (current choice):** Use a list to store the history of order book states.
-** Pros: Easy for new Computer Science student undergraduates to understand, who are likely to be the new incoming developers of our project.
-** Cons: Logic is duplicated twice. For example, when a new command is executed, we must remember to update both
-`HistoryManager` and `VersionedOrderBook`.
-* **Alternative 2:** Use `HistoryManager` for undo/redo
-** Pros: We do not need to maintain a separate list, and just reuse what is already in the codebase.
-** Cons: Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things.
-// end::undoredo[]
-
 // tag::loginfeature[]
 === Login Command
 ==== Current Implementation
@@ -362,10 +262,10 @@ are involved in the execution of this command. The `Logic` class is responsible 
 Below is a sequence diagram that illustrates how these 2 components interact when the `/login` command is executed:
 
 image::LoginCommandSequenceDiagram1.png[width="800"]
-Figure 3.2.1.1 Sequence diagram to illustrate `Logic` component interactions for `/login`.
+Figure 3.1.1.1 Sequence diagram to illustrate `Logic` component interactions for `/login`.
 
 image::LoginCommandSequenceDiagram2.png[width="800"]
-Figure 3.2.1.2 Sequence diagram to illustrate `Logic` and `Model` component interactions for `/login`.
+Figure 3.1.1.2 Sequence diagram to illustrate `Logic` and `Model` component interactions for `/login`.
 
 As shown above, execution of the `/login` command comprises of the following steps:
 
@@ -428,7 +328,7 @@ The format of the `add` command is `/order add f/FOOD n/NAME p/PHONE a/ADDRESS d
 The following sequence shows the sequence when the `add` command is execute by the `Manager`:
 
 image::OrderAddSequenceDiagram.png[width="650"]
-Figure 3.3.1.1 Sequence Diagram for order `find` command
+Figure 3.2.1.1 Sequence Diagram for order `find` command
 
 From the diagram above:
 
@@ -468,7 +368,7 @@ The order `find` command allows searching of orders in FoodZoom. It allows searc
 The following sequence diagram shows the sequence flow from the `LogicManager` to the `ModelManager` when a user enter a `find` command:
 
 image::OrderFindSequenceDiagram.png[width="650"]
-Figure 3.4.1.1 Sequence Diagram for order `find` command
+Figure 3.3.1.1 Sequence Diagram for order `find` command
 
 From the sequence diagram:
 
@@ -489,7 +389,7 @@ of the search.
 `Datetime` search can be performed in two ways. Below is a sequence diagram to show flow of how `datetime` search:
 
 image::OrderDatePredicate.png[width="650"]
-Figure 3.4.1.2 Sequence Diagram for `datetime` search
+Figure 3.3.1.2 Sequence Diagram for `datetime` search
 
 * If one `datetime` field is given, `OrderDatePredicate` creates a `OrderDateSinglePredicate` object and run its' `test` method.
 
@@ -525,9 +425,9 @@ The following diagram shows the sequence flow from the `LogicManager` to the `Mo
 command:
 
 image::DeliverymanAddCommandSequenceDiagram.png[width="650"]
-Figure 3.5.1.1 Sequence Diagram for deliveryman `add` command
+Figure 3.4.1.1 Sequence Diagram for deliveryman `add` command
 
-From Figure 3.5.1.1:
+From Figure 3.4.1.1:
 
 1. When `LogicManager` receives the `execute` command from the App, it calls the `parseCommand` method in `OrderBookParser`.
 
@@ -567,6 +467,7 @@ a `ParseException` would be thrown.
 ** Pros: Easier to implement & maintain
 ** Cons: Deliveryman can only be accessed & treated as parts of an `Order`
 
+// tag::route[]
 === Create Route Feature [deprecated since v1.2.1]
 This feature is deprecated as there was a design change regarding the relationship between delivery man and order.
 Previously, route was the middleman between delivery men and orders. Now, delivery men and orders are directly related.
@@ -579,17 +480,17 @@ It allows creating routes based on the order ids.
 The following sequence diagram shows the sequence flow from the `LogicManager` to the `ModelManager` when a user enter a `/route create` command:
 
 image::CreateRouteCommandSequenceDiagram1.png[width=800]
-Figure 3.6.1.1 Sequence diagram to illustrate `Logic` component interactions for route `create` command.
+Figure 3.5.1.1 Sequence diagram to illustrate `Logic` component interactions for route `create` command.
 
 image::CreateRouteCommandSequenceDiagram2.png[width=800]
-Figure 3.6.1.2 Sequence diagram to illustrate `Logic` and `Model` component interactions for route `create` command.
+Figure 3.5.1.2 Sequence diagram to illustrate `Logic` and `Model` component interactions for route `create` command.
 
 From the sequence diagram:
 
 .  When `LogicManager` receive the `execute` command, it calls the `parseCommand` method in `OrderBookParser`.
 .  `OrderBookParser` will receive `/route` as the command and instantiate `RouteCommandParser` to further parse the command.
 .  If the arguments specified in the `create` command are valid, a `CreateRouteCommand` will be created and return back to the `LogicManger`
-.  `LogicManger` will proceed to call the `execute` command of `CreateRouteCommand`
+.  `LogicManager` will proceed to call the `execute` command of `CreateRouteCommand`
 .  `CreateRouteCommand` will proceed to call the `getFilteredOrderList` method of `Model`
 .  Iterate through the `orderIds`, if valid, add the `Index` and the corresponding `Order` to the set of `Index` and `Order` respectively.
 .  Create a `Route` from the set of `Order`
@@ -604,6 +505,45 @@ From the sequence diagram:
 * **Alternative 2:** `CreateRouteCommand` is parsed straight from `OrderBookParser`.
 ** Pros: Easier to manage the file structure.
 ** Cons: Poor modularization of the `Command` classes.
+// end::route[]
+
+// tag::assign[]
+=== Assign feature
+==== Current Implementation
+The `/assign` command allows assigning of multiple orders to a delivery man in FoodZoom.
+
+The following sequence diagram shows the sequence flow from the `LogicManager` to the `ModelManager` when a user enter a `/assign` command:
+
+image::AssignCommandSequenceDiagram1.png[width=800]
+Figure 3.6.1.1 Sequence diagram to illustrate `Logic` component interactions for `/assign` command.
+
+image::AssignCommandSequenceDiagram2.png[width=800]
+Figure 3.6.1.2 Sequence diagram to illustrate `Logic` and `Model` component interactions for route `create` command.
+
+From the sequence diagram:
+
+.  When `LogicManager` receive the `execute` command, it calls the `parseCommand` method in `OrderBookParser`.
+.  `OrderBookParser` will receive `/assign` as the command and instantiate `AssignCommandParser` to further parse the command.
+.  If the arguments specified in the `/assign` command are valid, a `AssignCommand` will be created and return back to the `LogicManger`
+.  `LogicManager` will proceed to call the `execute` command of `AssignCommand`
+.  `AssignCommand` will proceed to call the `getFilteredOrderList` and `getFilteredDeliverymanList` method of `Model`
+.  Iterate through the `orderIds`, if valid, add the `order` corresponding to that `index` to the set of `Order`.
+.  Create a new `Deliveryman` to be assigned from the `deliveryman` corresponding to the deliveryman index.
+.  Iterate through the orders, call `setDeliveryman`.
+.  A new route would be added and create a new `CommandResult` to be returned.
+
+==== Design Consideration
+
+===== Aspect: Relationship between `Order` and `Deliveryman`
+* **Alternative 1 (current choice):** Two way associations between the `Order` and `Deliveryman`
+** Pros: Performing update operations such as assigning orders or marking orders as completed and displaying information on each order and
+delivery man are more effective as they are aware of one another.
+** Cons: More complicated to implement the assigning of order, and subsequently other features regarding this relationship such as removing of order.
+* **Alternative 2:** Only the `Deliveryman` is aware of the `Order`
+** Pros: Easier to implement the feature and manage the order and deliveryman states.
+** Cons: Performing the update operations mentioned above will be ineffective, and it will be more difficult to display information on which delivery man an order is assigned to.
+
+// end::assign[]
 
 === Logging
 
