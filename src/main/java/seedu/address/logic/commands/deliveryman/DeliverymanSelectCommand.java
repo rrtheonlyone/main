@@ -20,8 +20,8 @@ import seedu.address.model.deliveryman.Deliveryman;
 public class DeliverymanSelectCommand extends DeliverymanCommand {
     public static final String COMMAND_WORD = "select";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD
-        + ": Selects the order identified by the index number used in the displayed order list.\n"
+    public static final String MESSAGE_USAGE = DeliverymanCommand.COMMAND_WORD + " " + COMMAND_WORD
+        + ": Selects the deliveryman identified by the index number used in the displayed deliveryman list.\n"
         + "Parameters: INDEX (must be a positive integer)\n"
         + "Example: " + DeliverymanCommand.COMMAND_WORD + " " + COMMAND_WORD + " 1";
 

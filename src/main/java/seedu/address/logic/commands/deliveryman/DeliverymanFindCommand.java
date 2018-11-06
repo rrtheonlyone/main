@@ -16,11 +16,11 @@ import seedu.address.model.deliveryman.DeliverymanNameContainsKeywordsPredicate;
 public class DeliverymanFindCommand extends DeliverymanCommand {
     public static final String COMMAND_WORD = "find";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD
+    public static final String MESSAGE_USAGE = DeliverymanCommand.COMMAND_WORD + " " + COMMAND_WORD
             + ": Finds the deliveryman whose name contains any of "
             + "the specified keywords (case-insensitive) and displays them as a list with index numbers.\n"
             + "Parameters: n/KEYWORD \n"
-            + "Example: " + COMMAND_WORD + " n/Alex";
+            + "Example: " + DeliverymanCommand.COMMAND_WORD + " " + COMMAND_WORD + " n/Alex";
 
     private final DeliverymanNameContainsKeywordsPredicate predicate;
 

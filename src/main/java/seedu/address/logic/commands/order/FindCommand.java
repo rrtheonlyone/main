@@ -19,10 +19,10 @@ import seedu.address.model.order.Order;
 public class FindCommand extends OrderCommand {
     public static final String COMMAND_WORD = "find";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD
+    public static final String MESSAGE_USAGE = OrderCommand.COMMAND_WORD + " " + COMMAND_WORD
             + ": Finds the order whose keywords contain any of "
             + "the specified keywords (case-insensitive) and displays them as a list with index numbers.\n"
-            + "Parameters: [n/NAME] [p/PHONE] [a/ADDRESS] [dt/DATETIME] [f/FOOD]\n"
+            + "Parameters: [n/NAME] [p/PHONE] [a/ADDRESS] [dt/DATETIME] [f/FOOD] [st/ORDER_STATUS]\n"
             + "Example: " + OrderCommand.COMMAND_WORD + " " + COMMAND_WORD + " n/John f/Ice Milo\n"
             + "Example: " + OrderCommand.COMMAND_WORD + " " + COMMAND_WORD
             + " dt/01-10-2018 10:00:00 dt/03-10-2018 10:00:00";
