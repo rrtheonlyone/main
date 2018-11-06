@@ -42,7 +42,7 @@ to be delivered by their deliverymen conveniently.
 ** Improved checking for the date of the order to prevent invalid dates.
 ** Modified command words of some commands to unify the patterns.
 
-* *Code contributions*: https://github.com/CS2103-AY1819S1-T16-3/main/search?q=author%3Amonmanuela&unscoped_q=author%3Amonmanuela[Issues and Pull requests opened by me.]
+* *Code contributions*: https://nus-cs2103-ay1819s1.github.io/cs2103-dashboard/#=undefined&search=monmanuela[RepoSense]
 
 * *Other contributions*:
 

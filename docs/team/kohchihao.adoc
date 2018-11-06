@@ -36,7 +36,7 @@ used when the user is not logged in. As such, when commands in the future are im
 ** Updated status bar with username after the user log in.
 ** Add `/order done` command.
 
-* *Code contribution*: https://github.com/CS2103-AY1819S1-T16-3/main/search?q=author%3Akohchihao&unscoped_q=author%3Akohchihao[Issues/Pull request opened by me.]
+* *Code contribution*: https://nus-cs2103-ay1819s1.github.io/cs2103-dashboard/#=undefined&search=kohchihao[RepoSense]
 
 * *Other contributions*:
 ** Project management:
