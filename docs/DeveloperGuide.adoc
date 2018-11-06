@@ -47,10 +47,6 @@ Do not disable them. If you have disabled them, go to `File` > `Settings` > `Plu
 . Click `OK` to accept the default settings
 . Open a console and run the command `gradlew processResources` (Mac/Linux: `./gradlew processResources`). It should finish with the `BUILD SUCCESSFUL` message. +
 This will generate all resources required by the application and tests.
-. Open link:{repoURL}/src/main/java/seedu/address/storage/XmlAdaptedPerson.java[`XmlAdaptedPerson.java`] and link:{repoURL}/src/main/java/seedu/address/ui/MainWindow.java[`MainWindow.java`] and check for any code errors
-.. Due to an ongoing https://youtrack.jetbrains.com/issue/IDEA-189060[issue] with some of the newer versions of IntelliJ, code errors may be detected even if the project can be built and run successfully
-.. To resolve this, place your cursor over any of the code section highlighted in red. Press kbd:[ALT + ENTER], and select `Add '--add-modules=...' to module compiler options` for each error
-. Repeat this for the test folder as well (e.g. check link:{repoURL}/src/test/java/seedu/address/commons/util/XmlUtilTest.java[`XmlUtilTest.java`] and link:{repoURL}/src/test/java/seedu/address/ui/HelpWindowTest.java[`HelpWindowTest.java`] for code errors, and if so, resolve it the same way)
 
 === Verifying the setup
 
@@ -317,6 +313,181 @@ incorrect behavior.
 ** Cons: It breaks the SRP because `parseCommand` method should only be used to parse commands and not check for user
  logged in status.
 // end::loginfeature[]
+
+=== Dashboard
+
+==== Current Implementation - Overall Dashboard
+
+The dashboard for this application involve the main screen that the user first sees when he or
+she logs into the application. Refer to diagram below:
+
+image::Ui.png[width="790"]
+
+The 2 main components in the dashboard are the:
+
+..   Dynamic Map showing location of pending orders
+..   Statistics Panel giving insights for the data
+
+However, before delving into the details for those specific components, it is
+important to consider some of the implementation details common to both.
+
+First and foremost, the data for both these components are handled by a higher
+level component, `Display` . This component listens for changes and updates the relevant data
+to be rendered in those specific components. This is done as follows:
+
+```
+this.orderList.addListener((ListChangeListener.Change<? extends Order> change) -> {
+    while (change.next()) {
+        if (change.wasUpdated()) {
+            // handle order list being updated
+            ....
+        } else {
+            // handle removal or addition to order list
+            ....
+        }
+    }
+});
+```
+
+The following activity diagram summarize what happens inside the
+`Display` Component when a user executes a new command:
+
+image::UIListenerActivityDiagram.png[width="800"]
+
+In summary, the `UIManager` will help render these components. The
+`Display` component will handle the entire dashboard area. It
+will re-render the panels automatically once there are changes made.
+
+However, how exactly is the data processed? The following two subsections
+will shed further light on this.
+
+==== Current Implementation - Map Component
+
+The Map helps to render where all the pending orders are based on the
+address of Order given. The map looks like this:
+
+image::Ui.png[width="790"]
+
+The most noteworthy feature behind the map is that it works offline. It
+does not make an external call to Google Maps API or other external
+services. This section will illustrate how this is done.
+
+The map is designed to give a *reasonable* approximation of the order
+based on the postal code that has been provided. The first 2 digits of
+a Singapore postal code refers to a specific district in Singapore. The
+image below shows how it is demarcated.
+
+image::SingaporeDemarcation.png[width="790"]
+
+For example, if the first 2 digits of the given postal code is "61", the
+Order falls under district 22 (with reference to the image above).
+
+Based on this information in order to create an offline map, three
+components were employed:
+
+. An image of a Map that lies on a grid (JavaFx `GridPane`)
+. A Hashtable (Java `HashMap`) that maps the first two digits of the postal
+code to a specific coordinate on the grid
+. A `MapPanel` component that renders placeholders on the grid or clears
+placeholders if there has been a change
+
+Using the above, components the higher level `Display` component is able
+to pass in a HashMap (where the keys are the first 2 digits of the postal
+code and the values is the count) to the MapPanel. The MapPanel then
+renders the placeholders based on the count and postal code information
+given.
+
+The code snippet for initialisation the placeholders is given below:
+```
+public void initialise(HashMap<String, Integer> orderMap) {
+    // for each postal code
+    for (String postalCodeKey : orderMap.keySet()) {
+
+        if (POSTAL_CODE_CACHE.containsKey(postalCodeKey)) {
+
+            int regionCode = POSTAL_CODE_CACHE.get(postalCodeKey);
+            Integer[] coordinates = DISTRICT_CACHE.get(regionCode);
+
+            placeholderContainer = new ImageView(placeholder);
+
+            int count = orderMap.get(postalCodeKey);
+            int increment = 16 + count * 2;
+
+            placeholderContainer.setPreserveRatio(true);
+            placeholderContainer.setFitHeight(increment);
+            placeholderContainer.setFitWidth(increment);
+
+            mapPane.add(placeholderContainer, coordinates[1], coordinates[0]);
+        }
+    }
+}
+```
+
+
+==== Current Implementation - Statistics Panel
+
+Another aspect for the dashboard is the statistics panel. An image
+showing what is in the panel can be seen below.
+
+image::Ui.png[width="790"]
+
+The statistics panel has four key indicators:
+
+. The total number of orders displayed
+. The percentage of orders that are still pending
+. The most common food item bought
+. The Order History for the last 7 days in which there was at least one order
+
+For statistics (1) and (2), it is simply a matter of counting the total
+orders and checking how many of them are pending. For statistics (3) and (4)
+on the other hand, some considerations had to be done on the choice of
+data structure.
+
+In order to get the most common food item, a hashtable was used. The keys
+were the food items and the value would be the number of times this item
+appears. Every time, the list was updated, this hashtable would be updated
+and the maximum returned.
+
+For order history however, using a hashtable would not be efficient; it is
+computationally expensive to get the 7 most recent dates in which they was
+at least one order. A more efficient solution involved the use of a
+balanced binary search tree (or Java `TreeMap`). Using a custom comparator,
+all that had to be done was check for the top 7 entries in the tree.
+
+
+==== Design Considerations (for both Map/Statistics)
+
+===== Aspect: Processing of data
+* **Alternative 1 (Current Approach):** Let the UI component, handle the
+processing of data once the listener detects a change
+** Pros:
+- Since the listener is attached in the UI component itself, it is
+more convenient for the functions to process the data be available in
+the UI itself.
+- Separation of Concerns: the UI need not rely on other components to
+update the statistics once a change has been detected.
+** Cons:
+- There is a lot of code within the UI component itself and this solution
+is not very scalable. If more statistics are needed in the future, it will
+be difficult to configure.
+
+* **Alternative 2 :** Create a Statistics Manager under Model
+
+Instead of doing all the processing of data in the UI component itself,
+one consideration was to use a statistics manager under model. This
+manager will take in a list of orders and return the required data.
+
+** Pros:
+- This solution is more scalable. By having a separate class dedicated to managing the
+statistics of orders, it is easier to integrate much more
+complex statistics for the application
+** Cons:
+- There is more coupling. The UI has to constantly check with the
+statistics manager once a change to the observable list is detected.
+- The code becomes much more complex. There also may be a need to re-look at
+how the entire listener pattern is established.
+
+
 
 === Add Order Feature
 
