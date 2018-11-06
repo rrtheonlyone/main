@@ -55,7 +55,6 @@ public class User {
         }
 
         return otherUser != null
-                && otherUser.getName().equals(getName())
                 && otherUser.getUsername().equals(getUsername());
     }
 
