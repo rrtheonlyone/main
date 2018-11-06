@@ -74,7 +74,7 @@ the format to be used for all the commands and the syntax that is to be followed
 |PASSWORD | Can be alphanumeric, should be at least *6* characters long and spaces are *NOT* allowed. Not encrypted
 in current releases.
 
-|INDEX | Refers to the index number shown by the order / deliveryman list command & it must be a positive integer 1, 2, 3, ...
+|INDEX | Refers to the index number shown by the order / deliveryman list command & it must be a positive integer 1, 2, 3, ... and no larger than 2147483647.
 
 |=======================================================================
 ====
@@ -180,6 +180,8 @@ Format: `/order add f/FOOD n/NAME p/PHONE a/ADDRESS dt/DATETIME`
 * Address must be a valid address that exists in Singapore to be displayed on the map.
 * If the postal code is longer than 6 digits, much like any other field, only the last 6 digits will be taken into
 consideration
+* The manager is able to add dates from any time period as long as it is valid.
+* Two orders are considered the same if they have the same name, phone, and date time.
 ****
 
 Examples:
@@ -217,7 +219,7 @@ Edits the food of the 2nd order to be `Maggi Goreng, Ice Milo`.
 === Finding orders : `/order find` `[Since v1.2]`
 
 Find any order/s with any given order fields. +
-Format: `/order find [n/NAME] [p/PHONE] [a/ADDRESS] [f/food] [dt/DATETIME]` +
+Format: `/order find [n/NAME] [p/PHONE] [a/ADDRESS] [f/FOOD] [dt/DATETIME]` +
 
 ****
 * All fields are optional. However, at least one field must be specified.
@@ -333,8 +335,8 @@ Format: `/deliveryman find n/NAME` +
 
 Examples:
 
-* `/deliveryman find n/john` +
-Returns `john` and `John Doe`
+* `/deliveryman find n/John Smith` +
+Returns all delivery men with the names `John` or `Smith` e.g. `John Smith`, `John Doe`, and `Michael Smith`
 
 === Deleting a delivery man : `/deliveryman delete` `[Since v1.2]`
 
@@ -479,7 +481,7 @@ e.g. `/order add f/Roti Prata n/James Ho p/22224444 a/block 123, Clementi Rd, 12
 * *Listing orders* : `/order list`
 * *Edit order* : `/order edit INDEX [f/FOOD] [n/NAME] [p/PHONE_NUMBER] [a/ADDRESS] [dt/DATETIME]` +
 e.g. `/order edit 2 n/James Lee`
-* *Find order* : `/order find [n/NAME] [p/PHONE] [a/ADDRESS] [f/food] [dt/DATETIME]` +
+* *Find order* : `/order find [n/NAME] [p/PHONE] [a/ADDRESS] [f/FOOD] [dt/DATETIME]` +
 e.g. `/order find n/James Jake`
 * *Delete order* : `/order delete INDEX` +
 e.g. `/order delete 3`
