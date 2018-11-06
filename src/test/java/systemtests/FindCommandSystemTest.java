@@ -146,7 +146,6 @@ public class FindCommandSystemTest extends OrderBookSystemTest {
 
         /* Case: find name in order book, keyword is substring of name -> 0 orders found */
         command = findCommand + " " + PREFIX_NAME + "Mei";
-        ModelHelper.setFilteredList(expectedModel);
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
@@ -161,15 +160,16 @@ public class FindCommandSystemTest extends OrderBookSystemTest {
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
-        /* Case: find address of order in order book -> 1 order found */
-        command = findCommand + " " + PREFIX_ADDRESS + DANIEL.getAddress().value;
-        ModelHelper.setFilteredList(expectedModel, DANIEL);
+        /* Case: find food of order in order book -> 2 orders found */
+        List<Food> food = new ArrayList<>(DANIEL.getFood());
+        command = findCommand + " " + PREFIX_FOOD + food.get(0).foodName;
+        ModelHelper.setFilteredList(expectedModel, DANIEL, FIONA);
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
-        /* Case: find food of order in order book -> 1 order found */
-        List<Food> food = new ArrayList<>(DANIEL.getFood());
-        command = findCommand + " " + PREFIX_FOOD + food.get(0).foodName;
+        /* Case: find address of order in order book -> 1 order found */
+        command = findCommand + " " + PREFIX_ADDRESS + DANIEL.getAddress().value;
+        ModelHelper.setFilteredList(expectedModel, DANIEL);
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
