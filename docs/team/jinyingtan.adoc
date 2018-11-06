@@ -30,7 +30,7 @@ FoodZoom is a desktop application providing food businesses a delivery managemen
 
 * *Minor enhancement*: added a find command to search for existing deliveryman
 
-* *Code Contribution*: https://github.com/CS2103-AY1819S1-T16-3/main/search?p=2&q=author%3Ajinyingtan&unscoped_q=author%3Ajinyingtan[Issue/PRs by opened]
+* *Code Contribution*: https://nus-cs2103-ay1819s1.github.io/cs2103-dashboard/#=undefined&search=jinyingtan[RepoSense]
 
 * *Other contributions*:
 
