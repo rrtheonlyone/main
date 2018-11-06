@@ -194,6 +194,7 @@ Examples:
 Shows a list of all orders in chronological order +
 Format: `/order list`
 
+// tag::orderedit[]
 === Editing an order : `/order edit` `[Since v1.2]`
 
 Edits an existing order in the list of orders. +
@@ -215,7 +216,9 @@ Edits the phone number and name of the 1st order to be `91234567` and `Jonathan`
 * `/order list` +
 `/order edit 2 f/Maggi Goreng f/Ice Milo` +
 Edits the food of the 2nd order to be `Maggi Goreng, Ice Milo`.
+// end::orderedit[]
 
+// tag::orderfind[]
 === Finding orders : `/order find` `[Since v1.2]`
 
 Find any order/s with any given order fields. +
@@ -241,6 +244,7 @@ Returns orders with phone number of `81231233` and address of `block 123,
 Clementi Drive, #01-01`
 * `/order find dt/01-10-2018 10:00:00 dt/03-10-2018 10:00:00` +
 Returns for orders that are within the datetime `01-10-2018 10:00:00 and 03-10-2018 10:00:00`
+// end::orderfind[]
 
 === Deleting an order : `/order delete` `[Since v1.1]`
 

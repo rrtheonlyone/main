@@ -44,7 +44,7 @@ Roles: Scheduling and tracking deliverables and deadlines +
 
 === Tan Jin Ying
 image::jinyingtan.png[width="150", align="left"]
-{empty}[https://github.com/jinyingtan[github]] [https://www.tanjinying.com/[portfolio]]
+{empty}[https://github.com/jinyingtan[github]] [<<jinyingtan#, portfolio>>]
 
 Role: Documentation, UI +
 
