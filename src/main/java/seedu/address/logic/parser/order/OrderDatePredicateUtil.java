@@ -49,6 +49,7 @@ public class OrderDatePredicateUtil {
 
         for (String stringDate : stringsDates) {
             try {
+                sf.setLenient(false);
                 dates.add(sf.parse(stringDate));
             } catch (java.text.ParseException pE) {
                 throw new ParseException(OrderDate.MESSAGE_DATE_CONSTRAINTS);
