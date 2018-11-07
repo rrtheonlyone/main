@@ -9,8 +9,8 @@ import java.util.function.Predicate;
 public class OrderStatusContainsKeywordPredicate implements Predicate<Order> {
     private final List<OrderStatus> keywords;
 
-    public OrderStatusContainsKeywordPredicate(List<OrderStatus> statues) {
-        keywords = statues;
+    public OrderStatusContainsKeywordPredicate(List<OrderStatus> statuses) {
+        keywords = statuses;
     }
 
     @Override
