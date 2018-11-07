@@ -47,10 +47,6 @@ Do not disable them. If you have disabled them, go to `File` > `Settings` > `Plu
 . Click `OK` to accept the default settings
 . Open a console and run the command `gradlew processResources` (Mac/Linux: `./gradlew processResources`). It should finish with the `BUILD SUCCESSFUL` message. +
 This will generate all resources required by the application and tests.
-. Open link:{repoURL}/src/main/java/seedu/address/storage/XmlAdaptedPerson.java[`XmlAdaptedPerson.java`] and link:{repoURL}/src/main/java/seedu/address/ui/MainWindow.java[`MainWindow.java`] and check for any code errors
-.. Due to an ongoing https://youtrack.jetbrains.com/issue/IDEA-189060[issue] with some of the newer versions of IntelliJ, code errors may be detected even if the project can be built and run successfully
-.. To resolve this, place your cursor over any of the code section highlighted in red. Press kbd:[ALT + ENTER], and select `Add '--add-modules=...' to module compiler options` for each error
-. Repeat this for the test folder as well (e.g. check link:{repoURL}/src/test/java/seedu/address/commons/util/XmlUtilTest.java[`XmlUtilTest.java`] and link:{repoURL}/src/test/java/seedu/address/ui/HelpWindowTest.java[`HelpWindowTest.java`] for code errors, and if so, resolve it the same way)
 
 === Verifying the setup
 
@@ -105,7 +101,6 @@ When you are ready to start coding,
 
 == Design
 
-[[Design-Architecture]]
 === Architecture
 
 .Architecture Diagram
@@ -164,15 +159,15 @@ Note how the event is propagated through the `EventsCenter` to the `Storage` and
 
 The sections below give more details of each component.
 
-[[Design-Ui]]
 === UI component
 
 .Structure of the UI Component
-image::UiClassDiagram.png[width="800"]
+image::UiClassDiagram1.png[width="800"]
 
 *API* : link:{repoURL}/src/main/java/seedu/address/ui/Ui.java[`Ui.java`]
 
-The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter`, `BrowserPanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
+The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `OrderListPanel`,
+`StatusBarFooter`, `Dashboard` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
 
 The `UI` component uses JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the link:{repoURL}/src/main/java/seedu/address/ui/MainWindow.java[`MainWindow`] is specified in link:{repoURL}/src/main/resources/view/MainWindow.fxml[`MainWindow.fxml`]
 
@@ -182,7 +177,6 @@ The `UI` component,
 * Binds itself to some data in the `Model` so that the UI can auto-update when data in the `Model` change.
 * Responds to events raised from various parts of the App and updates the UI accordingly.
 
-[[Design-Logic]]
 === Logic component
 
 [[fig-LogicClassDiagram]]
@@ -202,7 +196,6 @@ Given below is the Sequence Diagram for interactions within the `Logic` componen
 .Interactions Inside the Logic Component for the `delete 1` Command
 image::DeletePersonSdForLogic.png[width="800"]
 
-[[Design-Model]]
 === Model component
 
 .Structure of the Model Component
@@ -224,7 +217,6 @@ that
 the UI automatically updates when the data in the list change.
 * does not depend on any of the other three components.
 
-[[Design-Storage]]
 === Storage component
 
 .Structure of the Storage Component
@@ -241,7 +233,6 @@ The `Storage` component,
 .Interactions inside the Storage component for whenever `ModelManager.saveFoodZoom(orderBook, deliverymenList)` is called.
 image::StorageSequenceDiagram.png[width="800"]
 
-[[Design-Commons]]
 === Common classes
 
 Classes used by multiple components are in the `seedu.addressbook.commons` package.
@@ -322,17 +313,254 @@ incorrect behavior.
  logged in status.
 // end::loginfeature[]
 
+=== Dashboard
+
+==== Current Implementation
+
+The dashboard for this application is the main screen that the user first sees when he or
+she logs into the application. It looks like this:
+
+image::Ui.png[width="790"]
+Figure 3.2.1.1 Main Screen showing the dashboard with the Map and Statistics Panel
+
+The 2 main components in the dashboard are the:
+
+..   Map showing location of pending orders
+..   Statistics Panel giving insights of the data
+
+Before delving into the details for these specific components, it is
+important to consider some of the implementation details that are common to both.
+
+The dashboard dynamically updates itself when the order list has been changed. For example,
+if `/order find n/john` is executed, the dashboard will also show orders that are specific
+to john.
+
+This is done by using the observer pattern. A higher-level component, `Display.java` listens for
+changes and renders the user interface for the dashboard screen. This component attaches
+a listener to the Observable List of Orders. The following activity diagram summarize
+what happens inside the `Display` Component when a user executes a new command:
+
+image::UIListenerActivityDiagram.png[width="800"]
+Figure 3.2.1.1 Activity Diagram showing what happens inside the `Display` component when a user
+executes a command
+
+The code snippet for the listener being attached is shown below:
+
+```
+this.orderList.addListener((ListChangeListener.Change<? extends Order> change) -> {
+    while (change.next()) {
+        if (change.wasUpdated()) {
+            // handle order list being updated
+            ....
+        } else {
+            // handle removal or addition to order list
+            ....
+        }
+    }
+});
+```
+
+Through this, the `Display` component is able to control the flow of the dashboard. It is responsible for
+rendering the Map and Statistics components along with passing in the data that
+they need. The data to be passed in has to be processed into a specific format so that
+they can be easily rendered. The next two subsections in 3.2 would elaborate on how this
+data processing is done.
+
+==== Map Component
+
+The Map shows the locations of the pending orders.
+
+image::MapPanel.png[width="600"]
+Figure 3.2.2.1 A closer look at the Map on the dashboard.
+
+The functionality that the map provides is as follows:
+
+.. It works offline and does not require internet. There is no reliance on any external service
+like Google Maps
+.. Placeholders are rendered based on the location of Order given
+.. The size of the placeholder is indicative of the number of orders in a specific area.
+
+In order to work offline, the map makes use of the postal code that is given
+with the order address to give a *reasonable* approximation of its location in Singapore.
+The reason this can be done is because the first 2 digits of a Singapore postal code
+refers to a specific district in Singapore. The demarcation diagram is show below:
+
+image::SingaporeDemarcation.png[width="790"]
+Figure 3.2.1.2 Diagram to illustrate how the regions are split up in Singapore. Each of the
+regions above corresponds to a specifc postal code tag
+
+For example, if the first 2 digits of the given postal code is "61", the
+Order falls under district 22 (with reference to the image above). If the first 2 digits are
+"47", the location is district 16.
+
+Based on this information in order to create an offline map, the components/data structures
+used are as follows:
+
+**An image of a Map that lies on a grid (JavaFx `GridPane`)**
+
+This is the component that displays on the dashboard. This component creates and
+updates the placeholders on the map based on the information that it is provided. The component
+has no knowledge of changes to the list of orders. Instead, it exposes 2 methods, `initialise`
+and `clear` that is used by the higher-order component to update the placeholders.
+
+The code snippet for the initialisation of the placeholders is shown below. Further details on
+the data passed in is given below.
+```
+public void initialise(HashMap<String, Integer> orderMap) {
+    // for each postal code
+    for (String postalCodeKey : orderMap.keySet()) {
+
+        if (POSTAL_CODE_CACHE.containsKey(postalCodeKey)) {
+
+            int regionCode = POSTAL_CODE_CACHE.get(postalCodeKey);
+            Integer[] coordinates = DISTRICT_CACHE.get(regionCode);
+
+            placeholderContainer = new ImageView(placeholder);
+
+            int count = orderMap.get(postalCodeKey);
+            int increment = 16 + count * 2;
+
+            placeholderContainer.setPreserveRatio(true);
+            placeholderContainer.setFitHeight(increment);
+            placeholderContainer.setFitWidth(increment);
+
+            mapPane.add(placeholderContainer, coordinates[1], coordinates[0]);
+        }
+    }
+}
+```
+
+**A Hashtable (Java `HashMap`) that maps the first two digits of the postal
+code to a specific coordinate on the grid**
+
+As mentioned above, the map is an image that lies on a grid. The placeholders are
+put onto a specific coordinate specified on the grid. The Map component is thus given
+a Hash Table of how many orders fall under a specific postal code region. An example data that it
+could be given is shown below:
+
+[width="59%",cols="",options="header",]
+|=======================================================================
+|Postal Code Region |Count
+| 61                | 5
+| 16                | 1
+| 32                | 2
+|=======================================================================
+
+Using this information, the `MapPanel` uses another lookup table to find out
+which coordinate the placeholder should be put inside. For example, postal code 61, is
+to be put inside grid {row: 6, column: 2}. The size of the placeholder is determined
+by the `count` of orders that fall within a specific region.
+
+The job of the `Display` component is to process the list of Orders into the format shown
+in the table above. It then calls specific method on the `MapPanel` component to allow
+for placeholders to be shown on the map. This is how the map is able to show locations
+of orders without relying on any internet connection.
+
+
+==== Statistics Panel
+
+Another aspect for the dashboard is the statistics panel.
+
+image::StatisticsPanel.png[width="400"]
+Figure 3.2.3.1 A closer look at the statistics panel in the dashboard
+
+The statistics panel has four key indicators:
+
+.. The total number of orders displayed
+.. The percentage of orders that are still pending
+.. The most common food item bought
+.. The Order History for the last 7 days in which there was at least one order
+
+Similar to the `MapPanel`, there is a `StatisticsPanel` which updates these statistics based
+on the information that it is provided from a higher-level component. It has similar methods
+to the `MapPanel` that allow data to be initialized and cleared.
+
+The data that is passed in to the `StatisticsPanel` along with the techniques employed to
+process the data is further elaborated on in the table below:
+
+[width="59%",cols="",options="header",]
+|=======================================================================
+|Statistic                    |Data Structure  | Technique
+| Total Orders                | Variable       | Count the orders in the list
+| Pending Order Percentage    | Variable       | Count orders with status "PENDING" and divide with total orders
+| Trending Food Item          | HashTable      | Use a lookup table to track the count of each food item in menu.
+Each time there is an update ot the orders, run through the table and see which food item has the largest count value.
+| Order Histogram             | Balanced Binary Search Tree (Java `TreeMap`)  | The dates from the Orders are put
+into a binary search tree along with their count. The tree uses a custom comparator that allows for dates to be
+compared with each other. This allows the 7 most recent dates with at least one order to be retrieved quickly. The
+tree is updated accordingly when orders are added or removed.
+|=======================================================================
+
+
+==== Design Considerations (for both Map/Statistics)
+
+===== Aspect: Processing of data
+* **Alternative 1 (Current Approach):** Let the UI component, handle the
+processing of data once the listener detects a change
+** Pros:
+- Separation of Concerns: the UI need not rely on other components to
+update the statistics once a change has been detected.
+** Cons:
+- There is a lot of code within the UI component itself and this solution
+is not very scalable. If more statistics are needed in the future, it will
+be difficult to configure.
+
+* **Alternative 2 :** Create a Statistics Manager under Model
+
+Instead of doing all the processing of data in the UI component itself,
+one consideration was to use a statistics manager. This
+manager will take in the list of orders and return the required statistics needed.
+
+** Pros:
+- This solution is more scalable. By having a separate class dedicated to managing the
+statistics of orders, it is easier to add in much more
+complex statistics for the application in future.
+** Cons:
+- There is more coupling. The UI has to constantly check with the
+statistics manager once a change to the observable list is detected.
+- The code becomes much more complex. There also may be a need to re-look at
+how the entire listener pattern is established.
+
+
+===== Aspect: Gathering Location Data
+* **Alternative 1 (Current Approach):** Use a cache to map points based
+on the first 2 digits of postal code
+** Pros:
+- The application would work offline.
+- There is no reliance on an external API service for the application to
+function. If the API service fails to function at any point of time, the
+map may not work anymore.
+** Cons:
+- There are inaccuracies in the data that is displayed on the map. It is also
+not very precise. e.g. You cannot zoom into the map and locate where
+exactly the orders are.
+
+* **Alternative 2 :** Make use of an external API service like Google
+Maps to render the location placeholders on the map
+
+** Pros:
+- The location data would be much more accurate and precise. Locations
+can be mapped exactly as they are. Relying on a powerful service could
+mean that this map feature can even be extended to work globally (not
+just Singapore).
+** Cons:
+- As mentioned above, there will now be a reliance on this service for this
+application to work. This would also introduce more overhead to the code e.g
+there is now a need to check for internet connection and render loaders so
+that the user experience is not affected.
+
+
 === Add Order Feature
 
 ==== Current Implementation
 The `add` order command allows the `Manager` to create a new order and add it to the list of orders.
 Adding a new order requires the customer's `name`, customer's `phone` number, customer's `address`, `food` and the `datetime`. +
-The format of the `add` command is `/order add f/FOOD n/NAME p/PHONE a/ADDRESS dt/DATETIME`.
+The format of the `add` command is `/order add n/NAME p/PHONE a/ADDRESS f/FOOD dt/DATETIME`.
 
 The following sequence shows the sequence when the `add` command is execute by the `Manager`:
 
 image::OrderAddSequenceDiagram.png[width="650"]
-Figure 3.2.1.1 Sequence Diagram for order `find` command
+Figure 3.3.1.1 Sequence Diagram for order `find` command
 
 From the diagram above:
 
@@ -345,7 +573,7 @@ From the diagram above:
 .  A `CommandResult` will be returned at the end,
 
 ==== Design Consideration
-===== Aspect: Data Structure of list of order
+===== Aspect: Data Structure for the list of Orders
 * **Alternative 1 (Current Approach):** Using a `UniqueOrderList`
 ** Pros: The comparison is not as rigid. You can create orders with similar names/address as long as it passes a less stringent criteria.
 ** Cons: You need additional overhead. You need to create an extra class and function to check.
@@ -372,7 +600,7 @@ The order `find` command allows searching of orders in FoodZoom. It allows searc
 The following sequence diagram shows the sequence flow from the `LogicManager` to the `ModelManager` when a user enter a `find` command:
 
 image::OrderFindSequenceDiagram.png[width="650"]
-Figure 3.3.1.1 Sequence Diagram for order `find` command
+Figure 3.4.1.1 Sequence Diagram for order `find` command
 
 From the sequence diagram:
 
@@ -393,7 +621,7 @@ of the search.
 `Datetime` search can be performed in two ways. Below is a sequence diagram to show flow of how `datetime` search:
 
 image::OrderDatePredicate.png[width="650"]
-Figure 3.3.1.2 Sequence Diagram for `datetime` search
+Figure 3.4.1.2 Sequence Diagram for `datetime` search
 
 * If one `datetime` field is given, `OrderDatePredicate` creates a `OrderDateSinglePredicate` object and run its' `test` method.
 
@@ -429,9 +657,9 @@ The following diagram shows the sequence flow from the `LogicManager` to the `Mo
 command:
 
 image::DeliverymanAddCommandSequenceDiagram.png[width="650"]
-Figure 3.4.1.1 Sequence Diagram for deliveryman `add` command
+Figure 3.5.1.1 Sequence Diagram for deliveryman `add` command
 
-From Figure 3.4.1.1:
+From Figure 3.5.1.1:
 
 1. When `LogicManager` receives the `execute` command from the App, it calls the `parseCommand` method in `OrderBookParser`.
 
@@ -484,10 +712,10 @@ It allows creating routes based on the order ids.
 The following sequence diagram shows the sequence flow from the `LogicManager` to the `ModelManager` when a user enter a `/route create` command:
 
 image::CreateRouteCommandSequenceDiagram1.png[width=800]
-Figure 3.5.1.1 Sequence diagram to illustrate `Logic` component interactions for route `create` command.
+Figure 3.6.1.1 Sequence diagram to illustrate `Logic` component interactions for route `create` command.
 
 image::CreateRouteCommandSequenceDiagram2.png[width=800]
-Figure 3.5.1.2 Sequence diagram to illustrate `Logic` and `Model` component interactions for route `create` command.
+Figure 3.6.1.2 Sequence diagram to illustrate `Logic` and `Model` component interactions for route `create` command.
 
 From the sequence diagram:
 
@@ -519,10 +747,10 @@ The `/assign` command allows assigning of multiple orders to a delivery man in F
 The following sequence diagram shows the sequence flow from the `LogicManager` to the `ModelManager` when a user enter a `/assign` command:
 
 image::AssignCommandSequenceDiagram1.png[width=800]
-Figure 3.6.1.1 Sequence diagram to illustrate `Logic` component interactions for `/assign` command.
+Figure 3.7.1.1 Sequence diagram to illustrate `Logic` component interactions for `/assign` command.
 
 image::AssignCommandSequenceDiagram2.png[width=800]
-Figure 3.6.1.2 Sequence diagram to illustrate `Logic` and `Model` component interactions for route `create` command.
+Figure 3.7.1.2 Sequence diagram to illustrate `Logic` and `Model` component interactions for route `create` command.
 
 From the sequence diagram:
 
@@ -1304,18 +1532,18 @@ These instructions only provide a starting point for testers to work on; testers
 .. Re-launch the app by double-clicking the jar file. +
    Expected: The most recent window size and location is retained.
 
-_{ more test cases ... }_
+=== Deleting an order
 
-=== Deleting a person
+. Deleting an order while all order are listed
 
-. Deleting a person while all persons are listed
-
-.. Prerequisites: List all persons using the `list` command. Multiple persons in the list.
-.. Test case: `delete 1` +
-   Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
-.. Test case: `delete 0` +
-   Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.
-.. Other incorrect delete commands to try: `delete`, `delete x` (where x is larger than the list size) _{give more}_ +
+.. Prerequisites: List all orders using the `/order list` command. Multiple orders in the list.
+.. Test case: `/order delete 1` +
+   Expected: First order is deleted from the list. Details of the deleted order shown in the status message.
+   Timestamp in the status bar is updated.
+.. Test case: `/order delete 0` +
+   Expected: No order is deleted. Error details shown in the status message. Status bar remains the same.
+.. Other incorrect delete commands to try: `/order delete`, `/order delete x` (where x is larger than the list size)
+_{give more}_ +
    Expected: Similar to previous.
 
 _{ more test cases ... }_
