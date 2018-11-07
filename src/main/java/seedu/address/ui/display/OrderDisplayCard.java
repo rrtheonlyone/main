@@ -3,6 +3,7 @@ package seedu.address.ui.display;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Region;
+import javafx.scene.text.Text;
 import seedu.address.model.deliveryman.Deliveryman;
 import seedu.address.model.order.Order;
 import seedu.address.ui.UiPart;
@@ -22,7 +23,7 @@ public class OrderDisplayCard extends UiPart<Region> {
     @FXML
     private Label phoneL;
     @FXML
-    private Label addressL;
+    private Text addressL;
     @FXML
     private Label nameL;
     @FXML
