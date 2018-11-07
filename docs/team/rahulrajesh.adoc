@@ -59,8 +59,7 @@ itself when the list is filtered or adjusted.
 ** Came up with `/home` command to return to the dashboard panel
 ** Various Bug Fixes
 
-* *Code contributions*: https://nus-cs2103-ay1819s1.github
-.io/cs2103-dashboard/#=undefined&search=rrtheonlyone[RepoSense]
+* *Code contributions*: https://nus-cs2103-ay1819s1.github.io/cs2103-dashboard/#=undefined&search=rrtheonlyone[RepoSense]
 
 * *Other contributions*:
 
@@ -73,8 +72,7 @@ itself when the list is filtered or adjusted.
 *** Updated User Guide and Developer Guide for the features I added
 
 ** Community:
-*** Review pull requests weekly (https://github
-.com/CS2103-AY1819S1-T16-3/main/pulls?utf8=%E2%9C%93&q=is%3Apr+reviewed-by%3Arrtheonlyone[see here])
+*** Review pull requests weekly (https://github.com/CS2103-AY1819S1-T16-3/main/pulls?utf8=%E2%9C%93&q=is%3Apr+reviewed-by%3Arrtheonlyone[see here])
 *** Reported bugs and gave suggestions for other members's project
 
 == Contributions to User Guide
