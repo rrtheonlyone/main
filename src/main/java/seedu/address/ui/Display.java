@@ -131,6 +131,7 @@ public class Display extends UiPart<Region> {
     private void setupStatistics() {
         orderHistory = new TreeMap<>();
         purchaseHistory = new HashMap<>();
+        this.progress = 0;
 
         logger.info(progress + "   " + total);
 
