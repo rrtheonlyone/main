@@ -16,10 +16,11 @@ public class DeliverymanAddCommand extends DeliverymanCommand {
 
     public static final String COMMAND_WORD = "add";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds deliveryman to the list. "
+    public static final String MESSAGE_USAGE = DeliverymanCommand.COMMAND_WORD + " " + COMMAND_WORD
+            + ": Adds deliveryman to the list. \n"
             + "Parameters: "
-            + PREFIX_NAME + "NAME "
-            + "Example: " + COMMAND_WORD + " "
+            + PREFIX_NAME + "NAME \n"
+            + "Example: " + DeliverymanCommand.COMMAND_WORD + " " + COMMAND_WORD + " "
             + PREFIX_NAME + "Lorem Ipsum";
 
     public static final String MESSAGE_SUCCESS = "New deliveryman added: %1$s";

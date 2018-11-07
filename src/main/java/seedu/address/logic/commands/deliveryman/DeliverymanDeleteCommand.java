@@ -19,10 +19,10 @@ public class DeliverymanDeleteCommand extends DeliverymanCommand {
 
     public static final String COMMAND_WORD = "delete";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD
+    public static final String MESSAGE_USAGE = DeliverymanCommand.COMMAND_WORD + " " + COMMAND_WORD
             + ": Deletes the deliveryman identified by the index number used in the displayed deliveryman list.\n"
             + "Parameters: INDEX (must be a positive integer)\n"
-            + "Example: " + COMMAND_WORD + " 1";
+            + "Example: " + DeliverymanCommand.COMMAND_WORD + " " + COMMAND_WORD + " 1";
 
     public static final String MESSAGE_DELETE_DELIVERYMAN_SUCCESS = "Deleted Deliveryman: %1$s";
 

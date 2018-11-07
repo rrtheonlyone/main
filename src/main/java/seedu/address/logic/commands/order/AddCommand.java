@@ -20,11 +20,13 @@ public class AddCommand extends OrderCommand {
 
     public static final String COMMAND_WORD = "add";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds an order to the order book. "
+    public static final String MESSAGE_USAGE = OrderCommand.COMMAND_WORD + " " + COMMAND_WORD
+            + ": Adds an order to the order book. "
             + "Parameters: "
             + PREFIX_NAME + "NAME "
             + PREFIX_PHONE + "PHONE "
             + PREFIX_ADDRESS + "ADDRESS "
+            + PREFIX_DATE + "DATETIME "
             + PREFIX_FOOD + "FOOD...\n"
             + "Example: " + OrderCommand.COMMAND_WORD + " " + COMMAND_WORD + " "
             + PREFIX_NAME + "John Doe "

@@ -11,9 +11,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.function.Predicate;
 
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 
 import seedu.address.logic.parser.ArgumentMultimap;
 import seedu.address.logic.parser.ArgumentTokenizer;
@@ -22,63 +20,41 @@ import seedu.address.model.order.Order;
 import seedu.address.model.order.OrderNameContainsKeywordPredicate;
 
 public class OrderPredicateUtilTest {
-    @Rule
-    public final ExpectedException thrown = ExpectedException.none();
-
     @Test
-    public void test_emptyNameTag_throwsParseException() throws ParseException {
-        thrown.expect(ParseException.class);
-
-        ArgumentMultimap emptyName = tokenizeInput(" n/");
-        Predicate<Order> predicate = new OrderPredicateUtil().parsePredicate(emptyName);
+    public void test_emptyTags_throwsParseException() throws ParseException {
+        assertParseFailure(" n/", OrderPredicateUtil.MESSAGE_EMPTY_KEYWORD);
+        assertParseFailure(" p/", OrderPredicateUtil.MESSAGE_EMPTY_KEYWORD);
+        assertParseFailure(" a/", OrderPredicateUtil.MESSAGE_EMPTY_KEYWORD);
+        assertParseFailure(" dt/", OrderPredicateUtil.MESSAGE_EMPTY_KEYWORD);
+        assertParseFailure(" f/", OrderPredicateUtil.MESSAGE_EMPTY_KEYWORD);
     }
 
     @Test
-    public void test_emptyPhoneTag_throwsParseException() throws ParseException {
-        thrown.expect(ParseException.class);
+    public void test_singleValidPredicate_returnsTrue() throws ParseException {
+        List<String> name = Collections.singletonList("alex");
+        Predicate<Order> expectedPredicate = new OrderNameContainsKeywordPredicate(name);
 
-        ArgumentMultimap emptyPhone = tokenizeInput(" p/");
-        Predicate<Order> predicate = new OrderPredicateUtil().parsePredicate(emptyPhone);
-    }
-
-    @Test
-    public void test_emptyAddressTag_throwsParseException() throws ParseException {
-        thrown.expect(ParseException.class);
-
-        ArgumentMultimap emptyAddress = tokenizeInput(" a/");
-        Predicate<Order> predicate = new OrderPredicateUtil().parsePredicate(emptyAddress);
-    }
-
-    @Test
-    public void test_emptyDateTag_throwsParseException() throws ParseException {
-        thrown.expect(ParseException.class);
-
-        ArgumentMultimap emptyDate = tokenizeInput(" dt/");
-        Predicate<Order> predicate = new OrderPredicateUtil().parsePredicate(emptyDate);
-    }
-
-    @Test
-    public void test_emptyFoodTag_throwsParseException() throws ParseException {
-        thrown.expect(ParseException.class);
-
-        ArgumentMultimap emptyFood = tokenizeInput(" f/");
-        Predicate<Order> predicate = new OrderPredicateUtil().parsePredicate(emptyFood);
-    }
-
-    @Test
-    public void test_singlePredicate() throws ParseException {
-        Predicate<Order> expectedPredicate;
-
-        ArgumentMultimap emptyName = tokenizeInput(" n/alex");
-        Predicate<Order> predicate = new OrderPredicateUtil().parsePredicate(emptyName);
-
-        List<String> names = Collections.singletonList("alex");
-        expectedPredicate = new OrderNameContainsKeywordPredicate(names);
+        ArgumentMultimap argMultimap = tokenizeInput(" n/alex");
+        Predicate<Order> predicate = new OrderPredicateUtil().parsePredicate(argMultimap);
 
         assertEquals(predicate, expectedPredicate);
     }
 
     private ArgumentMultimap tokenizeInput(String input) {
         return ArgumentTokenizer.tokenize(input, PREFIX_NAME, PREFIX_PHONE, PREFIX_ADDRESS, PREFIX_DATE, PREFIX_FOOD);
+    }
+
+    /**
+     * Asserts that the parsing of {@code userInput} is unsuccessful and the error message
+     * equals to {@code expectedMessage}.
+     */
+    private void assertParseFailure(String userInput, String expectedMessage) {
+        try {
+            ArgumentMultimap emptyField = tokenizeInput(userInput);
+            Predicate<Order> predicate = new OrderPredicateUtil().parsePredicate(emptyField);
+            throw new AssertionError("The expected ParseException was not thrown.");
+        } catch (ParseException pe) {
+            assertEquals(String.format(expectedMessage, userInput.trim()), pe.getMessage());
+        }
     }
 }

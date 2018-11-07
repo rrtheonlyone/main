@@ -22,13 +22,13 @@ import seedu.address.model.order.OrderPhoneContainsKeywordPredicate;
  * Util to parse order's predicate
  */
 public class OrderPredicateUtil {
+    public static final String MESSAGE_EMPTY_KEYWORD = "%1$s cannot be empty";
+
     private static final String STRING_PREFIX_NAME = "n/";
     private static final String STRING_PREFIX_PHONE = "p/";
     private static final String STRING_PREFIX_ADDRESS = "a/";
     private static final String STRING_PREFIX_DATE = "dt/";
     private static final String STRING_PREFIX_FOOD = "f/";
-
-    private static final String MESSAGE_EMPTY_KEYWORD = "%1$s cannot be empty";
 
     private Predicate<Order> chainedPredicated;
 

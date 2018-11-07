@@ -1,5 +1,6 @@
 package seedu.address.logic.parser.order;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Arrays;
@@ -7,23 +8,22 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
-import org.junit.Rule;
 import org.junit.Test;
 
-import org.junit.rules.ExpectedException;
-
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.order.OrderDate;
 
 public class OrderDatePredicateUtilTest {
-    @Rule
-    public final ExpectedException thrown = ExpectedException.none();
-
     @Test
     public void test_invalidDateGiven_throwsParseException() throws ParseException {
-        thrown.expect(ParseException.class);
-
         List<String> invalidDates = Collections.singletonList("first");
-        List<Date> dates = new OrderDatePredicateUtil().parseDateKeywords(invalidDates);
+        assertParseFailure(invalidDates, OrderDate.MESSAGE_DATE_CONSTRAINTS);
+
+        invalidDates = Collections.singletonList("57-10-1908 00:00:00");
+        assertParseFailure(invalidDates, OrderDate.MESSAGE_DATE_CONSTRAINTS);
+
+        invalidDates = Collections.singletonList("01-15-1908 00:00:00");
+        assertParseFailure(invalidDates, OrderDate.MESSAGE_DATE_CONSTRAINTS);
     }
 
     @Test
@@ -53,5 +53,18 @@ public class OrderDatePredicateUtilTest {
         }
 
         return true;
+    }
+
+    /**
+     * Asserts that the parsing of {@code userInput} is unsuccessful and the error message
+     * equals to {@code expectedMessage}.
+     */
+    private void assertParseFailure(List<String> userInput, String expectedMessage) {
+        try {
+            List<Date> dates = new OrderDatePredicateUtil().parseDateKeywords(userInput);
+            throw new AssertionError("The expected ParseException was not thrown.");
+        } catch (ParseException pe) {
+            assertEquals(expectedMessage, pe.getMessage());
+        }
     }
 }
