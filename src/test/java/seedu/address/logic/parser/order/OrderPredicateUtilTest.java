@@ -35,48 +35,8 @@ public class OrderPredicateUtilTest {
         List<String> name = Collections.singletonList("alex");
         Predicate<Order> expectedPredicate = new OrderNameContainsKeywordPredicate(name);
 
-<<<<<<< d49219fb5e138b1a75d473643c000c31596d51d2
         ArgumentMultimap argMultimap = tokenizeInput(" n/alex");
         Predicate<Order> predicate = new OrderPredicateUtil().parsePredicate(argMultimap);
-=======
-        ArgumentMultimap emptyAddress = tokenizeInput(" a/");
-        Predicate<Order> predicate = new OrderPredicateUtil().parsePredicate(emptyAddress);
-    }
-
-    @Test
-    public void test_emptyDateTag_throwsParseException() throws ParseException {
-        thrown.expect(ParseException.class);
-
-        ArgumentMultimap emptyDate = tokenizeInput(" dt/");
-        Predicate<Order> predicate = new OrderPredicateUtil().parsePredicate(emptyDate);
-    }
-
-    @Test
-    public void test_emptyFoodTag_throwsParseException() throws ParseException {
-        thrown.expect(ParseException.class);
-
-        ArgumentMultimap emptyFood = tokenizeInput(" f/");
-        Predicate<Order> predicate = new OrderPredicateUtil().parsePredicate(emptyFood);
-    }
-
-    @Test
-    public void test_emptyStatusTag_throwsParseException() throws ParseException {
-        thrown.expect(ParseException.class);
-
-        ArgumentMultimap emptyStatus = tokenizeInput(" st/");
-        Predicate<Order> predicate = new OrderPredicateUtil().parsePredicate(emptyStatus);
-    }
-
-    @Test
-    public void test_singlePredicate() throws ParseException {
-        Predicate<Order> expectedPredicate;
-
-        ArgumentMultimap emptyName = tokenizeInput(" n/alex");
-        Predicate<Order> predicate = new OrderPredicateUtil().parsePredicate(emptyName);
-
-        List<String> names = Collections.singletonList("alex");
-        expectedPredicate = new OrderNameContainsKeywordPredicate(names);
->>>>>>> Add and update tests for find order by status
 
         assertEquals(predicate, expectedPredicate);
     }
