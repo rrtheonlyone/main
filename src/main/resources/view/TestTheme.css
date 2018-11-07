@@ -246,3 +246,26 @@
     -fx-font-family: Rockwell;
     -fx-font-size: 16;
 }
+
+#orderHeader {
+    -fx-padding: 5;
+    -fx-font-style: bold;
+    -fx-font-family: Rockwell;
+    -fx-font-size: 18;
+    -fx-underline: true;
+}
+
+.display_order {
+    -fx-padding: 5;
+    -fx-font-family: Rockwell;
+    -fx-font-size: 14;
+}
+
+#addressL {
+    -fx-font-family: Rockwell;
+    -fx-font-size: 14;
+}
+
+#textWrapper {
+    -fx-padding: 6;
+}
