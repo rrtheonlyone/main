@@ -193,7 +193,7 @@ image::LogicClassDiagram.png[width="800"]
 link:{repoURL}/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]
 
 .  `Logic` uses the `OrderBookParser` class to parse the user command.
-.  `OrderBookParser` further creates either a `OrderCommandParser` or `DeliverymanCommandParser` to parse order or deliveryman command respectively. Other commands that is neither order or deliveryman skip this creation of the extra Parse
+.  `OrderBookParser` further creates either a `OrderCommandParser` or `DeliverymanCommandParser` to parse order or deliveryman command respectively. Other commands that is neither order or deliveryman skip this creation of the extra Parser.
 .  This results in a `Command` object which is executed by the `LogicManager`.
 .  The command execution can affect the `Model` (e.g. adding an order) and/or raise events.
 .  The result of the command execution is encapsulated as a `CommandResult` object which is passed back to the `Ui`.
