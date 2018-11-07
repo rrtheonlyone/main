@@ -18,6 +18,8 @@ import seedu.address.model.order.OrderDatePredicate;
 import seedu.address.model.order.OrderFoodContainsKeywordPredicate;
 import seedu.address.model.order.OrderNameContainsKeywordPredicate;
 import seedu.address.model.order.OrderPhoneContainsKeywordPredicate;
+import seedu.address.model.order.OrderStatus;
+import seedu.address.model.order.OrderStatusContainsKeywordPredicate;
 
 public class FindCommandParserTest {
 
@@ -48,6 +50,10 @@ public class FindCommandParserTest {
         FindCommand expectedFoodFindCommand =
                 new FindCommand(new OrderFoodContainsKeywordPredicate(Arrays.asList("rice")));
         assertParseSuccess(parser, " f/rice", expectedFoodFindCommand);
+
+        FindCommand expectedStatusFindCommand =
+                new FindCommand(new OrderStatusContainsKeywordPredicate(Arrays.asList(new OrderStatus("PENDING"))));
+        assertParseSuccess(parser, " st/PENDING", expectedStatusFindCommand);
 
         SimpleDateFormat sf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
         Date date = null;

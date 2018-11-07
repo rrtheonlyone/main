@@ -11,6 +11,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_FOOD;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PASSWORD;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_STATUS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_USERNAME;
 import static seedu.address.testutil.TypicalOrders.ALICE;
 import static seedu.address.testutil.TypicalOrders.BENSON;
@@ -173,6 +174,11 @@ public class FindCommandSystemTest extends OrderBookSystemTest {
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
+        /* Case: find status of order in order book -> 1 order found */
+        command = findCommand + " " + PREFIX_STATUS + "COMPLETED";
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
         /* Case: find single date of order in order book -> 1 order found */
         command = findCommand + " " + PREFIX_DATE + "04-10-2018 10:00:00";
         assertCommandSuccess(command, expectedModel);
@@ -189,9 +195,16 @@ public class FindCommandSystemTest extends OrderBookSystemTest {
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
+
         /* Case: find with phone and address in order book -> 1 order found */
         command = findCommand + " " + PREFIX_PHONE + "8765" + " " + PREFIX_ADDRESS + "10th street";
         ModelHelper.setFilteredList(expectedModel, DANIEL);
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find 2 different statuses of order in order book -> 2 orders found */
+        command = findCommand + " " + PREFIX_STATUS + "ONGOING COMPLETED";
+        ModelHelper.setFilteredList(expectedModel, DANIEL, FIONA);
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
@@ -200,6 +213,7 @@ public class FindCommandSystemTest extends OrderBookSystemTest {
         ModelHelper.setFilteredList(expectedModel);
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
+
 
         /* Case: find by name while an order is selected -> selected card deselected */
         showAllOrders();

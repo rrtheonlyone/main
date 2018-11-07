@@ -6,7 +6,7 @@ package seedu.address.model.order;
  */
 public class OrderStatus {
 
-    public static final String MESSAGE_DATE_CONSTRAINTS =
+    public static final String MESSAGE_STATUS_CONSTRAINTS =
             "Status should be either: PENDING, ONGOING or COMPLETED";
 
     /**
