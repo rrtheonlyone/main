@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Region;
+import javafx.scene.text.Text;
 import seedu.address.model.order.Food;
 import seedu.address.model.order.Order;
 
@@ -29,7 +30,7 @@ public class OrderCard extends UiPart<Region> {
     public final Order order;
 
     @FXML
-    private Label id;
+    private Text id;
     @FXML
     private Label address;
     @FXML
