@@ -1596,15 +1596,18 @@ Expected: Fail to sign up. User already exist within the application.
 
 . Deleting an order while all order are listed
 
-.. Prerequisites: List all orders using the `/order list` command. Multiple orders in the list.
-.. Test case: `/order delete 1` +
-   Expected: First order is deleted from the list. Details of the deleted order shown in the status message.
+.. Prerequisites: List all orders using the `/order list` command. Multiple orders in the list. The order to be deleted is `Pending` or `Completed`.
+.. Test case: `/order delete <pending_or_completed_order_index>` +
+   Expected: That order is deleted from the list. Details of the deleted order shown in the status message.
    Timestamp in the status bar is updated.
 .. Test case: `/order delete 0` +
    Expected: No order is deleted. Error details shown in the status message. Status bar remains the same.
 .. Other incorrect delete commands to try: `/order delete`, `/order delete x` (where x is larger than the list size)
 _{give more}_ +
    Expected: Similar to previous.
+.. Test case: Deleting an `Ongoing` order +
+   Command: `/order delete o/<ongoing_order_index>`
+   Expected: Unable to delete the order because it is already assigned to a deliveryman.
 
 _{ more test cases ... }_
 
@@ -1631,6 +1634,22 @@ Expected: Fail to mark the order as `Completed` because only `ongoing` status ca
 Command: `/order done <order_index_of_completed_status>` +
 Expected: Fail to mark the order as `Completed` because it is already `completed`.
 
+=== Assigning orders to a deliveryman
+
+. Assigning multiple pending orders to a deliveryman
+
+.. Prerequisites: Have orders that are `Pending`, `Ongoing`, and `Completed` and a deliveryman
+.. Test case: Assigning two `Pending` orders to a deliveryman +
+   Command: `/assign o/<first_pending_order_index> o/<second_pending_order_index> d/1` +
+   Expected: First deliveryman's assigned order count increases by 2, the two orders change status to become `Ongoing`.
+
+.. Test case: Invalid order or deliveryman index +
+   Command: `/assign o/0 d/1`, `/assign o/1 d/0` +
+   Expected: Cannot assign because the order index is not a non-zero unsigned integer.
+
+.. Test case: Assigning an `Ongoing` or `Completed` order to a deliveryman +
+   Command: `/assign o/<ongoing_or_completed_order_index> d/1` +
+   Expected: Cannot assign because that order was already assigned to a deliveryman previously.
 
 === Saving data
 
