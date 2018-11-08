@@ -1535,6 +1535,60 @@ These instructions only provide a starting point for testers to work on; testers
 .. Re-launch the app by double-clicking the jar file. +
    Expected: The most recent window size and location is retained.
 
+=== Login into account
+
+. Login into the application 
+.. Prerequisites: Needs to be logged out of the application. 
+... Test case: Invalid username and valid password + 
+Command: `/login u/1 pw/password123` +
+Expected: Cannot login because username is too short and it needs to be 3 - 64 characters. 
+
+... Test case: Username with 65 characters (invalid) and valid password +
+Command: `/login u/012345678901234567890123456789012345678901234567890123456789012345 pw/password123` +
+Expected: Cannot login because username is too long and it needs to be 3 - 64 characters. 
+
+... Test case: Valid username and invalid password +
+Command: `/login u/lucaskoh pw/123` + 
+Expected: Cannot login because password is too short and it needs to be at least 6 characters 
+
+... Test case: Valid username and 6 characters password (valid) +
+Command: `/login u/lucaskoh pw/123456` + 
+Expected: Cannot login because account does not exist. 
+
+.. Prerequisites: Application comes with default valid user. 
+... Test case: Valid username and valid password +
+Command: `/login u/alicepauline pw/alicepauline01` + 
+Expected: Successfully login into the application because of valid username and password and user exist in application. The application will bring you to the home page.
+
+
+=== Sign up for an account 
+. Sign up for an account
+.. Prerequisites: No exisiting account in application.
+... Test case: Invalid name, valid username, valid password +
+Command: `/signup n/lu u/lucaskoh pw/123456` + 
+Expected: Fail to sign up. Name is too short and it needs to be 3 - 64 characters long.
+
+... Test case: Invalid name(65 characters long), valid username, valid password + 
+Command: `/signup n/012345678901234567890123456789012345678901234567890123456789012345 u/lucaskoh pw/123456` +
+Expected: Fail to sign up. Name is too long and it needs to be 3 - 64 characters long.
+
+... Test case: Valid name, invalid username, valid password + 
+Command: `/signup n/LucasKoh u/@1234~2! pw/123456` + 
+Expected: Fail to sign up. Username should only contain alphanumeric characters. 
+
+... Test case: Valid name, valid username, invalid password + 
+Command: `/signup n/LucasKoh u/lucaskoh pw/!!@@15` +
+Expected: Fail to sign up. Password should only contain alphanumeric characters.
+
+... Test case: Valid name, valid username, valid password + 
+Command: `/signup n/Lucas Koh u/lucaskoh pw/lucaskoh54321` +
+Expected: Successfully sign up for account. Application will automatically logged you into the home page.
+
+.. Prerequisites: Already have `n/Alice Pauline u/alicepauline pw/alicepauline01` account within the application.
+... Test case: Different name, same username and same password + 
+Command: `/signup n/Alicepauline u/alicepauline pw/alicepauline01` + 
+Expected: Fail to sign up. User already exist within the application. 
+
 === Deleting an order
 
 . Deleting an order while all order are listed
@@ -1550,6 +1604,29 @@ _{give more}_ +
    Expected: Similar to previous.
 
 _{ more test cases ... }_
+
+=== Mark an order as COMPLETED
+
+. Marking an order as `completed`
+.. Prerequisites: Already have an `ongoing` order. 
+... Test case: Mark an invalid index as completed +
+Command: `/order done 0` + 
+Expected: No order is marked as completed. Index have to a positive integer. 
+
+... Test case: Mark an valid index `ongoing` order as completed + 
+Command: `/order done <order_index_of_ongoing_status>` + 
+Expected: Order on orderlist panel is marked as `completed` and deliveryman is updated.
+
+.. Prerequisites: Have some `pending` orders. 
+... Test case: Mark a valid index as completed but would fail. +
+Command: `/order done <order_index_of_pending_status>` + 
+Expected: Fail to mark order as `completed` because only `ongoing` status can be marked as `completed`.
+
+.. Prerequisites: Have some `completed` orders.
+... Test case: Mark a valid index as completed but would fail. + 
+Command: `/order done <order_index_of_completed_status>` +
+Expected: Fail to mark order as `completed` because it is already `completed`.
+
 
 === Saving data
 
