@@ -1,6 +1,7 @@
 = Monika Manuela Hengki - Project Portfolio
 :imagesDir: ../images
 :stylesDir: ../stylesheets
+
 == Project: FoodZoom
 
 ---
