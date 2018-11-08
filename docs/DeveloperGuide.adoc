@@ -1572,7 +1572,7 @@ Expected: Fail to sign up. Name is too short and it needs to be 3 - 64 character
 Command: `/signup n/012345678901234567890123456789012345678901234567890123456789012345 u/lucaskoh pw/123456` +
 Expected: Fail to sign up. Name is too long and it needs to be 3 - 64 characters long.
 
-... Test case: Valid name, invalid username, valid password + 
+... Test case: Valid name, invalid username, valid password +
 Command: `/signup n/LucasKoh u/@1234~2! pw/123456` +
 Expected: Fail to sign up. Username should only contain alphanumeric characters.
 
