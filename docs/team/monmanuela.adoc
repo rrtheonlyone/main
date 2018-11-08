@@ -18,7 +18,7 @@ commands (using Command Line Interface). FoodZoom allows managers to plan order 
 dispatch them to deliverymen available. Deliverymen can also quickly view their assigned delivery routes and
 increase their efficiency. FoodZoom is built by me and 4 other Computer Science students.
 
-.Figure 1: FoodZoom Home Page
+.FoodZoom Home Page
 image::Ui.png[width="800"]
 
 == Summary of Contribution
