@@ -1,6 +1,7 @@
 = Monika Manuela Hengki - Project Portfolio
 :imagesDir: ../images
 :stylesDir: ../stylesheets
+
 == Project: FoodZoom
 
 ---
@@ -17,6 +18,7 @@ commands (using Command Line Interface). FoodZoom allows managers to plan order 
 dispatch them to deliverymen available. Deliverymen can also quickly view their assigned delivery routes and
 increase their efficiency. FoodZoom is built by me and 4 other Computer Science students.
 
+.FoodZoom Home Page
 image::Ui.png[width="800"]
 
 == Summary of Contribution
