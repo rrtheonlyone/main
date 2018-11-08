@@ -1,0 +1,96 @@
+= Rahul Rajesh - Project Portfolio
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+== Project: FoodZoom
+
+---
+
+I am a year 2 Computer Science Student studying in National University of Singapore. I am
+interested in using technology to solve everyday problems and am always on the lookout for
+any challenging project to work with. This is a portfolio page which serves to document my
+work on FoodZoom.
+
+== Overview
+
+FoodZoom is a food delivery management desktop application for food businesses to streamline their
+delivery process. FoodZoom is responsive and quick as users interact with the application by typing the
+commands (using Command Line Interface). FoodZoom allows managers to plan order delivery routes and
+dispatch them to deliverymen available. FoodZoom is built by a team of five.
+
+image::Ui.png[width="800"]
+
+== Summary of Contribution
+
+---
+|===
+|Given below are contributions that I made to this application.
+|===
+
+* *Major enhancements*:
+
+- Added Functionality to do location-based matching of orders on a map:.
+
+** What it does: All pending orders are displayed on the map. This map is able to update itself when
+the order list is changed.
+
+** Justification: This is one of the code features of the application. Managers using the application can now
+track where their pending orders are in one glance. It allows for efficient dispatch of the respective orders to
+the deliverymen involved. It works without internet and has no reliance on any external service.
+
+** Highlights: The order location is calculated from the postal code given in the address. The size of the
+               placeholder indicates how many orders they are in a particular location.
+
+- Designed the dashboard that gives key insights based on the patterns of orders that come in:
+
+** What it does: Dashboard on the application that dynamically changes when the order list is filtered or
+                 viewed. It shows pending orders and order history for the week.
+
+** Justification: The feature allows for managers to gather insights on their business. They can see what are
+                  their most trending food items and peruse their order history for the week.
+
+** Highlights: The data is collected based on the available orders in the application. The data dynamically updates
+itself when the list is filtered or adjusted.
+
+
+* *Minor enhancements*:
+
+** Enhanced and came up with the User Interface for the application
+** Added essential fields such as address and date to order model.
+** Came up with `/home` command to return to the dashboard panel
+** Various Bug Fixes
+
+* *Code contributions*: https://nus-cs2103-ay1819s1.github.io/cs2103-dashboard/#=undefined&search=rrtheonlyone[RepoSense]
+
+* *Other contributions*:
+
+** Project management:
+*** Initiated launch of new features (dashboard/better find etc.)
+*** Guide team members on existing practices
+*** Helped with the issue tracking using labels and assignees on Github.
+
+** Documentation:
+*** Updated User Guide and Developer Guide for the features I added
+
+** Community:
+*** Review pull requests weekly (https://github.com/CS2103-AY1819S1-T16-3/main/pulls?utf8=%E2%9C%93&q=is%3Apr+reviewed-by%3Arrtheonlyone[see here])
+*** Reported bugs and gave suggestions for other members's project
+
+== Contributions to User Guide
+|===
+|Given below are some of my contributions to the User Guide. They showcase my ability to write clear
+ documentation targeting end-users.
+|===
+
+include::../UserGuide.adoc[tag=home]
+
+include::../UserGuide.adoc[tag=orderAdd]
+
+== Contributions to Developer Guide
+|===
+|Given below are some of my contributions to the Developer Guide. They showcase my ability to write
+ technical documentation and the technical depth of my contributions to the project.
+|===
+
+include::../DeveloperGuide.adoc[tag=dashboard]
+
+include::../DeveloperGuide.adoc[tag=orderAdd]

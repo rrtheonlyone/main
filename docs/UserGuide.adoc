@@ -171,6 +171,7 @@ Logout from the application.
 Format: `/logout`
 // end::logout[]
 
+// tag::home[]
 === Return to Home Page : `/home` `[Since v1.3]`
 
 If any selection is done, allows you to return back to the home page with the dashboard
@@ -182,7 +183,9 @@ Format: `/home`
 designed to work offline and give you a rough gauge of where your orders are
 * This dashboard dynamically updates itself when the order list is changed (try /order find!)
 ****
+// end::home[]
 
+// tag::orderAdd[]
 === Adding an order : `/order add` `[Since v1.1]`
 
 Adds an order to the list of orders +
@@ -201,11 +204,14 @@ Examples:
 
 * `/order add f/Roti Prata n/John Smith p/12345678 a/block 123, Clementi Drive, #01-01 610123 dt/26-12-2018 10:10:54`
 * `/order add a/block 55 Computing Drive 117417 n/Harry f/Tissue Prata f/Nasi Briyani p/81889111 dt/14-12-2018 14:10:54`
+// end::orderAdd[]
 
+// tag::orderList[]
 === Listing all orders : `/order list` `[Since v1.1]`
 
 Shows a list of all orders in chronological order +
 Format: `/order list`
+// end::orderList[]
 
 // tag::orderedit[]
 === Editing an order : `/order edit` `[Since v1.2]`

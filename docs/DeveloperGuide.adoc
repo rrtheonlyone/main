@@ -314,6 +314,7 @@ incorrect behavior.
  logged in status.
 // end::loginfeature[]
 
+// tag::dashboard[]
 === Dashboard
 
 ==== Current Implementation
@@ -549,8 +550,9 @@ just Singapore).
 application to work. This would also introduce more overhead to the code e.g
 there is now a need to check for internet connection and render loaders so
 that the user experience is not affected.
+// end::dashboard[]
 
-
+// tag::orderAdd[]
 === Add Order Feature
 
 ==== Current Implementation
@@ -591,6 +593,7 @@ From the diagram above:
 * **Alternative 2:** Store all parameters of `Order` as `String`
 ** Pros: Easy to implement.
 ** Cons: Violates SRP as one single class will need to check if the arguments are valid.
+// end::orderAdd[]
 
 // tag::orderfindfeature[]
 === Find Order Feature
