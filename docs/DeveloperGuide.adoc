@@ -1615,7 +1615,8 @@ Expected: No order is marked as completed. Index have to a positive integer.
 
 ... Test case: Mark an valid index `Ongoing` order as completed +
 Command: `/order done <order_index_of_ongoing_status>` +
-Expected: Order on order list panel is marked as `Completed` and deliveryman is updated.
+Expected: Order on order list panel is marked as `Completed` and deliveryman is updated (Deliveryman total assigned
+orders will decrease by `1` or become `available`).
 
 .. Prerequisites: Have some `Pending` orders.
 ... Test case: Mark a valid index as completed but would fail. +
