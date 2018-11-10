@@ -8,6 +8,7 @@ import com.google.common.collect.ImmutableMultiset;
 
 import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.text.Text;
 import seedu.address.model.order.Order;
 
 /**
@@ -18,7 +19,7 @@ public class OrderCardHandle extends NodeHandle<Node> {
     private static final String ADDRESS_FIELD_ID = "#address";
     private static final String FOOD_FIELD_ID = "#foodList";
 
-    private final Label idLabel;
+    private final Text idLabel;
     private final Label addressLabel;
     private final Label foodLabel;
 
