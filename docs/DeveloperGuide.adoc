@@ -1605,27 +1605,27 @@ _{give more}_ +
 
 _{ more test cases ... }_
 
-=== Mark an order as COMPLETED
+=== Mark an order as Completed
 
-. Marking an order as `completed`
-.. Prerequisites: Already have an `ongoing` order.
+. Marking an order as `Completed`
+.. Prerequisites: Already have an `Ongoing` order.
 ... Test case: Mark an invalid index as completed +
 Command: `/order done 0` +
 Expected: No order is marked as completed. Index have to a positive integer.
 
-... Test case: Mark an valid index `ongoing` order as completed +
+... Test case: Mark an valid index `Ongoing` order as completed +
 Command: `/order done <order_index_of_ongoing_status>` +
-Expected: Order on orderlist panel is marked as `completed` and deliveryman is updated.
+Expected: Order on order list panel is marked as `Completed` and deliveryman is updated.
 
-.. Prerequisites: Have some `pending` orders.
+.. Prerequisites: Have some `Pending` orders.
 ... Test case: Mark a valid index as completed but would fail. +
 Command: `/order done <order_index_of_pending_status>` +
-Expected: Fail to mark order as `completed` because only `ongoing` status can be marked as `completed`.
+Expected: Fail to mark the order as `Completed` because only `ongoing` status can be marked as `completed`.
 
-.. Prerequisites: Have some `completed` orders.
+.. Prerequisites: Have some `Completed` orders.
 ... Test case: Mark a valid index as completed but would fail. +
 Command: `/order done <order_index_of_completed_status>` +
-Expected: Fail to mark order as `completed` because it is already `completed`.
+Expected: Fail to mark the order as `Completed` because it is already `completed`.
 
 
 === Saving data
