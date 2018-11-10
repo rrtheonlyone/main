@@ -1638,17 +1638,17 @@ Expected: Fail to mark the order as `Completed` because it is already `completed
 
 . Assigning multiple pending orders to a deliveryman
 
-.. Prerequisite: Have orders that are `Pending`, and a deliveryman
+.. Prerequisite: Have orders that are `Pending`, and a deliveryman +
    Test case: Assigning two `Pending` orders to a deliveryman +
    Command: `/assign o/<first_pending_order_index> o/<second_pending_order_index> d/1` +
    Expected: First deliveryman's assigned order count increases by 2, the two orders change status to become `Ongoing`.
 
-.. Prerequisite: Have a deliveryman
+.. Prerequisite: Have a deliveryman +
    Test case: Invalid order or deliveryman index +
    Command: `/assign o/0 d/1`, `/assign o/1 d/0` +
    Expected: Cannot assign because the order index is not a non-zero unsigned integer.
 
-.. Prerequisite: Have an `Ongoing` or `Completed` order
+.. Prerequisite: Have an `Ongoing` or `Completed` order +
    Test case: Assigning an `Ongoing` or `Completed` order to a deliveryman +
    Command: `/assign o/<ongoing_or_completed_order_index> d/1` +
    Expected: Cannot assign because that order was already assigned to a deliveryman previously.
