@@ -12,6 +12,7 @@ public class Messages {
     public static final String MESSAGE_INVALID_ORDER_DISPLAYED_INDEX = "The order index provided is invalid";
     public static final String MESSAGE_PERSONS_LISTED_OVERVIEW = "%1$d persons listed!";
     public static final String MESSAGE_ORDERS_LISTED_OVERVIEW = "%1$d orders listed!";
+    public static final String MESSAGE_COMPLETED_ORDER = "This order is already delivered to the customer.";
     public static final String MESSAGE_INVALID_DELIVERYMAN_DISPLAYED_INDEX =
         "The deliveryman index provided is invalid";
     public static final String MESSAGE_INVALID_DELIVERYMAN_COMMAND_FORMAT =
@@ -23,8 +24,8 @@ public class Messages {
             + "already assigned to a deliveryman.";
     public static final String MESSAGE_ORDER_ALREADY_ASSIGNED_TO_DELIVERYMAN = "Order %1$s is already assigned to "
             + "deliveryman %2$s, cannot be edited or reassigned to another deliveryman!";
-    public static final String MESSAGE_ORDER_ALREADY_ASSIGNED_TO_DELIVERYMAN_CANNOT_CLEAR = "There is an order already "
-            + "assigned to a deliveryman, order list cannot be cleared.";
+    public static final String MESSAGE_ORDER_ONGOING_CANNOT_CLEAR = "There is at least one ongoing order in the list, "
+            + "order list cannot be cleared.";
     public static final String MESSAGE_REQUIRE_LOGIN = "Please login first!";
 
 }
