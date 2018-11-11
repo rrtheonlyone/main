@@ -25,7 +25,7 @@ public class DeliverymanSelectCommand extends DeliverymanCommand {
         + "Parameters: INDEX (must be a positive integer)\n"
         + "Example: " + DeliverymanCommand.COMMAND_WORD + " " + COMMAND_WORD + " 1";
 
-    public static final String MESSAGE_SELECT_ORDER_SUCCESS = "Selected Order: %1$s";
+    public static final String MESSAGE_SELECT_ORDER_SUCCESS = "Selected Deliveryman: %1$s";
 
     private final Index targetIndex;
 

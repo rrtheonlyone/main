@@ -162,6 +162,7 @@
 
 #deliverymanListView .list-cell:filled:selected {
     -fx-background-color: #424d5f;
+    -fx-text-fill: white;
 }
 
 #name {
@@ -269,3 +270,48 @@
 #textWrapper {
     -fx-padding: 6;
 }
+
+#namePrintOut {
+    -fx-padding: 5;
+    -fx-font-style: bold;
+    -fx-font-family: Rockwell;
+    -fx-font-size: 18;
+    -fx-underline: true;
+}
+
+#statusOP {
+    -fx-padding: 5;
+    -fx-font-style: bold;
+    -fx-font-family: Rockwell;
+    -fx-font-size: 16;
+}
+
+#deliverymanStatusPrintOut {
+    -fx-font-family: Rockwell;
+}
+
+#deliverymanStatusOPWrapper {
+    -fx-padding: 5;
+}
+
+#nameP {
+    -fx-font-style: bold;
+}
+
+#orderAssignedOP {
+    -fx-padding: 5;
+    -fx-font-style: bold;
+    -fx-font-family: Rockwell;
+    -fx-font-size: 16;
+}
+
+#deliverymanPO {
+    -fx-padding: 5;
+    -fx-font-family: Rockwell;
+    -fx-font-size: 12;
+}
+
+#textWrapperP {
+    -fx-padding: 4 0 0 0;
+}
+

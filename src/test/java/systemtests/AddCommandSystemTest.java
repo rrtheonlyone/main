@@ -208,7 +208,7 @@ public class AddCommandSystemTest extends OrderBookSystemTest {
      * 2. Command box has the error style class.<br>
      * 3. Result display box displays {@code expectedResultMessage}.<br>
      * 4. {@code Storage} and {@code PersonListPanel} remain unchanged.<br>
-     * 5. Browser url, selected card and status bar remain unchanged.<br>
+     * 5. Browser url and status bar remain unchanged.<br>
      * Verifications 1, 3 and 4 are performed by
      * {@code OrderBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
      *
@@ -219,7 +219,6 @@ public class AddCommandSystemTest extends OrderBookSystemTest {
 
         executeCommand(command);
         assertApplicationDisplaysExpected(command, expectedResultMessage, expectedModel);
-        assertSelectedCardUnchanged();
         assertCommandBoxShowsErrorStyle();
         assertStatusBarUnchanged();
     }

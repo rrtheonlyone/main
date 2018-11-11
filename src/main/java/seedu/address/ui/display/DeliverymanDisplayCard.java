@@ -1,11 +1,11 @@
 package seedu.address.ui.display;
 
-import javafx.collections.FXCollections;
+import java.util.Set;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
+import javafx.scene.layout.VBox;
 import seedu.address.model.deliveryman.Deliveryman;
 import seedu.address.model.order.Order;
 import seedu.address.ui.UiPart;
@@ -21,30 +21,39 @@ public class DeliverymanDisplayCard extends UiPart<Region> {
     public final Deliveryman deliveryman;
 
     @FXML
-    private Label name;
+    private Label namePrintOut;
     @FXML
-    private Label deliverymanStatus;
+    private Label deliverymanStatusPrintOut;
     @FXML
-    private ListView<Order> orderListViewForCard;
+    private VBox orderListDisplay;
+
 
     public DeliverymanDisplayCard(Deliveryman deliveryman) {
         super(FXML);
         this.deliveryman = deliveryman;
-        name.setText(deliveryman.getName().fullName);
+        namePrintOut.setText(deliveryman.getName().fullName);
+
         setDeliverymanStatus();
-        orderListViewForCard.setItems(FXCollections.observableArrayList(deliveryman.getOrders()));
-        orderListViewForCard.setCellFactory(listView -> new OrderListViewCell());
+        setOrders(deliveryman.getOrders());
     }
 
     private void setDeliverymanStatus() {
         if (deliveryman.getOrders().size() > 0) {
-            deliverymanStatus.setText("Delivering");
-            deliverymanStatus.getStyleClass().clear();
-            deliverymanStatus.getStyleClass().add(BUSY_LABEL_CLASS);
+            deliverymanStatusPrintOut.setText("Delivering");
+            deliverymanStatusPrintOut.getStyleClass().clear();
+            deliverymanStatusPrintOut.getStyleClass().add(BUSY_LABEL_CLASS);
         } else {
-            deliverymanStatus.setText("Available");
-            deliverymanStatus.getStyleClass().clear();
-            deliverymanStatus.getStyleClass().add(AVAILABLE_LABEL_CLASS);
+            deliverymanStatusPrintOut.setText("Available");
+            deliverymanStatusPrintOut.getStyleClass().clear();
+            deliverymanStatusPrintOut.getStyleClass().add(AVAILABLE_LABEL_CLASS);
+        }
+    }
+
+    private void setOrders(Set<Order> orders) {
+        for (Order o : orders) {
+
+            OrderPrintOut orderPrintOut = new OrderPrintOut(o);
+            orderListDisplay.getChildren().add(orderPrintOut.getRoot());
         }
     }
 
@@ -63,22 +72,5 @@ public class DeliverymanDisplayCard extends UiPart<Region> {
         // state check
         DeliverymanDisplayCard card = (DeliverymanDisplayCard) other;
         return deliveryman.equals(card.deliveryman);
-    }
-
-    /**
-     * Custom {@code ListCell} that displays the graphics of a {@code Order} using a {@code OrderCard}.
-     */
-    class OrderListViewCell extends ListCell<Order> {
-        @Override
-        protected void updateItem(Order order, boolean empty) {
-            super.updateItem(order, empty);
-
-            if (empty || order == null) {
-                setGraphic(null);
-                setText(null);
-            } else {
-                setGraphic(new OrderDisplayListCard(order).getRoot());
-            }
-        }
     }
 }

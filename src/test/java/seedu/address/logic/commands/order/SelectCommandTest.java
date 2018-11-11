@@ -118,6 +118,5 @@ public class SelectCommandTest {
     private void assertExecutionFailure(Index index, String expectedMessage) {
         SelectCommand selectCommand = new SelectCommand(index);
         assertCommandFailure(selectCommand, model, commandHistory, expectedMessage);
-        assertTrue(eventsCollectorRule.eventsCollector.isEmpty());
     }
 }
