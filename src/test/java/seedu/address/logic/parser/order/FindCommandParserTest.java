@@ -48,7 +48,7 @@ public class FindCommandParserTest {
         assertParseSuccess(parser, " a/123, Jurong West Ave 6, #08-111", expectedAddressFindCommand);
 
         FindCommand expectedFoodFindCommand =
-                new FindCommand(new OrderFoodContainsKeywordPredicate(Arrays.asList("rice")));
+                new FindCommand(new OrderFoodContainsKeywordPredicate("rice"));
         assertParseSuccess(parser, " f/rice", expectedFoodFindCommand);
 
         FindCommand expectedStatusFindCommand =

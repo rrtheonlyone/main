@@ -161,10 +161,10 @@ public class FindCommandSystemTest extends OrderBookSystemTest {
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
-        /* Case: find food of order in order book -> 2 orders found */
+        /* Case: find food of order in order book -> 1 orders found */
         List<Food> food = new ArrayList<>(DANIEL.getFood());
         command = findCommand + " " + PREFIX_FOOD + food.get(0).foodName;
-        ModelHelper.setFilteredList(expectedModel, DANIEL, FIONA);
+        ModelHelper.setFilteredList(expectedModel, DANIEL);
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 

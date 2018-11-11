@@ -3,10 +3,6 @@ package seedu.address.model.order;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-
 import org.junit.Test;
 
 import seedu.address.testutil.OrderBuilder;
@@ -14,8 +10,8 @@ import seedu.address.testutil.OrderBuilder;
 public class OrderFoodContainsKeywordPredicateTest {
     @Test
     public void equals() {
-        List<String> firstPredicateKeywordList = Collections.singletonList("first");
-        List<String> secondPredicateKeywordList = Arrays.asList("first", "second");
+        String firstPredicateKeywordList = "first";
+        String secondPredicateKeywordList = "second";
 
         OrderFoodContainsKeywordPredicate firstPredicate =
                 new OrderFoodContainsKeywordPredicate(firstPredicateKeywordList);
@@ -44,34 +40,30 @@ public class OrderFoodContainsKeywordPredicateTest {
     public void test_foodContainsKeywords_returnsTrue() {
         // One keyword
         OrderFoodContainsKeywordPredicate predicate =
-                new OrderFoodContainsKeywordPredicate(Collections.singletonList("rice"));
+                new OrderFoodContainsKeywordPredicate("fried");
         assertTrue(predicate.test(new OrderBuilder().withFood("fried rice").build()));
 
-        // Multiple keywords
-        predicate = new OrderFoodContainsKeywordPredicate(Arrays.asList("fried", "rice"));
+        // Keyword match 2 word
+        predicate = new OrderFoodContainsKeywordPredicate("rice");
         assertTrue(predicate.test(new OrderBuilder().withFood("fried rice").build()));
 
-        // Only one matching keyword
-        predicate = new OrderFoodContainsKeywordPredicate(Arrays.asList("tea", "rice"));
+        // Leading and Trailing whitespace
+        predicate = new OrderFoodContainsKeywordPredicate("     rice      ");
         assertTrue(predicate.test(new OrderBuilder().withFood("fried rice").build()));
-
-        // Keyword match only 2nd food
-        predicate = new OrderFoodContainsKeywordPredicate(Arrays.asList("rice"));
-        assertTrue(predicate.test(new OrderBuilder().withFood("milo", "fried rice").build()));
 
         // Mixed-case keywords
-        predicate = new OrderFoodContainsKeywordPredicate(Arrays.asList("fRiEd", "RiCE"));
+        predicate = new OrderFoodContainsKeywordPredicate("fRiEd RiCE");
         assertTrue(predicate.test(new OrderBuilder().withFood("Fried Rice").build()));
     }
 
     @Test
     public void test_foodDoesNotContainKeywords_returnsFalse() {
         // Non-matching keyword
-        OrderFoodContainsKeywordPredicate predicate = new OrderFoodContainsKeywordPredicate(Arrays.asList("tea"));
+        OrderFoodContainsKeywordPredicate predicate = new OrderFoodContainsKeywordPredicate("tea");
         assertFalse(predicate.test(new OrderBuilder().withFood("fried rice").build()));
 
         // Match no food
-        predicate = new OrderFoodContainsKeywordPredicate(Arrays.asList("tea"));
+        predicate = new OrderFoodContainsKeywordPredicate("tea");
         assertFalse(predicate.test(new OrderBuilder().withFood("fried rice", "ice milo", "roti canai").build()));
     }
 }

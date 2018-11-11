@@ -114,9 +114,7 @@ public class OrderPredicateUtil {
 
         case STRING_PREFIX_FOOD:
             String food = getLastValueFromList(keywords);
-            String[] foodKeywords = trimAndSplitStringByWhiteSpaces(food);
-            OrderFoodContainsKeywordPredicate foodPredicate =
-                    new OrderFoodContainsKeywordPredicate(Arrays.asList(foodKeywords));
+            OrderFoodContainsKeywordPredicate foodPredicate = new OrderFoodContainsKeywordPredicate(food);
 
             setToPredicate(foodPredicate);
 
