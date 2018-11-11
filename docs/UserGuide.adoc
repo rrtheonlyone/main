@@ -262,8 +262,8 @@ Format: `/order find [n/NAME] [p/PHONE] [a/ADDRESS] [f/FOOD] [dt/DATETIME] [st/O
 * Empty value after any fields are not allowed. e.g. `n/`
 * The search is case insensitive. e.g `tom` will match `Tom`
 * Partial match is allowed for name, phone, food and address. e.g. `alex` will match `alex lim` and `al` will match `alex lim`
-* When more than 1 fields are given, the find will do an `and` on all fields. e.g. `n/alex p/1234`, will be `n == 'alex' AND p == 1234` 
-* When the same fields are given, it will take the last field. e.g. `n/alex n/tom`, Only `n/tom` is taken 
+* When more than 1 fields are given, the find will do an `and` on all fields. e.g. `n/alex p/1234`, will be `n == 'alex' AND p == 1234`
+* When the same fields are given, it will take the last field. e.g. `n/alex n/tom`, Only `n/tom` is taken
 * Phone Find
 ** Multiple phone search is allow when phone numbers are separated by spaces. e.g. `p/1234 9111` will match phones with `1234` and `9111`
 * Date Find
