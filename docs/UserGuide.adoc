@@ -149,11 +149,6 @@ Examples:
 
 * `/signup n/John Doe u/johndoe pw/johndoepassword`
 
-After you sign up, you will greeted with the home page:
-
-.Home page after successful sign up
-image::Signup.png[width="750"]
-
 // end::signup[]
 
 // tag::login[]
@@ -168,10 +163,6 @@ Examples:
 
 * `/login u/manager pw/password`
 
-After you login, you will greeted with the home page:
-
-.Home page after successful login
-image::Login.png[width="750"]
 // end::login[]
 
 // tag::logout[]
@@ -181,10 +172,6 @@ Logout from the application.
 
 Format: `/logout`
 
-After you logout, you will be greeted with an empty page:
-
-.Empty page after successful logout
-image::Logout.png[width="750"]
 // end::logout[]
 
 // tag::home[]
