@@ -85,8 +85,13 @@ public class EditCommand extends OrderCommand {
         Order orderToEdit = lastShownList.get(index.getZeroBased());
         Order editedOrder = createEditedOrder(orderToEdit, editOrderDescriptor);
 
+
         if (!orderToEdit.isSameOrder(editedOrder) && model.hasOrder(editedOrder)) {
             throw new CommandException(MESSAGE_DUPLICATE_ORDER);
+        }
+
+        if (editedOrder.isCompleted()) {
+            throw new CommandException(Messages.MESSAGE_COMPLETED_ORDER);
         }
 
         if (editedOrder.isAlreadyAssignedDeliveryman()) {
