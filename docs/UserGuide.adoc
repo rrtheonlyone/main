@@ -261,11 +261,16 @@ Format: `/order find [n/NAME] [p/PHONE] [a/ADDRESS] [f/FOOD] [dt/DATETIME] [st/O
 * All fields are optional. However, at least one field must be specified.
 * Empty value after any fields are not allowed. e.g. `n/`
 * The search is case insensitive. e.g `tom` will match `Tom`
-* Partial match is allowed for name, phone and food. e.g. `alex` will match `alex lim` and `al` will match `alex lim`
-* To find for orders from a specific date, use 1 date field. e.g `dt/01-10-2018 10:00:00` will return order/s on that
+* Partial match is allowed for name, phone, food and address. e.g. `alex` will match `alex lim` and `al` will match `alex lim`
+* When more than 1 fields are given, the find will do an `and` on all fields. e.g. `n/alex p/1234`, will be `n == 'alex' AND p == 1234` 
+* When the same fields are given, it will take the last field. e.g. `n/alex n/tom`, Only `n/tom` is taken 
+* Phone Find
+** Multiple phone search is allow when phone numbers are separated by spaces. e.g. `p/1234 9111` will match phones with `1234` and `9111`
+* Date Find
+** To find for orders from a specific date, use 1 date field. e.g `dt/01-10-2018 10:00:00` will return order/s on that
  date.
-* To find for orders with a date range, use 2 date fields. e.g. `dt/01-10-2018 10:00:00 dt/03-10-2018
-  10:00:00` will return order/s within the 2 dates.
+** To find for orders with a date range, use 2 or more date fields. e.g. `dt/01-10-2018 10:00:00 dt/03-10-2018
+  10:00:00` will return order/s within the 2 dates. When more than 2 date fields are given, it will take the smallest and the biggest datetime
 ****
 
 Examples:
@@ -362,6 +367,7 @@ Examples:
 `/deliveryman edit 1 n/John Doe` +
 Edits the name of the 1st delivery man to be `John Doe`.
 
+// tag::deliverymanfind[]
 === Finding delivery man by name : `/deliveryman find` `[Since v1.2]`
 
 Find delivery men whose name contain in the given parameter. +
@@ -369,15 +375,15 @@ Format: `/deliveryman find n/NAME` +
 
 ****
 * The search is case insensitive. e.g `tom` will match `Tom`
-* Only search one name at a time
-* The order of the keywords does not matter. e.g. `Alice Smith` will match `Smith Alice`
+* When more than one name field is given, it will only consider the last name field. e.g. `n/alex n/tom`, only `n/tom` will be considered
 * Partial match is allowed e.g. `tom` will match `tommy`
 ****
 
 Examples:
 
 * `/deliveryman find n/John Smith` +
-Returns all delivery men with the names `John` or `Smith` e.g. `John Smith`, `John Doe`, and `Michael Smith`
+Returns all delivery men with the names `John` e.g. `John Smith` and `John Doe`
+// end::deliverymanfind[]
 
 // tag::deliverymandelete[]
 === Deleting a delivery man : `/deliveryman delete` `[Since v1.2]`
