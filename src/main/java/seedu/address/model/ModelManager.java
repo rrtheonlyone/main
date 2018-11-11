@@ -10,11 +10,13 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
+import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.FoodZoomChangedEvent;
 import seedu.address.commons.events.model.UserLoggedInEvent;
 import seedu.address.commons.events.model.UserLoggedOutEvent;
 import seedu.address.commons.events.model.UsersListChangedEvent;
+import seedu.address.commons.events.ui.BackToHomeEvent;
 import seedu.address.model.deliveryman.Deliveryman;
 import seedu.address.model.deliveryman.DeliverymenList;
 import seedu.address.model.deliveryman.VersionedDeliverymenList;
@@ -191,6 +193,7 @@ public class ModelManager extends ComponentManager implements Model {
     public void updateFilteredOrderList(Predicate<Order> predicate) {
         requireNonNull(predicate);
         filteredOrders.setPredicate(predicate);
+        EventsCenter.getInstance().post(new BackToHomeEvent());
     }
 
     //=========== Filtered Deliveryman List Accessors =======================================================
@@ -208,6 +211,7 @@ public class ModelManager extends ComponentManager implements Model {
     public void updateFilteredDeliverymenList(Predicate<Deliveryman> predicate) {
         requireNonNull(predicate);
         filteredDeliverymen.setPredicate(predicate);
+        EventsCenter.getInstance().post(new BackToHomeEvent());
     }
 
     //=========== Undo/Redo =================================================================================
