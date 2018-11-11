@@ -42,7 +42,7 @@ public class DeleteCommand extends OrderCommand {
         }
 
         Order orderToDelete = lastShownList.get(targetIndex.getZeroBased());
-        if (orderToDelete.isAlreadyAssignedDeliveryman() && orderToDelete.getOrderStatus().isOngoingStatus()) {
+        if (orderToDelete.isAlreadyAssignedDeliveryman() && orderToDelete.isOngoing()) {
             throw new CommandException(Messages.MESSAGE_ORDER_HAS_DELIVERYMAN_CANNOT_DELETE);
         }
 
