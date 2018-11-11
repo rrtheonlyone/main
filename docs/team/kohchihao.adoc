@@ -68,6 +68,8 @@ include::../UserGuide.adoc[tag=login]
 
 include::../UserGuide.adoc[tag=logout]
 
+include::../UserGuide.adoc[tag=orderdone]
+
 == Contributions to Developer Guide
 
 |===

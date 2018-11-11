@@ -433,6 +433,7 @@ Examples:
 Assigns order number 1 and 2 to delivery man number 2.
 // end::assignfeature[]
 
+// tag::orderdone[]
 === Mark an order as completed : `/order done` `[Since v1.4]`
 
 Mark an order as completed.
@@ -453,7 +454,7 @@ Examples:
 `/assign d/2 o/1` +
 `/order done 1`
 Mark order number 1 as completed.
-
+// end::orderdone[]
 
 === Listing entered commands : `/history` `[Since v1.1]`
 
