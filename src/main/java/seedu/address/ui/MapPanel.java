@@ -49,6 +49,12 @@ public class MapPanel extends UiPart<Region> {
                 placeholderContainer = new ImageView(placeholder);
 
                 int count = orderMap.get(postalCodeKey);
+
+                // set a limit on count
+                if (count > 25) {
+                    count = 25;
+                }
+
                 int increment = 16 + count * 2;
 
                 placeholderContainer.setPreserveRatio(true);
