@@ -1651,25 +1651,33 @@ Milo dt/30-10-2018 00:00:01` +
     Expected: No order would be selected and displayed as this is an invalid index.
 
 === Finding order/s
-. Finding order by name, phone or food
-.. Prerequisites: Logged into the application. Having at least 1 order.
-.. Test case: Valid name without space +
-    Command: `/order find n/Alex` +
-    Expected: Order/s with the name `Alex`, `Alexandar` and `Alex Yeoh` is shown on the left panel.
+. Finding order by phone
+.. Prerequisites: Having at least 1 order.
+.. Test case: Valid phone without space +
+    Command: `/order find p/9111` +
+    Expected: Order/s with the phone `9111` and `911122113` is shown on the left panel.
 
-.. Test case: Valid names with space +
-    Command: `/order find n/Alex Yeoh` +
-    Expected: Order/s with the name `Alex`, `Alexandar`, `Alex Yeoh`, `Yeoh Jin` is shown on the left panel.
+.. Test case: Valid phones with space +
+    Command: `/order find p/1234 9111` +
+    Expected: Order/s with the phone `9111`, `911122113`, `1234`, `12345678` is shown on the left panel.
 
 .. Test case: Empty value +
-    Command: `/order find n/` +
+    Command: `/order find p/` +
     Expected: Error is shown in the status message. Value cannot be empty.
 
-. Finding order by address
-.. Prerequisites: Logged into the application. Having at least 1 order.
+. Finding order by address, name, food
+.. Prerequisites: Having at least 1 order.
 .. Test case: Valid address +
     Command: `/order find a/Blk 10` +
     Expected: Order/s with the address containing `Blk 10` is shown on the left panel.
+
+.. Test case: Valid food +
+    Command: `/order find f/Chicken Rice` +
+    Expected: Order/s with food `Chicken Rice`, `Chicken Rice with Chilli` is shown on the left panel.
+
+.. Test case: Valid name +
+    Command: `/order find n/Alex Yeoh` +
+    Expected: Order/s with name `Alex Yeoh`, `Alex Yeoh Jin` is shown on the left panel.
 
 . Finding order by status
 .. Prerequisites: Logged into the application. Having orders in the list with 3 different status
