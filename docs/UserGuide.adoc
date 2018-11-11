@@ -148,6 +148,12 @@ Format: `/signup n/NAME u/USERNAME pw/PASSWORD`
 Examples:
 
 * `/signup n/John Doe u/johndoe pw/johndoepassword`
+
+After you sign up, you will greeted with the home page:
+
+.Home page after successful sign up
+image::Signup.png[width="750"]
+
 // end::signup[]
 
 // tag::login[]
@@ -161,6 +167,11 @@ Format: `/login u/USERNAME pw/PASSWORD`
 Examples:
 
 * `/login u/manager pw/password`
+
+After you login, you will greeted with the home page:
+
+.Home page after successful login
+image::Login.png[width="750"]
 // end::login[]
 
 // tag::logout[]
@@ -169,6 +180,11 @@ Examples:
 Logout from the application.
 
 Format: `/logout`
+
+After you logout, you will be greeted with an empty page:
+
+.Empty page after successful logout
+image::Logout.png[width="750"]
 // end::logout[]
 
 // tag::home[]
@@ -454,6 +470,12 @@ Examples:
 `/assign d/2 o/1` +
 `/order done 1`
 Mark order number 1 as completed.
+
+After you mark an order done:
+
+.Home page after successful sign up
+image::orderdone.png[width="350"]
+
 // end::orderdone[]
 
 === Listing entered commands : `/history` `[Since v1.1]`
