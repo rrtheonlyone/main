@@ -1,16 +1,11 @@
 package seedu.address.ui.display;
 
-import java.util.HashSet;
 import java.util.Set;
 
-import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
 import seedu.address.model.deliveryman.Deliveryman;
 import seedu.address.model.order.Order;
 import seedu.address.ui.UiPart;
@@ -26,9 +21,9 @@ public class DeliverymanDisplayCard extends UiPart<Region> {
     public final Deliveryman deliveryman;
 
     @FXML
-    private Label nameOP;
+    private Label namePrintOut;
     @FXML
-    private Label deliverymanStatusOP;
+    private Label deliverymanStatusPrintOut;
     @FXML
     private VBox orderListDisplay;
 
@@ -36,7 +31,7 @@ public class DeliverymanDisplayCard extends UiPart<Region> {
     public DeliverymanDisplayCard(Deliveryman deliveryman) {
         super(FXML);
         this.deliveryman = deliveryman;
-        nameOP.setText(deliveryman.getName().fullName);
+        namePrintOut.setText(deliveryman.getName().fullName);
 
         setDeliverymanStatus();
         setOrders(deliveryman.getOrders());
@@ -44,13 +39,13 @@ public class DeliverymanDisplayCard extends UiPart<Region> {
 
     private void setDeliverymanStatus() {
         if (deliveryman.getOrders().size() > 0) {
-            deliverymanStatusOP.setText("Delivering");
-            deliverymanStatusOP.getStyleClass().clear();
-            deliverymanStatusOP.getStyleClass().add(BUSY_LABEL_CLASS);
+            deliverymanStatusPrintOut.setText("Delivering");
+            deliverymanStatusPrintOut.getStyleClass().clear();
+            deliverymanStatusPrintOut.getStyleClass().add(BUSY_LABEL_CLASS);
         } else {
-            deliverymanStatusOP.setText("Available");
-            deliverymanStatusOP.getStyleClass().clear();
-            deliverymanStatusOP.getStyleClass().add(AVAILABLE_LABEL_CLASS);
+            deliverymanStatusPrintOut.setText("Available");
+            deliverymanStatusPrintOut.getStyleClass().clear();
+            deliverymanStatusPrintOut.getStyleClass().add(AVAILABLE_LABEL_CLASS);
         }
     }
 
