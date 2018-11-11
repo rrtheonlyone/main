@@ -443,6 +443,7 @@ Format: `/assign d/DELIVERYMAN_INDEX o/ORDER_INDEX`
 * There must be at least 1 order and 1 delivery man.
 * Add more than 1 orders by specifying more tags. e.g. `o/1 o/2 o/3`.
 * Orders that are `Ongoing` or `Completed` cannot be reassigned.
+* No more than 5 can be assigned to a deliveryman at one time.
 ****
 
 Examples:
