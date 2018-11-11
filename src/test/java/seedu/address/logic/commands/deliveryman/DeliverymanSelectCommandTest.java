@@ -116,6 +116,5 @@ public class DeliverymanSelectCommandTest {
     private void assertExecutionFailure(Index index, String expectedMessage) {
         DeliverymanSelectCommand selectCommand = new DeliverymanSelectCommand(index);
         assertCommandFailure(selectCommand, model, commandHistory, expectedMessage);
-        assertTrue(eventsCollectorRule.eventsCollector.isEmpty());
     }
 }
