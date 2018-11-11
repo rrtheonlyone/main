@@ -7,6 +7,9 @@ import javafx.scene.text.Text;
 import seedu.address.model.order.Order;
 import seedu.address.ui.UiPart;
 
+/**
+ * UI Component representing the display of a single order in the deliveryman's list of orders.
+ */
 public class OrderPrintOut extends UiPart<Region> {
 
     private static final String FXML = "display/OrderPrintOut.fxml";
@@ -14,25 +17,25 @@ public class OrderPrintOut extends UiPart<Region> {
     private final Order order;
 
     @FXML
-    private Label namePO;
+    private Label nameP;
 
     @FXML
-    private Label datePO;
+    private Label dateP;
 
     @FXML
-    private Text addressPO;
+    private Text addressP;
 
     @FXML
-    private Label phonePO;
+    private Label phoneP;
 
     public OrderPrintOut(Order order) {
         super(FXML);
         this.order = order;
 
-        namePO.setText("Order from " + order.getName().fullName);
-        datePO.setText(order.getDate().toString());
-        phonePO.setText(order.getPhone().toString());
-        addressPO.setText(order.getAddress().toString());
+        nameP.setText("Order from " + order.getName().fullName);
+        dateP.setText(order.getDate().toString());
+        phoneP.setText(order.getPhone().toString());
+        addressP.setText(order.getAddress().toString());
     }
 
 
