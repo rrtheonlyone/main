@@ -9,6 +9,7 @@ import java.util.UUID;
 
 import seedu.address.model.TaggedObject;
 import seedu.address.model.common.Name;
+import seedu.address.model.deliveryman.exceptions.OrdersLimitExceededException;
 import seedu.address.model.order.Order;
 
 /**
@@ -16,6 +17,9 @@ import seedu.address.model.order.Order;
  * Guarantees: has a name that is unique.
  */
 public class Deliveryman extends TaggedObject {
+
+    /** Limit for amount of orders a deliveryman can have at one point of time */
+    public static final int ORDERS_LIMIT = 5;
 
     private final Name name;
     private final Set<Order> orders = new HashSet<>();
@@ -53,7 +57,14 @@ public class Deliveryman extends TaggedObject {
         return orders;
     }
 
-    public void addOrder(Order order) {
+    /**
+     * Adds {@code order} to the set of orders for the deliveryman.
+     * Throws {@code OrdersLimitExceededException} if the amount of orders assigned exceeds the limit for orders.
+     */
+    public void addOrder(Order order) throws OrdersLimitExceededException {
+        if (orders.size() >= ORDERS_LIMIT) {
+            throw new OrdersLimitExceededException();
+        }
         orders.add(order);
     }
 

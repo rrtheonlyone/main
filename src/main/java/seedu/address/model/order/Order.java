@@ -12,6 +12,7 @@ import seedu.address.model.common.Address;
 import seedu.address.model.common.Name;
 import seedu.address.model.common.Phone;
 import seedu.address.model.deliveryman.Deliveryman;
+import seedu.address.model.deliveryman.exceptions.OrdersLimitExceededException;
 
 /**
  * Represents an Order in the order book.
@@ -110,7 +111,7 @@ public class Order extends TaggedObject {
         return food;
     }
 
-    public void setDeliveryman(Deliveryman newDeliveryman) {
+    public void setDeliveryman(Deliveryman newDeliveryman) throws OrdersLimitExceededException {
         assert(!isAlreadyAssignedDeliveryman());
         deliveryman = newDeliveryman;
         updateStatusOngoing();

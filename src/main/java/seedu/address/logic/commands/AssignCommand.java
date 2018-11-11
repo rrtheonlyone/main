@@ -16,6 +16,7 @@ import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.deliveryman.Deliveryman;
+import seedu.address.model.deliveryman.exceptions.OrdersLimitExceededException;
 import seedu.address.model.order.Order;
 
 /**
@@ -79,7 +80,11 @@ public class AssignCommand extends Command {
 
         for (Order order : ordersToAdd) {
             Order updatedOrder = new Order(order);
-            updatedOrder.setDeliveryman(assignedDeliveryman);
+            try {
+                updatedOrder.setDeliveryman(assignedDeliveryman);
+            } catch (OrdersLimitExceededException e) {
+                throw new CommandException(Messages.MESSAGE_ORDERS_LIMIT_EXCEEDED);
+            }
             model.updateOrder(order, updatedOrder);
         }
 
