@@ -5,8 +5,6 @@ import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailur
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
 import static seedu.address.logic.parser.deliveryman.DeliverymanFindCommandParser.MESSAGE_EMPTY_NAME_FIELD;
 
-import java.util.Arrays;
-
 import org.junit.Test;
 
 import seedu.address.logic.commands.deliveryman.DeliverymanFindCommand;
@@ -34,7 +32,7 @@ public class DeliverymanFindCommandParserTest {
     public void parse_validArgs_returnsFindCommand() {
         // no leading and trailing whitespaces
         DeliverymanFindCommand expectedFindCommand =
-                new DeliverymanFindCommand(new DeliverymanNameContainsKeywordsPredicate(Arrays.asList("Alex")));
+                new DeliverymanFindCommand(new DeliverymanNameContainsKeywordsPredicate("Alex"));
         assertParseSuccess(parser, " n/Alex", expectedFindCommand);
     }
 }

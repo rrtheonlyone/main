@@ -189,8 +189,8 @@ public class CommandTestUtil {
         assertTrue(targetIndex.getZeroBased() < model.getFilteredDeliverymenList().size());
 
         Deliveryman deliveryman = model.getFilteredDeliverymenList().get(targetIndex.getZeroBased());
-        final String[] splitName = deliveryman.getName().fullName.split("\\s+");
-        model.updateFilteredDeliverymenList(new DeliverymanNameContainsKeywordsPredicate(Arrays.asList(splitName[0])));
+        final String name = deliveryman.getName().fullName;
+        model.updateFilteredDeliverymenList(new DeliverymanNameContainsKeywordsPredicate(name));
 
         assertEquals(1, model.getFilteredDeliverymenList().size());
     }

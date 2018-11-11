@@ -6,8 +6,6 @@ import static org.junit.Assert.assertTrue;
 import static seedu.address.commons.core.Messages.MESSAGE_DELIVERYMEN_LISTED_OVERVIEW;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.testutil.TypicalDeliverymen.CHIKAO;
-import static seedu.address.testutil.TypicalDeliverymen.MANIKA;
-import static seedu.address.testutil.TypicalDeliverymen.RAJUL;
 import static seedu.address.testutil.TypicalDeliverymen.getTypicalDeliverymenList;
 import static seedu.address.testutil.TypicalOrders.getTypicalOrderBook;
 import static seedu.address.testutil.user.TypicalUsers.getTypicalUsersList;
@@ -37,9 +35,9 @@ public class DeliverymanFindCommandTest {
     @Test
     public void equals() {
         DeliverymanNameContainsKeywordsPredicate firstPredicate =
-                new DeliverymanNameContainsKeywordsPredicate(Collections.singletonList("first"));
+                new DeliverymanNameContainsKeywordsPredicate("first");
         DeliverymanNameContainsKeywordsPredicate secondPredicate =
-                new DeliverymanNameContainsKeywordsPredicate(Collections.singletonList("second"));
+                new DeliverymanNameContainsKeywordsPredicate("second");
 
         DeliverymanFindCommand findFirstOrderCommand = new DeliverymanFindCommand(firstPredicate);
         DeliverymanFindCommand findSecondOrderCommand = new DeliverymanFindCommand(secondPredicate);
@@ -62,10 +60,10 @@ public class DeliverymanFindCommandTest {
     }
 
     @Test
-    public void execute_zeroKeywords_noDeliverymanFound() {
+    public void execute_invalidKeyword_noDeliverymanFound() {
         String expectedMessage = String.format(MESSAGE_DELIVERYMEN_LISTED_OVERVIEW, 0);
 
-        DeliverymanNameContainsKeywordsPredicate predicate = preparePredicate(" ");
+        DeliverymanNameContainsKeywordsPredicate predicate = new DeliverymanNameContainsKeywordsPredicate("invalid");
         DeliverymanFindCommand commandName = new DeliverymanFindCommand(predicate);
         expectedModel.updateFilteredDeliverymenList(predicate);
         assertCommandSuccess(commandName, model, commandHistory, expectedMessage, expectedModel);
@@ -73,19 +71,22 @@ public class DeliverymanFindCommandTest {
     }
 
     @Test
-    public void execute_multipleKeywords_multipleDeliverymanFound() {
-        String expectedMessage = String.format(MESSAGE_DELIVERYMEN_LISTED_OVERVIEW, 3);
-        DeliverymanNameContainsKeywordsPredicate predicate = preparePredicate("Chi Monuela Rajul");
+    public void execute_exactKeyword_oneDeliverymanFound() {
+        String expectedMessage = String.format(MESSAGE_DELIVERYMEN_LISTED_OVERVIEW, 1);
+        DeliverymanNameContainsKeywordsPredicate predicate = new DeliverymanNameContainsKeywordsPredicate("Chi Kao");
         DeliverymanFindCommand command = new DeliverymanFindCommand(predicate);
         expectedModel.updateFilteredDeliverymenList(predicate);
         assertCommandSuccess(command, model, commandHistory, expectedMessage, expectedModel);
-        assertEquals(Arrays.asList(CHIKAO, MANIKA, RAJUL), model.getFilteredDeliverymenList());
+        assertEquals(Arrays.asList(CHIKAO), model.getFilteredDeliverymenList());
     }
 
-    /**
-     * Parses {@code userInput} into a {@code NameContainsKeywordsPredicate}.
-     */
-    private DeliverymanNameContainsKeywordsPredicate preparePredicate(String userInput) {
-        return new DeliverymanNameContainsKeywordsPredicate(Arrays.asList(userInput.split("\\s+")));
+    @Test
+    public void execute_partialKeyword_oneDeliverymanFound() {
+        String expectedMessage = String.format(MESSAGE_DELIVERYMEN_LISTED_OVERVIEW, 1);
+        DeliverymanNameContainsKeywordsPredicate predicate = new DeliverymanNameContainsKeywordsPredicate("Chi");
+        DeliverymanFindCommand command = new DeliverymanFindCommand(predicate);
+        expectedModel.updateFilteredDeliverymenList(predicate);
+        assertCommandSuccess(command, model, commandHistory, expectedMessage, expectedModel);
+        assertEquals(Arrays.asList(CHIKAO), model.getFilteredDeliverymenList());
     }
 }
