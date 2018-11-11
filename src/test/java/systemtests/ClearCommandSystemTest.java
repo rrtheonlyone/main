@@ -74,7 +74,7 @@ public class ClearCommandSystemTest extends OrderBookSystemTest {
      * box displays {@code expectedResultMessage} and the model related components equal to the current model.
      * These verifications are done by
      * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
-     * Also verifies that the browser url, selected card and status bar remain unchanged, and the command box has the
+     * Also verifies that the browser url and status bar remain unchanged, and the command box has the
      * error style.
      *
      * @see OrderBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
@@ -84,7 +84,6 @@ public class ClearCommandSystemTest extends OrderBookSystemTest {
 
         executeCommand(command);
         assertApplicationDisplaysExpected(command, expectedResultMessage, expectedModel);
-        assertSelectedCardUnchanged();
         assertCommandBoxShowsErrorStyle();
         assertStatusBarUnchanged();
     }
