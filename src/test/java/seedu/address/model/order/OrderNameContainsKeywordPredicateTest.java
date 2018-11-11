@@ -3,10 +3,6 @@ package seedu.address.model.order;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-
 import org.junit.Test;
 
 import seedu.address.testutil.OrderBuilder;
@@ -14,20 +10,20 @@ import seedu.address.testutil.OrderBuilder;
 public class OrderNameContainsKeywordPredicateTest {
     @Test
     public void equals() {
-        List<String> firstPredicateKeywordList = Collections.singletonList("first");
-        List<String> secondPredicateKeywordList = Arrays.asList("first", "second");
+        String firstPredicateKeyword = "first";
+        String secondPredicateKeyword = "second";
 
         OrderNameContainsKeywordPredicate firstPredicate =
-                new OrderNameContainsKeywordPredicate(firstPredicateKeywordList);
+                new OrderNameContainsKeywordPredicate(firstPredicateKeyword);
         OrderNameContainsKeywordPredicate secondPredicate =
-                new OrderNameContainsKeywordPredicate(secondPredicateKeywordList);
+                new OrderNameContainsKeywordPredicate(secondPredicateKeyword);
 
         // same object -> returns true
         assertTrue(firstPredicate.equals(firstPredicate));
 
         // same values -> returns true
         OrderNameContainsKeywordPredicate firstPredicateCopy =
-                new OrderNameContainsKeywordPredicate(firstPredicateKeywordList);
+                new OrderNameContainsKeywordPredicate(firstPredicateKeyword);
         assertTrue(firstPredicate.equals(firstPredicateCopy));
 
         // different types -> returns false
@@ -44,26 +40,26 @@ public class OrderNameContainsKeywordPredicateTest {
     public void test_nameContainsKeywords_returnsTrue() {
         // One keyword
         OrderNameContainsKeywordPredicate predicate =
-                new OrderNameContainsKeywordPredicate(Collections.singletonList("Alice"));
+                new OrderNameContainsKeywordPredicate("Alice");
         assertTrue(predicate.test(new OrderBuilder().withName("Alice Bob").build()));
 
-        // Multiple keywords
-        predicate = new OrderNameContainsKeywordPredicate(Arrays.asList("Alice", "Bob"));
+        // Keyword match 2 word
+        predicate = new OrderNameContainsKeywordPredicate("Bob");
         assertTrue(predicate.test(new OrderBuilder().withName("Alice Bob").build()));
 
-        // Only one matching keyword
-        predicate = new OrderNameContainsKeywordPredicate(Arrays.asList("Bob", "Carol"));
+        // Partial Match
+        predicate = new OrderNameContainsKeywordPredicate("Ali");
         assertTrue(predicate.test(new OrderBuilder().withName("Alice Carol").build()));
 
         // Mixed-case keywords
-        predicate = new OrderNameContainsKeywordPredicate(Arrays.asList("aLIce", "bOB"));
+        predicate = new OrderNameContainsKeywordPredicate("aLIce bOB");
         assertTrue(predicate.test(new OrderBuilder().withName("Alice Bob").build()));
     }
 
     @Test
     public void test_nameDoesNotContainKeywords_returnsFalse() {
         // Non-matching keyword
-        OrderNameContainsKeywordPredicate predicate = new OrderNameContainsKeywordPredicate(Arrays.asList("Carol"));
+        OrderNameContainsKeywordPredicate predicate = new OrderNameContainsKeywordPredicate("Carol");
         assertFalse(predicate.test(new OrderBuilder().withName("Alice Bob").build()));
     }
 }

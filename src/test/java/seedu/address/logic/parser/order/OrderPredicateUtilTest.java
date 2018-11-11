@@ -8,8 +8,6 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_STATUS;
 
-import java.util.Collections;
-import java.util.List;
 import java.util.function.Predicate;
 
 import org.junit.Test;
@@ -32,7 +30,7 @@ public class OrderPredicateUtilTest {
 
     @Test
     public void test_singleValidPredicate_returnsTrue() throws ParseException {
-        List<String> name = Collections.singletonList("alex");
+        String name = "alex";
         Predicate<Order> expectedPredicate = new OrderNameContainsKeywordPredicate(name);
 
         ArgumentMultimap argMultimap = tokenizeInput(" n/alex");

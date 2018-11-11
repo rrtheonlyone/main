@@ -36,7 +36,7 @@ public class FindCommandParserTest {
     @Test
     public void parse_validArgs_returnsFindCommand() {
         FindCommand expectedNameFindCommand =
-                new FindCommand(new OrderNameContainsKeywordPredicate(Arrays.asList("Alex")));
+                new FindCommand(new OrderNameContainsKeywordPredicate("Alex"));
         assertParseSuccess(parser, " n/Alex", expectedNameFindCommand);
 
         FindCommand expectedPhoneFindCommand =

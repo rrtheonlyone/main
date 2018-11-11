@@ -73,9 +73,11 @@ public class OrderCommandParserTest {
     @Test
     public void parse_find() throws Exception {
         List<String> keywords = Arrays.asList("foo", "bar", "baz");
+        String searchKeyword = keywords.stream().collect(Collectors.joining(" "));
+
         FindCommand command = (FindCommand) parser.parse(
-                FindCommand.COMMAND_WORD + " n/" + keywords.stream().collect(Collectors.joining(" ")));
-        assertEquals(new FindCommand(new OrderNameContainsKeywordPredicate(keywords)), command);
+                FindCommand.COMMAND_WORD + " n/" + searchKeyword);
+        assertEquals(new FindCommand(new OrderNameContainsKeywordPredicate(searchKeyword)), command);
     }
 
     @Test

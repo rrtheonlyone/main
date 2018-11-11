@@ -78,9 +78,7 @@ public class OrderPredicateUtil {
         switch (prefix.toString()) {
         case STRING_PREFIX_NAME:
             String name = getLastValueFromList(keywords);
-            String[] nameKeywords = trimAndSplitStringByWhiteSpaces(name);
-            OrderNameContainsKeywordPredicate namePredicate =
-                    new OrderNameContainsKeywordPredicate(Arrays.asList(nameKeywords));
+            OrderNameContainsKeywordPredicate namePredicate = new OrderNameContainsKeywordPredicate(name);
 
             setToPredicate(namePredicate);
 

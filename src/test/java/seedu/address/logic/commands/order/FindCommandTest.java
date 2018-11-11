@@ -52,9 +52,9 @@ public class FindCommandTest {
     @Test
     public void equals() {
         Predicate<Order> firstPredicate =
-                new OrderNameContainsKeywordPredicate(Collections.singletonList("first"));
+                new OrderNameContainsKeywordPredicate("first");
         Predicate<Order> secondPredicate =
-                new OrderNameContainsKeywordPredicate(Collections.singletonList("second"));
+                new OrderNameContainsKeywordPredicate("second");
 
         FindCommand findFirstOrderCommand = new FindCommand(firstPredicate);
         FindCommand findSecondOrderCommand = new FindCommand(secondPredicate);
@@ -99,7 +99,7 @@ public class FindCommandTest {
     @Test
     public void execute_singlePrefixMultipleKeywords_multipleOrdersFound() throws ParseException {
         String expectedMessage = String.format(MESSAGE_ORDERS_LISTED_OVERVIEW, 2);
-        Predicate<Order> predicate = preparePredicate(" n/alice carl");
+        Predicate<Order> predicate = preparePredicate(" p/9435 9535");
         FindCommand command = new FindCommand(predicate);
         expectedModel.updateFilteredOrderList(predicate);
         assertCommandSuccess(command, model, commandHistory, expectedMessage, expectedModel);
@@ -124,16 +124,6 @@ public class FindCommandTest {
         expectedModel.updateFilteredOrderList(predicate);
         assertCommandSuccess(command, model, commandHistory, expectedMessage, expectedModel);
         assertEquals(Collections.emptyList(), model.getFilteredOrderList());
-    }
-
-    @Test
-    public void execute_multiplePrefixMultipleKeywords_multipleOrdersFound() throws ParseException {
-        String expectedMessage = String.format(MESSAGE_ORDERS_LISTED_OVERVIEW, 2);
-        Predicate<Order> predicate = preparePredicate(" f/Prata Sandwich dt/01-10-2018 10:00:00");
-        FindCommand command = new FindCommand(predicate);
-        expectedModel.updateFilteredOrderList(predicate);
-        assertCommandSuccess(command, model, commandHistory, expectedMessage, expectedModel);
-        assertEquals(Arrays.asList(ALICE, FIONA), model.getFilteredOrderList());
     }
 
     @Test

@@ -10,20 +10,20 @@ import seedu.address.testutil.OrderBuilder;
 public class OrderFoodContainsKeywordPredicateTest {
     @Test
     public void equals() {
-        String firstPredicateKeywordList = "first";
-        String secondPredicateKeywordList = "second";
+        String firstPredicateKeyword = "first";
+        String secondPredicateKeyword = "second";
 
         OrderFoodContainsKeywordPredicate firstPredicate =
-                new OrderFoodContainsKeywordPredicate(firstPredicateKeywordList);
+                new OrderFoodContainsKeywordPredicate(firstPredicateKeyword);
         OrderFoodContainsKeywordPredicate secondPredicate =
-                new OrderFoodContainsKeywordPredicate(secondPredicateKeywordList);
+                new OrderFoodContainsKeywordPredicate(secondPredicateKeyword);
 
         // Same object -> returns true
         assertTrue(firstPredicate.equals(firstPredicate));
 
         // Same values -> returns true
         OrderFoodContainsKeywordPredicate firstPredicateCopy =
-                new OrderFoodContainsKeywordPredicate(firstPredicateKeywordList);
+                new OrderFoodContainsKeywordPredicate(firstPredicateKeyword);
         assertTrue(firstPredicate.equals(firstPredicateCopy));
 
         // Different types -> returns false
