@@ -7,13 +7,13 @@
 <VBox fx:id="deliverymanPO" prefHeight="200.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/10.0.1"
       xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Label fx:id="namePO" prefHeight="30.0" prefWidth="300.0" text="Label" />
-      <Label fx:id="phonePO" prefHeight="30.0" prefWidth="300.0" text="Label" />
+      <Label fx:id="nameP" prefHeight="30.0" prefWidth="300.0" text="Label" />
+      <Label fx:id="phoneP" prefHeight="30.0" prefWidth="300.0" text="Label" />
 
-      <VBox fx:id="textWrapperPO">
-         <Text fx:id="addressPO" wrappingWidth="300" />
+      <VBox fx:id="textWrapperP">
+         <Text fx:id="addressP" wrappingWidth="300" />
       </VBox>
 
-      <Label fx:id="datePO" prefHeight="30.0" prefWidth="300.0" text="Label" />
+      <Label fx:id="dateP" prefHeight="30.0" prefWidth="300.0" text="Label" />
    </children>
 </VBox>
