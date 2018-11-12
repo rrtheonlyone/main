@@ -322,13 +322,13 @@ incorrect behavior.
 The dashboard for this application is the main screen that the user first sees when he or
 she logs into the application. It looks like this:
 
-image::Ui.png[width="790"]
+image::Ui.png[width="400"]
 Figure 3.2.1.1 Main Screen showing the dashboard with the Map and Statistics Panel
 
 The 2 main components in the dashboard are the:
 
 ..   Map showing location of pending orders
-..   Statistics Panel giving insights of the data
+..   Statistics Panel giving insights for the data
 
 Before delving into the details for these specific components, it is
 important to consider some of the implementation details that are common to both.
@@ -342,7 +342,7 @@ changes and renders the user interface for the dashboard screen. This component 
 a listener to the Observable List of Orders. The following activity diagram summarize
 what happens inside the `Display` Component when a user executes a new command:
 
-image::UIListenerActivityDiagram.png[width="800"]
+image::UIListenerActivityDiagram.png[width="500"]
 Figure 3.2.1.1 Activity Diagram showing what happens inside the `Display` component when a user
 executes a command
 
@@ -372,7 +372,7 @@ data processing is done.
 
 The Map shows the locations of the pending orders.
 
-image::MapPanel.png[width="600"]
+image::MapPanel.png[width="400"]
 Figure 3.2.2.1 A closer look at the Map on the dashboard.
 
 The functionality that the map provides is as follows:
@@ -387,7 +387,7 @@ with the order address to give a *reasonable* approximation of its location in S
 The reason this can be done is because the first 2 digits of a Singapore postal code
 refers to a specific district in Singapore. The demarcation diagram is show below:
 
-image::SingaporeDemarcation.png[width="790"]
+image::SingaporeDemarcation.png[width="600"]
 Figure 3.2.1.2 Diagram to illustrate how the regions are split up in Singapore. Each of the
 regions above corresponds to a specifc postal code tag
 
@@ -404,6 +404,7 @@ This is the component that displays on the dashboard. This component creates and
 updates the placeholders on the map based on the information that it is provided. The component
 has no knowledge of changes to the list of orders. Instead, it exposes 2 methods, `initialise`
 and `clear` that is used by the higher-order component to update the placeholders.
+// end::dashboard[]
 
 The code snippet for the initialisation of the placeholders is shown below. Further details on
 the data passed in is given below.
@@ -431,7 +432,7 @@ public void initialise(HashMap<String, Integer> orderMap) {
     }
 }
 ```
-
+// tag::dashboard2[]
 **A Hashtable (Java `HashMap`) that maps the first two digits of the postal
 code to a specific coordinate on the grid**
 
@@ -463,7 +464,7 @@ of orders without relying on any internet connection.
 
 Another aspect for the dashboard is the statistics panel.
 
-image::StatisticsPanel.png[width="400"]
+image::StatisticsPanel.png[width="250"]
 Figure 3.2.3.1 A closer look at the statistics panel in the dashboard
 
 The statistics panel has four key indicators:
@@ -480,7 +481,7 @@ to the `MapPanel` that allow data to be initialized and cleared.
 The data that is passed in to the `StatisticsPanel` along with the techniques employed to
 process the data is further elaborated on in the table below:
 
-[width="59%",cols="",options="header",]
+[width="90%",cols="",options="header",]
 |=======================================================================
 |Statistic                    |Data Structure  | Technique
 | Total Orders                | Variable       | Count the orders in the list
@@ -550,7 +551,7 @@ just Singapore).
 application to work. This would also introduce more overhead to the code e.g
 there is now a need to check for internet connection and render loaders so
 that the user experience is not affected.
-// end::dashboard[]
+// end::dashboard2[]
 
 // tag::orderAdd[]
 === Add Order Feature
@@ -1591,6 +1592,63 @@ Expected: Successfully sign up for account. Application will automatically logge
 ... Test case: Different name, same username and same password +
 Command: `/signup n/Alicepauline u/alicepauline pw/alicepauline01` +
 Expected: Fail to sign up. User already exist within the application.
+
+=== Adding an Order
+.. Prerequisites: Logged into the application. An order with name "John Lee", phone "98765432" and date "20-10-2018
+00:00:00" does not already exist. To check, type `/order list` to see all existing order.
+
+... Test case: `/order add n/John Lee p/98765432 a/311, Clementi Ave 2, #02-25, 612344 f/Roti Prata f/Ice Milo
+dt/20-10-2018 00:00:00` +
+    Expected: A new order with the above details is added to the list. The command box should reflect this accordingly
+    with the message "New order added: " + <details of order>. The map should show a new placeholder (or an existing
+    placeholder will increase in size). Timestamp in the status bar is updated.
+
+... Test case: `/order add n/John Lee p/98765432 a/311, Clementi Ave 2, #02-25, 612344 f/Roti Prata f/Ice Milo
+dt/21-10-2018 00:00:00` +
+    Expected: A new order with the above details is added to the list. The command box should reflect this accordingly
+             with the message "New order added: " + <details of order>. The map should show a new placeholder (or an
+             existing placeholder will increase in size) that gives an approximation of location. Timestamp in the
+             status bar is updated.
+
+... Test case: `/order add n/John Lee p/98765432 a/311, Clementi Ave 2, #02-25, 612344 f/Roti Prata f/Ice Milo
+                dt/32-10-2018 00:00:00` +
+    Expected: No order is added. Error details shown in the status message (invalid date). Status bar remains the same.
+
+... Test case: `/order add n/John Lee p/98765432 a/311, Clementi Ave 2, #02-25, 612344 dt/32-10-2018 00:00:00` +
+    Expected: No order is added. Error details shown in the status message (no food). Status bar remains the same.
+
+... Test case: `/order add n/John Lee n/John Roe p/98765432 a/311, Clementi Ave 2, #02-25, 612344 f/Roti Prata f/Ice
+Milo dt/30-10-2018 00:00:05` +
+    Expected: A new order with the above details is added to the list. The name is taken as the last name given which
+     is John Roe. The command box should reflect this accordingly
+           with the message "New order added: " + <details of order>. The map should show a new placeholder (or an
+            existing placeholder will increase in size) that gives an approximation of location. Timestamp in the
+            status bar is updated.
+
+... Test case: `/order add n/John Lee n/John Roe p/98765432 a/311, Clementi Ave 2, #02-25, 54612344 f/Roti Prata f/Ice
+Milo dt/30-10-2018 00:00:01` +
+    Expected: A new order with the above details is added to the list. The command box should reflect this accordingly
+           with the message "New order added: " + <details of order>. The map should show a new placeholder (or an
+            existing placeholder will increase in size) that gives an approximation of location. The location will
+            point to postal code `612344` as only last six digits are considered. Timestamp in the
+            status bar is updated.
+
+
+.. Prerequisites: An order with name "John Lee", phone "98765432" and date "20-10-2018
+                  00:00:00" already exists
+... Test case: `/order add n/John Lee p/98765432 a/311, Clementi Ave 2, #02-25, 612344 f/Roti Prata f/Ice Milo dt/20-10-2018 00:00:00` +
+    Expected: No order is added. Error details shown in the status message (duplicate order). Status bar remains the
+    same.
+
+
+=== Selecting order
+.. Prerequisites: There is at least 1 order being displayed in the list.
+
+... Test case: `/order select 1` +
+    Expected: The selected order would be displayed on the display panel.
+
+... Test case: `/order select 0` +
+    Expected: No order would be selected and displayed as this is an invalid index.
 
 === Finding order/s
 . Finding order by name, phone or food
