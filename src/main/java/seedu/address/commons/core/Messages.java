@@ -1,5 +1,7 @@
 package seedu.address.commons.core;
 
+import static seedu.address.model.deliveryman.Deliveryman.ORDERS_LIMIT;
+
 /**
  * Container for user visible messages.
  */
@@ -27,5 +29,6 @@ public class Messages {
     public static final String MESSAGE_ORDER_ONGOING_CANNOT_CLEAR = "There is at least one ongoing order in the list, "
             + "order list cannot be cleared.";
     public static final String MESSAGE_REQUIRE_LOGIN = "Please login first!";
-
+    public static final String MESSAGE_ORDERS_LIMIT_EXCEEDED = String.format(
+        "You cannot assign more than %1$d orders to a deliveryman.", ORDERS_LIMIT);
 }

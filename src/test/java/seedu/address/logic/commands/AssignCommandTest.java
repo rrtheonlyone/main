@@ -55,7 +55,7 @@ public class AssignCommandTest {
     }
 
     @Test
-    public void execute_orderAssignedToDeliveryman_successful() {
+    public void execute_orderAssignedToDeliveryman_successful() throws Exception {
         Set<Order> ordersToAdd = new HashSet<>();
         Order toAssign = new Order(validOrder);
         ordersToAdd.add(toAssign);
@@ -99,6 +99,21 @@ public class AssignCommandTest {
 
         thrown.expect(CommandException.class);
         thrown.expectMessage(Messages.MESSAGE_INVALID_DELIVERYMAN_DISPLAYED_INDEX);
+        assignCommand.execute(model, commandHistory);
+    }
+
+    @Test
+    public void execute_tooManyOrders_throwsCommandException() throws Exception {
+        Set<Index> orderIds = new HashSet<>();
+        for (int i = 0; i < model.getFilteredOrderList().size(); i++) {
+            if (!model.getFilteredOrderList().get(i).isCompleted()) {
+                orderIds.add(Index.fromZeroBased(i));
+            }
+        }
+        AssignCommand assignCommand = new AssignCommand(validDeliverymanIndex, orderIds);
+
+        thrown.expect(CommandException.class);
+        thrown.expectMessage(Messages.MESSAGE_ORDERS_LIMIT_EXCEEDED);
         assignCommand.execute(model, commandHistory);
     }
 
