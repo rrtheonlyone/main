@@ -184,7 +184,8 @@ designed to work offline and give you a rough gauge of where your orders are
 * This dashboard dynamically updates itself when the order list is changed
 ****
 
-Once the command is executed, you will be greeted with a screen similar to below (for your order data):
+Once the command is executed, you will be greeted with a screen similar to below (statistics shown will vary based on
+ the data you have):
 
 .Home page for application
 image::UiHome.png[width="400"]
