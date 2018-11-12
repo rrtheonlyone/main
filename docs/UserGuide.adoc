@@ -177,7 +177,7 @@ Format: `/logout`
 // tag::home[]
 === Return to Home Page : `/home` `[Since v1.3]`
 
-If any selection is done, allows you to return back to the home page with the dashboard
+If any selection is done, allows you to return back to the home page with the dashboard +
 Format: `/home`
 
 ****
