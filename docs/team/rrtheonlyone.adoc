@@ -1,23 +1,22 @@
 = Rahul Rajesh - Project Portfolio
 :imagesDir: ../images
 :stylesDir: ../stylesheets
-== Project: FoodZoom
+
+I am a year 2 Computer Science Student studying at National University of Singapore. I am
+interested in using technology to solve everyday problems and am always on the lookout for
+any challenging project to work with.
 
 ---
+== Project: FoodZoom
 
-I am a year 2 Computer Science Student studying in National University of Singapore. I am
-interested in using technology to solve everyday problems and am always on the lookout for
-any challenging project to work with. This is a portfolio page which serves to document my
-work on FoodZoom.
 
 == Overview
 
-FoodZoom is a food delivery management desktop application for food businesses to streamline their
-delivery process. FoodZoom is responsive and quick as users interact with the application by typing the
-commands (using Command Line Interface). FoodZoom allows managers to plan order delivery routes and
-dispatch them to deliverymen available. FoodZoom is built by a team of five.
+FoodZoom is a desktop application for food businesses to streamline their delivery process. FoodZoom's core
+functionality is that it allows for managers to keep track of the food orders they have from
+customers and send out deliverymen to handle those orders. FoodZoom is also able to show orders on a map and
+provide relevant statistics to the user. The application was built by a team of 5 computer science students.
 
-image::Ui.png[width="800"]
 
 == Summary of Contribution
 
@@ -25,47 +24,52 @@ image::Ui.png[width="800"]
 |===
 |Given below are contributions that I made to this application.
 |===
+--
+* *Major enhancement:* Built the system that allows for the *generation of statistics* and *location-based matching*
+based off the provided data (Pull Request
+https://github.com/CS2103-AY1819S1-T16-3/main/pull/102[#102],
+https://github.com/CS2103-AY1819S1-T16-3/main/pull/121[#121])
 
-* *Major enhancements*:
+** What it does: The main screen consists of a map and a dashboard. The map is able to show the number of pending
+orders at a region. The dashboard shows statistics like the most popular food item and the order history
 
-- Added Functionality to do location-based matching of orders on a map:.
+** Justification: Users of this application can track where their pending orders are in one glance. Orders in the
+same region can now be dispatched to the same deliveryman. Users can also use the generated statistics to improve their
+profits and improve the overall experience they can provide to their customers
 
-** What it does: All pending orders are displayed on the map. This map is able to update itself when
-the order list is changed.
+* *Major enhancement:* Completely *revamped* and *redesigned* the User Interface (UI) for the application
+(Pull Request
+https://github.com/CS2103-AY1819S1-T16-3/main/pull/102[#73],
+https://github.com/CS2103-AY1819S1-T16-3/main/pull/128[#128],
+https://github.com/CS2103-AY1819S1-T16-3/main/pull/171[#171]
+https://github.com/CS2103-AY1819S1-T16-3/main/pull/183[#183])
 
-** Justification: This is one of the code features of the application. Managers using the application can now
-track where their pending orders are in one glance. It allows for efficient dispatch of the respective orders to
-the deliverymen involved. It works without internet and has no reliance on any external service.
+** What it does: Users of this application have a visually appealing interface. They are able to view
+the status of their orders, available deliverymen and key insights for their data all in one screen.
 
-** Highlights: The order location is calculated from the postal code given in the address. The size of the
-               placeholder indicates how many orders they are in a particular location.
+** Justification: The UI is minimalistic and was designed with the end-user in mind. There is only one screen that
+the user uses at all times and all essential details are on that screen. The UI updates itself based on the
+actions of the user e.g. the map/dashboard will dynamically update when there is a change.
 
-- Designed the dashboard that gives key insights based on the patterns of orders that come in:
-
-** What it does: Dashboard on the application that dynamically changes when the order list is filtered or
-                 viewed. It shows pending orders and order history for the week.
-
-** Justification: The feature allows for managers to gather insights on their business. They can see what are
-                  their most trending food items and peruse their order history for the week.
-
-** Highlights: The data is collected based on the available orders in the application. The data dynamically updates
-itself when the list is filtered or adjusted.
-
+--
 
 * *Minor enhancements*:
 
-** Enhanced and came up with the User Interface for the application
-** Added essential fields such as address and date to order model.
-** Came up with `/home` command to return to the dashboard panel
-** Various Bug Fixes
+** Added essential fields such as address and date to order model
+(https://github.com/CS2103-AY1819S1-T16-3/main/pull/37[#37],
+https://github.com/CS2103-AY1819S1-T16-3/main/pull/37[#99]).
+** Came up with `/home` command to return to the dashboard panel (https://github.com/CS2103-AY1819S1-T16-3/main/pull/123[#123])
+** Various Bug Fixes (https://github.com/CS2103-AY1819S1-T16-3/main/pull/101[#101],
+https://github.com/CS2103-AY1819S1-T16-3/main/pull/101[#125],
+https://github.com/CS2103-AY1819S1-T16-3/main/pull/185[#185])
 
 * *Code contributions*: https://nus-cs2103-ay1819s1.github.io/cs2103-dashboard/#=undefined&search=rrtheonlyone[RepoSense]
 
 * *Other contributions*:
 
 ** Project management:
-*** Initiated launch of new features (dashboard/better find etc.)
-*** Guide team members on existing practices
+*** Initiated launch of new features (dashboard/improved find etc.)
+*** Guided team members on existing practices
 *** Helped with the issue tracking using labels and assignees on Github.
 
 ** Documentation:
@@ -73,7 +77,15 @@ itself when the list is filtered or adjusted.
 
 ** Community:
 *** Review pull requests weekly (https://github.com/CS2103-AY1819S1-T16-3/main/pulls?utf8=%E2%9C%93&q=is%3Apr+reviewed-by%3Arrtheonlyone[see here])
-*** Reported bugs and gave suggestions for other members's project
+*** Reported bugs and gave suggestions for other members's project (
+Issue https://github.com/CS2103-AY1819S1-T09-2/main/issues/221[#213],
+https://github.com/CS2103-AY1819S1-T09-2/main/issues/221[#216],
+https://github.com/CS2103-AY1819S1-T09-2/main/issues/221[#221],
+https://github.com/CS2103-AY1819S1-T09-2/main/issues/225[#225],
+https://github.com/CS2103-AY1819S1-T09-2/main/issues/226[#226],
+https://github.com/CS2103-AY1819S1-T09-2/main/issues/230[#230],
+https://github.com/CS2103-AY1819S1-T09-2/main/issues/236[#236]
+)
 
 == Contributions to User Guide
 |===
@@ -93,4 +105,5 @@ include::../UserGuide.adoc[tag=orderAdd]
 
 include::../DeveloperGuide.adoc[tag=dashboard]
 
-include::../DeveloperGuide.adoc[tag=orderAdd]
+include::../DeveloperGuide.adoc[tag=dashboard2]
+

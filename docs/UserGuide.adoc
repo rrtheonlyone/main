@@ -184,8 +184,19 @@ Format: `/home`
 * Renders a bar graph which shows the order history (limited to the latest 7 orders by date)
 * Shows a map - the map gives a reasonable *estimate* for the locations of the pending orders. It is
 designed to work offline and give you a rough gauge of where your orders are
-* This dashboard dynamically updates itself when the order list is changed (try /order find!)
+* This dashboard dynamically updates itself when the order list is changed
 ****
+
+Once the command is executed, you will be greeted with a screen similar to below (statistics shown will vary based on
+ the data you have):
+
+.Home page for application
+image::UiHome.png[width="400"]
+
+The screen consists of a map showing your pending orders and a statistics panel. The size of the
+placeholder is indicative of how many orders they are in a region. You can observe these
+components change when carrying out some of the other commands in the application! (try `/order find`)
+
 // end::home[]
 
 // tag::orderAdd[]
@@ -198,7 +209,7 @@ Format: `/order add f/FOOD n/NAME p/PHONE a/ADDRESS dt/DATETIME`
 * Able to add more than 1 food items by specifying more food tags. e.g. `f/Roti Prata f/Ice Milo`.
 * Address must be a valid address that exists in Singapore to be displayed on the map.
 * If the postal code is longer than 6 digits, much like any other field, only the *last 6 digits* will be taken into
-consideration
+consideration for approximating the location
 * The manager is able to add dates from any time period as long as it is valid.
 * Two orders are considered the same if they have the same name, phone, and date time.
 ****

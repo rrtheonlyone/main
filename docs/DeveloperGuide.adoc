@@ -322,13 +322,13 @@ incorrect behavior.
 The dashboard for this application is the main screen that the user first sees when he or
 she logs into the application. It looks like this:
 
-image::Ui.png[width="790"]
+image::Ui.png[width="400"]
 Figure 3.2.1.1 Main Screen showing the dashboard with the Map and Statistics Panel
 
 The 2 main components in the dashboard are the:
 
 ..   Map showing location of pending orders
-..   Statistics Panel giving insights of the data
+..   Statistics Panel giving insights for the data
 
 Before delving into the details for these specific components, it is
 important to consider some of the implementation details that are common to both.
@@ -342,7 +342,7 @@ changes and renders the user interface for the dashboard screen. This component 
 a listener to the Observable List of Orders. The following activity diagram summarize
 what happens inside the `Display` Component when a user executes a new command:
 
-image::UIListenerActivityDiagram.png[width="800"]
+image::UIListenerActivityDiagram.png[width="500"]
 Figure 3.2.1.1 Activity Diagram showing what happens inside the `Display` component when a user
 executes a command
 
@@ -372,7 +372,7 @@ data processing is done.
 
 The Map shows the locations of the pending orders.
 
-image::MapPanel.png[width="600"]
+image::MapPanel.png[width="400"]
 Figure 3.2.2.1 A closer look at the Map on the dashboard.
 
 The functionality that the map provides is as follows:
@@ -387,7 +387,7 @@ with the order address to give a *reasonable* approximation of its location in S
 The reason this can be done is because the first 2 digits of a Singapore postal code
 refers to a specific district in Singapore. The demarcation diagram is show below:
 
-image::SingaporeDemarcation.png[width="790"]
+image::SingaporeDemarcation.png[width="500"]
 Figure 3.2.1.2 Diagram to illustrate how the regions are split up in Singapore. Each of the
 regions above corresponds to a specifc postal code tag
 
@@ -404,6 +404,7 @@ This is the component that displays on the dashboard. This component creates and
 updates the placeholders on the map based on the information that it is provided. The component
 has no knowledge of changes to the list of orders. Instead, it exposes 2 methods, `initialise`
 and `clear` that is used by the higher-order component to update the placeholders.
+// end::dashboard[]
 
 The code snippet for the initialisation of the placeholders is shown below. Further details on
 the data passed in is given below.
@@ -431,7 +432,7 @@ public void initialise(HashMap<String, Integer> orderMap) {
     }
 }
 ```
-
+// tag::dashboard2[]
 **A Hashtable (Java `HashMap`) that maps the first two digits of the postal
 code to a specific coordinate on the grid**
 
@@ -463,7 +464,7 @@ of orders without relying on any internet connection.
 
 Another aspect for the dashboard is the statistics panel.
 
-image::StatisticsPanel.png[width="400"]
+image::StatisticsPanel.png[width="250"]
 Figure 3.2.3.1 A closer look at the statistics panel in the dashboard
 
 The statistics panel has four key indicators:
@@ -480,7 +481,7 @@ to the `MapPanel` that allow data to be initialized and cleared.
 The data that is passed in to the `StatisticsPanel` along with the techniques employed to
 process the data is further elaborated on in the table below:
 
-[width="59%",cols="",options="header",]
+[width="90%",cols="",options="header",]
 |=======================================================================
 |Statistic                    |Data Structure  | Technique
 | Total Orders                | Variable       | Count the orders in the list
@@ -550,7 +551,7 @@ just Singapore).
 application to work. This would also introduce more overhead to the code e.g
 there is now a need to check for internet connection and render loaders so
 that the user experience is not affected.
-// end::dashboard[]
+// end::dashboard2[]
 
 // tag::orderAdd[]
 === Add Order Feature
@@ -1592,9 +1593,66 @@ Expected: Successfully sign up for account. Application will automatically logge
 Command: `/signup n/Alicepauline u/alicepauline pw/alicepauline01` +
 Expected: Fail to sign up. User already exist within the application.
 
+=== Adding an Order
+.. Prerequisites: Logged into the application. An order with name "John Lee", phone "98765432" and date "20-10-2018
+00:00:00" does not already exist. To check, type `/order list` to see all existing order.
+
+... Test case: `/order add n/John Lee p/98765432 a/311, Clementi Ave 2, #02-25, 612344 f/Roti Prata f/Ice Milo
+dt/20-10-2018 00:00:00` +
+    Expected: A new order with the above details is added to the list. The command box should reflect this accordingly
+    with the message "New order added: " + <details of order>. The map should show a new placeholder (or an existing
+    placeholder will increase in size). Timestamp in the status bar is updated.
+
+... Test case: `/order add n/John Lee p/98765432 a/311, Clementi Ave 2, #02-25, 612344 f/Roti Prata f/Ice Milo
+dt/21-10-2018 00:00:00` +
+    Expected: A new order with the above details is added to the list. The command box should reflect this accordingly
+             with the message "New order added: " + <details of order>. The map should show a new placeholder (or an
+             existing placeholder will increase in size) that gives an approximation of location. Timestamp in the
+             status bar is updated.
+
+... Test case: `/order add n/John Lee p/98765432 a/311, Clementi Ave 2, #02-25, 612344 f/Roti Prata f/Ice Milo
+                dt/32-10-2018 00:00:00` +
+    Expected: No order is added. Error details shown in the status message (invalid date). Status bar remains the same.
+
+... Test case: `/order add n/John Lee p/98765432 a/311, Clementi Ave 2, #02-25, 612344 dt/32-10-2018 00:00:00` +
+    Expected: No order is added. Error details shown in the status message (no food). Status bar remains the same.
+
+... Test case: `/order add n/John Lee n/John Roe p/98765432 a/311, Clementi Ave 2, #02-25, 612344 f/Roti Prata f/Ice
+Milo dt/30-10-2018 00:00:05` +
+    Expected: A new order with the above details is added to the list. The name is taken as the last name given which
+     is John Roe. The command box should reflect this accordingly
+           with the message "New order added: " + <details of order>. The map should show a new placeholder (or an
+            existing placeholder will increase in size) that gives an approximation of location. Timestamp in the
+            status bar is updated.
+
+... Test case: `/order add n/John Lee n/John Roe p/98765432 a/311, Clementi Ave 2, #02-25, 54612344 f/Roti Prata f/Ice
+Milo dt/30-10-2018 00:00:01` +
+    Expected: A new order with the above details is added to the list. The command box should reflect this accordingly
+           with the message "New order added: " + <details of order>. The map should show a new placeholder (or an
+            existing placeholder will increase in size) that gives an approximation of location. The location will
+            point to postal code `612344` as only last six digits are considered. Timestamp in the
+            status bar is updated.
+
+
+.. Prerequisites: An order with name "John Lee", phone "98765432" and date "20-10-2018
+                  00:00:00" already exists
+... Test case: `/order add n/John Lee p/98765432 a/311, Clementi Ave 2, #02-25, 612344 f/Roti Prata f/Ice Milo dt/20-10-2018 00:00:00` +
+    Expected: No order is added. Error details shown in the status message (duplicate order). Status bar remains the
+    same.
+
+
+=== Selecting order
+.. Prerequisites: Logged into the application. There is at least 1 order being displayed in the list.
+
+... Test case: `/order select 1` +
+    Expected: The selected order would be displayed on the display panel.
+
+... Test case: `/order select 0` +
+    Expected: No order would be selected and displayed as this is an invalid index.
+
 === Finding order/s
 . Finding order by name, phone or food
-.. Prerequisites: Having at least 1 order.
+.. Prerequisites: Logged into the application. Having at least 1 order.
 .. Test case: Valid name without space +
     Command: `/order find n/Alex` +
     Expected: Order/s with the name `Alex`, `Alexandar` and `Alex Yeoh` is shown on the left panel.
@@ -1608,13 +1666,13 @@ Expected: Fail to sign up. User already exist within the application.
     Expected: Error is shown in the status message. Value cannot be empty.
 
 . Finding order by address
-.. Prerequisites: Having at least 1 order.
+.. Prerequisites: Logged into the application. Having at least 1 order.
 .. Test case: Valid address +
     Command: `/order find a/Blk 10` +
     Expected: Order/s with the address containing `Blk 10` is shown on the left panel.
 
 . Finding order by status
-.. Prerequisites: Having orders in the list with 3 different status
+.. Prerequisites: Logged into the application. Having orders in the list with 3 different status
 .. Test case: Exact Status +
     Command: `/order find st/PENDING` +
     Expected: Order/s with status `PENDING` is shown on the left panel.
@@ -1632,7 +1690,7 @@ Expected: Fail to sign up. User already exist within the application.
     Expected: Error is shown in the status message. Only valid status are allowed.
 
 . Finding order by date
-.. Prerequisites: Having orders added with different dates
+.. Prerequisites: Logged into the application. Having orders added with different dates
 .. Test case: Find with one datetime parameter +
     Command: `/order find dt/01-10-2018 10:00:00` +
     Expected: Order/s with the datetime `01-10-2018 10:00:00` is shown on the left panel.
@@ -1658,14 +1716,15 @@ Expected: Fail to sign up. User already exist within the application.
     Expected: Error is shown in the status message. Date should be a valid date.
 
 . Finding order with more than 1 argument
-.. Prerequisites: Having at least 1 order
+.. Prerequisites: Logged into the application. Having at least 1 order
 .. Test case: Valid name and status value +
     Command: `/order find n/john st/pending` +
     Expected: Order/s with the name `john` and the status `PENDING` is shown on the left panel.
 
 === Editing an order
 . Edit an order while all orders are listed
-.. Prerequisites: List all orders using the `/order list` command. Multiple orders in the list.
+.. Prerequisites: Logged into the application. List all orders using the `/order list` command. Multiple orders in the
+ list.
 ... Test case: Valid arguments +
     Command: `/order edit <order_index> f/Roti Canai` +
     Expected: Food of the order with the `<order_index>` will be overwritten with the food `Roti Canai`
@@ -1677,12 +1736,13 @@ Expected: Fail to sign up. User already exist within the application.
 ... Other incorrect edit commands to try: `/order edit x f/alex` (where x is larger than the list on the left) +
     Expected: Cannot edit as the order index must be a valid index in the list shown on the left.
 
-.. Prerequisites: There is an order with the name `alex`, phone `12345678` and datetime `01-10-2018 10:00:00`
+.. Prerequisites: Logged into the application. There is an order with the name `alex`, phone `12345678` and datetime
+`01-10-2018 10:00:00`
 ... Test case: Edit an order to an existing order in the list +
     Command: `/order edit 1 n/alex p/12345678 dt/01-10-2018 10:00:00` +
     Expected: Cannot edit as an order with the same name, phone and datetime is already in the list of orders.
 
-.. Prerequisites: Have orders that are `Ongoing` or `Completed`
+.. Prerequisites: Logged into the application. Have orders that are `Ongoing` or `Completed`
 ... Test case: Edit an order with status `Ongoing` or `Completed` +
     Command: `/order edit <ongoing_or_completed_order_index> f/tea` +
     Expected: Cannot edit as the order is already assign to a deliveryman.
@@ -1691,7 +1751,8 @@ Expected: Fail to sign up. User already exist within the application.
 
 . Deleting an order while all order are listed
 
-.. Prerequisites: List all orders using the `/order list` command. Multiple orders in the list. The order to be deleted is `Pending` or `Completed`.
+.. Prerequisites: Logged into the application. List all orders using the `/order list` command. Multiple orders in the
+ list. The order to be deleted is `Pending` or `Completed`.
 .. Test case: `/order delete <pending_or_completed_order_index>` +
    Expected: That order is deleted from the list. Details of the deleted order shown in the status message.
    Timestamp in the status bar is updated.
@@ -1700,7 +1761,7 @@ Expected: Fail to sign up. User already exist within the application.
 .. Other incorrect delete commands to try: `/order delete`, `/order delete x` (where x is larger than the list size)
 _{give more}_ +
    Expected: Similar to previous.
-.. Test case: Deleting an `Ongoing` order +
+.. Test case: Logged into the application. Deleting an `Ongoing` order +
    Command: `/order delete o/<ongoing_order_index>`
    Expected: Unable to delete the order because it is already assigned to a deliveryman.
 
@@ -1709,7 +1770,7 @@ _{ more test cases ... }_
 === Mark an order as Completed
 
 . Marking an order as `Completed`
-.. Prerequisites: Already have an `Ongoing` order.
+.. Prerequisites: Logged into the application. Already have an `Ongoing` order.
 ... Test case: Mark an invalid index as completed +
 Command: `/order done 0` +
 Expected: No order is marked as completed. Index have to a positive integer.
@@ -1719,12 +1780,12 @@ Command: `/order done <order_index_of_ongoing_status>` +
 Expected: Order on order list panel is marked as `Completed` and deliveryman is updated (Deliveryman total assigned
 orders will decrease by `1` or become `available`).
 
-.. Prerequisites: Have some `Pending` orders.
+.. Prerequisites: Logged into the application. Have some `Pending` orders.
 ... Test case: Mark a valid index as completed but would fail. +
 Command: `/order done <order_index_of_pending_status>` +
 Expected: Fail to mark the order as `Completed` because only `ongoing` status can be marked as `completed`.
 
-.. Prerequisites: Have some `Completed` orders.
+.. Prerequisites: Logged into the application. Have some `Completed` orders.
 ... Test case: Mark a valid index as completed but would fail. +
 Command: `/order done <order_index_of_completed_status>` +
 Expected: Fail to mark the order as `Completed` because it is already `completed`.
@@ -1733,24 +1794,25 @@ Expected: Fail to mark the order as `Completed` because it is already `completed
 
 . Assigning multiple pending orders to a deliveryman
 
-.. Prerequisite: Have orders that are `Pending`, and a deliveryman +
+.. Prerequisite: Logged into the application. Have orders that are `Pending`, and a deliveryman +
    Test case: Assigning two `Pending` orders to a deliveryman +
    Command: `/assign o/<first_pending_order_index> o/<second_pending_order_index> d/1` +
    Expected: First deliveryman's assigned order count increases by 2, the two orders change status to become `Ongoing`.
 
-.. Prerequisite: Have a deliveryman +
+.. Prerequisite: Logged into the application. Have a deliveryman +
    Test case: Invalid order or deliveryman index +
    Command: `/assign o/0 d/1`, `/assign o/1 d/0` +
    Expected: Cannot assign because the order index is not a non-zero unsigned integer.
 
-.. Prerequisite: Have an `Ongoing` or `Completed` order +
+.. Prerequisite: Logged into the application. Have an `Ongoing` or `Completed` order +
    Test case: Assigning an `Ongoing` or `Completed` order to a deliveryman +
    Command: `/assign o/<ongoing_or_completed_order_index> d/1` +
    Expected: Cannot assign because that order was already assigned to a deliveryman previously.
 
 === Adding deliveryman
 
-.. Prerequisites: Name "John" has not been used for any existing deliverymen. To check, type `/deliveryman list` to see
+.. Prerequisites: Logged into the application. Name "John" has not been used for any existing deliverymen. To check,
+type `/deliveryman list` to see
 all existing deliverymen.
 
 ... Test case: `/deliveryman add n/John` +
@@ -1761,7 +1823,7 @@ all existing deliverymen.
     Expected: No deliveryman is added. Error details shown in the status message - non-alphanumeric characters are not allowed.
     Status bar remains the same.
 
-.. Prerequisites: A deliveryman named "John" exists in the system.
+.. Prerequisites: Logged into the application. A deliveryman named "John" exists in the system.
 
 ... Test case: `/deliveryman add n/John` +
     Expected: No deliveryman is added. Error details shown in the status message.
@@ -1769,7 +1831,8 @@ all existing deliverymen.
 
 === Deleting deliveryman
 
-.. Prerequisites: There is 1 deliveryman being displayed in the list. This deliveryman must not have any orders assigned to him too.
+.. Prerequisites: Logged into the application. There is 1 deliveryman being displayed in the list. This deliveryman
+must not have any orders assigned to him too.
 To achieve this, you can filter deliverymen by name, for example, using the default deliverymen, you can try `/deliveryman find n/Chi Kao`
 
 ... Test case: `/deliveryman delete 0` +
@@ -1781,14 +1844,15 @@ To achieve this, you can filter deliverymen by name, for example, using the defa
 ... Test case: `/deliveryman delete 1` +
     Expected: The deliveryman displayed will be deleted.
 
-.. Prerequisites: There is 1 deliveryman being displayed in the list. This deliveryman has an order assigned to him.
+.. Prerequisites: Logged into the application. There is 1 deliveryman being displayed in the list. This deliveryman
+has an order assigned to him.
 To achieve this, you can filter deliveryman by name, then assign him a `Pending` order, for example `/assign o/1 d/1`.
 
 ... Test case: `/deliveryman delete 1` +
     Expected: Deliveryman would not be deleted as you are not allowed to delete deliveryman with orders assigned.
 
 === Selecting deliveryman
-.. Prerequisites: There is at least 1 deliveryman being displayed in the list.
+.. Prerequisites: Logged into the application. There is at least 1 deliveryman being displayed in the list.
 
 ... Test case: `/deliveryman select 1` +
     Expected: The selected deliveryman would be displayed on the display panel.
