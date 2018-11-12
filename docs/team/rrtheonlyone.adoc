@@ -82,7 +82,7 @@ Issue https://github.com/CS2103-AY1819S1-T09-2/main/issues/221[#213],
 https://github.com/CS2103-AY1819S1-T09-2/main/issues/221[#216],
 https://github.com/CS2103-AY1819S1-T09-2/main/issues/221[#221],
 https://github.com/CS2103-AY1819S1-T09-2/main/issues/225[#225],
-https://github.com/CS2103-AY1819S1-T09-2/main/issues/226[#226],g
+https://github.com/CS2103-AY1819S1-T09-2/main/issues/226[#226],
 https://github.com/CS2103-AY1819S1-T09-2/main/issues/230[#230],
 https://github.com/CS2103-AY1819S1-T09-2/main/issues/236[#236]
 )
