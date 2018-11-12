@@ -460,7 +460,7 @@ Mark order number 1 as completed.
 
 After you mark an order done:
 
-.Home page after successful sign up
+.Order status changed to Completed after the order is marked as done
 image::orderdone.png[width="350"]
 
 // end::orderdone[]
