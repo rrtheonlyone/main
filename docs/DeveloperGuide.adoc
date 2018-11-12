@@ -387,7 +387,7 @@ with the order address to give a *reasonable* approximation of its location in S
 The reason this can be done is because the first 2 digits of a Singapore postal code
 refers to a specific district in Singapore. The demarcation diagram is show below:
 
-image::SingaporeDemarcation.png[width="600"]
+image::SingaporeDemarcation.png[width="500"]
 Figure 3.2.1.2 Diagram to illustrate how the regions are split up in Singapore. Each of the
 regions above corresponds to a specifc postal code tag
 
