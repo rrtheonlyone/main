@@ -121,6 +121,5 @@ include::../DeveloperGuide.adoc[tag=dashboard2]
 |Given below are some of the design considerations I had while implementing the dashboard feature.
 |===
 
-
 include::../DeveloperGuide.adoc[tag=dashboard3]
 
