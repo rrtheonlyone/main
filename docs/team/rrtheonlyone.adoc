@@ -58,7 +58,7 @@ actions of the user e.g. the map/dashboard will dynamically update when there is
 ** Added essential fields such as address and date to order model
 (https://github.com/CS2103-AY1819S1-T16-3/main/pull/37[#37],
 https://github.com/CS2103-AY1819S1-T16-3/main/pull/37[#99]).
-** Came up with `/home` command to return to the dashboard panel (https://github.com/CS2103-AY1819S1-T16-3/main/pulls/123[#123])
+** Came up with `/home` command to return to the dashboard panel (https://github.com/CS2103-AY1819S1-T16-3/main/pull/123[#123])
 ** Various Bug Fixes (https://github.com/CS2103-AY1819S1-T16-3/main/pull/101[#101],
 https://github.com/CS2103-AY1819S1-T16-3/main/pull/101[#125],
 https://github.com/CS2103-AY1819S1-T16-3/main/pull/185[#185])
@@ -82,7 +82,7 @@ Issue https://github.com/CS2103-AY1819S1-T09-2/main/issues/221[#213],
 https://github.com/CS2103-AY1819S1-T09-2/main/issues/221[#216],
 https://github.com/CS2103-AY1819S1-T09-2/main/issues/221[#221],
 https://github.com/CS2103-AY1819S1-T09-2/main/issues/225[#225],
-https://github.com/CS2103-AY1819S1-T09-2/main/issues/226[#226],
+https://github.com/CS2103-AY1819S1-T09-2/main/issues/226[#226],g
 https://github.com/CS2103-AY1819S1-T09-2/main/issues/230[#230],
 https://github.com/CS2103-AY1819S1-T09-2/main/issues/236[#236]
 )
