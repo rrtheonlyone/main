@@ -14,17 +14,13 @@ any challenging project to work with. This portfolio page serves to document my 
 FoodZoom is a desktop application allowing users to streamline their delivery process. The application is
 specifically targeted towards food businesses who need an efficient way to manage their delivery services.
 FoodZoom uses a Command-Line Interface, meaning users can simply make use of keyword based commands when running the
-application.
+application. The application was built by a team of 5 students including myself.
 
 FoodZoom's *core functionality* includes:
 
-- Users being able to track food orders they have from customers
+- Users being able to track food orders (visualise on a map) they have from customers
 - Managing deliverymen and assigning orders to them
-- Analysis of Order to display relevant statistics (order history, trending food etc.) to users
-- Pending Orders shown on a map to allow for efficient dispatch to deliverymen.
-
-The application was built by a team of 5 students including myself.
-
+- Analysis of orders to display relevant statistics (order history, trending food etc.) to users
 
 == Summary of Contributions
 

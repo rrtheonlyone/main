@@ -197,14 +197,17 @@ The screen consists of a map showing your pending orders and a statistics panel.
 placeholder is indicative of how many orders they are in a region. You can observe these
 components change when carrying out some of the other commands in the application! (try `/order find`)
 
+This feature allows you to keep track of how many orders you have on certain days and also take note of
+what is the most common item people have ordered from your stall!
 // end::home[]
 
 // tag::orderAdd[]
 === Adding an order : `/order add` `[Since v1.1]`
 
-Adds an order to the list of orders +
+Allows you to adds a new order to the list of orders. +
 Format: `/order add f/FOOD n/NAME p/PHONE a/ADDRESS dt/DATETIME`
 
+There are also some things you need to take note of:
 ****
 * Able to add more than 1 food items by specifying more food tags. e.g. `f/Roti Prata f/Ice Milo`.
 * Address must be a valid address that exists in Singapore to be displayed on the map.
@@ -214,7 +217,7 @@ consideration for approximating the location
 * Two orders are considered the same if they have the same name, phone, and date time.
 ****
 
-Examples:
+Examples of add order commands (note that the above parameters can be re-ordered):
 
 * `/order add f/Roti Prata n/John Smith p/12345678 a/block 123, Clementi Drive, #01-01 610123 dt/26-12-2018 10:10:54`
 * `/order add a/block 55 Computing Drive 117417 n/Harry f/Tissue Prata f/Nasi Briyani p/81889111 dt/14-12-2018 14:10:54`
