@@ -105,8 +105,10 @@ public class AssignCommandTest {
     @Test
     public void execute_tooManyOrders_throwsCommandException() throws Exception {
         Set<Index> orderIds = new HashSet<>();
-        for (int i = 2; i <= model.getFilteredOrderList().size(); i++) {
-            orderIds.add(Index.fromOneBased(i));
+        for (int i = 0; i < model.getFilteredOrderList().size(); i++) {
+            if (!model.getFilteredOrderList().get(i).isCompleted()) {
+                orderIds.add(Index.fromZeroBased(i));
+            }
         }
         AssignCommand assignCommand = new AssignCommand(validDeliverymanIndex, orderIds);
 

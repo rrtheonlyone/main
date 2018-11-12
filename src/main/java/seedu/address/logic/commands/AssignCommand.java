@@ -77,6 +77,9 @@ public class AssignCommand extends Command {
         }
 
         Deliveryman assignedDeliveryman = new Deliveryman(deliverymanToAssign);
+        if (!assignedDeliveryman.canAccommodate(ordersToAdd)) {
+            throw new CommandException(Messages.MESSAGE_ORDERS_LIMIT_EXCEEDED);
+        }
 
         for (Order order : ordersToAdd) {
             Order updatedOrder = new Order(order);

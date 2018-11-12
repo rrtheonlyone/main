@@ -2,6 +2,7 @@ package seedu.address.model.deliveryman;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -66,6 +67,10 @@ public class Deliveryman extends TaggedObject {
             throw new OrdersLimitExceededException();
         }
         orders.add(order);
+    }
+
+    public boolean canAccommodate(Collection<Order> orders) {
+        return getOrders().size() + orders.size() <= ORDERS_LIMIT;
     }
 
     public void removeOrder(Order order) {
