@@ -64,6 +64,10 @@ public class AssignCommand extends Command {
                 throw new CommandException(Messages.MESSAGE_INVALID_ORDER_DISPLAYED_INDEX);
             }
             Order order = lastShownOrderList.get(i.getZeroBased());
+            if (order.isCompleted()) {
+                throw new CommandException(Messages.MESSAGE_COMPLETED_ORDER);
+            }
+
             if (order.isAlreadyAssignedDeliveryman()) {
                 throw new CommandException(String.format(Messages.MESSAGE_ORDER_ALREADY_ASSIGNED_TO_DELIVERYMAN,
                         i.getOneBased(), order.getDeliveryman()));

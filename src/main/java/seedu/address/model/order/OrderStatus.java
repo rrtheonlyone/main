@@ -44,6 +44,13 @@ public class OrderStatus {
     }
 
     /**
+     * Checks if the status is completed.
+     */
+    public boolean isCompletedStatus() {
+        return orderState.equals(Status.COMPLETED);
+    }
+
+    /**
      * Returns true if a given string is a valid status.
      */
     public static boolean isValidStatus(String orderStatus) {

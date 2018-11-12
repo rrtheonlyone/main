@@ -23,8 +23,8 @@ public class ClearCommand extends OrderCommand {
     public CommandResult execute(Model model, CommandHistory history) throws CommandException {
         requireNonNull(model);
         for (Order order : model.getOrderBook().getOrderList()) {
-            if (order.isAlreadyAssignedDeliveryman()) {
-                throw new CommandException(Messages.MESSAGE_ORDER_ALREADY_ASSIGNED_TO_DELIVERYMAN_CANNOT_CLEAR);
+            if (order.isOngoing()) {
+                throw new CommandException(Messages.MESSAGE_ORDER_ONGOING_CANNOT_CLEAR);
             }
         }
         model.resetData(new OrderBook());

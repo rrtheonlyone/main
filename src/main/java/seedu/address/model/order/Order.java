@@ -125,6 +125,14 @@ public class Order extends TaggedObject {
         return deliveryman != null;
     }
 
+    public boolean isCompleted() {
+        return orderStatus.isCompletedStatus();
+    }
+
+    public boolean isOngoing() {
+        return orderStatus.isOngoingStatus();
+    }
+
     /**
      * Returns true if both orders of the same name have at least one other identity field that is the same.
      * This defines a weaker notion of equality between two orders.

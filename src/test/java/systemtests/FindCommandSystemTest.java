@@ -202,9 +202,9 @@ public class FindCommandSystemTest extends OrderBookSystemTest {
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
-        /* Case: find 2 different statuses of order in order book -> 2 orders found */
+        /* Case: find 2 different statuses of order in order book -> 1 order found */
         command = findCommand + " " + PREFIX_STATUS + "ONGOING COMPLETED";
-        ModelHelper.setFilteredList(expectedModel, DANIEL, FIONA);
+        ModelHelper.setFilteredList(expectedModel, FIONA);
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 

@@ -238,7 +238,7 @@ Format: `/order edit INDEX [f/FOOD] [n/NAME] [p/PHONE] [a/ADDRESS] [dt/DATETIME]
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
 * When a parameter is specified, e.g. `f/`, `n/`, empty fields are not allowed. Value must be specified.
-* Orders that are already assigned to a deliveryman cannot be edited.
+* Orders that are `Ongoing` or `Completed` cannot be edited.
 ****
 
 Examples:
@@ -286,7 +286,7 @@ Format: `/order delete INDEX`
 
 ****
 * Deletes an order at the specified `INDEX`.
-* Orders that are already assigned to a deliveryman cannot be deleted.
+* Orders that are `Ongoing` cannot be deleted.
 ****
 
 Examples:
@@ -436,7 +436,7 @@ Format: `/assign d/DELIVERYMAN_INDEX o/ORDER_INDEX`
 * Assigns orders at the specific `ORDER_INDEX` to the delivery man at the `DELIVERYMAN_INDEX`
 * There must be at least 1 order and 1 delivery man.
 * Add more than 1 orders by specifying more tags. e.g. `o/1 o/2 o/3`.
-* Orders that are already assigned to a deliveryman cannot be reassigned.
+* Orders that are `Ongoing` or `Completed` cannot be reassigned.
 ****
 
 Examples:
