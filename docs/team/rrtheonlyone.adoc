@@ -13,9 +13,9 @@ any challenging project to work with.
 == Overview
 
 FoodZoom is a desktop application for food businesses to streamline their delivery process. FoodZoom's core
-functionality is that it allows for managers to keep track of the number of orders they have from
-customers and send out deliverymen to handle those orders. In addition, FoodZoom is able to provide insights and
-give location information for the orders that it has. The application was built by 5 students.
+functionality is that it allows for managers to keep track of the food orders they have from
+customers and send out deliverymen to handle those orders. FoodZoom is also able to show orders on a map and
+provide relevant statistics to the user. The application was built by a team of 5 computer science students.
 
 
 == Summary of Contribution
@@ -26,19 +26,18 @@ give location information for the orders that it has. The application was built 
 |===
 --
 * *Major enhancement:* Built the system that allows for the *generation of statistics* and *location-based matching*
-based off the
-data (Pull Request
+based off the provided data (Pull Request
 https://github.com/CS2103-AY1819S1-T16-3/main/pull/102[#102],
 https://github.com/CS2103-AY1819S1-T16-3/main/pull/121[#121])
 
 ** What it does: The main screen consists of a map and a dashboard. The map is able to show the number of pending
 orders at a region. The dashboard shows statistics like the most popular food item and the order history
 
-** Justification: Users of this application can  track where their pending orders are in one glance. Orders in the
+** Justification: Users of this application can track where their pending orders are in one glance. Orders in the
 same region can now be dispatched to the same deliveryman. Users can also use the generated statistics to improve their
 profits and improve the overall experience they can provide to their customers
 
-* *Major enhancement:* Completely *Revamped* and *Designed* the User Interface (UI) for the application
+* *Major enhancement:* Completely *revamped* and *redesigned* the User Interface (UI) for the application
 (Pull Request
 https://github.com/CS2103-AY1819S1-T16-3/main/pull/102[#73],
 https://github.com/CS2103-AY1819S1-T16-3/main/pull/128[#128],
@@ -50,7 +49,7 @@ the status of their orders, available deliverymen and key insights for their dat
 
 ** Justification: The UI is minimalistic and was designed with the end-user in mind. There is only one screen that
 the user uses at all times and all essential details are on that screen. The UI updates itself based on the
-actions of the user e.g. the map/dashboard will dynamically update when orders are added or edited.
+actions of the user e.g. the map/dashboard will dynamically update when there is a change.
 
 --
 
