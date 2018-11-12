@@ -6,8 +6,6 @@ import static seedu.address.commons.core.Messages.MESSAGE_INVALID_DELIVERYMAN_CO
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST;
 
-import java.util.Arrays;
-
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -57,7 +55,7 @@ public class DeliverymanCommandParserTest {
         DeliverymanFindCommand command = (DeliverymanFindCommand) parser.parse(
                 DeliverymanFindCommand.COMMAND_WORD + " n/" + keyword);
         assertEquals(new DeliverymanFindCommand(
-                new DeliverymanNameContainsKeywordsPredicate(Arrays.asList(keyword))), command);
+                new DeliverymanNameContainsKeywordsPredicate(keyword)), command);
     }
 
     @Test

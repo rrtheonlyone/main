@@ -3,10 +3,6 @@ package seedu.address.model.deliveryman;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-
 import org.junit.Test;
 
 import seedu.address.testutil.DeliverymanBuilder;
@@ -14,20 +10,20 @@ import seedu.address.testutil.DeliverymanBuilder;
 public class DeliverymanNameContainsKeywordsPredicateTest {
     @Test
     public void equals() {
-        List<String> firstPredicateKeywordList = Collections.singletonList("first");
-        List<String> secondPredicateKeywordList = Arrays.asList("first", "second");
+        String firstPredicateKeyword = "first";
+        String secondPredicateKeyword = "second";
 
         DeliverymanNameContainsKeywordsPredicate firstPredicate =
-                new DeliverymanNameContainsKeywordsPredicate(firstPredicateKeywordList);
+                new DeliverymanNameContainsKeywordsPredicate(firstPredicateKeyword);
         DeliverymanNameContainsKeywordsPredicate secondPredicate =
-                new DeliverymanNameContainsKeywordsPredicate(secondPredicateKeywordList);
+                new DeliverymanNameContainsKeywordsPredicate(secondPredicateKeyword);
 
         // same object -> returns true
         assertTrue(firstPredicate.equals(firstPredicate));
 
         // same values -> returns true
         DeliverymanNameContainsKeywordsPredicate firstPredicateCopy =
-                new DeliverymanNameContainsKeywordsPredicate(firstPredicateKeywordList);
+                new DeliverymanNameContainsKeywordsPredicate(firstPredicateKeyword);
         assertTrue(firstPredicate.equals(firstPredicateCopy));
 
         // different types -> returns false
@@ -44,31 +40,26 @@ public class DeliverymanNameContainsKeywordsPredicateTest {
     public void test_nameContainsKeywords_returnsTrue() {
         // One keyword
         DeliverymanNameContainsKeywordsPredicate predicate =
-                new DeliverymanNameContainsKeywordsPredicate(Collections.singletonList("Alice"));
+                new DeliverymanNameContainsKeywordsPredicate("Alice");
         assertTrue(predicate.test(new DeliverymanBuilder().withName("Alice Bob").build()));
 
-        // Multiple keywords
-        predicate = new DeliverymanNameContainsKeywordsPredicate(Arrays.asList("Alice", "Bob"));
+        // Keyword match 2 word
+        predicate = new DeliverymanNameContainsKeywordsPredicate("Bob");
         assertTrue(predicate.test(new DeliverymanBuilder().withName("Alice Bob").build()));
 
-        // Only one matching keyword
-        predicate = new DeliverymanNameContainsKeywordsPredicate(Arrays.asList("Bob", "Carol"));
+        // Partial Match
+        predicate = new DeliverymanNameContainsKeywordsPredicate("Ali");
         assertTrue(predicate.test(new DeliverymanBuilder().withName("Alice Carol").build()));
 
         // Mixed-case keywords
-        predicate = new DeliverymanNameContainsKeywordsPredicate(Arrays.asList("aLIce", "bOB"));
+        predicate = new DeliverymanNameContainsKeywordsPredicate("aLIce bOB");
         assertTrue(predicate.test(new DeliverymanBuilder().withName("Alice Bob").build()));
     }
 
     @Test
     public void test_nameDoesNotContainKeywords_returnsFalse() {
-        // Zero keywords
-        DeliverymanNameContainsKeywordsPredicate predicate =
-                new DeliverymanNameContainsKeywordsPredicate(Collections.emptyList());
-        assertFalse(predicate.test(new DeliverymanBuilder().withName("Alice").build()));
-
         // Non-matching keyword
-        predicate = new DeliverymanNameContainsKeywordsPredicate(Arrays.asList("Carol"));
+        DeliverymanNameContainsKeywordsPredicate predicate = new DeliverymanNameContainsKeywordsPredicate("Carol");
         assertFalse(predicate.test(new DeliverymanBuilder().withName("Alice Bob").build()));
     }
 }

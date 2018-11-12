@@ -86,26 +86,15 @@ public class FindCommandSystemTest extends OrderBookSystemTest {
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
-        /* Case: find multiple orders by name in order book, 2 keywords -> 2 orders found */
-        command = findCommand + " " + PREFIX_NAME + "Benson Daniel";
-        ModelHelper.setFilteredList(expectedModel, BENSON, DANIEL);
+        /* Case: find order by exact name in order book -> 1 order found */
+        command = findCommand + " " + PREFIX_NAME + "Benson Meier";
+        ModelHelper.setFilteredList(expectedModel, BENSON);
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
-        /* Case: find multiple orders by name in order book, 2 keywords in reversed order -> 2 orders found */
-        command = findCommand + " " + PREFIX_NAME + "Daniel Benson";
-        assertCommandSuccess(command, expectedModel);
-        assertSelectedCardUnchanged();
-
-        /* Case: find multiple orders by name in order book, 2 keywords with 1 repeat -> 2 orders found */
-        command = findCommand + " " + PREFIX_NAME + "Daniel Benson Daniel";
-        assertCommandSuccess(command, expectedModel);
-        assertSelectedCardUnchanged();
-
-        /* Case: find multiple orders by name in order book, 2 matching keywords and 1 non-matching keyword
-         * -> 2 orders found
-         */
-        command = findCommand + " " + PREFIX_NAME + "Daniel Benson NonMatchingKeyWord";
+        /* Case: find order exact name name in order book, in reversed order -> 1 order found */
+        command = findCommand + " " + PREFIX_NAME + "Meier Benson";
+        ModelHelper.setFilteredList(expectedModel);
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
@@ -161,10 +150,10 @@ public class FindCommandSystemTest extends OrderBookSystemTest {
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
-        /* Case: find food of order in order book -> 2 orders found */
+        /* Case: find food of order in order book -> 1 orders found */
         List<Food> food = new ArrayList<>(DANIEL.getFood());
         command = findCommand + " " + PREFIX_FOOD + food.get(0).foodName;
-        ModelHelper.setFilteredList(expectedModel, DANIEL, FIONA);
+        ModelHelper.setFilteredList(expectedModel, DANIEL);
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 

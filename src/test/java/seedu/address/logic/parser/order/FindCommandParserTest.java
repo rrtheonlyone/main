@@ -36,7 +36,7 @@ public class FindCommandParserTest {
     @Test
     public void parse_validArgs_returnsFindCommand() {
         FindCommand expectedNameFindCommand =
-                new FindCommand(new OrderNameContainsKeywordPredicate(Arrays.asList("Alex")));
+                new FindCommand(new OrderNameContainsKeywordPredicate("Alex"));
         assertParseSuccess(parser, " n/Alex", expectedNameFindCommand);
 
         FindCommand expectedPhoneFindCommand =
@@ -48,7 +48,7 @@ public class FindCommandParserTest {
         assertParseSuccess(parser, " a/123, Jurong West Ave 6, #08-111", expectedAddressFindCommand);
 
         FindCommand expectedFoodFindCommand =
-                new FindCommand(new OrderFoodContainsKeywordPredicate(Arrays.asList("rice")));
+                new FindCommand(new OrderFoodContainsKeywordPredicate("rice"));
         assertParseSuccess(parser, " f/rice", expectedFoodFindCommand);
 
         FindCommand expectedStatusFindCommand =

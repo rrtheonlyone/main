@@ -3,7 +3,6 @@ package seedu.address.logic.parser.deliveryman;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 
-import java.util.Arrays;
 import java.util.stream.Stream;
 
 import seedu.address.logic.commands.deliveryman.DeliverymanCommand;
@@ -45,9 +44,7 @@ public class DeliverymanFindCommandParser implements Parser<DeliverymanCommand> 
             throw new ParseException(MESSAGE_EMPTY_NAME_FIELD);
         }
 
-        String[] nameKeywords = name.split("\\s+");
-
-        return new DeliverymanFindCommand(new DeliverymanNameContainsKeywordsPredicate(Arrays.asList(nameKeywords)));
+        return new DeliverymanFindCommand(new DeliverymanNameContainsKeywordsPredicate(name));
     }
 
     /**

@@ -50,6 +50,8 @@ include::../UserGuide.adoc[tag=orderfind]
 
 include::../UserGuide.adoc[tag=orderedit]
 
+include::../UserGuide.adoc[tag=deliverymanfind]
+
 == Contributions to Developer Guide
 
 |===
