@@ -1642,7 +1642,7 @@ Milo dt/30-10-2018 00:00:01` +
 
 
 === Selecting order
-.. Prerequisites: There is at least 1 order being displayed in the list.
+.. Prerequisites: Logged into the application. There is at least 1 order being displayed in the list.
 
 ... Test case: `/order select 1` +
     Expected: The selected order would be displayed on the display panel.
@@ -1652,7 +1652,7 @@ Milo dt/30-10-2018 00:00:01` +
 
 === Finding order/s
 . Finding order by name, phone or food
-.. Prerequisites: Having at least 1 order.
+.. Prerequisites: Logged into the application. Having at least 1 order.
 .. Test case: Valid name without space +
     Command: `/order find n/Alex` +
     Expected: Order/s with the name `Alex`, `Alexandar` and `Alex Yeoh` is shown on the left panel.
@@ -1666,13 +1666,13 @@ Milo dt/30-10-2018 00:00:01` +
     Expected: Error is shown in the status message. Value cannot be empty.
 
 . Finding order by address
-.. Prerequisites: Having at least 1 order.
+.. Prerequisites: Logged into the application. Having at least 1 order.
 .. Test case: Valid address +
     Command: `/order find a/Blk 10` +
     Expected: Order/s with the address containing `Blk 10` is shown on the left panel.
 
 . Finding order by status
-.. Prerequisites: Having orders in the list with 3 different status
+.. Prerequisites: Logged into the application. Having orders in the list with 3 different status
 .. Test case: Exact Status +
     Command: `/order find st/PENDING` +
     Expected: Order/s with status `PENDING` is shown on the left panel.
@@ -1690,7 +1690,7 @@ Milo dt/30-10-2018 00:00:01` +
     Expected: Error is shown in the status message. Only valid status are allowed.
 
 . Finding order by date
-.. Prerequisites: Having orders added with different dates
+.. Prerequisites: Logged into the application. Having orders added with different dates
 .. Test case: Find with one datetime parameter +
     Command: `/order find dt/01-10-2018 10:00:00` +
     Expected: Order/s with the datetime `01-10-2018 10:00:00` is shown on the left panel.
@@ -1716,14 +1716,15 @@ Milo dt/30-10-2018 00:00:01` +
     Expected: Error is shown in the status message. Date should be a valid date.
 
 . Finding order with more than 1 argument
-.. Prerequisites: Having at least 1 order
+.. Prerequisites: Logged into the application. Having at least 1 order
 .. Test case: Valid name and status value +
     Command: `/order find n/john st/pending` +
     Expected: Order/s with the name `john` and the status `PENDING` is shown on the left panel.
 
 === Editing an order
 . Edit an order while all orders are listed
-.. Prerequisites: List all orders using the `/order list` command. Multiple orders in the list.
+.. Prerequisites: Logged into the application. List all orders using the `/order list` command. Multiple orders in the
+ list.
 ... Test case: Valid arguments +
     Command: `/order edit <order_index> f/Roti Canai` +
     Expected: Food of the order with the `<order_index>` will be overwritten with the food `Roti Canai`
@@ -1735,12 +1736,13 @@ Milo dt/30-10-2018 00:00:01` +
 ... Other incorrect edit commands to try: `/order edit x f/alex` (where x is larger than the list on the left) +
     Expected: Cannot edit as the order index must be a valid index in the list shown on the left.
 
-.. Prerequisites: There is an order with the name `alex`, phone `12345678` and datetime `01-10-2018 10:00:00`
+.. Prerequisites: Logged into the application. There is an order with the name `alex`, phone `12345678` and datetime
+`01-10-2018 10:00:00`
 ... Test case: Edit an order to an existing order in the list +
     Command: `/order edit 1 n/alex p/12345678 dt/01-10-2018 10:00:00` +
     Expected: Cannot edit as an order with the same name, phone and datetime is already in the list of orders.
 
-.. Prerequisites: Have orders that are `Ongoing` or `Completed`
+.. Prerequisites: Logged into the application. Have orders that are `Ongoing` or `Completed`
 ... Test case: Edit an order with status `Ongoing` or `Completed` +
     Command: `/order edit <ongoing_or_completed_order_index> f/tea` +
     Expected: Cannot edit as the order is already assign to a deliveryman.
@@ -1749,7 +1751,8 @@ Milo dt/30-10-2018 00:00:01` +
 
 . Deleting an order while all order are listed
 
-.. Prerequisites: List all orders using the `/order list` command. Multiple orders in the list. The order to be deleted is `Pending` or `Completed`.
+.. Prerequisites: Logged into the application. List all orders using the `/order list` command. Multiple orders in the
+ list. The order to be deleted is `Pending` or `Completed`.
 .. Test case: `/order delete <pending_or_completed_order_index>` +
    Expected: That order is deleted from the list. Details of the deleted order shown in the status message.
    Timestamp in the status bar is updated.
@@ -1758,7 +1761,7 @@ Milo dt/30-10-2018 00:00:01` +
 .. Other incorrect delete commands to try: `/order delete`, `/order delete x` (where x is larger than the list size)
 _{give more}_ +
    Expected: Similar to previous.
-.. Test case: Deleting an `Ongoing` order +
+.. Test case: Logged into the application. Deleting an `Ongoing` order +
    Command: `/order delete o/<ongoing_order_index>`
    Expected: Unable to delete the order because it is already assigned to a deliveryman.
 
@@ -1767,7 +1770,7 @@ _{ more test cases ... }_
 === Mark an order as Completed
 
 . Marking an order as `Completed`
-.. Prerequisites: Already have an `Ongoing` order.
+.. Prerequisites: Logged into the application. Already have an `Ongoing` order.
 ... Test case: Mark an invalid index as completed +
 Command: `/order done 0` +
 Expected: No order is marked as completed. Index have to a positive integer.
@@ -1777,12 +1780,12 @@ Command: `/order done <order_index_of_ongoing_status>` +
 Expected: Order on order list panel is marked as `Completed` and deliveryman is updated (Deliveryman total assigned
 orders will decrease by `1` or become `available`).
 
-.. Prerequisites: Have some `Pending` orders.
+.. Prerequisites: Logged into the application. Have some `Pending` orders.
 ... Test case: Mark a valid index as completed but would fail. +
 Command: `/order done <order_index_of_pending_status>` +
 Expected: Fail to mark the order as `Completed` because only `ongoing` status can be marked as `completed`.
 
-.. Prerequisites: Have some `Completed` orders.
+.. Prerequisites: Logged into the application. Have some `Completed` orders.
 ... Test case: Mark a valid index as completed but would fail. +
 Command: `/order done <order_index_of_completed_status>` +
 Expected: Fail to mark the order as `Completed` because it is already `completed`.
@@ -1791,24 +1794,25 @@ Expected: Fail to mark the order as `Completed` because it is already `completed
 
 . Assigning multiple pending orders to a deliveryman
 
-.. Prerequisite: Have orders that are `Pending`, and a deliveryman +
+.. Prerequisite: Logged into the application. Have orders that are `Pending`, and a deliveryman +
    Test case: Assigning two `Pending` orders to a deliveryman +
    Command: `/assign o/<first_pending_order_index> o/<second_pending_order_index> d/1` +
    Expected: First deliveryman's assigned order count increases by 2, the two orders change status to become `Ongoing`.
 
-.. Prerequisite: Have a deliveryman +
+.. Prerequisite: Logged into the application. Have a deliveryman +
    Test case: Invalid order or deliveryman index +
    Command: `/assign o/0 d/1`, `/assign o/1 d/0` +
    Expected: Cannot assign because the order index is not a non-zero unsigned integer.
 
-.. Prerequisite: Have an `Ongoing` or `Completed` order +
+.. Prerequisite: Logged into the application. Have an `Ongoing` or `Completed` order +
    Test case: Assigning an `Ongoing` or `Completed` order to a deliveryman +
    Command: `/assign o/<ongoing_or_completed_order_index> d/1` +
    Expected: Cannot assign because that order was already assigned to a deliveryman previously.
 
 === Adding deliveryman
 
-.. Prerequisites: Name "John" has not been used for any existing deliverymen. To check, type `/deliveryman list` to see
+.. Prerequisites: Logged into the application. Name "John" has not been used for any existing deliverymen. To check,
+type `/deliveryman list` to see
 all existing deliverymen.
 
 ... Test case: `/deliveryman add n/John` +
@@ -1819,7 +1823,7 @@ all existing deliverymen.
     Expected: No deliveryman is added. Error details shown in the status message - non-alphanumeric characters are not allowed.
     Status bar remains the same.
 
-.. Prerequisites: A deliveryman named "John" exists in the system.
+.. Prerequisites: Logged into the application. A deliveryman named "John" exists in the system.
 
 ... Test case: `/deliveryman add n/John` +
     Expected: No deliveryman is added. Error details shown in the status message.
@@ -1827,7 +1831,8 @@ all existing deliverymen.
 
 === Deleting deliveryman
 
-.. Prerequisites: There is 1 deliveryman being displayed in the list. This deliveryman must not have any orders assigned to him too.
+.. Prerequisites: Logged into the application. There is 1 deliveryman being displayed in the list. This deliveryman
+must not have any orders assigned to him too.
 To achieve this, you can filter deliverymen by name, for example, using the default deliverymen, you can try `/deliveryman find n/Chi Kao`
 
 ... Test case: `/deliveryman delete 0` +
@@ -1839,14 +1844,15 @@ To achieve this, you can filter deliverymen by name, for example, using the defa
 ... Test case: `/deliveryman delete 1` +
     Expected: The deliveryman displayed will be deleted.
 
-.. Prerequisites: There is 1 deliveryman being displayed in the list. This deliveryman has an order assigned to him.
+.. Prerequisites: Logged into the application. There is 1 deliveryman being displayed in the list. This deliveryman
+has an order assigned to him.
 To achieve this, you can filter deliveryman by name, then assign him a `Pending` order, for example `/assign o/1 d/1`.
 
 ... Test case: `/deliveryman delete 1` +
     Expected: Deliveryman would not be deleted as you are not allowed to delete deliveryman with orders assigned.
 
 === Selecting deliveryman
-.. Prerequisites: There is at least 1 deliveryman being displayed in the list.
+.. Prerequisites: Logged into the application. There is at least 1 deliveryman being displayed in the list.
 
 ... Test case: `/deliveryman select 1` +
     Expected: The selected deliveryman would be displayed on the display panel.
